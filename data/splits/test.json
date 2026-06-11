@@ -3583,7 +3583,8 @@
     ],
     "normalized_source_hash": "8dca3529d4765dcc1c007b66f6f9720f1b9d1a739c8e838c7cd32b75f76bb303",
     "vtype": "Unchecked Call Return (SWC-104)",
-    "label": 1
+    "label": 0,
+    "label_correction": "SWC-104 view/pure rule: invalid annotation"
   },
   {
     "filePath": "DAppSCAN-source/contracts/QuillAudits-Yearn Finance-Stablecoins 3pool/stablecoins-3pool-adeb776933c6cb3b8306239cc3357d4c6239a88d/contracts/StrategyUSDC.sol",
@@ -3615,7 +3616,8 @@
     ],
     "normalized_source_hash": "1c103ab9dfef5c344a78500950fa1bd3d8d81373faf6c244b7b94f128792c4ae",
     "vtype": "Unchecked Call Return (SWC-104)",
-    "label": 1
+    "label": 0,
+    "label_correction": "SWC-104 view/pure rule: invalid annotation"
   },
   {
     "filePath": "DAppSCAN-source/contracts/QuillAudits-Yearn Finance-Stablecoins 3pool/stablecoins-3pool-adeb776933c6cb3b8306239cc3357d4c6239a88d/contracts/StrategyUSDT.sol",
@@ -3647,7 +3649,8 @@
     ],
     "normalized_source_hash": "1c103ab9dfef5c344a78500950fa1bd3d8d81373faf6c244b7b94f128792c4ae",
     "vtype": "Unchecked Call Return (SWC-104)",
-    "label": 1
+    "label": 0,
+    "label_correction": "SWC-104 view/pure rule: invalid annotation"
   },
   {
     "source": "DAppSCAN",
@@ -5345,7 +5348,8 @@
     ],
     "normalized_source_hash": "e23c36a91da32b105d719e554e3034f0d747a672f93460e40cad0c8f8d715692",
     "vtype": "Unchecked Call Return (SWC-104)",
-    "label": 1
+    "label": 0,
+    "label_correction": "SWC-104 view/pure rule: invalid annotation"
   },
   {
     "source": "DAppSCAN",
