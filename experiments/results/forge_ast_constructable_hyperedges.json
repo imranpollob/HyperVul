@@ -1,0 +1,2935 @@
+[
+  {
+    "vfp_id": "vfp_00001",
+    "finding_id": 2,
+    "finding_title": "Wrong approval in fullfillImage",
+    "severity": "High",
+    "file": "AgentImageService.sol",
+    "function": "fulfillImage",
+    "contract": "AgentImageService",
+    "external_calls": [
+      {
+        "call_text": "IERC20Upgradeable(agentToken).safeTransfer(spectralTreasury, (request.amount * parameters[Parameter.TREASURY_CUT]) / 100",
+        "method": "safeTransfer",
+        "receiver": "IERC20Upgradeable",
+        "reason": "SafeERC20 .safeTransfer()"
+      }
+    ],
+    "state_vars_accessed": [
+      "accumulatedFees",
+      "imageRequests",
+      "parameters",
+      "pendingFees",
+      "spectralTreasury"
+    ],
+    "inherited_vars_used": false,
+    "inherited_calls_used": false
+  },
+  {
+    "vfp_id": "vfp_00001",
+    "finding_id": 3,
+    "finding_title": "Duplicate requestId values can occur",
+    "severity": "Medium",
+    "file": "AgentImageService.sol",
+    "function": "requestImage",
+    "contract": "AgentImageService",
+    "external_calls": [
+      {
+        "call_text": "token.safeTransferFrom(msg.sender, address(this), config.pricePerImage)",
+        "method": "safeTransferFrom",
+        "receiver": "token",
+        "reason": "SafeERC20 .safeTransferFrom()"
+      }
+    ],
+    "state_vars_accessed": [
+      "agentConfigs",
+      "imageRequests",
+      "pendingFees"
+    ],
+    "inherited_vars_used": false,
+    "inherited_calls_used": false
+  },
+  {
+    "vfp_id": "vfp_00001",
+    "finding_id": 4,
+    "finding_title": "The requestRefund function contains an incorrect check",
+    "severity": "Medium",
+    "file": "AgentImageService.sol",
+    "function": "requestRefund",
+    "contract": "AgentImageService",
+    "external_calls": [
+      {
+        "call_text": "IERC20Upgradeable(agentToken).safeTransfer(msg.sender, request.amount)",
+        "method": "safeTransfer",
+        "receiver": "IERC20Upgradeable",
+        "reason": "SafeERC20 .safeTransfer()"
+      }
+    ],
+    "state_vars_accessed": [
+      "agentConfigs",
+      "imageRequests",
+      "pendingFees"
+    ],
+    "inherited_vars_used": false,
+    "inherited_calls_used": false
+  },
+  {
+    "vfp_id": "vfp_00007",
+    "finding_id": 6,
+    "finding_title": "Unbounded Iteration in Folio Functions",
+    "severity": "Medium",
+    "file": "Folio.sol",
+    "function": "startRebalance",
+    "contract": "Folio",
+    "external_calls": [
+      {
+        "call_text": "basket.values()",
+        "method": "values",
+        "receiver": "basket",
+        "reason": "call on contract-typed state var 'basket' (type: EnumerableSet.AddressSet)"
+      }
+    ],
+    "state_vars_accessed": [
+      "REBALANCE_MANAGER",
+      "basket",
+      "rebalance"
+    ],
+    "inherited_vars_used": false,
+    "inherited_calls_used": false
+  },
+  {
+    "vfp_id": "vfp_00007",
+    "finding_id": 6,
+    "finding_title": "Unbounded Iteration in Folio Functions",
+    "severity": "Medium",
+    "file": "Folio.sol",
+    "function": "getRebalance",
+    "contract": "Folio",
+    "external_calls": [
+      {
+        "call_text": "basket.values()",
+        "method": "values",
+        "receiver": "basket",
+        "reason": "call on contract-typed state var 'basket' (type: EnumerableSet.AddressSet)"
+      }
+    ],
+    "state_vars_accessed": [
+      "basket",
+      "rebalance"
+    ],
+    "inherited_vars_used": false,
+    "inherited_calls_used": false
+  },
+  {
+    "vfp_id": "vfp_00007",
+    "finding_id": 6,
+    "finding_title": "Unbounded Iteration in Folio Functions",
+    "severity": "Medium",
+    "file": "Folio.sol",
+    "function": "mint",
+    "contract": "Folio",
+    "external_calls": [
+      {
+        "call_text": "daoFeeRegistry.getFeeDetails(\n            address(this)\n        )",
+        "method": "getFeeDetails",
+        "receiver": "daoFeeRegistry",
+        "reason": "call on contract-typed state var 'daoFeeRegistry' (type: IFolioDAOFeeRegistry)"
+      },
+      {
+        "call_text": "SafeERC20.safeTransferFrom(IERC20(_assets[i]), msg.sender, address(this), _amounts[i])",
+        "method": "safeTransferFrom",
+        "receiver": "SafeERC20",
+        "reason": "SafeERC20 .safeTransferFrom()"
+      }
+    ],
+    "state_vars_accessed": [
+      "daoFeeRegistry",
+      "daoPendingFeeShares",
+      "feeRecipientsPendingFeeShares",
+      "mintFee"
+    ],
+    "inherited_vars_used": false,
+    "inherited_calls_used": false
+  },
+  {
+    "vfp_id": "vfp_00007",
+    "finding_id": 6,
+    "finding_title": "Unbounded Iteration in Folio Functions",
+    "severity": "Medium",
+    "file": "Folio.sol",
+    "function": "distributeFees",
+    "contract": "Folio",
+    "external_calls": [
+      {
+        "call_text": "daoFeeRegistry.getFeeDetails(address(this))",
+        "method": "getFeeDetails",
+        "receiver": "daoFeeRegistry",
+        "reason": "call on contract-typed state var 'daoFeeRegistry' (type: IFolioDAOFeeRegistry)"
+      }
+    ],
+    "state_vars_accessed": [
+      "daoFeeRegistry",
+      "daoPendingFeeShares",
+      "feeRecipients",
+      "feeRecipientsPendingFeeShares"
+    ],
+    "inherited_vars_used": false,
+    "inherited_calls_used": false
+  },
+  {
+    "vfp_id": "vfp_00019",
+    "finding_id": 1,
+    "finding_title": "Creation of contract OPSuccinctDisputeGame could be blocked by front-running the output proposal",
+    "severity": "Medium",
+    "file": "OPSuccinctDisputeGame.sol",
+    "function": "initialize",
+    "contract": "OPSuccinctDisputeGame",
+    "external_calls": [
+      {
+        "call_text": "oracle.proposeL2Output(\n            configName(), rootClaim().raw(), l2BlockNumber(), l1BlockNumber(), proof(), proverAd",
+        "method": "proposeL2Output",
+        "receiver": "oracle",
+        "reason": "call on contract-typed local var 'oracle' (type: OPSuccinctL2OutputOracle)"
+      }
+    ],
+    "state_vars_accessed": [
+      "L2_OUTPUT_ORACLE",
+      "createdAt",
+      "status",
+      "wasRespectedGameTypeWhenCreated"
+    ],
+    "inherited_vars_used": false,
+    "inherited_calls_used": false
+  },
+  {
+    "vfp_id": "vfp_00029",
+    "finding_id": 0,
+    "finding_title": "Infinite Loop in Tick Iteration Due to Misaligned Current Tick",
+    "severity": "High",
+    "file": "AntiSandwichHook.sol",
+    "function": "_beforeSwap",
+    "contract": "AntiSandwichHook",
+    "external_calls": [
+      {
+        "call_text": "key.toId()",
+        "method": "toId",
+        "receiver": "key",
+        "reason": "call on contract-typed local var 'key' (type: PoolKey)"
+      },
+      {
+        "call_text": "poolManager.getSlot0(poolId)",
+        "method": "getSlot0",
+        "receiver": "poolManager",
+        "reason": "DeFi method .getSlot0() on 'poolManager'"
+      },
+      {
+        "call_text": "_lastCheckpoint.state.slot0.tick()",
+        "method": "tick",
+        "receiver": "_lastCheckpoint",
+        "reason": "call on contract-typed local var '_lastCheckpoint' (type: Checkpoint)"
+      }
+    ],
+    "state_vars_accessed": [
+      "_lastCheckpoints"
+    ],
+    "inherited_vars_used": false,
+    "inherited_calls_used": false
+  },
+  {
+    "vfp_id": "vfp_00032",
+    "finding_id": 8,
+    "finding_title": "Hardcoded useEth = true in remove_liquidity_one_coin or remove_liquidity lead to stuck fund",
+    "severity": "High",
+    "file": "CurveConvex2Token.sol",
+    "function": "unstakeAndExitPool",
+    "contract": "CurveConvexLib",
+    "external_calls": [
+      {
+        "call_text": "WETH.deposit{value: exitBalances[0]}()",
+        "method": "deposit",
+        "receiver": "WETH",
+        "reason": "DeFi method .deposit() on 'WETH'"
+      },
+      {
+        "call_text": "WETH.deposit{value: exitBalances[1]}()",
+        "method": "deposit",
+        "receiver": "WETH",
+        "reason": "DeFi method .deposit() on 'WETH'"
+      }
+    ],
+    "state_vars_accessed": [
+      "ASSET",
+      "TOKEN_1",
+      "TOKEN_2"
+    ],
+    "inherited_vars_used": false,
+    "inherited_calls_used": false
+  },
+  {
+    "vfp_id": "vfp_00032",
+    "finding_id": 26,
+    "finding_title": "USDT approve() reverts due to non-standard return value",
+    "severity": "Critical",
+    "file": "GenericERC4626.sol",
+    "function": "stakeTokens",
+    "contract": "GenericERC4626WithdrawRequestManager",
+    "external_calls": [
+      {
+        "call_text": "ERC20(YIELD_TOKEN).balanceOf(address(this))",
+        "method": "balanceOf",
+        "receiver": "ERC20",
+        "reason": "inline cast call ERC20(...).balanceOf()"
+      },
+      {
+        "call_text": "ERC20(depositToken).safeTransferFrom(msg.sender, address(this), amount)",
+        "method": "safeTransferFrom",
+        "receiver": "ERC20",
+        "reason": "SafeERC20 .safeTransferFrom()"
+      },
+      {
+        "call_text": "ERC20(YIELD_TOKEN).balanceOf(address(this))",
+        "method": "balanceOf",
+        "receiver": "ERC20",
+        "reason": "inline cast call ERC20(...).balanceOf()"
+      },
+      {
+        "call_text": "ERC20(YIELD_TOKEN).safeTransfer(msg.sender, yieldTokensMinted)",
+        "method": "safeTransfer",
+        "receiver": "ERC20",
+        "reason": "SafeERC20 .safeTransfer()"
+      }
+    ],
+    "state_vars_accessed": [
+      "YIELD_TOKEN"
+    ],
+    "inherited_vars_used": true,
+    "inherited_calls_used": false
+  },
+  {
+    "vfp_id": "vfp_00032",
+    "finding_id": 29,
+    "finding_title": "Users will be unfairly liquidated if collateral value drops after initiating withdraw request",
+    "severity": "High",
+    "file": "AbstractYieldStrategy.sol",
+    "function": "mintShares",
+    "contract": "AbstractYieldStrategy",
+    "external_calls": [
+      {
+        "call_text": "ERC20(asset).safeTransferFrom(t_CurrentLendingRouter, address(this), assetAmount)",
+        "method": "safeTransferFrom",
+        "receiver": "ERC20",
+        "reason": "SafeERC20 .safeTransferFrom()"
+      }
+    ],
+    "state_vars_accessed": [
+      "asset",
+      "t_AllowTransfer_Amount",
+      "t_AllowTransfer_To",
+      "t_CurrentLendingRouter"
+    ],
+    "inherited_vars_used": false,
+    "inherited_calls_used": false
+  },
+  {
+    "vfp_id": "vfp_00033",
+    "finding_id": 2,
+    "finding_title": "DineroWithdrawRequestManager vulnerable to token overwithdrawal via batch ID overlap",
+    "severity": "High",
+    "file": "src/withdraws/Dinero.sol",
+    "function": "_initiateWithdrawImpl",
+    "contract": "DineroWithdrawRequestManager",
+    "external_calls": [
+      {
+        "call_text": "pxETH.approve(address(PirexETH), amountToWithdraw)",
+        "method": "approve",
+        "receiver": "pxETH",
+        "reason": "known ERC-like method .approve() on 'pxETH'"
+      }
+    ],
+    "state_vars_accessed": [
+      "MAX_BATCH_ID",
+      "s_batchNonce"
+    ],
+    "inherited_vars_used": false,
+    "inherited_calls_used": false
+  },
+  {
+    "vfp_id": "vfp_00045",
+    "finding_id": 0,
+    "finding_title": "Proof-set owner can reset proofSetLastProvenEpoch to avoid accumulated fees",
+    "severity": "Medium",
+    "file": "PDPVerifier.sol",
+    "function": "nextProvingPeriod",
+    "contract": "PDPVerifier",
+    "external_calls": [
+      {
+        "call_text": "PDPListener(listenerAddr).nextProvingPeriod(setId, nextChallengeEpoch[setId], proofSetLeafCount[setId], extraData)",
+        "method": "nextProvingPeriod",
+        "receiver": "PDPListener",
+        "reason": "inline cast call PDPListener(...).nextProvingPeriod()"
+      }
+    ],
+    "state_vars_accessed": [
+      "EXTRA_DATA_MAX_SIZE",
+      "NO_CHALLENGE_SCHEDULED",
+      "NO_PROVEN_EPOCH",
+      "challengeFinality",
+      "challengeRange",
+      "nextChallengeEpoch",
+      "proofSetLastProvenEpoch",
+      "proofSetLeafCount",
+      "proofSetListener",
+      "proofSetOwner",
+      "scheduledRemovals"
+    ],
+    "inherited_vars_used": false,
+    "inherited_calls_used": false
+  },
+  {
+    "vfp_id": "vfp_00058",
+    "finding_id": 15,
+    "finding_title": "The old pairReserves is used for margin level checks in the margin",
+    "severity": "Medium",
+    "file": "LikwidMarginPosition.sol",
+    "function": "_margin",
+    "contract": "LikwidMarginPosition",
+    "external_calls": [
+      {
+        "call_text": "marginLevels.minMarginLevel()",
+        "method": "minMarginLevel",
+        "receiver": "marginLevels",
+        "reason": "call on contract-typed state var 'marginLevels' (type: MarginLevels)"
+      },
+      {
+        "call_text": "marginLevels.minBorrowLevel()",
+        "method": "minBorrowLevel",
+        "receiver": "marginLevels",
+        "reason": "call on contract-typed state var 'marginLevels' (type: MarginLevels)"
+      },
+      {
+        "call_text": "vault.unlock(data)",
+        "method": "unlock",
+        "receiver": "vault",
+        "reason": "DeFi method .unlock() on 'vault'"
+      },
+      {
+        "call_text": "key.toId()",
+        "method": "toId",
+        "receiver": "key",
+        "reason": "call on contract-typed local var 'key' (type: PoolKey)"
+      }
+    ],
+    "state_vars_accessed": [
+      "marginLevels",
+      "poolIds",
+      "poolKeys",
+      "positionInfos"
+    ],
+    "inherited_vars_used": true,
+    "inherited_calls_used": false
+  },
+  {
+    "vfp_id": "vfp_00058",
+    "finding_id": 15,
+    "finding_title": "The old pairReserves is used for margin level checks in the margin",
+    "severity": "Medium",
+    "file": "LikwidMarginPosition.sol",
+    "function": "_executeAddLeverage",
+    "contract": "LikwidMarginPosition",
+    "external_calls": [
+      {
+        "call_text": "poolState.mirrorReserves.reserve01(!position.marginForOne)",
+        "method": "reserve01",
+        "receiver": "poolState",
+        "reason": "call on contract-typed local var 'poolState' (type: PoolState)"
+      },
+      {
+        "call_text": "poolState.realReserves.reserve01(!position.marginForOne)",
+        "method": "reserve01",
+        "receiver": "poolState",
+        "reason": "call on contract-typed local var 'poolState' (type: PoolState)"
+      },
+      {
+        "call_text": "poolState.realReserves.reserve01(position.marginForOne)",
+        "method": "reserve01",
+        "receiver": "poolState",
+        "reason": "call on contract-typed local var 'poolState' (type: PoolState)"
+      },
+      {
+        "call_text": "delta.marginFee.deduct(marginTotal)",
+        "method": "deduct",
+        "receiver": "delta",
+        "reason": "call on contract-typed local var 'delta' (type: MarginBalanceDelta)"
+      },
+      {
+        "call_text": "position.update(\n            borrowCumulativeLast,\n            depositCumulativeLast,\n            params.marginAmount.to",
+        "method": "update",
+        "receiver": "position",
+        "reason": "call on contract-typed local var 'position' (type: MarginPosition.State)"
+      },
+      {
+        "call_text": "params.marginAmount.toInt128()",
+        "method": "toInt128",
+        "receiver": "params",
+        "reason": "call on contract-typed local var 'params' (type: IMarginPositionManager.MarginParams)"
+      }
+    ],
+    "state_vars_accessed": [
+      "defaultMarginFee"
+    ],
+    "inherited_vars_used": false,
+    "inherited_calls_used": false
+  },
+  {
+    "vfp_id": "vfp_00058",
+    "finding_id": 16,
+    "finding_title": "The borrow level check blocks positive margin adjustments in the modify function",
+    "severity": "Medium",
+    "file": "LikwidMarginPosition.sol",
+    "function": "modify",
+    "contract": "LikwidMarginPosition",
+    "external_calls": [
+      {
+        "call_text": "position.update(borrowCumulativeLast, depositCumulativeLast, changeAmount, 0, 0, 0)",
+        "method": "update",
+        "receiver": "position",
+        "reason": "call on contract-typed local var 'position' (type: MarginPosition.State)"
+      },
+      {
+        "call_text": "_marginLevels.minBorrowLevel()",
+        "method": "minBorrowLevel",
+        "receiver": "_marginLevels",
+        "reason": "call on contract-typed local var '_marginLevels' (type: MarginLevels)"
+      },
+      {
+        "call_text": "vault.unlock(data)",
+        "method": "unlock",
+        "receiver": "vault",
+        "reason": "DeFi method .unlock() on 'vault'"
+      },
+      {
+        "call_text": "key.toId()",
+        "method": "toId",
+        "receiver": "key",
+        "reason": "call on contract-typed local var 'key' (type: PoolKey)"
+      }
+    ],
+    "state_vars_accessed": [
+      "marginLevels",
+      "poolIds",
+      "poolKeys",
+      "positionInfos"
+    ],
+    "inherited_vars_used": true,
+    "inherited_calls_used": false
+  },
+  {
+    "vfp_id": "vfp_00058",
+    "finding_id": 17,
+    "finding_title": "The deadline check is missing in the increaseLiquidity and removeLiquidity functions",
+    "severity": "Medium",
+    "file": "LikwidPairPosition.sol",
+    "function": "removeLiquidity",
+    "contract": "LikwidPairPosition",
+    "external_calls": [
+      {
+        "call_text": "IVault.ModifyLiquidityParams({\n            amount0: 0,\n            amount1: 0,\n            liquidityDelta: -int128(liqui",
+        "method": "ModifyLiquidityParams",
+        "receiver": "IVault",
+        "reason": "call on interface/contract type 'IVault'"
+      },
+      {
+        "call_text": "vault.unlock(data)",
+        "method": "unlock",
+        "receiver": "vault",
+        "reason": "DeFi method .unlock() on 'vault'"
+      }
+    ],
+    "state_vars_accessed": [
+      "poolIds",
+      "poolKeys"
+    ],
+    "inherited_vars_used": true,
+    "inherited_calls_used": false
+  },
+  {
+    "vfp_id": "vfp_00058",
+    "finding_id": 19,
+    "finding_title": "Inconsistent level check when modifying margin position",
+    "severity": "Medium",
+    "file": "LikwidMarginPosition.sol",
+    "function": "modify",
+    "contract": "LikwidMarginPosition",
+    "external_calls": [
+      {
+        "call_text": "position.update(borrowCumulativeLast, depositCumulativeLast, changeAmount, 0, 0, 0)",
+        "method": "update",
+        "receiver": "position",
+        "reason": "call on contract-typed local var 'position' (type: MarginPosition.State)"
+      },
+      {
+        "call_text": "_marginLevels.minBorrowLevel()",
+        "method": "minBorrowLevel",
+        "receiver": "_marginLevels",
+        "reason": "call on contract-typed local var '_marginLevels' (type: MarginLevels)"
+      },
+      {
+        "call_text": "vault.unlock(data)",
+        "method": "unlock",
+        "receiver": "vault",
+        "reason": "DeFi method .unlock() on 'vault'"
+      },
+      {
+        "call_text": "key.toId()",
+        "method": "toId",
+        "receiver": "key",
+        "reason": "call on contract-typed local var 'key' (type: PoolKey)"
+      }
+    ],
+    "state_vars_accessed": [
+      "marginLevels",
+      "poolIds",
+      "poolKeys",
+      "positionInfos"
+    ],
+    "inherited_vars_used": true,
+    "inherited_calls_used": false
+  },
+  {
+    "vfp_id": "vfp_00084",
+    "finding_id": 2,
+    "finding_title": "The OctoDistributor doesn't work when the agent token is set to address(0)",
+    "severity": "Medium",
+    "file": "OctoDistributor.sol",
+    "function": "transferHiringDistributions",
+    "contract": "OctoDistributor",
+    "external_calls": [
+      {
+        "call_text": "usdc_token.safeTransferFrom(msg.sender, address(this), totalUsdc)",
+        "method": "safeTransferFrom",
+        "receiver": "usdc_token",
+        "reason": "SafeERC20 .safeTransferFrom()"
+      },
+      {
+        "call_text": "spectral_token.safeTransferFrom(msg.sender, address(this), totalSpec)",
+        "method": "safeTransferFrom",
+        "receiver": "spectral_token",
+        "reason": "SafeERC20 .safeTransferFrom()"
+      },
+      {
+        "call_text": "IERC20Upgradeable(agentToken).safeTransferFrom(msg.sender, address(this), totalAgentToken)",
+        "method": "safeTransferFrom",
+        "receiver": "IERC20Upgradeable",
+        "reason": "SafeERC20 .safeTransferFrom()"
+      },
+      {
+        "call_text": "systemAddresses.ansResolver.addr(distributions[i].recipientAnsNode)",
+        "method": "addr",
+        "receiver": "systemAddresses",
+        "reason": "call on contract-typed state var 'systemAddresses' (type: SystemAddresses)"
+      }
+    ],
+    "state_vars_accessed": [
+      "spectral_token",
+      "systemAddresses",
+      "usdc_token",
+      "userBalances"
+    ],
+    "inherited_vars_used": false,
+    "inherited_calls_used": false
+  },
+  {
+    "vfp_id": "vfp_00084",
+    "finding_id": 3,
+    "finding_title": "The withdrawAllAgentTokens function works incorrectly in OctoDistributor",
+    "severity": "Medium",
+    "file": "OctoDistributor.sol",
+    "function": "withdrawAllAgentTokens",
+    "contract": "OctoDistributor",
+    "external_calls": [
+      {
+        "call_text": "IERC20Upgradeable(token).safeTransfer(msg.sender, amount)",
+        "method": "safeTransfer",
+        "receiver": "IERC20Upgradeable",
+        "reason": "SafeERC20 .safeTransfer()"
+      }
+    ],
+    "state_vars_accessed": [
+      "userBalances"
+    ],
+    "inherited_vars_used": false,
+    "inherited_calls_used": false
+  },
+  {
+    "vfp_id": "vfp_00088",
+    "finding_id": 0,
+    "finding_title": "Reentrancy Vulnerability in _claimWithdrawal Function",
+    "severity": "Critical",
+    "file": "EnjoyoorsVaultWithdrawals.sol",
+    "function": "_claimWithdrawal",
+    "contract": "EnjoyoorsVaultWithdrawals",
+    "external_calls": [
+      {
+        "call_text": "IERC20(token).safeTransfer(request.user, amount)",
+        "method": "safeTransfer",
+        "receiver": "IERC20",
+        "reason": "SafeERC20 .safeTransfer()"
+      }
+    ],
+    "state_vars_accessed": [
+      "lastRequestId",
+      "withdrawalRequests"
+    ],
+    "inherited_vars_used": false,
+    "inherited_calls_used": false
+  },
+  {
+    "vfp_id": "vfp_00096",
+    "finding_id": 1,
+    "finding_title": "Factory Migration Will Fail",
+    "severity": "High",
+    "file": "MarketConfigurator.sol",
+    "function": "_migrateFactoryTargets",
+    "contract": "MarketConfigurator",
+    "external_calls": [
+      {
+        "call_text": "targets.length()",
+        "method": "length",
+        "receiver": "targets",
+        "reason": "call on contract-typed local var 'targets' (type: EnumerableSet.AddressSet)"
+      },
+      {
+        "call_text": "targets.at(i)",
+        "method": "at",
+        "receiver": "targets",
+        "reason": "call on contract-typed local var 'targets' (type: EnumerableSet.AddressSet)"
+      },
+      {
+        "call_text": "targets.remove(target)",
+        "method": "remove",
+        "receiver": "targets",
+        "reason": "call on contract-typed local var 'targets' (type: EnumerableSet.AddressSet)"
+      },
+      {
+        "call_text": "_factoryTargets[newFactory][suite].add(target)",
+        "method": "add",
+        "receiver": "_factoryTargets",
+        "reason": "call on contract-typed state var '_factoryTargets' (type: mapping(address factory => mapping(address suite => EnumerableSet.AddressSet)))"
+      }
+    ],
+    "state_vars_accessed": [
+      "_authorizedFactories",
+      "_factoryTargets"
+    ],
+    "inherited_vars_used": false,
+    "inherited_calls_used": false
+  },
+  {
+    "vfp_id": "vfp_00102",
+    "finding_id": 2,
+    "finding_title": "Lack of nonReentrant modifier in fillOrder() and modifyOrder() allows attacker to steal funds",
+    "severity": "High",
+    "file": "OracleLess.sol",
+    "function": "fillOrder",
+    "contract": "OracleLess",
+    "external_calls": [
+      {
+        "call_text": "ArrayMutation.removeFromArray(\n            pendingOrderIdx,\n            pendingOrderIds\n        )",
+        "method": "removeFromArray",
+        "receiver": "ArrayMutation",
+        "reason": "call on interface/contract type 'ArrayMutation'"
+      },
+      {
+        "call_text": "order.tokenOut.safeTransfer(address(MASTER), feeAmount)",
+        "method": "safeTransfer",
+        "receiver": "order",
+        "reason": "SafeERC20 .safeTransfer()"
+      },
+      {
+        "call_text": "order.tokenOut.safeTransfer(order.recipient, adjustedAmount)",
+        "method": "safeTransfer",
+        "receiver": "order",
+        "reason": "SafeERC20 .safeTransfer()"
+      },
+      {
+        "call_text": "order.tokenIn.safeTransfer(order.recipient, tokenInRefund)",
+        "method": "safeTransfer",
+        "receiver": "order",
+        "reason": "SafeERC20 .safeTransfer()"
+      }
+    ],
+    "state_vars_accessed": [
+      "MASTER",
+      "orders",
+      "pendingOrderIds"
+    ],
+    "inherited_vars_used": false,
+    "inherited_calls_used": false
+  },
+  {
+    "vfp_id": "vfp_00102",
+    "finding_id": 7,
+    "finding_title": "Insecure Use of Recipient in safeTransferFrom Leading to Unauthorized Token Transfers",
+    "severity": "High",
+    "file": "OracleLess.sol",
+    "function": "procureTokens",
+    "contract": "OracleLess",
+    "external_calls": [
+      {
+        "call_text": "permit2.permit(owner, payload.permitSingle, payload.signature)",
+        "method": "permit",
+        "receiver": "permit2",
+        "reason": "call on contract-typed state var 'permit2' (type: IPermit2)"
+      },
+      {
+        "call_text": "permit2.transferFrom(\n                owner,\n                address(this),\n                uint160(amount),\n           ",
+        "method": "transferFrom",
+        "receiver": "permit2",
+        "reason": "call on contract-typed state var 'permit2' (type: IPermit2)"
+      },
+      {
+        "call_text": "token.safeTransferFrom(owner, address(this), amount)",
+        "method": "safeTransferFrom",
+        "receiver": "token",
+        "reason": "SafeERC20 .safeTransferFrom()"
+      }
+    ],
+    "state_vars_accessed": [
+      "permit2"
+    ],
+    "inherited_vars_used": false,
+    "inherited_calls_used": false
+  },
+  {
+    "vfp_id": "vfp_00102",
+    "finding_id": 7,
+    "finding_title": "Insecure Use of Recipient in safeTransferFrom Leading to Unauthorized Token Transfers",
+    "severity": "High",
+    "file": "StopLimit.sol",
+    "function": "modifyOrder",
+    "contract": "StopLimit",
+    "external_calls": [
+      {
+        "call_text": "order.tokenIn.safeTransferFrom(\n                        order.recipient,\n                        address(this),\n        ",
+        "method": "safeTransferFrom",
+        "receiver": "order",
+        "reason": "SafeERC20 .safeTransferFrom()"
+      },
+      {
+        "call_text": "MASTER.checkMinOrderSize(order.tokenIn, newAmountIn)",
+        "method": "checkMinOrderSize",
+        "receiver": "MASTER",
+        "reason": "call on contract-typed state var 'MASTER' (type: IAutomationMaster)"
+      },
+      {
+        "call_text": "order.tokenIn.safeTransfer(order.recipient, _amountInDelta)",
+        "method": "safeTransfer",
+        "receiver": "order",
+        "reason": "SafeERC20 .safeTransfer()"
+      },
+      {
+        "call_text": "MASTER.oracles(_tokenOut)",
+        "method": "oracles",
+        "receiver": "MASTER",
+        "reason": "call on contract-typed state var 'MASTER' (type: IAutomationMaster)"
+      },
+      {
+        "call_text": "MASTER.getExchangeRate(order.tokenIn, _tokenOut)",
+        "method": "getExchangeRate",
+        "receiver": "MASTER",
+        "reason": "call on contract-typed state var 'MASTER' (type: IAutomationMaster)"
+      }
+    ],
+    "state_vars_accessed": [
+      "MASTER",
+      "orders"
+    ],
+    "inherited_vars_used": false,
+    "inherited_calls_used": false
+  },
+  {
+    "vfp_id": "vfp_00102",
+    "finding_id": 16,
+    "finding_title": "StopLimit Order Fails to Execute Due to Repeated Minimum Size Check",
+    "severity": "Medium",
+    "file": "StopLimit.sol",
+    "function": "performUpkeep",
+    "contract": "StopLimit",
+    "external_calls": [
+      {
+        "call_text": "ArrayMutation.removeFromArray(\n            data.pendingOrderIdx,\n            pendingOrderIds\n        )",
+        "method": "removeFromArray",
+        "receiver": "ArrayMutation",
+        "reason": "call on interface/contract type 'ArrayMutation'"
+      },
+      {
+        "call_text": "BRACKET_CONTRACT.fillStopLimitOrder(\n            swapPayload,\n            order.takeProfit,\n            order.stopPrice,",
+        "method": "fillStopLimitOrder",
+        "receiver": "BRACKET_CONTRACT",
+        "reason": "call on contract-typed state var 'BRACKET_CONTRACT' (type: IBracket)"
+      }
+    ],
+    "state_vars_accessed": [
+      "BRACKET_CONTRACT",
+      "orders",
+      "pendingOrderIds"
+    ],
+    "inherited_vars_used": false,
+    "inherited_calls_used": false
+  },
+  {
+    "vfp_id": "vfp_00102",
+    "finding_id": 16,
+    "finding_title": "StopLimit Order Fails to Execute Due to Repeated Minimum Size Check",
+    "severity": "Medium",
+    "file": "Bracket.sol",
+    "function": "_createOrder",
+    "contract": "Bracket",
+    "external_calls": [
+      {
+        "call_text": "MASTER.oracles(tokenIn)",
+        "method": "oracles",
+        "receiver": "MASTER",
+        "reason": "call on contract-typed state var 'MASTER' (type: IAutomationMaster)"
+      },
+      {
+        "call_text": "MASTER.oracles(tokenIn)",
+        "method": "oracles",
+        "receiver": "MASTER",
+        "reason": "call on contract-typed state var 'MASTER' (type: IAutomationMaster)"
+      },
+      {
+        "call_text": "MASTER.checkMinOrderSize(tokenIn, amountIn)",
+        "method": "checkMinOrderSize",
+        "receiver": "MASTER",
+        "reason": "call on contract-typed state var 'MASTER' (type: IAutomationMaster)"
+      },
+      {
+        "call_text": "MASTER.generateOrderId(msg.sender)",
+        "method": "generateOrderId",
+        "receiver": "MASTER",
+        "reason": "call on contract-typed state var 'MASTER' (type: IAutomationMaster)"
+      },
+      {
+        "call_text": "MASTER.getExchangeRate(tokenIn, tokenOut)",
+        "method": "getExchangeRate",
+        "receiver": "MASTER",
+        "reason": "call on contract-typed state var 'MASTER' (type: IAutomationMaster)"
+      }
+    ],
+    "state_vars_accessed": [
+      "MASTER",
+      "orders",
+      "pendingOrderIds"
+    ],
+    "inherited_vars_used": false,
+    "inherited_calls_used": false
+  },
+  {
+    "vfp_id": "vfp_00102",
+    "finding_id": 18,
+    "finding_title": "Unbounded Iteration in _cancelOrder Leading to DoS",
+    "severity": "Medium",
+    "file": "OracleLess.sol",
+    "function": "_cancelOrder",
+    "contract": "OracleLess",
+    "external_calls": [
+      {
+        "call_text": "ArrayMutation.removeFromArray(\n                    i,\n                    pendingOrderIds\n                )",
+        "method": "removeFromArray",
+        "receiver": "ArrayMutation",
+        "reason": "call on interface/contract type 'ArrayMutation'"
+      },
+      {
+        "call_text": "order.tokenIn.safeTransfer(order.recipient, order.amountIn)",
+        "method": "safeTransfer",
+        "receiver": "order",
+        "reason": "SafeERC20 .safeTransfer()"
+      }
+    ],
+    "state_vars_accessed": [
+      "pendingOrderIds"
+    ],
+    "inherited_vars_used": false,
+    "inherited_calls_used": false
+  },
+  {
+    "vfp_id": "vfp_00116",
+    "finding_id": 3,
+    "finding_title": "Unclear L1 Message Queue Logic",
+    "severity": "Medium",
+    "file": "L1Mailbox.sol",
+    "function": "getMsg",
+    "contract": "L1Mailbox",
+    "external_calls": [
+      {
+        "call_text": "msgQueue.at(_l1MsgCount - lastestQueueIndex - 1)",
+        "method": "at",
+        "receiver": "msgQueue",
+        "reason": "call on contract-typed state var 'msgQueue' (type: DoubleEndedQueue.Bytes32Deque)"
+      }
+    ],
+    "state_vars_accessed": [
+      "lastestQueueIndex",
+      "msgQueue",
+      "pendingQueueIndex",
+      "stableRollingHash"
+    ],
+    "inherited_vars_used": false,
+    "inherited_calls_used": false
+  },
+  {
+    "vfp_id": "vfp_00122",
+    "finding_id": 3,
+    "finding_title": "Zappers Can Lose User Funds",
+    "severity": "High",
+    "file": "BorrowerOperations.sol",
+    "function": "_adjustTrove",
+    "contract": "BorrowerOperations",
+    "external_calls": [
+      {
+        "call_text": "_troveManager.getLatestTroveData(_troveId)",
+        "method": "getLatestTroveData",
+        "receiver": "_troveManager",
+        "reason": "call on contract-typed local var '_troveManager' (type: ITroveManager)"
+      },
+      {
+        "call_text": "_troveManager.getLatestBatchData(batchManager)",
+        "method": "getLatestBatchData",
+        "receiver": "_troveManager",
+        "reason": "call on contract-typed local var '_troveManager' (type: ITroveManager)"
+      },
+      {
+        "call_text": "vars.activePool.getNewApproxAvgInterestRateFromTroveChange(_troveChange)",
+        "method": "getNewApproxAvgInterestRateFromTroveChange",
+        "receiver": "vars",
+        "reason": "call on contract-typed local var 'vars' (type: LocalVariables_adjustTrove)"
+      },
+      {
+        "call_text": "_troveManager.onAdjustTroveInsideBatch(\n                _troveId,\n                vars.newColl,\n                _troveCh",
+        "method": "onAdjustTroveInsideBatch",
+        "receiver": "_troveManager",
+        "reason": "call on contract-typed local var '_troveManager' (type: ITroveManager)"
+      },
+      {
+        "call_text": "_troveManager.onAdjustTrove(_troveId, vars.newColl, vars.newDebt, _troveChange)",
+        "method": "onAdjustTrove",
+        "receiver": "_troveManager",
+        "reason": "call on contract-typed local var '_troveManager' (type: ITroveManager)"
+      },
+      {
+        "call_text": "vars.activePool.mintAggInterestAndAccountForTroveChange(_troveChange, batchManager)",
+        "method": "mintAggInterestAndAccountForTroveChange",
+        "receiver": "vars",
+        "reason": "call on contract-typed local var 'vars' (type: LocalVariables_adjustTrove)"
+      }
+    ],
+    "state_vars_accessed": [
+      "CCR",
+      "boldToken",
+      "interestBatchManagerOf"
+    ],
+    "inherited_vars_used": false,
+    "inherited_calls_used": false
+  },
+  {
+    "vfp_id": "vfp_00123",
+    "finding_id": 1,
+    "finding_title": "BalancerFlashLoan Missing Access Control",
+    "severity": "High",
+    "file": "BalancerFlashLoan.sol",
+    "function": "makeFlashLoan",
+    "contract": "BalancerFlashLoan",
+    "external_calls": [
+      {
+        "call_text": "vault.flashLoan(this, tokens, amounts, userData)",
+        "method": "flashLoan",
+        "receiver": "vault",
+        "reason": "call on contract-typed state var 'vault' (type: IVault)"
+      }
+    ],
+    "state_vars_accessed": [
+      "vault"
+    ],
+    "inherited_vars_used": false,
+    "inherited_calls_used": false
+  },
+  {
+    "vfp_id": "vfp_00123",
+    "finding_id": 1,
+    "finding_title": "BalancerFlashLoan Missing Access Control",
+    "severity": "High",
+    "file": "BalancerFlashLoan.sol",
+    "function": "receiveFlashLoan",
+    "contract": "BalancerFlashLoan",
+    "external_calls": [
+      {
+        "call_text": "tokens[0].safeTransfer(address(receiver), effectiveFlashLoanAmount)",
+        "method": "safeTransfer",
+        "receiver": "tokens",
+        "reason": "SafeERC20 .safeTransfer()"
+      },
+      {
+        "call_text": "receiver.receiveFlashLoanOnOpenLeveragedTrove(openTroveParams, effectiveFlashLoanAmount)",
+        "method": "receiveFlashLoanOnOpenLeveragedTrove",
+        "receiver": "receiver",
+        "reason": "call on contract-typed local var 'receiver' (type: IFlashLoanReceiver)"
+      },
+      {
+        "call_text": "tokens[0].safeTransfer(address(receiver), effectiveFlashLoanAmount)",
+        "method": "safeTransfer",
+        "receiver": "tokens",
+        "reason": "SafeERC20 .safeTransfer()"
+      },
+      {
+        "call_text": "receiver.receiveFlashLoanOnLeverUpTrove(leverUpTroveParams, effectiveFlashLoanAmount)",
+        "method": "receiveFlashLoanOnLeverUpTrove",
+        "receiver": "receiver",
+        "reason": "call on contract-typed local var 'receiver' (type: IFlashLoanReceiver)"
+      },
+      {
+        "call_text": "tokens[0].safeTransfer(address(receiver), effectiveFlashLoanAmount)",
+        "method": "safeTransfer",
+        "receiver": "tokens",
+        "reason": "SafeERC20 .safeTransfer()"
+      },
+      {
+        "call_text": "receiver.receiveFlashLoanOnLeverDownTrove(leverDownTroveParams, effectiveFlashLoanAmount)",
+        "method": "receiveFlashLoanOnLeverDownTrove",
+        "receiver": "receiver",
+        "reason": "call on contract-typed local var 'receiver' (type: IFlashLoanReceiver)"
+      },
+      {
+        "call_text": "tokens[0].safeTransfer(address(vault), amounts[0] + feeAmounts[0])",
+        "method": "safeTransfer",
+        "receiver": "tokens",
+        "reason": "SafeERC20 .safeTransfer()"
+      }
+    ],
+    "state_vars_accessed": [
+      "vault"
+    ],
+    "inherited_vars_used": false,
+    "inherited_calls_used": false
+  },
+  {
+    "vfp_id": "vfp_00125",
+    "finding_id": 0,
+    "finding_title": "Missing reentrancy guard in the cancel function",
+    "severity": "High",
+    "file": "Aori.sol",
+    "function": "cancel",
+    "contract": "Aori",
+    "external_calls": [
+      {
+        "call_text": "orderToCancel.validateCancel(\n            orderId,\n            ENDPOINT_ID,\n            this.orderStatus,\n            ms",
+        "method": "validateCancel",
+        "receiver": "orderToCancel",
+        "reason": "call on contract-typed local var 'orderToCancel' (type: Order)"
+      }
+    ],
+    "state_vars_accessed": [
+      "ENDPOINT_ID",
+      "isAllowedSolver",
+      "orderStatus"
+    ],
+    "inherited_vars_used": false,
+    "inherited_calls_used": false
+  },
+  {
+    "vfp_id": "vfp_00126",
+    "finding_id": 2,
+    "finding_title": "Compromised Messengers Cannot Be Removed",
+    "severity": "Medium",
+    "file": "SpokePool.sol",
+    "function": "_setOftMessenger",
+    "contract": "SpokePool",
+    "external_calls": [
+      {
+        "call_text": "IOFT(_messenger).token()",
+        "method": "token",
+        "receiver": "IOFT",
+        "reason": "inline cast call IOFT(...).token()"
+      }
+    ],
+    "state_vars_accessed": [
+      "oftMessengers"
+    ],
+    "inherited_vars_used": false,
+    "inherited_calls_used": false
+  },
+  {
+    "vfp_id": "vfp_00153",
+    "finding_id": 0,
+    "finding_title": "Incorrect minimum unbond quantity calculation",
+    "severity": "High",
+    "file": "PolygonStrategy.sol",
+    "function": "unbond",
+    "contract": "PolygonStrategy",
+    "external_calls": [
+      {
+        "call_text": "token.balanceOf(address(this))",
+        "method": "balanceOf",
+        "receiver": "token",
+        "reason": "known ERC-like method .balanceOf() on 'token'"
+      },
+      {
+        "call_text": "vault.getTotalDeposits()",
+        "method": "getTotalDeposits",
+        "receiver": "vault",
+        "reason": "call on contract-typed local var 'vault' (type: IPolygonVault)"
+      },
+      {
+        "call_text": "vault.getPrincipalDeposits()",
+        "method": "getPrincipalDeposits",
+        "receiver": "vault",
+        "reason": "call on contract-typed local var 'vault' (type: IPolygonVault)"
+      },
+      {
+        "call_text": "vault.withdrawRewards()",
+        "method": "withdrawRewards",
+        "receiver": "vault",
+        "reason": "call on contract-typed local var 'vault' (type: IPolygonVault)"
+      },
+      {
+        "call_text": "vault.unbond(vaultToUnbond)",
+        "method": "unbond",
+        "receiver": "vault",
+        "reason": "call on contract-typed local var 'vault' (type: IPolygonVault)"
+      },
+      {
+        "call_text": "token.balanceOf(address(this))",
+        "method": "balanceOf",
+        "receiver": "token",
+        "reason": "known ERC-like method .balanceOf() on 'token'"
+      }
+    ],
+    "state_vars_accessed": [
+      "numVaultsUnbonding",
+      "totalQueued",
+      "validatorRemoval",
+      "validatorWithdrawalIndex",
+      "vaults"
+    ],
+    "inherited_vars_used": false,
+    "inherited_calls_used": false
+  },
+  {
+    "vfp_id": "vfp_00156",
+    "finding_id": 0,
+    "finding_title": "Incorrect Execution Context for Transfer on Core When Finalizing a Swap",
+    "severity": "High",
+    "file": "HyperCoreFlowExecutor.sol",
+    "function": "finalizeSwapFlows",
+    "contract": "HyperCoreFlowExecutor",
+    "external_calls": [
+      {
+        "call_text": "HyperCoreLib.spotBalance(\n            address(finalTokenInfo.swapHandler),\n            finalCoreTokenInfo.coreIndex\n    ",
+        "method": "spotBalance",
+        "receiver": "HyperCoreLib",
+        "reason": "call on interface/contract type 'HyperCoreLib'"
+      },
+      {
+        "call_text": "HyperCoreLib\n                .minimumCoreReceiveAmountToAmounts(\n                    totalAdditionalToSend,\n            ",
+        "method": "minimumCoreReceiveAmountToAmounts",
+        "receiver": "HyperCoreLib",
+        "reason": "call on interface/contract type 'HyperCoreLib'"
+      },
+      {
+        "call_text": "donationBox.withdraw(IERC20(finalToken), totalAdditionalToSendEVM)",
+        "method": "withdraw",
+        "receiver": "donationBox",
+        "reason": "call on contract-typed state var 'donationBox' (type: DonationBox)"
+      },
+      {
+        "call_text": "IERC20(finalToken).safeTransfer(address(finalTokenInfo.swapHandler), totalAdditionalToSendEVM)",
+        "method": "safeTransfer",
+        "receiver": "IERC20",
+        "reason": "SafeERC20 .safeTransfer()"
+      },
+      {
+        "call_text": "finalTokenInfo.swapHandler.transferFundsToSelfOnCore(\n                finalToken,\n                finalCoreTokenInfo.cor",
+        "method": "transferFundsToSelfOnCore",
+        "receiver": "finalTokenInfo",
+        "reason": "call on contract-typed local var 'finalTokenInfo' (type: FinalTokenInfo)"
+      }
+    ],
+    "state_vars_accessed": [
+      "cumulativeSponsoredAmount",
+      "donationBox",
+      "finalTokenInfos",
+      "lastPullFundsBlock"
+    ],
+    "inherited_vars_used": false,
+    "inherited_calls_used": false
+  },
+  {
+    "vfp_id": "vfp_00156",
+    "finding_id": 0,
+    "finding_title": "Incorrect Execution Context for Transfer on Core When Finalizing a Swap",
+    "severity": "High",
+    "file": "HyperCoreFlowExecutor.sol",
+    "function": "_finalizeSingleSwap",
+    "contract": "HyperCoreFlowExecutor",
+    "external_calls": [
+      {
+        "call_text": "HyperCoreLib.minimumCoreReceiveAmountToAmounts(\n            additionalToSend,\n            finalCoreTokenInfo.tokenInfo.e",
+        "method": "minimumCoreReceiveAmountToAmounts",
+        "receiver": "HyperCoreLib",
+        "reason": "call on interface/contract type 'HyperCoreLib'"
+      },
+      {
+        "call_text": "HyperCoreLib.transferERC20CoreToCore(finalCoreTokenInfo.coreIndex, swap.finalRecipient, totalToSend)",
+        "method": "transferERC20CoreToCore",
+        "receiver": "HyperCoreLib",
+        "reason": "call on interface/contract type 'HyperCoreLib'"
+      }
+    ],
+    "state_vars_accessed": [
+      "swaps"
+    ],
+    "inherited_vars_used": false,
+    "inherited_calls_used": false
+  },
+  {
+    "vfp_id": "vfp_00156",
+    "finding_id": 2,
+    "finding_title": "Partial Conversion of Initial Token Leads to Stranded Funds",
+    "severity": "High",
+    "file": "ArbitraryEVMFlowExecutor.sol",
+    "function": "_executeFlow",
+    "contract": "ArbitraryEVMFlowExecutor",
+    "external_calls": [
+      {
+        "call_text": "IERC20(params.initialToken).balanceOf(address(this))",
+        "method": "balanceOf",
+        "receiver": "IERC20",
+        "reason": "inline cast call IERC20(...).balanceOf()"
+      },
+      {
+        "call_text": "IERC20(params.commonParams.finalToken).balanceOf(address(this))",
+        "method": "balanceOf",
+        "receiver": "IERC20",
+        "reason": "inline cast call IERC20(...).balanceOf()"
+      },
+      {
+        "call_text": "IERC20(params.initialToken).safeTransfer(multicallHandler, params.commonParams.amountInEVM)",
+        "method": "safeTransfer",
+        "receiver": "IERC20",
+        "reason": "SafeERC20 .safeTransfer()"
+      },
+      {
+        "call_text": "MulticallHandler(payable(multicallHandler)).handleV3AcrossMessage(\n            params.initialToken,\n            params.c",
+        "method": "handleV3AcrossMessage",
+        "receiver": "MulticallHandler",
+        "reason": "inline cast call MulticallHandler(...).handleV3AcrossMessage()"
+      },
+      {
+        "call_text": "IERC20(params.commonParams.finalToken).balanceOf(address(this))",
+        "method": "balanceOf",
+        "receiver": "IERC20",
+        "reason": "inline cast call IERC20(...).balanceOf()"
+      }
+    ],
+    "state_vars_accessed": [
+      "multicallHandler"
+    ],
+    "inherited_vars_used": false,
+    "inherited_calls_used": false
+  },
+  {
+    "vfp_id": "vfp_00156",
+    "finding_id": 3,
+    "finding_title": "Incorrect `finalToken` in `HyperEVMFallback`",
+    "severity": "Medium",
+    "file": "HyperCoreFlowExecutor.sol",
+    "function": "_initiateSwapFlow",
+    "contract": "HyperCoreFlowExecutor",
+    "external_calls": [
+      {
+        "call_text": "HyperCoreLib.maximumEVMSendAmountToAmounts(\n            params.amountInEVM,\n            initialCoreTokenInfo.tokenInfo.e",
+        "method": "maximumEVMSendAmountToAmounts",
+        "receiver": "HyperCoreLib",
+        "reason": "call on interface/contract type 'HyperCoreLib'"
+      },
+      {
+        "call_text": "HyperCoreLib.isCoreAmountSafeToBridge(\n            initialCoreTokenInfo.coreIndex,\n            coreAmountIn,\n           ",
+        "method": "isCoreAmountSafeToBridge",
+        "receiver": "HyperCoreLib",
+        "reason": "call on interface/contract type 'HyperCoreLib'"
+      },
+      {
+        "call_text": "IERC20(initialToken).safeTransfer(address(swapHandler), tokensToSendEvm)",
+        "method": "safeTransfer",
+        "receiver": "IERC20",
+        "reason": "SafeERC20 .safeTransfer()"
+      },
+      {
+        "call_text": "swapHandler.transferFundsToSelfOnCore(\n            initialToken,\n            initialCoreTokenInfo.coreIndex,\n           ",
+        "method": "transferFundsToSelfOnCore",
+        "receiver": "swapHandler",
+        "reason": "call on contract-typed local var 'swapHandler' (type: SwapHandler)"
+      }
+    ],
+    "state_vars_accessed": [
+      "ONEX1e8",
+      "PPM_DECIMALS",
+      "PPM_SCALAR",
+      "baseToken",
+      "coreTokenInfos",
+      "swaps"
+    ],
+    "inherited_vars_used": false,
+    "inherited_calls_used": false
+  },
+  {
+    "vfp_id": "vfp_00156",
+    "finding_id": 3,
+    "finding_title": "Incorrect `finalToken` in `HyperEVMFallback`",
+    "severity": "Medium",
+    "file": "HyperCoreFlowExecutor.sol",
+    "function": "_fallbackHyperEVMFlow",
+    "contract": "HyperCoreFlowExecutor",
+    "external_calls": [
+      {
+        "call_text": "donationBox.withdraw(IERC20(params.finalToken), sponsorshipFundsToForward)",
+        "method": "withdraw",
+        "receiver": "donationBox",
+        "reason": "call on contract-typed state var 'donationBox' (type: DonationBox)"
+      },
+      {
+        "call_text": "IERC20(params.finalToken).safeTransfer(params.finalRecipient, totalAmountToForward)",
+        "method": "safeTransfer",
+        "receiver": "IERC20",
+        "reason": "SafeERC20 .safeTransfer()"
+      }
+    ],
+    "state_vars_accessed": [
+      "cumulativeSponsoredAmount",
+      "donationBox"
+    ],
+    "inherited_vars_used": false,
+    "inherited_calls_used": false
+  },
+  {
+    "vfp_id": "vfp_00156",
+    "finding_id": 32,
+    "finding_title": "Incorrect Handling Of The Sponsored Account Activation Fee",
+    "severity": "High",
+    "file": "HyperCoreFlowExecutor.sol",
+    "function": "activateUserAccount",
+    "contract": "HyperCoreFlowExecutor",
+    "external_calls": [
+      {
+        "call_text": "HyperCoreLib.coreUserExists(finalRecipient)",
+        "method": "coreUserExists",
+        "receiver": "HyperCoreLib",
+        "reason": "call on interface/contract type 'HyperCoreLib'"
+      },
+      {
+        "call_text": "HyperCoreLib.isCoreAmountSafeToBridge(\n            coreTokenInfo.coreIndex,\n            coreTokenInfo.accountActivationF",
+        "method": "isCoreAmountSafeToBridge",
+        "receiver": "HyperCoreLib",
+        "reason": "call on interface/contract type 'HyperCoreLib'"
+      },
+      {
+        "call_text": "donationBox.withdraw(IERC20(fundingToken), activationFeeEvm)",
+        "method": "withdraw",
+        "receiver": "donationBox",
+        "reason": "call on contract-typed state var 'donationBox' (type: DonationBox)"
+      },
+      {
+        "call_text": "HyperCoreLib.transferERC20EVMToCore(\n            fundingToken,\n            coreTokenInfo.coreIndex,\n            finalRec",
+        "method": "transferERC20EVMToCore",
+        "receiver": "HyperCoreLib",
+        "reason": "call on interface/contract type 'HyperCoreLib'"
+      }
+    ],
+    "state_vars_accessed": [
+      "cumulativeSponsoredActivationFee",
+      "donationBox"
+    ],
+    "inherited_vars_used": false,
+    "inherited_calls_used": false
+  },
+  {
+    "vfp_id": "vfp_00161",
+    "finding_id": 2,
+    "finding_title": "`view` Functions Return Future-Dated Chain Configuration",
+    "severity": "Medium",
+    "file": "sys_chaincfg.sol",
+    "function": "set_config",
+    "contract": "ChainCfg",
+    "external_calls": [
+      {
+        "call_text": "configCps.pop()",
+        "method": "pop",
+        "receiver": "configCps",
+        "reason": "call on contract-typed state var 'configCps' (type: ConfigCheckpoint[])"
+      },
+      {
+        "call_text": "configCps.push()",
+        "method": "push",
+        "receiver": "configCps",
+        "reason": "call on contract-typed state var 'configCps' (type: ConfigCheckpoint[])"
+      },
+      {
+        "call_text": "cfgCp.configs.push(Config({\n                        key: conf.key,\n                        value: conf.value\n           ",
+        "method": "push",
+        "receiver": "cfgCp",
+        "reason": "call on contract-typed local var 'cfgCp' (type: ConfigCheckpoint)"
+      },
+      {
+        "call_text": "cfgCp.configs.push(Config({\n                key: keys[i],\n                value: values[i]\n            }))",
+        "method": "push",
+        "receiver": "cfgCp",
+        "reason": "call on contract-typed local var 'cfgCp' (type: ConfigCheckpoint)"
+      }
+    ],
+    "state_vars_accessed": [
+      "configCps"
+    ],
+    "inherited_vars_used": false,
+    "inherited_calls_used": false
+  },
+  {
+    "vfp_id": "vfp_00174",
+    "finding_id": 2,
+    "finding_title": "Extra Reward Tokens from ResolvStaking Stuck in P2pResolvProxy",
+    "severity": "Medium",
+    "file": "P2pResolvProxy.sol",
+    "function": "withdrawRESOLV",
+    "contract": "P2pResolvProxy",
+    "external_calls": [
+      {
+        "call_text": "IResolvStaking(i_stRESOLV).claimEnabled()",
+        "method": "claimEnabled",
+        "receiver": "IResolvStaking",
+        "reason": "inline cast call IResolvStaking(...).claimEnabled()"
+      }
+    ],
+    "state_vars_accessed": [
+      "i_RESOLV",
+      "i_stRESOLV"
+    ],
+    "inherited_vars_used": false,
+    "inherited_calls_used": false
+  },
+  {
+    "vfp_id": "vfp_00174",
+    "finding_id": 5,
+    "finding_title": "initiateWithdrawalRESOLVAccruedRewards() Withdraws Both Principal and Rewards Instead of Only Rewards",
+    "severity": "Medium",
+    "file": "P2pResolvProxy.sol",
+    "function": "initiateWithdrawalRESOLVAccruedRewards",
+    "contract": "P2pResolvProxy",
+    "external_calls": [
+      {
+        "call_text": "IResolvStaking(i_stRESOLV).initiateWithdrawal(uint256(amount))",
+        "method": "initiateWithdrawal",
+        "receiver": "IResolvStaking",
+        "reason": "inline cast call IResolvStaking(...).initiateWithdrawal()"
+      }
+    ],
+    "state_vars_accessed": [
+      "i_stRESOLV"
+    ],
+    "inherited_vars_used": false,
+    "inherited_calls_used": false
+  },
+  {
+    "vfp_id": "vfp_00175",
+    "finding_id": 3,
+    "finding_title": "Profit Misclassification Due to Stale Rewards Calculation",
+    "severity": "Medium",
+    "file": "P2pYieldProxy.sol",
+    "function": "_withdraw",
+    "contract": "P2pYieldProxy",
+    "external_calls": [
+      {
+        "call_text": "IERC20(_asset).balanceOf(address(this))",
+        "method": "balanceOf",
+        "receiver": "IERC20",
+        "reason": "inline cast call IERC20(...).balanceOf()"
+      },
+      {
+        "call_text": "IERC20(_asset).balanceOf(address(this))",
+        "method": "balanceOf",
+        "receiver": "IERC20",
+        "reason": "inline cast call IERC20(...).balanceOf()"
+      },
+      {
+        "call_text": "IERC20(_asset).safeTransfer(i_p2pTreasury, p2pAmount)",
+        "method": "safeTransfer",
+        "receiver": "IERC20",
+        "reason": "SafeERC20 .safeTransfer()"
+      },
+      {
+        "call_text": "IERC20(_asset).safeTransfer(s_client, clientAmount)",
+        "method": "safeTransfer",
+        "receiver": "IERC20",
+        "reason": "SafeERC20 .safeTransfer()"
+      }
+    ],
+    "state_vars_accessed": [
+      "i_p2pTreasury",
+      "s_client",
+      "s_totalDeposited",
+      "s_totalWithdrawn"
+    ],
+    "inherited_vars_used": false,
+    "inherited_calls_used": false
+  },
+  {
+    "vfp_id": "vfp_00179",
+    "finding_id": 4,
+    "finding_title": "Restricted USDC Bridging via Shared Bridge with Custom Gas Token",
+    "severity": "High",
+    "file": "ZkStack_CustomGasToken_Adapter.sol",
+    "function": "relayTokens",
+    "contract": "ZkStack_CustomGasToken_Adapter",
+    "external_calls": [
+      {
+        "call_text": "BRIDGE_HUB.sharedBridge()",
+        "method": "sharedBridge",
+        "receiver": "BRIDGE_HUB",
+        "reason": "call on contract-typed state var 'BRIDGE_HUB' (type: BridgeHubInterface)"
+      },
+      {
+        "call_text": "L1_WETH.withdraw(amount)",
+        "method": "withdraw",
+        "receiver": "L1_WETH",
+        "reason": "call on contract-typed state var 'L1_WETH' (type: WETH9Interface)"
+      },
+      {
+        "call_text": "IERC20(CUSTOM_GAS_TOKEN).forceApprove(sharedBridge, txBaseCost)",
+        "method": "forceApprove",
+        "receiver": "IERC20",
+        "reason": "inline cast call IERC20(...).forceApprove()"
+      },
+      {
+        "call_text": "BRIDGE_HUB.requestL2TransactionTwoBridges{ value: amount }(\n                BridgeHubInterface.L2TransactionRequestTwoBr",
+        "method": "requestL2TransactionTwoBridges",
+        "receiver": "BRIDGE_HUB",
+        "reason": "call on contract-typed state var 'BRIDGE_HUB' (type: BridgeHubInterface)"
+      },
+      {
+        "call_text": "IERC20(l1Token).forceApprove(sharedBridge, txBaseCost + amount)",
+        "method": "forceApprove",
+        "receiver": "IERC20",
+        "reason": "inline cast call IERC20(...).forceApprove()"
+      },
+      {
+        "call_text": "BRIDGE_HUB.requestL2TransactionDirect(\n                BridgeHubInterface.L2TransactionRequestDirect({\n                 ",
+        "method": "requestL2TransactionDirect",
+        "receiver": "BRIDGE_HUB",
+        "reason": "call on contract-typed state var 'BRIDGE_HUB' (type: BridgeHubInterface)"
+      },
+      {
+        "call_text": "IERC20(CUSTOM_GAS_TOKEN).forceApprove(USDC_SHARED_BRIDGE, txBaseCost)",
+        "method": "forceApprove",
+        "receiver": "IERC20",
+        "reason": "inline cast call IERC20(...).forceApprove()"
+      },
+      {
+        "call_text": "IERC20(l1Token).forceApprove(USDC_SHARED_BRIDGE, amount)",
+        "method": "forceApprove",
+        "receiver": "IERC20",
+        "reason": "inline cast call IERC20(...).forceApprove()"
+      },
+      {
+        "call_text": "BRIDGE_HUB.requestL2TransactionTwoBridges(\n                    BridgeHubInterface.L2TransactionRequestTwoBridgesOuter({\n",
+        "method": "requestL2TransactionTwoBridges",
+        "receiver": "BRIDGE_HUB",
+        "reason": "call on contract-typed state var 'BRIDGE_HUB' (type: BridgeHubInterface)"
+      },
+      {
+        "call_text": "IERC20(CUSTOM_GAS_TOKEN).forceApprove(sharedBridge, txBaseCost)",
+        "method": "forceApprove",
+        "receiver": "IERC20",
+        "reason": "inline cast call IERC20(...).forceApprove()"
+      },
+      {
+        "call_text": "IERC20(l1Token).forceApprove(sharedBridge, amount)",
+        "method": "forceApprove",
+        "receiver": "IERC20",
+        "reason": "inline cast call IERC20(...).forceApprove()"
+      },
+      {
+        "call_text": "BRIDGE_HUB.requestL2TransactionTwoBridges(\n                BridgeHubInterface.L2TransactionRequestTwoBridgesOuter({\n    ",
+        "method": "requestL2TransactionTwoBridges",
+        "receiver": "BRIDGE_HUB",
+        "reason": "call on contract-typed state var 'BRIDGE_HUB' (type: BridgeHubInterface)"
+      }
+    ],
+    "state_vars_accessed": [
+      "BRIDGE_HUB",
+      "CHAIN_ID",
+      "CUSTOM_GAS_TOKEN",
+      "ETH_TOKEN_ADDRESS",
+      "L1_GAS_TO_L2_GAS_PER_PUB_DATA_LIMIT",
+      "L1_WETH",
+      "L2_GAS_LIMIT",
+      "L2_REFUND_ADDRESS",
+      "USDC_SHARED_BRIDGE"
+    ],
+    "inherited_vars_used": false,
+    "inherited_calls_used": false
+  },
+  {
+    "vfp_id": "vfp_00181",
+    "finding_id": 2,
+    "finding_title": "Insufficient Slippage Check",
+    "severity": "High",
+    "file": "BaseCustomAccounting.sol",
+    "function": "addLiquidity",
+    "contract": "BaseCustomAccounting",
+    "external_calls": [
+      {
+        "call_text": "poolManager.getSlot0(poolKey.toId())",
+        "method": "getSlot0",
+        "receiver": "poolManager",
+        "reason": "DeFi method .getSlot0() on 'poolManager'"
+      },
+      {
+        "call_text": "poolKey.toId()",
+        "method": "toId",
+        "receiver": "poolKey",
+        "reason": "call on contract-typed state var 'poolKey' (type: PoolKey)"
+      },
+      {
+        "call_text": "poolKey.currency0.isAddressZero()",
+        "method": "isAddressZero",
+        "receiver": "poolKey",
+        "reason": "call on contract-typed state var 'poolKey' (type: PoolKey)"
+      },
+      {
+        "call_text": "poolKey.currency0.transfer(msg.sender, msg.value - amount0)",
+        "method": "transfer",
+        "receiver": "poolKey",
+        "reason": "low-level .transfer()"
+      }
+    ],
+    "state_vars_accessed": [
+      "poolKey"
+    ],
+    "inherited_vars_used": false,
+    "inherited_calls_used": false
+  },
+  {
+    "vfp_id": "vfp_00181",
+    "finding_id": 2,
+    "finding_title": "Insufficient Slippage Check",
+    "severity": "High",
+    "file": "BaseCustomAccounting.sol",
+    "function": "removeLiquidity",
+    "contract": "BaseCustomAccounting",
+    "external_calls": [
+      {
+        "call_text": "poolManager.getSlot0(poolKey.toId())",
+        "method": "getSlot0",
+        "receiver": "poolManager",
+        "reason": "DeFi method .getSlot0() on 'poolManager'"
+      },
+      {
+        "call_text": "poolKey.toId()",
+        "method": "toId",
+        "receiver": "poolKey",
+        "reason": "call on contract-typed state var 'poolKey' (type: PoolKey)"
+      },
+      {
+        "call_text": "delta.amount0()",
+        "method": "amount0",
+        "receiver": "delta",
+        "reason": "call on contract-typed local var 'delta' (type: BalanceDelta)"
+      },
+      {
+        "call_text": "delta.amount1()",
+        "method": "amount1",
+        "receiver": "delta",
+        "reason": "call on contract-typed local var 'delta' (type: BalanceDelta)"
+      }
+    ],
+    "state_vars_accessed": [
+      "poolKey"
+    ],
+    "inherited_vars_used": false,
+    "inherited_calls_used": false
+  },
+  {
+    "vfp_id": "vfp_00186",
+    "finding_id": 0,
+    "finding_title": "Anyone can call claim for any account",
+    "severity": "Medium",
+    "file": "MerkleDistributor.sol",
+    "function": "claim",
+    "contract": "MerkleDistributor",
+    "external_calls": [
+      {
+        "call_text": "IERC20(tokens[i]).safeTransfer(account, amounts[i])",
+        "method": "safeTransfer",
+        "receiver": "IERC20",
+        "reason": "SafeERC20 .safeTransfer()"
+      }
+    ],
+    "state_vars_accessed": [
+      "merkleRoot"
+    ],
+    "inherited_vars_used": false,
+    "inherited_calls_used": false
+  },
+  {
+    "vfp_id": "vfp_00189",
+    "finding_id": 0,
+    "finding_title": "Stale Total Assets Value During Flash Operation",
+    "severity": "High",
+    "file": "Box.sol",
+    "function": "flash",
+    "contract": "Box",
+    "external_calls": [
+      {
+        "call_text": "flashToken.safeTransferFrom(msg.sender, address(this), flashAmount)",
+        "method": "safeTransferFrom",
+        "receiver": "flashToken",
+        "reason": "SafeERC20 .safeTransferFrom()"
+      },
+      {
+        "call_text": "IBoxFlashCallback(msg.sender).onBoxFlash(flashToken, flashAmount, data)",
+        "method": "onBoxFlash",
+        "receiver": "IBoxFlashCallback",
+        "reason": "inline cast call IBoxFlashCallback(...).onBoxFlash()"
+      },
+      {
+        "call_text": "flashToken.safeTransfer(msg.sender, flashAmount)",
+        "method": "safeTransfer",
+        "receiver": "flashToken",
+        "reason": "SafeERC20 .safeTransfer()"
+      }
+    ],
+    "state_vars_accessed": [
+      "_cachedNavDepth"
+    ],
+    "inherited_vars_used": false,
+    "inherited_calls_used": false
+  },
+  {
+    "vfp_id": "vfp_00189",
+    "finding_id": 2,
+    "finding_title": "Read-only Reentrancy",
+    "severity": "High",
+    "file": "Box.sol",
+    "function": "allocate",
+    "contract": "Box",
+    "external_calls": [
+      {
+        "call_text": "oracles[token].price()",
+        "method": "price",
+        "receiver": "oracles",
+        "reason": "call on contract-typed state var 'oracles' (type: mapping(IERC20 => IOracle))"
+      },
+      {
+        "call_text": "token.balanceOf(address(this))",
+        "method": "balanceOf",
+        "receiver": "token",
+        "reason": "call on contract-typed local var 'token' (type: IERC20)"
+      }
+    ],
+    "state_vars_accessed": [
+      "asset",
+      "isAllocator",
+      "maxSlippage",
+      "oracles"
+    ],
+    "inherited_vars_used": false,
+    "inherited_calls_used": false
+  },
+  {
+    "vfp_id": "vfp_00189",
+    "finding_id": 2,
+    "finding_title": "Read-only Reentrancy",
+    "severity": "High",
+    "file": "Box.sol",
+    "function": "deallocate",
+    "contract": "Box",
+    "external_calls": [
+      {
+        "call_text": "oracles[token].price()",
+        "method": "price",
+        "receiver": "oracles",
+        "reason": "call on contract-typed state var 'oracles' (type: mapping(IERC20 => IOracle))"
+      }
+    ],
+    "state_vars_accessed": [
+      "asset",
+      "isAllocator",
+      "maxSlippage",
+      "oracles"
+    ],
+    "inherited_vars_used": false,
+    "inherited_calls_used": false
+  },
+  {
+    "vfp_id": "vfp_00189",
+    "finding_id": 2,
+    "finding_title": "Read-only Reentrancy",
+    "severity": "High",
+    "file": "Box.sol",
+    "function": "reallocate",
+    "contract": "Box",
+    "external_calls": [
+      {
+        "call_text": "oracles[from].price()",
+        "method": "price",
+        "receiver": "oracles",
+        "reason": "call on contract-typed state var 'oracles' (type: mapping(IERC20 => IOracle))"
+      },
+      {
+        "call_text": "oracles[to].price()",
+        "method": "price",
+        "receiver": "oracles",
+        "reason": "call on contract-typed state var 'oracles' (type: mapping(IERC20 => IOracle))"
+      }
+    ],
+    "state_vars_accessed": [
+      "maxSlippage",
+      "oracles"
+    ],
+    "inherited_vars_used": false,
+    "inherited_calls_used": false
+  },
+  {
+    "vfp_id": "vfp_00190",
+    "finding_id": 3,
+    "finding_title": "BoxAdapterCached Can Be Arbitraged",
+    "severity": "Medium",
+    "file": "BoxAdapterCached.sol",
+    "function": "updateTotalAssets",
+    "contract": "BoxAdapterCached",
+    "external_calls": [
+      {
+        "call_text": "IVaultV2(parentVault).isAllocator(msg.sender)",
+        "method": "isAllocator",
+        "receiver": "IVaultV2",
+        "reason": "inline cast call IVaultV2(...).isAllocator()"
+      }
+    ],
+    "state_vars_accessed": [
+      "parentVault",
+      "totalAssets",
+      "totalAssetsTimestamp"
+    ],
+    "inherited_vars_used": false,
+    "inherited_calls_used": false
+  },
+  {
+    "vfp_id": "vfp_00200",
+    "finding_id": 2,
+    "finding_title": "M1: processExitDelayReport griefing",
+    "severity": "Medium",
+    "file": "CSExitPenalties.sol",
+    "function": "processExitDelayReport",
+    "contract": "CSExitPenalties",
+    "external_calls": [
+      {
+        "call_text": "ACCOUNTING.getBondCurveId(nodeOperatorId)",
+        "method": "getBondCurveId",
+        "receiver": "ACCOUNTING",
+        "reason": "call on contract-typed state var 'ACCOUNTING' (type: ICSAccounting)"
+      },
+      {
+        "call_text": "PARAMETERS_REGISTRY.getAllowedExitDelay(\n            curveId\n        )",
+        "method": "getAllowedExitDelay",
+        "receiver": "PARAMETERS_REGISTRY",
+        "reason": "call on contract-typed state var 'PARAMETERS_REGISTRY' (type: ICSParametersRegistry)"
+      },
+      {
+        "call_text": "PARAMETERS_REGISTRY.getExitDelayPenalty(curveId)",
+        "method": "getExitDelayPenalty",
+        "receiver": "PARAMETERS_REGISTRY",
+        "reason": "call on contract-typed state var 'PARAMETERS_REGISTRY' (type: ICSParametersRegistry)"
+      }
+    ],
+    "state_vars_accessed": [
+      "ACCOUNTING",
+      "PARAMETERS_REGISTRY",
+      "_exitPenaltyInfo"
+    ],
+    "inherited_vars_used": false,
+    "inherited_calls_used": false
+  },
+  {
+    "vfp_id": "vfp_00200",
+    "finding_id": 2,
+    "finding_title": "M1: processExitDelayReport griefing",
+    "severity": "Medium",
+    "file": "ValidatorExitDelayVerifier.sol",
+    "function": "verifyValidatorExitDelay",
+    "contract": "ValidatorExitDelayVerifier",
+    "external_calls": [
+      {
+        "call_text": "LOCATOR.validatorsExitBusOracle()",
+        "method": "validatorsExitBusOracle",
+        "receiver": "LOCATOR",
+        "reason": "call on contract-typed state var 'LOCATOR' (type: ILidoLocator)"
+      },
+      {
+        "call_text": "LOCATOR.stakingRouter()",
+        "method": "stakingRouter",
+        "receiver": "LOCATOR",
+        "reason": "call on contract-typed state var 'LOCATOR' (type: ILidoLocator)"
+      },
+      {
+        "call_text": "veb.unpackExitRequest(\n                exitRequests.data,\n                exitRequests.dataFormat,\n                witne",
+        "method": "unpackExitRequest",
+        "receiver": "veb",
+        "reason": "call on contract-typed local var 'veb' (type: IValidatorsExitBus)"
+      },
+      {
+        "call_text": "stakingRouter.reportValidatorExitDelay(moduleId, nodeOpId, proofSlotTimestamp, pubkey, eligibleToExitInSec)",
+        "method": "reportValidatorExitDelay",
+        "receiver": "stakingRouter",
+        "reason": "call on contract-typed local var 'stakingRouter' (type: IStakingRouter)"
+      }
+    ],
+    "state_vars_accessed": [
+      "LOCATOR"
+    ],
+    "inherited_vars_used": false,
+    "inherited_calls_used": false
+  },
+  {
+    "vfp_id": "vfp_00209",
+    "finding_id": 1,
+    "finding_title": "User can inflate number of rewards by staking additional amount of rewards right before claiming them",
+    "severity": "Critical",
+    "file": "StakingManager.sol",
+    "function": "stake",
+    "contract": "StakingManager",
+    "external_calls": [
+      {
+        "call_text": "stakingToken.mint(_account, _wad)",
+        "method": "mint",
+        "receiver": "stakingToken",
+        "reason": "call on contract-typed state var 'stakingToken' (type: IStakingToken)"
+      },
+      {
+        "call_text": "protocolToken.safeTransferFrom(msg.sender, address(this), _wad)",
+        "method": "safeTransferFrom",
+        "receiver": "protocolToken",
+        "reason": "SafeERC20 .safeTransferFrom()"
+      },
+      {
+        "call_text": "_rewardPool.stake(_wad)",
+        "method": "stake",
+        "receiver": "_rewardPool",
+        "reason": "call on contract-typed local var '_rewardPool' (type: IRewardPool)"
+      }
+    ],
+    "state_vars_accessed": [
+      "_rewardTypes",
+      "protocolToken",
+      "rewards",
+      "stakedBalances",
+      "stakingToken"
+    ],
+    "inherited_vars_used": false,
+    "inherited_calls_used": false
+  },
+  {
+    "vfp_id": "vfp_00209",
+    "finding_id": 1,
+    "finding_title": "User can inflate number of rewards by staking additional amount of rewards right before claiming them",
+    "severity": "Critical",
+    "file": "StakingManager.sol",
+    "function": "withdraw",
+    "contract": "StakingManager",
+    "external_calls": [
+      {
+        "call_text": "stakingToken.burnFrom(msg.sender, _withdrawalAmount)",
+        "method": "burnFrom",
+        "receiver": "stakingToken",
+        "reason": "call on contract-typed state var 'stakingToken' (type: IStakingToken)"
+      },
+      {
+        "call_text": "protocolToken.safeTransfer(msg.sender, _withdrawalAmount)",
+        "method": "safeTransfer",
+        "receiver": "protocolToken",
+        "reason": "SafeERC20 .safeTransfer()"
+      }
+    ],
+    "state_vars_accessed": [
+      "_params",
+      "_pendingWithdrawals",
+      "protocolToken",
+      "stakingToken"
+    ],
+    "inherited_vars_used": false,
+    "inherited_calls_used": false
+  },
+  {
+    "vfp_id": "vfp_00215",
+    "finding_id": 1,
+    "finding_title": "Front-running the encryption-key\u2013registration transaction can deny service to function finalizeBundle",
+    "severity": "High",
+    "file": "ScrollChainValidium.sol",
+    "function": "registerNewEncryptionKey",
+    "contract": "ScrollChainValidium",
+    "external_calls": [
+      {
+        "call_text": "IL1MessageQueueV2(messageQueueV2).nextCrossDomainMessageIndex()",
+        "method": "nextCrossDomainMessageIndex",
+        "receiver": "IL1MessageQueueV2",
+        "reason": "inline cast call IL1MessageQueueV2(...).nextCrossDomainMessageIndex()"
+      },
+      {
+        "call_text": "encryptionKeys.push(EncryptionKey(_msgIndex, _key))",
+        "method": "push",
+        "receiver": "encryptionKeys",
+        "reason": "call on contract-typed state var 'encryptionKeys' (type: EncryptionKey[])"
+      }
+    ],
+    "state_vars_accessed": [
+      "KEY_MANAGER_ROLE",
+      "encryptionKeys",
+      "messageQueueV2"
+    ],
+    "inherited_vars_used": false,
+    "inherited_calls_used": false
+  },
+  {
+    "vfp_id": "vfp_00215",
+    "finding_id": 1,
+    "finding_title": "Front-running the encryption-key\u2013registration transaction can deny service to function finalizeBundle",
+    "severity": "High",
+    "file": "ScrollChainValidium.sol",
+    "function": "_finalizeBundle",
+    "contract": "ScrollChainValidium",
+    "external_calls": [
+      {
+        "call_text": "IRollupVerifier(verifier).verifyBundleProof(version, batchIndex, aggrProof, publicInputs)",
+        "method": "verifyBundleProof",
+        "receiver": "IRollupVerifier",
+        "reason": "inline cast call IRollupVerifier(...).verifyBundleProof()"
+      }
+    ],
+    "state_vars_accessed": [
+      "committedBatches",
+      "layer2ChainId",
+      "messageQueueV2",
+      "stateRoots",
+      "verifier",
+      "withdrawRoots"
+    ],
+    "inherited_vars_used": false,
+    "inherited_calls_used": false
+  },
+  {
+    "vfp_id": "vfp_00220",
+    "finding_id": 1,
+    "finding_title": "Asymmetric First In-Block Swap Initialization Leads to Stale State",
+    "severity": "Critical",
+    "file": "AntiSandwichHook.sol",
+    "function": "_beforeSwap",
+    "contract": "AntiSandwichHook",
+    "external_calls": [
+      {
+        "call_text": "key.toId()",
+        "method": "toId",
+        "receiver": "key",
+        "reason": "call on contract-typed local var 'key' (type: PoolKey)"
+      }
+    ],
+    "state_vars_accessed": [
+      "_lastCheckpoints"
+    ],
+    "inherited_vars_used": false,
+    "inherited_calls_used": false
+  },
+  {
+    "vfp_id": "vfp_00220",
+    "finding_id": 1,
+    "finding_title": "Asymmetric First In-Block Swap Initialization Leads to Stale State",
+    "severity": "Critical",
+    "file": "AntiSandwichHook.sol",
+    "function": "_afterSwap",
+    "contract": "AntiSandwichHook",
+    "external_calls": [
+      {
+        "call_text": "key.toId()",
+        "method": "toId",
+        "receiver": "key",
+        "reason": "call on contract-typed local var 'key' (type: PoolKey)"
+      },
+      {
+        "call_text": "poolManager.getSlot0(poolId)",
+        "method": "getSlot0",
+        "receiver": "poolManager",
+        "reason": "DeFi method .getSlot0() on 'poolManager'"
+      },
+      {
+        "call_text": "_lastCheckpoint.slot0.tick()",
+        "method": "tick",
+        "receiver": "_lastCheckpoint",
+        "reason": "call on contract-typed local var '_lastCheckpoint' (type: Checkpoint)"
+      },
+      {
+        "call_text": "delta.amount1()",
+        "method": "amount1",
+        "receiver": "delta",
+        "reason": "call on contract-typed local var 'delta' (type: BalanceDelta)"
+      }
+    ],
+    "state_vars_accessed": [
+      "_lastCheckpoints"
+    ],
+    "inherited_vars_used": false,
+    "inherited_calls_used": false
+  },
+  {
+    "vfp_id": "vfp_00220",
+    "finding_id": 2,
+    "finding_title": "Integer Underflow in `_getTargetOutput` Due to Improper Type Casting",
+    "severity": "Critical",
+    "file": "AntiSandwichHook.sol",
+    "function": "_getTargetOutput",
+    "contract": "AntiSandwichHook",
+    "external_calls": [
+      {
+        "call_text": "key.toId()",
+        "method": "toId",
+        "receiver": "key",
+        "reason": "call on contract-typed local var 'key' (type: PoolKey)"
+      },
+      {
+        "call_text": "Pool.swap(\n            _lastCheckpoint.state,\n            Pool.SwapParams({\n                tickSpacing: key.tickSpacing",
+        "method": "swap",
+        "receiver": "Pool",
+        "reason": "known external method .swap() on 'Pool'"
+      },
+      {
+        "call_text": "targetDelta.amount1()",
+        "method": "amount1",
+        "receiver": "targetDelta",
+        "reason": "call on contract-typed local var 'targetDelta' (type: BalanceDelta)"
+      }
+    ],
+    "state_vars_accessed": [
+      "_lastCheckpoints"
+    ],
+    "inherited_vars_used": false,
+    "inherited_calls_used": false
+  },
+  {
+    "vfp_id": "vfp_00220",
+    "finding_id": 6,
+    "finding_title": "Incorrect Unspecified Amount Handling Breaks Anti-Sandwich Logic",
+    "severity": "High",
+    "file": "AntiSandwichHook.sol",
+    "function": "_getTargetOutput",
+    "contract": "AntiSandwichHook",
+    "external_calls": [
+      {
+        "call_text": "key.toId()",
+        "method": "toId",
+        "receiver": "key",
+        "reason": "call on contract-typed local var 'key' (type: PoolKey)"
+      },
+      {
+        "call_text": "Pool.swap(\n            _lastCheckpoint.state,\n            Pool.SwapParams({\n                tickSpacing: key.tickSpacing",
+        "method": "swap",
+        "receiver": "Pool",
+        "reason": "known external method .swap() on 'Pool'"
+      },
+      {
+        "call_text": "targetDelta.amount1()",
+        "method": "amount1",
+        "receiver": "targetDelta",
+        "reason": "call on contract-typed local var 'targetDelta' (type: BalanceDelta)"
+      }
+    ],
+    "state_vars_accessed": [
+      "_lastCheckpoints"
+    ],
+    "inherited_vars_used": false,
+    "inherited_calls_used": false
+  },
+  {
+    "vfp_id": "vfp_00220",
+    "finding_id": 7,
+    "finding_title": "Incorrect Handling of `unspecifiedAmount` Leads to Overcharging",
+    "severity": "High",
+    "file": "AntiSandwichHook.sol",
+    "function": "_afterSwap",
+    "contract": "AntiSandwichHook",
+    "external_calls": [
+      {
+        "call_text": "key.toId()",
+        "method": "toId",
+        "receiver": "key",
+        "reason": "call on contract-typed local var 'key' (type: PoolKey)"
+      },
+      {
+        "call_text": "poolManager.getSlot0(poolId)",
+        "method": "getSlot0",
+        "receiver": "poolManager",
+        "reason": "DeFi method .getSlot0() on 'poolManager'"
+      },
+      {
+        "call_text": "_lastCheckpoint.slot0.tick()",
+        "method": "tick",
+        "receiver": "_lastCheckpoint",
+        "reason": "call on contract-typed local var '_lastCheckpoint' (type: Checkpoint)"
+      },
+      {
+        "call_text": "delta.amount1()",
+        "method": "amount1",
+        "receiver": "delta",
+        "reason": "call on contract-typed local var 'delta' (type: BalanceDelta)"
+      }
+    ],
+    "state_vars_accessed": [
+      "_lastCheckpoints"
+    ],
+    "inherited_vars_used": false,
+    "inherited_calls_used": false
+  },
+  {
+    "vfp_id": "vfp_00220",
+    "finding_id": 7,
+    "finding_title": "Incorrect Handling of `unspecifiedAmount` Leads to Overcharging",
+    "severity": "High",
+    "file": "AntiSandwichHook.sol",
+    "function": "_getTargetOutput",
+    "contract": "AntiSandwichHook",
+    "external_calls": [
+      {
+        "call_text": "key.toId()",
+        "method": "toId",
+        "receiver": "key",
+        "reason": "call on contract-typed local var 'key' (type: PoolKey)"
+      },
+      {
+        "call_text": "Pool.swap(\n            _lastCheckpoint.state,\n            Pool.SwapParams({\n                tickSpacing: key.tickSpacing",
+        "method": "swap",
+        "receiver": "Pool",
+        "reason": "known external method .swap() on 'Pool'"
+      },
+      {
+        "call_text": "targetDelta.amount1()",
+        "method": "amount1",
+        "receiver": "targetDelta",
+        "reason": "call on contract-typed local var 'targetDelta' (type: BalanceDelta)"
+      }
+    ],
+    "state_vars_accessed": [
+      "_lastCheckpoints"
+    ],
+    "inherited_vars_used": false,
+    "inherited_calls_used": false
+  },
+  {
+    "vfp_id": "vfp_00221",
+    "finding_id": 3,
+    "finding_title": "Limit Orders Can Be Incorrectly Filled",
+    "severity": "High",
+    "file": "LimitOrderHook.sol",
+    "function": "_afterSwap",
+    "contract": "LimitOrderHook",
+    "external_calls": [
+      {
+        "call_text": "key.toId()",
+        "method": "toId",
+        "receiver": "key",
+        "reason": "call on contract-typed local var 'key' (type: PoolKey)"
+      },
+      {
+        "call_text": "key.toId()",
+        "method": "toId",
+        "receiver": "key",
+        "reason": "call on contract-typed local var 'key' (type: PoolKey)"
+      }
+    ],
+    "state_vars_accessed": [
+      "tickLowerLasts"
+    ],
+    "inherited_vars_used": false,
+    "inherited_calls_used": false
+  },
+  {
+    "vfp_id": "vfp_00221",
+    "finding_id": 9,
+    "finding_title": "Incorrect Timing of `removingAllLiquidity` Flag Calculation in `cancelOrder`",
+    "severity": "High",
+    "file": "LimitOrderHook.sol",
+    "function": "cancelOrder",
+    "contract": "LimitOrderHook",
+    "external_calls": [
+      {
+        "call_text": "poolManager.unlock(\n                abi.encode(\n                    CallbackData(\n                        Callbacks.Canc",
+        "method": "unlock",
+        "receiver": "poolManager",
+        "reason": "DeFi method .unlock() on 'poolManager'"
+      }
+    ],
+    "state_vars_accessed": [
+      "orderInfos"
+    ],
+    "inherited_vars_used": false,
+    "inherited_calls_used": false
+  },
+  {
+    "vfp_id": "vfp_00221",
+    "finding_id": 9,
+    "finding_title": "Incorrect Timing of `removingAllLiquidity` Flag Calculation in `cancelOrder`",
+    "severity": "High",
+    "file": "LimitOrderHook.sol",
+    "function": "_handleCancelCallback",
+    "contract": "LimitOrderHook",
+    "external_calls": [
+      {
+        "call_text": "IPoolManager.ModifyLiquidityParams({\n                tickLower: cancelData.tickLower,\n                tickUpper: tickUpp",
+        "method": "ModifyLiquidityParams",
+        "receiver": "IPoolManager",
+        "reason": "call on interface/contract type 'IPoolManager'"
+      },
+      {
+        "call_text": "feesAccrued.amount0()",
+        "method": "amount0",
+        "receiver": "feesAccrued",
+        "reason": "call on contract-typed local var 'feesAccrued' (type: BalanceDelta)"
+      },
+      {
+        "call_text": "poolManager.mint(\n                    address(this), cancelData.key.currency0.toId(), amount0Fee = uint128(feesAccrued.a",
+        "method": "mint",
+        "receiver": "poolManager",
+        "reason": "known ERC-like method .mint() on 'poolManager'"
+      },
+      {
+        "call_text": "cancelData.key.currency0.toId()",
+        "method": "toId",
+        "receiver": "cancelData",
+        "reason": "call on contract-typed local var 'cancelData' (type: CallbackDataCancel)"
+      },
+      {
+        "call_text": "feesAccrued.amount0()",
+        "method": "amount0",
+        "receiver": "feesAccrued",
+        "reason": "call on contract-typed local var 'feesAccrued' (type: BalanceDelta)"
+      },
+      {
+        "call_text": "feesAccrued.amount1()",
+        "method": "amount1",
+        "receiver": "feesAccrued",
+        "reason": "call on contract-typed local var 'feesAccrued' (type: BalanceDelta)"
+      },
+      {
+        "call_text": "poolManager.mint(\n                    address(this), cancelData.key.currency1.toId(), amount1Fee = uint128(feesAccrued.a",
+        "method": "mint",
+        "receiver": "poolManager",
+        "reason": "known ERC-like method .mint() on 'poolManager'"
+      },
+      {
+        "call_text": "cancelData.key.currency1.toId()",
+        "method": "toId",
+        "receiver": "cancelData",
+        "reason": "call on contract-typed local var 'cancelData' (type: CallbackDataCancel)"
+      },
+      {
+        "call_text": "feesAccrued.amount1()",
+        "method": "amount1",
+        "receiver": "feesAccrued",
+        "reason": "call on contract-typed local var 'feesAccrued' (type: BalanceDelta)"
+      },
+      {
+        "call_text": "principalDelta.amount0()",
+        "method": "amount0",
+        "receiver": "principalDelta",
+        "reason": "call on contract-typed local var 'principalDelta' (type: BalanceDelta)"
+      },
+      {
+        "call_text": "cancelData.key.currency0.take(poolManager, cancelData.to, uint256(uint128(principalDelta.amount0())), false)",
+        "method": "take",
+        "receiver": "cancelData",
+        "reason": "call on contract-typed local var 'cancelData' (type: CallbackDataCancel)"
+      },
+      {
+        "call_text": "principalDelta.amount0()",
+        "method": "amount0",
+        "receiver": "principalDelta",
+        "reason": "call on contract-typed local var 'principalDelta' (type: BalanceDelta)"
+      },
+      {
+        "call_text": "principalDelta.amount1()",
+        "method": "amount1",
+        "receiver": "principalDelta",
+        "reason": "call on contract-typed local var 'principalDelta' (type: BalanceDelta)"
+      },
+      {
+        "call_text": "cancelData.key.currency1.take(poolManager, cancelData.to, uint256(uint128(principalDelta.amount1())), false)",
+        "method": "take",
+        "receiver": "cancelData",
+        "reason": "call on contract-typed local var 'cancelData' (type: CallbackDataCancel)"
+      },
+      {
+        "call_text": "principalDelta.amount1()",
+        "method": "amount1",
+        "receiver": "principalDelta",
+        "reason": "call on contract-typed local var 'principalDelta' (type: BalanceDelta)"
+      }
+    ],
+    "state_vars_accessed": [
+      "ZERO_BYTES"
+    ],
+    "inherited_vars_used": false,
+    "inherited_calls_used": false
+  },
+  {
+    "vfp_id": "vfp_00221",
+    "finding_id": 12,
+    "finding_title": "Incorrect Usage of Returned Balance Delta",
+    "severity": "Medium",
+    "file": "LimitOrderHook.sol",
+    "function": "_handlePlaceCallback",
+    "contract": "LimitOrderHook",
+    "external_calls": [
+      {
+        "call_text": "IPoolManager.ModifyLiquidityParams({\n                tickLower: placeData.tickLower,\n                tickUpper: placeDat",
+        "method": "ModifyLiquidityParams",
+        "receiver": "IPoolManager",
+        "reason": "call on interface/contract type 'IPoolManager'"
+      },
+      {
+        "call_text": "delta.amount0()",
+        "method": "amount0",
+        "receiver": "delta",
+        "reason": "call on contract-typed local var 'delta' (type: BalanceDelta)"
+      },
+      {
+        "call_text": "delta.amount1()",
+        "method": "amount1",
+        "receiver": "delta",
+        "reason": "call on contract-typed local var 'delta' (type: BalanceDelta)"
+      },
+      {
+        "call_text": "key.currency0.settle(poolManager, placeData.owner, uint256(uint128(-delta.amount0())), false)",
+        "method": "settle",
+        "receiver": "key",
+        "reason": "call on contract-typed local var 'key' (type: PoolKey)"
+      },
+      {
+        "call_text": "delta.amount0()",
+        "method": "amount0",
+        "receiver": "delta",
+        "reason": "call on contract-typed local var 'delta' (type: BalanceDelta)"
+      },
+      {
+        "call_text": "key.currency1.settle(poolManager, placeData.owner, uint256(uint128(-delta.amount1())), false)",
+        "method": "settle",
+        "receiver": "key",
+        "reason": "call on contract-typed local var 'key' (type: PoolKey)"
+      }
+    ],
+    "state_vars_accessed": [
+      "ZERO_BYTES"
+    ],
+    "inherited_vars_used": false,
+    "inherited_calls_used": false
+  },
+  {
+    "vfp_id": "vfp_00224",
+    "finding_id": 16,
+    "finding_title": "Endianness Mismatch in senderHash Representation Between Contract and Circuit",
+    "severity": "Medium",
+    "file": "OidcRecoveryValidator.sol",
+    "function": "startRecovery",
+    "contract": "OidcRecoveryValidator",
+    "external_calls": [
+      {
+        "call_text": "keyRegistryContract.hashIssuer(oidcData.iss)",
+        "method": "hashIssuer",
+        "receiver": "keyRegistryContract",
+        "reason": "call on contract-typed local var 'keyRegistryContract' (type: OidcKeyRegistry)"
+      },
+      {
+        "call_text": "keyRegistryContract.getKey(issHash, data.kid)",
+        "method": "getKey",
+        "receiver": "keyRegistryContract",
+        "reason": "call on contract-typed local var 'keyRegistryContract' (type: OidcKeyRegistry)"
+      }
+    ],
+    "state_vars_accessed": [
+      "PUB_SIGNALS_LENGTH",
+      "accountData",
+      "keyRegistry",
+      "verifier"
+    ],
+    "inherited_vars_used": false,
+    "inherited_calls_used": false
+  },
+  {
+    "vfp_id": "vfp_00234",
+    "finding_id": 8,
+    "finding_title": "mErc20Host: Permissionless calls to external endpoints fail when source chain is Eth mainnet",
+    "severity": "Medium",
+    "file": "mErc20Host.sol",
+    "function": "_verifyProof",
+    "contract": "mErc20Host",
+    "external_calls": [
+      {
+        "call_text": "verifier.verifyInput(journalData, seal)",
+        "method": "verifyInput",
+        "receiver": "verifier",
+        "reason": "call on contract-typed state var 'verifier' (type: IZkVerifier)"
+      }
+    ],
+    "state_vars_accessed": [
+      "verifier"
+    ],
+    "inherited_vars_used": false,
+    "inherited_calls_used": false
+  },
+  {
+    "vfp_id": "vfp_00237",
+    "finding_id": 3,
+    "finding_title": "MainFeeDistributor.sol#swapLzToken function always revert because of interface mismatch",
+    "severity": "High",
+    "file": "MainFeeDistributor.sol",
+    "function": "swapLzToken",
+    "contract": "MainFeeDistributor",
+    "external_calls": [
+      {
+        "call_text": "bridgeableToken.balanceOf(address(this))",
+        "method": "balanceOf",
+        "receiver": "bridgeableToken",
+        "reason": "call on contract-typed state var 'bridgeableToken' (type: IERC20)"
+      },
+      {
+        "call_text": "IBridgeableToken(address(bridgeableToken)).getMaxCreditableAmount()",
+        "method": "getMaxCreditableAmount",
+        "receiver": "IBridgeableToken",
+        "reason": "inline cast call IBridgeableToken(...).getMaxCreditableAmount()"
+      },
+      {
+        "call_text": "IBridgeableToken(address(bridgeableToken)).swapLzTokenToPrincipalToken(address(this), swapAmount)",
+        "method": "swapLzTokenToPrincipalToken",
+        "receiver": "IBridgeableToken",
+        "reason": "inline cast call IBridgeableToken(...).swapLzTokenToPrincipalToken()"
+      }
+    ],
+    "state_vars_accessed": [
+      "bridgeableToken"
+    ],
+    "inherited_vars_used": false,
+    "inherited_calls_used": false
+  },
+  {
+    "vfp_id": "vfp_00260",
+    "finding_id": 3,
+    "finding_title": "relayTokens Calls Made By Forwarders May Fail",
+    "severity": "Medium",
+    "file": "Router_Adapter.sol",
+    "function": "relayTokens",
+    "contract": "Router_Adapter",
+    "external_calls": [
+      {
+        "call_text": "HUB_POOL.poolRebalanceRoute(L2_CHAIN_ID, l1Token)",
+        "method": "poolRebalanceRoute",
+        "receiver": "HUB_POOL",
+        "reason": "call on contract-typed state var 'HUB_POOL' (type: HubPoolInterface)"
+      },
+      {
+        "call_text": "L1_ADAPTER.delegatecall(\n            abi.encodeCall(AdapterInterface.relayTokens, (l1Token, l2Token, amount, L2_TARGET))",
+        "method": "delegatecall",
+        "receiver": "L1_ADAPTER",
+        "reason": "low-level .delegatecall()"
+      },
+      {
+        "call_text": "L1_ADAPTER.delegatecall(abi.encodeCall(AdapterInterface.relayMessage, (L2_TARGET, message)))",
+        "method": "delegatecall",
+        "receiver": "L1_ADAPTER",
+        "reason": "low-level .delegatecall()"
+      }
+    ],
+    "state_vars_accessed": [
+      "HUB_POOL",
+      "L1_ADAPTER",
+      "L2_CHAIN_ID",
+      "L2_TARGET",
+      "L3_CHAIN_ID"
+    ],
+    "inherited_vars_used": false,
+    "inherited_calls_used": false
+  },
+  {
+    "vfp_id": "vfp_00260",
+    "finding_id": 3,
+    "finding_title": "relayTokens Calls Made By Forwarders May Fail",
+    "severity": "Medium",
+    "file": "Router_Adapter.sol",
+    "function": "relayMessage",
+    "contract": "Router_Adapter",
+    "external_calls": [
+      {
+        "call_text": "L1_ADAPTER.delegatecall(\n            abi.encodeCall(AdapterInterface.relayMessage, (L2_TARGET, wrappedMessage))\n        ",
+        "method": "delegatecall",
+        "receiver": "L1_ADAPTER",
+        "reason": "low-level .delegatecall()"
+      }
+    ],
+    "state_vars_accessed": [
+      "L1_ADAPTER",
+      "L2_TARGET",
+      "L3_CHAIN_ID"
+    ],
+    "inherited_vars_used": false,
+    "inherited_calls_used": false
+  },
+  {
+    "vfp_id": "vfp_00262",
+    "finding_id": 1,
+    "finding_title": "Inflation Attack in DIAExternalStaking Allows Stealing First Depositor's Stake",
+    "severity": "Critical",
+    "file": "DIAExternalStaking.sol",
+    "function": "addRewardToPool",
+    "contract": "DIAExternalStaking",
+    "external_calls": [
+      {
+        "call_text": "STAKING_TOKEN.safeTransferFrom(msg.sender, address(this), amount)",
+        "method": "safeTransferFrom",
+        "receiver": "STAKING_TOKEN",
+        "reason": "SafeERC20 .safeTransferFrom()"
+      }
+    ],
+    "state_vars_accessed": [
+      "STAKING_TOKEN",
+      "totalPoolSize"
+    ],
+    "inherited_vars_used": false,
+    "inherited_calls_used": false
+  },
+  {
+    "vfp_id": "vfp_00262",
+    "finding_id": 1,
+    "finding_title": "Inflation Attack in DIAExternalStaking Allows Stealing First Depositor's Stake",
+    "severity": "Critical",
+    "file": "DIAExternalStaking.sol",
+    "function": "_stake",
+    "contract": "DIAExternalStaking",
+    "external_calls": [
+      {
+        "call_text": "STAKING_TOKEN.safeTransferFrom(staker, address(this), amount)",
+        "method": "safeTransferFrom",
+        "receiver": "STAKING_TOKEN",
+        "reason": "SafeERC20 .safeTransferFrom()"
+      }
+    ],
+    "state_vars_accessed": [
+      "STAKING_TOKEN",
+      "stakingIndex",
+      "stakingIndicesByBeneficiary",
+      "stakingIndicesByPayoutWallet",
+      "stakingIndicesByPrincipalUnstaker",
+      "stakingLimit",
+      "stakingStores",
+      "tokensStaked",
+      "totalPoolSize",
+      "totalShareAmount"
+    ],
+    "inherited_vars_used": false,
+    "inherited_calls_used": false
+  },
+  {
+    "vfp_id": "vfp_00281",
+    "finding_id": 1,
+    "finding_title": "Flashloan Functionality is Blocked",
+    "severity": "High",
+    "file": "FlashLoans.sol",
+    "function": "flashLoan",
+    "contract": "FlashLoans",
+    "external_calls": [
+      {
+        "call_text": "IERC20(token).balanceOf(address(this))",
+        "method": "balanceOf",
+        "receiver": "IERC20",
+        "reason": "inline cast call IERC20(...).balanceOf()"
+      },
+      {
+        "call_text": "IERC20(token).safeTransfer(address(receiver), amount)",
+        "method": "safeTransfer",
+        "receiver": "IERC20",
+        "reason": "SafeERC20 .safeTransfer()"
+      },
+      {
+        "call_text": "receiver.onFlashLoan(_msgSender(), token, amount, fee, data)",
+        "method": "onFlashLoan",
+        "receiver": "receiver",
+        "reason": "call on contract-typed local var 'receiver' (type: IERC3156FlashBorrower)"
+      },
+      {
+        "call_text": "IERC20(token).balanceOf(address(this))",
+        "method": "balanceOf",
+        "receiver": "IERC20",
+        "reason": "inline cast call IERC20(...).balanceOf()"
+      },
+      {
+        "call_text": "IERC20(token).safeTransfer(treasury, fee)",
+        "method": "safeTransfer",
+        "receiver": "IERC20",
+        "reason": "SafeERC20 .safeTransfer()"
+      }
+    ],
+    "state_vars_accessed": [
+      "CALLBACK_SUCCESS"
+    ],
+    "inherited_vars_used": false,
+    "inherited_calls_used": false
+  },
+  {
+    "vfp_id": "vfp_00281",
+    "finding_id": 3,
+    "finding_title": "Flashloan Functionality Does Not Follow ERC-3156 Standard",
+    "severity": "Medium",
+    "file": "FlashLoans.sol",
+    "function": "flashLoan",
+    "contract": "FlashLoans",
+    "external_calls": [
+      {
+        "call_text": "IERC20(token).balanceOf(address(this))",
+        "method": "balanceOf",
+        "receiver": "IERC20",
+        "reason": "inline cast call IERC20(...).balanceOf()"
+      },
+      {
+        "call_text": "IERC20(token).safeTransfer(address(receiver), amount)",
+        "method": "safeTransfer",
+        "receiver": "IERC20",
+        "reason": "SafeERC20 .safeTransfer()"
+      },
+      {
+        "call_text": "receiver.onFlashLoan(_msgSender(), token, amount, fee, data)",
+        "method": "onFlashLoan",
+        "receiver": "receiver",
+        "reason": "call on contract-typed local var 'receiver' (type: IERC3156FlashBorrower)"
+      },
+      {
+        "call_text": "IERC20(token).balanceOf(address(this))",
+        "method": "balanceOf",
+        "receiver": "IERC20",
+        "reason": "inline cast call IERC20(...).balanceOf()"
+      },
+      {
+        "call_text": "IERC20(token).safeTransfer(treasury, fee)",
+        "method": "safeTransfer",
+        "receiver": "IERC20",
+        "reason": "SafeERC20 .safeTransfer()"
+      }
+    ],
+    "state_vars_accessed": [
+      "CALLBACK_SUCCESS"
+    ],
+    "inherited_vars_used": false,
+    "inherited_calls_used": false
+  },
+  {
+    "vfp_id": "vfp_00288",
+    "finding_id": 2,
+    "finding_title": "Missing Slippage Protection in Token Swap Execution",
+    "severity": "Medium",
+    "file": "src/helpers/DelegationMetaSwapAdapter.sol",
+    "function": "swapTokens",
+    "contract": "DelegationMetaSwapAdapter",
+    "external_calls": [
+      {
+        "call_text": "_tokenFrom.allowance(address(this), address(metaSwap))",
+        "method": "allowance",
+        "receiver": "_tokenFrom",
+        "reason": "call on contract-typed local var '_tokenFrom' (type: IERC20)"
+      },
+      {
+        "call_text": "_tokenFrom.safeIncreaseAllowance(address(metaSwap), type(uint256).max)",
+        "method": "safeIncreaseAllowance",
+        "receiver": "_tokenFrom",
+        "reason": "SafeERC20 .safeIncreaseAllowance()"
+      },
+      {
+        "call_text": "metaSwap.swap{ value: value_ }(_aggregatorId, _tokenFrom, _amountFrom, _swapData)",
+        "method": "swap",
+        "receiver": "metaSwap",
+        "reason": "call on contract-typed state var 'metaSwap' (type: IMetaSwap)"
+      }
+    ],
+    "state_vars_accessed": [
+      "metaSwap"
+    ],
+    "inherited_vars_used": false,
+    "inherited_calls_used": false
+  },
+  {
+    "vfp_id": "vfp_00288",
+    "finding_id": 3,
+    "finding_title": "Re-Entrancy Risk in swapTokens()",
+    "severity": "Medium",
+    "file": "src/helpers/DelegationMetaSwapAdapter.sol",
+    "function": "swapTokens",
+    "contract": "DelegationMetaSwapAdapter",
+    "external_calls": [
+      {
+        "call_text": "_tokenFrom.allowance(address(this), address(metaSwap))",
+        "method": "allowance",
+        "receiver": "_tokenFrom",
+        "reason": "call on contract-typed local var '_tokenFrom' (type: IERC20)"
+      },
+      {
+        "call_text": "_tokenFrom.safeIncreaseAllowance(address(metaSwap), type(uint256).max)",
+        "method": "safeIncreaseAllowance",
+        "receiver": "_tokenFrom",
+        "reason": "SafeERC20 .safeIncreaseAllowance()"
+      },
+      {
+        "call_text": "metaSwap.swap{ value: value_ }(_aggregatorId, _tokenFrom, _amountFrom, _swapData)",
+        "method": "swap",
+        "receiver": "metaSwap",
+        "reason": "call on contract-typed state var 'metaSwap' (type: IMetaSwap)"
+      }
+    ],
+    "state_vars_accessed": [
+      "metaSwap"
+    ],
+    "inherited_vars_used": false,
+    "inherited_calls_used": false
+  },
+  {
+    "vfp_id": "vfp_00289",
+    "finding_id": 6,
+    "finding_title": "Potential price manipulation via read-only reentrancy in BasketToken.proRataRedeem()",
+    "severity": "Medium",
+    "file": "BasketToken.sol",
+    "function": "proRataRedeem",
+    "contract": "BasketToken",
+    "external_calls": [
+      {
+        "call_text": "BasketManager(basketManager).managementFee(address(this))",
+        "method": "managementFee",
+        "receiver": "BasketManager",
+        "reason": "inline cast call BasketManager(...).managementFee()"
+      },
+      {
+        "call_text": "BasketManager(basketManager).feeCollector()",
+        "method": "feeCollector",
+        "receiver": "BasketManager",
+        "reason": "inline cast call BasketManager(...).feeCollector()"
+      },
+      {
+        "call_text": "BasketManager(basketManager).proRataRedeem(totalSupplyBefore, shares, to)",
+        "method": "proRataRedeem",
+        "receiver": "BasketManager",
+        "reason": "inline cast call BasketManager(...).proRataRedeem()"
+      }
+    ],
+    "state_vars_accessed": [
+      "basketManager"
+    ],
+    "inherited_vars_used": false,
+    "inherited_calls_used": false
+  }
+]

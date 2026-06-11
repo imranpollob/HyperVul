@@ -1,0 +1,31 @@
+{
+  "method": "tree-sitter AST",
+  "total_vfps": 303,
+  "total_findings": 695,
+  "interaction_findings": 212,
+  "findings_with_func_loc": 148,
+  "source_found": 251,
+  "source_not_found": 50,
+  "parse_errors": 0,
+  "contract_not_found": 1,
+  "func_not_found_in_ast": 50,
+  "has_external_call": 133,
+  "has_state_var_access": 116,
+  "has_both": 88,
+  "constructable_hyperedges": 83,
+  "from_unique_findings": 63,
+  "from_unique_vfps": 40,
+  "severity_distribution": {
+    "High": 35,
+    "Medium": 39,
+    "Critical": 9
+  },
+  "previous_regex_count": 61,
+  "delta": 22,
+  "inherited_state_var_uplift": 5,
+  "inherited_call_uplift": 0,
+  "retained_from_regex": 60,
+  "newly_detected_by_ast": 23,
+  "fallback_dryrun_total_constructable": 83,
+  "fallback_dryrun_additional_count": 0
+}
