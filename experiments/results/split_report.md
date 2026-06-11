@@ -66,6 +66,20 @@ We ran rigorous leakage tests on the generated splits:
 
 ---
 
+## Disclosures & Limitations for the Paper
+
+The following explicit disclosures are noted for the paper:
+
+1. **Test-Set Cross-Contract Ratio Imbalance**:
+   * *Property*: The test-set cross-contract ratio shows an imbalance between positive hyperedges (**38.78%**) and negative hyperedges (**50.39%**).
+   * *Mitigation*: Because we will report model performance on cross-contract and intra-contract interactions **separately** within the test set, this structural ratio imbalance does not distort or bias the final reported metrics.
+
+2. **Indicative Per-Vulnerability-Type Test Counts**:
+   * *Property*: Due to the project-level splitting constraint, the absolute counts for individual vulnerability types in the test split are small (Reentrancy: 24, Front-running / Tx Order: 15, Unchecked Call Return: 10, Delegatecall: 0).
+   * *Mitigation*: Per-vulnerability-type performance metrics on the test split are **indicative only**. The primary reported evaluation metric for HyperVul is the pooled binary detection performance.
+
+---
+
 ## Data Split Files
 *   [train.json](file:///home/pollmix/Coding/HyperVul/data/splits/train.json) — Train split (positives and negatives).
 *   [val.json](file:///home/pollmix/Coding/HyperVul/data/splits/val.json) — Validation split (positives and negatives).
