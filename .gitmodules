@@ -4,3 +4,6 @@
 [submodule "data/FORGE-Curated"]
 	path = data/FORGE-Curated
 	url = https://github.com/shenyimings/FORGE-Curated.git
+[submodule "data/external/openzeppelin-contracts"]
+	path = data/external/openzeppelin-contracts
+	url = https://github.com/OpenZeppelin/openzeppelin-contracts.git
