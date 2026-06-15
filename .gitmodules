@@ -1,0 +1,6 @@
+[submodule "data/DAppSCAN"]
+	path = data/DAppSCAN
+	url = https://github.com/InPlusLab/DAppSCAN.git
+[submodule "data/FORGE-Curated"]
+	path = data/FORGE-Curated
+	url = https://github.com/shenyimings/FORGE-Curated.git
