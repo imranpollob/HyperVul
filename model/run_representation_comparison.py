@@ -246,20 +246,29 @@ def main():
     ap.add_argument("--hg-noskip", action="store_true")
     ap.add_argument("--drop-func", action="store_true",
                     help="atomic probe: drop the (redundant) full-function node, keep only state/callee nodes")
+    ap.add_argument("--sig", action="store_true",
+                    help="use signature/skeleton function embeddings (atomic, function identity kept)")
     args = ap.parse_args()
     HG["layers"] = args.hg_layers
     HG["skip"] = not args.hg_noskip
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    print(f"Device: {device} | seeds={args.seeds}")
+    print(f"Device: {device} | seeds={args.seeds} | features={'SIGNATURE' if args.sig else 'FULL'}")
     splits = PROJECT_ROOT / "data" / "splits"
     results = PROJECT_ROOT / "experiments" / "results"
 
-    train_data = json.load(open(splits / "train_augmented.json"))
-    val_data = json.load(open(splits / "val_features.json"))
-    test_data = json.load(open(splits / "test_features.json"))
-    oz = json.load(open(results / "eval_clean_negatives_oz_features.json"))
-    aave = json.load(open(results / "eval_clean_negatives_aave_split.json"))
+    if args.sig:
+        train_data = json.load(open(splits / "train_augmented_sig.json"))
+        val_data = json.load(open(splits / "val_sig.json"))
+        test_data = json.load(open(splits / "test_sig.json"))
+        oz = json.load(open(results / "eval_clean_negatives_oz_sig.json"))
+        aave = json.load(open(results / "eval_clean_negatives_aave_sig.json"))
+    else:
+        train_data = json.load(open(splits / "train_augmented.json"))
+        val_data = json.load(open(splits / "val_features.json"))
+        test_data = json.load(open(splits / "test_features.json"))
+        oz = json.load(open(results / "eval_clean_negatives_oz_features.json"))
+        aave = json.load(open(results / "eval_clean_negatives_aave_split.json"))
     oz_map = json.load(open(PROJECT_ROOT / "scratch" / "oz_split_mapping.json"))
 
     oz_train = [i for i in oz if oz_map.get((i.get("file") or i.get("filePath")).replace(
