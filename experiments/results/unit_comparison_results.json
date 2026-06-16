@@ -1,0 +1,110 @@
+{
+  "function": {
+    "threshold": 0.13540000000000002,
+    "val_loss": 0.6194347335547997,
+    "val_recall": 0.972972972972973,
+    "recall": 0.9090909090909091,
+    "precision": 0.40404040404040403,
+    "f1": 0.5594405594405595,
+    "f2": 0.7272727272727273,
+    "pr_auc": 0.5939276287036364,
+    "roc_auc": 0.8492727272727273,
+    "cross_f1": 0.4444444444444444,
+    "intra_f1": 0.65,
+    "per_class": {
+      "Reentrancy (SWC-107)": {
+        "count": 23,
+        "recall": 0.9130434782608695
+      },
+      "Front-running / Tx Order (SWC-114)": {
+        "count": 15,
+        "recall": 0.9333333333333333
+      },
+      "Unchecked Call Return (SWC-104)": {
+        "count": 6,
+        "recall": 0.8333333333333334
+      }
+    }
+  },
+  "func_state": {
+    "threshold": 0.0995,
+    "val_loss": 0.7291865944862366,
+    "val_recall": 0.972972972972973,
+    "recall": 0.9318181818181818,
+    "precision": 0.41836734693877553,
+    "f1": 0.5774647887323944,
+    "f2": 0.7481751824817519,
+    "pr_auc": 0.5151951348460206,
+    "roc_auc": 0.8229090909090909,
+    "cross_f1": 0.4375,
+    "intra_f1": 0.6923076923076923,
+    "per_class": {
+      "Reentrancy (SWC-107)": {
+        "count": 23,
+        "recall": 0.8695652173913043
+      },
+      "Front-running / Tx Order (SWC-114)": {
+        "count": 15,
+        "recall": 1.0
+      },
+      "Unchecked Call Return (SWC-104)": {
+        "count": 6,
+        "recall": 1.0
+      }
+    }
+  },
+  "func_callee": {
+    "threshold": 0.1062,
+    "val_loss": 0.5787702546548591,
+    "val_recall": 0.972972972972973,
+    "recall": 0.9545454545454546,
+    "precision": 0.4329896907216495,
+    "f1": 0.5957446808510638,
+    "f2": 0.7692307692307694,
+    "pr_auc": 0.6927097153692116,
+    "roc_auc": 0.8798181818181818,
+    "cross_f1": 0.45454545454545453,
+    "intra_f1": 0.72,
+    "per_class": {
+      "Reentrancy (SWC-107)": {
+        "count": 23,
+        "recall": 0.9130434782608695
+      },
+      "Front-running / Tx Order (SWC-114)": {
+        "count": 15,
+        "recall": 1.0
+      },
+      "Unchecked Call Return (SWC-104)": {
+        "count": 6,
+        "recall": 1.0
+      }
+    }
+  },
+  "full": {
+    "threshold": 0.1573,
+    "val_loss": 0.5572532279781564,
+    "val_recall": 0.972972972972973,
+    "recall": 0.9318181818181818,
+    "precision": 0.47674418604651164,
+    "f1": 0.6307692307692307,
+    "f2": 0.7824427480916031,
+    "pr_auc": 0.6380562577757702,
+    "roc_auc": 0.867090909090909,
+    "cross_f1": 0.5263157894736842,
+    "intra_f1": 0.7123287671232876,
+    "per_class": {
+      "Reentrancy (SWC-107)": {
+        "count": 23,
+        "recall": 0.8695652173913043
+      },
+      "Front-running / Tx Order (SWC-114)": {
+        "count": 15,
+        "recall": 1.0
+      },
+      "Unchecked Call Return (SWC-104)": {
+        "count": 6,
+        "recall": 1.0
+      }
+    }
+  }
+}

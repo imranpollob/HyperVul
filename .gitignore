@@ -1,2 +1,9 @@
+.mimocode
+.vscode
+.claude
+.codex
+
+
 data/splits/train_augmented.json
 data/splits/*.json
+experiments/results/eval_clean_negatives_external.json
