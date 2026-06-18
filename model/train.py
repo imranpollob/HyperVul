@@ -1,6 +1,7 @@
 import json
 import sys
 import os
+import argparse
 import random
 from pathlib import Path
 import numpy as np
@@ -19,6 +20,59 @@ try:
     from model.model import HyperedgeClassifier
 except ModuleNotFoundError:
     from model import HyperedgeClassifier
+
+from src.models.ops import ProjectionHead, SupConLoss, build_node_types
+
+# ---------------------------------------------------------------------------
+# Stage 3 — Supervised Contrastive Calibration defaults
+#   L = L_CE + lambda * L_SCL, with SCL applied to a normalized projection of the
+#   pooled hyperedge embedding. Clean (label=0) interactions that contain external
+#   calls are up-weighted as hard anchors to crush the OOD false-positive rate.
+# ---------------------------------------------------------------------------
+SCL_LAMBDA = 0.5            # weight of the contrastive term
+SCL_TEMPERATURE = 0.1      # SupCon temperature
+SCL_PROJ_DIM = 128         # projection head output dim
+SCL_HARD_NEG_WEIGHT = 3.0  # per-anchor weight for clean-with-external-call items
+
+
+def parse_args(argv=None):
+    p = argparse.ArgumentParser(description="HyperVul iteration-3 training with "
+                                            "Supervised Contrastive Calibration (Stage 3).")
+    p.add_argument("--no-scl", action="store_true",
+                   help="Disable SCL and train CE-only (baseline ablation).")
+    p.add_argument("--no-localize", action="store_true",
+                   help="Disable the interaction-aware LocalizationHead and use the pure "
+                        "set-pool MLP path (bypasses loc_gate fusion).")
+    p.add_argument("--scl-lambda", type=float, default=SCL_LAMBDA,
+                   help="Weight lambda of the SCL term in L = L_CE + lambda*L_SCL.")
+    p.add_argument("--scl-temperature", type=float, default=SCL_TEMPERATURE)
+    p.add_argument("--scl-hard-neg-weight", type=float, default=SCL_HARD_NEG_WEIGHT,
+                   help="Per-anchor SCL weight for clean (label=0) items with external calls.")
+    p.add_argument("--scl-proj-dim", type=int, default=SCL_PROJ_DIM)
+    p.add_argument("--out-tag", type=str, default="",
+                   help="Optional suffix for checkpoint/report filenames to avoid "
+                        "clobbering across ablations (e.g. 'scl', 'baseline').")
+    return p.parse_args(argv)
+
+
+def has_external_calls(item) -> bool:
+    """True if the hyperedge contains at least one callee/external call, across both the
+    SmartBERT feature schema (node_features.external_calls) and the Stage-2 bottleneck
+    schema (callee_nodes)."""
+    nf = item.get("node_features") or {}
+    if nf.get("external_calls"):
+        return True
+    if item.get("callee_nodes"):
+        return True
+    return False
+
+
+def scl_anchor_weights(items, hard_weight: float, device) -> torch.Tensor:
+    """Per-anchor SCL weight: hard_weight for clean (label=0) hyperedges that have
+    external calls (our dominant false-positive trigger), 1.0 otherwise."""
+    w = [hard_weight if (float(it.get("label", 0.0)) == 0.0 and has_external_calls(it)) else 1.0
+         for it in items]
+    return torch.tensor(w, dtype=torch.float32, device=device)
 
 # Fix random seed
 def set_seed(seed=42):
@@ -88,7 +142,8 @@ def evaluate_model(model, dataloader, device):
     with torch.no_grad():
         for x, mask, labels, batch_items in dataloader:
             x, mask = x.to(device), mask.to(device)
-            logits, _ = model(x, mask)
+            node_types = build_node_types(batch_items, x.shape[1], device=device)
+            logits, _ = model(x, mask, node_types)
             probs = torch.sigmoid(logits).squeeze(-1).cpu().numpy()
             all_probs.extend(probs)
             all_labels.extend(labels.numpy())
@@ -96,10 +151,18 @@ def evaluate_model(model, dataloader, device):
             
     return np.array(all_probs), np.array(all_labels), all_items
 
-def main():
+def main(args=None):
+    if args is None:
+        args = parse_args([])
     set_seed(42)
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print(f"Using device: {device}")
+    use_scl = not args.no_scl
+    use_localize = not args.no_localize
+    print(f"Supervised Contrastive Calibration: {'ON' if use_scl else 'OFF'} "
+          f"(lambda={args.scl_lambda}, temp={args.scl_temperature}, "
+          f"hard_neg_weight={args.scl_hard_neg_weight}, proj_dim={args.scl_proj_dim})")
+    print(f"Interaction-Aware Localization Head: {'ON' if use_localize else 'OFF'}")
     
     # 1. Load datasets
     splits_dir = PROJECT_ROOT / "data" / "splits"
@@ -204,9 +267,13 @@ def main():
         neg_count = sum(1 for x in sweep_train_data if x.get('label', 0.0) == 0)
         pos_upweight = neg_count / pos_count if pos_count > 0 else 1.5
         
-        # Initialize model
-        model = HyperedgeClassifier(input_dim=768, hidden_dim=256, dropout=0.3).to(device)
-        optimizer = optim.Adam(model.parameters(), lr=1e-3, weight_decay=1e-5)
+        # Initialize model (+ projection head for contrastive calibration)
+        model = HyperedgeClassifier(input_dim=768, hidden_dim=256, dropout=0.3,
+                                    localize=use_localize).to(device)
+        proj_head = ProjectionHead(in_dim=768, hidden=256, out_dim=args.scl_proj_dim).to(device)
+        supcon = SupConLoss(temperature=args.scl_temperature)
+        params = list(model.parameters()) + (list(proj_head.parameters()) if use_scl else [])
+        optimizer = optim.Adam(params, lr=1e-3, weight_decay=1e-5)
         criterion = nn.BCEWithLogitsLoss(pos_weight=torch.tensor([pos_upweight], device=device))
         
         # Train with early stopping on val_data
@@ -217,12 +284,22 @@ def main():
         
         for epoch in range(1, 201):
             model.train()
+            proj_head.train()
             train_loss = 0.0
-            for x, mask, labels, _ in train_loader:
+            for x, mask, labels, batch_items in train_loader:
                 x, mask, labels = x.to(device), mask.to(device), labels.to(device)
                 optimizer.zero_grad()
-                logits, _ = model(x, mask)
-                loss = criterion(logits.squeeze(-1), labels)
+                # Encode once: logits fuse the set-pool head with the interaction-aware
+                # localization logit (Stage 4); pooled feeds the SCL projection (Stage 3).
+                node_types = build_node_types(batch_items, x.shape[1], device=device)
+                logits, pooled, _, _ = model.encode(x, mask, node_types)
+                ce_loss = criterion(logits.squeeze(-1), labels)
+                loss = ce_loss
+                if use_scl and args.scl_lambda > 0:
+                    z = proj_head(pooled)
+                    weights = scl_anchor_weights(batch_items, args.scl_hard_neg_weight, device)
+                    scl_loss = supcon(z, labels, weights=weights)
+                    loss = ce_loss + args.scl_lambda * scl_loss
                 loss.backward()
                 optimizer.step()
                 train_loss += loss.item() * x.size(0)
@@ -230,11 +307,14 @@ def main():
             
             # Validation evaluation
             model.eval()
+            proj_head.eval()
             val_loss = 0.0
             with torch.no_grad():
-                for x, mask, labels, _ in val_loader:
+                for x, mask, labels, val_items in val_loader:
                     x, mask, labels = x.to(device), mask.to(device), labels.to(device)
-                    logits, _ = model(x, mask)
+                    node_types = build_node_types(val_items, x.shape[1], device=device)
+                    logits, _ = model(x, mask, node_types)
+                    # Early stopping on CE only (SCL is a training-time regularizer).
                     loss = criterion(logits.squeeze(-1), labels)
                     val_loss += loss.item() * x.size(0)
             val_loss /= len(val_dataset)
@@ -317,16 +397,18 @@ def main():
     print(f"Sweep completed. Selected Best K_app: {best_K} with Combined Val FPR: {best_sweep['combined_val_fpr']*100:.2f}%")
     print("="*60)
     
-    # Save checkpoint
+    # Save checkpoint (tag-suffixed to keep ablation runs from clobbering each other)
+    tag = f"_{args.out_tag}" if args.out_tag else ""
     checkpoint_dir = PROJECT_ROOT / "model"
     os.makedirs(checkpoint_dir, exist_ok=True)
-    torch.save(best_model_state, checkpoint_dir / "iteration3_checkpoint.pt")
-    
-    with open(checkpoint_dir / "threshold_config_iter3.json", "w") as fh:
+    torch.save(best_model_state, checkpoint_dir / f"iteration3_checkpoint{tag}.pt")
+
+    with open(checkpoint_dir / f"threshold_config_iter3{tag}.json", "w") as fh:
         json.dump({"best_threshold": float(best_threshold), "best_K": best_K, "val_recall": float(best_recall_val)}, fh, indent=2)
         
-    # Re-initialize best model for evaluation
-    model = HyperedgeClassifier(input_dim=768, hidden_dim=256, dropout=0.3).to(device)
+    # Re-initialize best model for evaluation (same localize setting -> matching state_dict keys)
+    model = HyperedgeClassifier(input_dim=768, hidden_dim=256, dropout=0.3,
+                                localize=use_localize).to(device)
     model.load_state_dict({k: v.to(device) for k, v in best_model_state.items()})
     model.eval()
     
@@ -442,7 +524,7 @@ def main():
         vuln_recalls["Delegatecall (SWC-112)"] = {"count": 0, "recall": "Unevaluated"}
         
     # Write report to iteration3_results.md
-    report_path = results_dir / "iteration3_results.md"
+    report_path = results_dir / f"iteration3_results{tag}.md"
     
     vuln_table_rows = []
     for vt, stats in vuln_recalls.items():
@@ -562,4 +644,4 @@ We analyze the performance separately on cross-contract vs. intra-contract hyper
     print("Training and evaluation completed successfully!")
 
 if __name__ == '__main__':
-    main()
+    main(parse_args())

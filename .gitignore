@@ -3,6 +3,12 @@
 .claude
 .vscode
 
+data/splits/train_augmented.json
+data/splits/train_augmented_sig.json
+experiments/results/eval_clean_negatives_external.json
+
+*.pyc
+
 ### Python ###
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -179,6 +185,3 @@ pyrightconfig.json
 
 # Custom rules (everything added below won't be overriden by 'Generate .gitignore File' if you use 'Update' option)
 
-experiments/results/eval_clean_negatives_external.json
-data/splits/train_augmented.json
-data/splits/train_augmented_sig.json
