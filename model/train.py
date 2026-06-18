@@ -1,6 +1,7 @@
 import json
 import sys
 import os
+import argparse
 import random
 from pathlib import Path
 import numpy as np
@@ -20,6 +21,71 @@ try:
 except ModuleNotFoundError:
     from model import HyperedgeClassifier
 
+from src.models.ops import ProjectionHead, SupConLoss, build_node_types
+from src.models.symbolic import SYM_DIM, sym_mask
+
+# ---------------------------------------------------------------------------
+# Stage 3 — Supervised Contrastive Calibration defaults
+#   L = L_CE + lambda * L_SCL, with SCL applied to a normalized projection of the
+#   pooled hyperedge embedding. Clean (label=0) interactions that contain external
+#   calls are up-weighted as hard anchors to crush the OOD false-positive rate.
+# ---------------------------------------------------------------------------
+SCL_LAMBDA = 0.5            # weight of the contrastive term
+SCL_TEMPERATURE = 0.1      # SupCon temperature
+SCL_PROJ_DIM = 128         # projection head output dim
+SCL_HARD_NEG_WEIGHT = 3.0  # per-anchor weight for clean-with-external-call items
+
+
+def parse_args(argv=None):
+    p = argparse.ArgumentParser(description="HyperVul iteration-3 training with "
+                                            "Supervised Contrastive Calibration (Stage 3).")
+    p.add_argument("--no-scl", action="store_true",
+                   help="Disable SCL and train CE-only (baseline ablation).")
+    p.add_argument("--no-localize", action="store_true",
+                   help="Disable the interaction-aware LocalizationHead and use the pure "
+                        "set-pool MLP path (bypasses loc_gate fusion).")
+    p.add_argument("--scl-lambda", type=float, default=SCL_LAMBDA,
+                   help="Weight lambda of the SCL term in L = L_CE + lambda*L_SCL.")
+    p.add_argument("--scl-temperature", type=float, default=SCL_TEMPERATURE)
+    p.add_argument("--scl-hard-neg-weight", type=float, default=SCL_HARD_NEG_WEIGHT,
+                   help="Per-anchor SCL weight for clean (label=0) items with external calls.")
+    p.add_argument("--scl-proj-dim", type=int, default=SCL_PROJ_DIM)
+    p.add_argument("--out-tag", type=str, default="",
+                   help="Optional suffix for checkpoint/report filenames to avoid "
+                        "clobbering across ablations (e.g. 'scl', 'baseline').")
+    p.add_argument("--seed", type=int, default=42,
+                   help="Single training seed for this run. Multi-seed = invoke once per "
+                        "seed; experiments/aggregate_ablation.py pools the per-seed JSONs.")
+    p.add_argument("--fix-k", type=int, default=None,
+                   help="Train at this fixed K_app (Aave clean negatives) and SKIP the "
+                        "K-sweep. De-confounds the ablation (use e.g. --fix-k 100 in all arms).")
+    p.add_argument("--sym-mode", choices=["off", "none", "security", "full"], default="off",
+                   help="Stage-2 symbolic node features concatenated onto embeddings: "
+                        "off=768-d only; none=zeroed symbolic (arch-matched baseline); "
+                        "security=safety slots only (target_kind/security_context/cross/nonReentrant); "
+                        "full=all symbolic. Requires *_sym.json sidecars (build_security_features.py).")
+    return p.parse_args(argv)
+
+
+def has_external_calls(item) -> bool:
+    """True if the hyperedge contains at least one callee/external call, across both the
+    SmartBERT feature schema (node_features.external_calls) and the Stage-2 bottleneck
+    schema (callee_nodes)."""
+    nf = item.get("node_features") or {}
+    if nf.get("external_calls"):
+        return True
+    if item.get("callee_nodes"):
+        return True
+    return False
+
+
+def scl_anchor_weights(items, hard_weight: float, device) -> torch.Tensor:
+    """Per-anchor SCL weight: hard_weight for clean (label=0) hyperedges that have
+    external calls (our dominant false-positive trigger), 1.0 otherwise."""
+    w = [hard_weight if (float(it.get("label", 0.0)) == 0.0 and has_external_calls(it)) else 1.0
+         for it in items]
+    return torch.tensor(w, dtype=torch.float32, device=device)
+
 # Fix random seed
 def set_seed(seed=42):
     random.seed(seed)
@@ -30,33 +96,45 @@ def set_seed(seed=42):
     torch.backends.cudnn.benchmark = False
 
 class HyperedgeDataset(Dataset):
+    # Class-level symbolic mask (length SYM_DIM) set once per run in main(); when not None,
+    # each node's masked Stage-2 symbolic vector is concatenated onto its 768-d embedding.
+    sym_mask = None
+
     def __init__(self, data_list):
         self.items = data_list
-        
+
     def __len__(self):
         return len(self.items)
-        
+
     def __getitem__(self, idx):
         item = self.items[idx]
-        
-        # Extract function features (768)
-        func_emb = item['node_features']['function']
-        
-        # Extract state variables features (dict)
-        sv_embs = list(item['node_features']['state_vars'].values())
-        
-        # Extract external calls features (list of dicts)
-        ec_embs = [ec['embedding'] for ec in item['node_features']['external_calls']]
-        
-        # Combine into a single sequence of node features
-        # Sequence: [func] + [svs] + [ecs]
-        all_node_features = [func_emb] + sv_embs + ec_embs
-        
-        # Convert to tensor
-        x = torch.tensor(all_node_features, dtype=torch.float32)
-        label = float(item.get('label', 0.0))
-        
-        return x, label, item
+        nf = item['node_features']
+        sv_names = list(nf['state_vars'].keys())
+        # Node sequence: [func] + [state vars] + [external calls]
+        emb_nodes = ([nf['function']]
+                     + [nf['state_vars'][n] for n in sv_names]
+                     + [ec['embedding'] for ec in nf['external_calls']])
+
+        mask = HyperedgeDataset.sym_mask
+        if mask is not None:
+            sym = item.get('_sym')
+            ncall = len(nf['external_calls'])
+            zero = [0.0] * SYM_DIM
+            if sym is not None:
+                csym = [(sym['external_calls'][i] if i < len(sym['external_calls']) else zero)
+                        for i in range(ncall)]
+                sym_nodes = ([sym['function']]
+                             + [sym['state_vars'].get(n, zero) for n in sv_names]
+                             + csym)
+            else:                                  # source unresolved -> zero symbolic
+                sym_nodes = [zero for _ in emb_nodes]
+            node_feats = [e + [v * m for v, m in zip(s, mask)]
+                          for e, s in zip(emb_nodes, sym_nodes)]
+        else:
+            node_feats = emb_nodes
+
+        x = torch.tensor(node_feats, dtype=torch.float32)
+        return x, float(item.get('label', 0.0)), item
 
 def collate_fn(batch):
     tensors, labels, items = zip(*batch)
@@ -69,7 +147,7 @@ def collate_fn(batch):
         num_nodes = t.size(0)
         padding_size = max_len - num_nodes
         if padding_size > 0:
-            padded_t = torch.cat([t, torch.zeros(padding_size, 768)], dim=0)
+            padded_t = torch.cat([t, torch.zeros(padding_size, t.size(1))], dim=0)
             mask = torch.cat([torch.ones(num_nodes, dtype=torch.bool), torch.zeros(padding_size, dtype=torch.bool)], dim=0)
         else:
             padded_t = t
@@ -88,7 +166,8 @@ def evaluate_model(model, dataloader, device):
     with torch.no_grad():
         for x, mask, labels, batch_items in dataloader:
             x, mask = x.to(device), mask.to(device)
-            logits, _ = model(x, mask)
+            node_types = build_node_types(batch_items, x.shape[1], device=device)
+            logits, _ = model(x, mask, node_types)
             probs = torch.sigmoid(logits).squeeze(-1).cpu().numpy()
             all_probs.extend(probs)
             all_labels.extend(labels.numpy())
@@ -96,10 +175,22 @@ def evaluate_model(model, dataloader, device):
             
     return np.array(all_probs), np.array(all_labels), all_items
 
-def main():
-    set_seed(42)
+def main(args=None):
+    if args is None:
+        args = parse_args([])
+    set_seed(args.seed)
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    print(f"Using device: {device}")
+    print(f"Using device: {device} | seed={args.seed} | fix_k={args.fix_k}")
+    use_scl = not args.no_scl
+    use_localize = not args.no_localize
+    use_sym = args.sym_mode != "off"
+    HyperedgeDataset.sym_mask = sym_mask(args.sym_mode) if use_sym else None
+    input_dim = 768 + (SYM_DIM if use_sym else 0)
+    print(f"Supervised Contrastive Calibration: {'ON' if use_scl else 'OFF'} "
+          f"(lambda={args.scl_lambda}, temp={args.scl_temperature}, "
+          f"hard_neg_weight={args.scl_hard_neg_weight}, proj_dim={args.scl_proj_dim})")
+    print(f"Interaction-Aware Localization Head: {'ON' if use_localize else 'OFF'}")
+    print(f"Symbolic node features: mode={args.sym_mode} | input_dim={input_dim}")
     
     # 1. Load datasets
     splits_dir = PROJECT_ROOT / "data" / "splits"
@@ -122,7 +213,29 @@ def main():
         liquity_data = json.load(f)
         
     print(f"Loaded train: {len(train_data)}, val: {len(val_data)}, test: {len(test_data)}, OZ: {len(oz_data)}, External (Maker/Bancor): {len(external_data)}, Aave: {len(aave_data)}, Liquity: {len(liquity_data)}.")
-    
+
+    # Attach Stage-2 symbolic sidecars (index-aligned *_sym.json) when sym features are on.
+    def attach_sym(data, features_path):
+        if not use_sym:
+            return
+        sp = features_path.with_name(features_path.stem + "_sym.json")
+        if not sp.exists():
+            raise FileNotFoundError(
+                f"--sym-mode {args.sym_mode} needs sidecar {sp.name}; "
+                f"run: python scripts/build_security_features.py")
+        syms = json.load(open(sp))
+        assert len(syms) == len(data), f"sidecar length {len(syms)} != data {len(data)} ({sp.name})"
+        for it, s in zip(data, syms):
+            it['_sym'] = s
+
+    attach_sym(train_data, splits_dir / "train_augmented.json")
+    attach_sym(val_data, splits_dir / "val_features.json")
+    attach_sym(test_data, splits_dir / "test_features.json")
+    attach_sym(oz_data, results_dir / "eval_clean_negatives_oz_features.json")
+    attach_sym(external_data, results_dir / "eval_clean_negatives_external.json")
+    attach_sym(aave_data, results_dir / "eval_clean_negatives_aave_split.json")
+    attach_sym(liquity_data, results_dir / "eval_clean_negatives_liquity.json")
+
     # Load OZ split mapping
     mapping_path = PROJECT_ROOT / "scratch" / "oz_split_mapping.json"
     with open(mapping_path) as f:
@@ -155,8 +268,8 @@ def main():
     bancor_data = [item for item in external_data if item.get("source") == "Bancor"]
     print(f"External Splits - MakerDAO: {len(makerdao_data)}, Bancor: {len(bancor_data)}")
     
-    # Sample fixed K_oz = 100 clean negatives from oz_train_data (reproducibly)
-    set_seed(42)
+    # Sample fixed K_oz = 100 clean negatives from oz_train_data (reproducibly, per seed)
+    set_seed(args.seed)
     sorted_oz_train = sorted(oz_train_data, key=lambda x: (x['file'], x['contract'], x['function']))
     sampled_oz_train = random.sample(sorted_oz_train, 100)
     
@@ -173,18 +286,18 @@ def main():
     test_dataset = HyperedgeDataset(test_data)
     test_loader = DataLoader(test_dataset, batch_size=32, shuffle=False, collate_fn=collate_fn)
     
-    # We sweep K_app (Aave clean negatives added to training)
+    # We sweep K_app (Aave clean negatives added to training); --fix-k pins it (de-confound).
     # Available Aave train: 225
-    sweep_K = [0, 50, 100, 150, 200, 225]
+    sweep_K = [args.fix_k] if args.fix_k is not None else [0, 50, 100, 150, 200, 225]
     sweep_results = []
-    
+
     for K in sweep_K:
         print("\n" + "="*60)
         print(f"Running Sweep for K_app = {K} (Adding {K} Aave clean negatives to training)")
         print("="*60)
-        
+
         # Set seed for reproducibility of sweep sampling and training
-        set_seed(42)
+        set_seed(args.seed)
         
         # Deterministically sample K items from aave_train_data
         sorted_aave_train = sorted(aave_train_data, key=lambda x: (x['file'], x['contract'], x['function']))
@@ -204,9 +317,13 @@ def main():
         neg_count = sum(1 for x in sweep_train_data if x.get('label', 0.0) == 0)
         pos_upweight = neg_count / pos_count if pos_count > 0 else 1.5
         
-        # Initialize model
-        model = HyperedgeClassifier(input_dim=768, hidden_dim=256, dropout=0.3).to(device)
-        optimizer = optim.Adam(model.parameters(), lr=1e-3, weight_decay=1e-5)
+        # Initialize model (+ projection head for contrastive calibration)
+        model = HyperedgeClassifier(input_dim=input_dim, hidden_dim=256, dropout=0.3,
+                                    localize=use_localize).to(device)
+        proj_head = ProjectionHead(in_dim=input_dim, hidden=256, out_dim=args.scl_proj_dim).to(device)
+        supcon = SupConLoss(temperature=args.scl_temperature)
+        params = list(model.parameters()) + (list(proj_head.parameters()) if use_scl else [])
+        optimizer = optim.Adam(params, lr=1e-3, weight_decay=1e-5)
         criterion = nn.BCEWithLogitsLoss(pos_weight=torch.tensor([pos_upweight], device=device))
         
         # Train with early stopping on val_data
@@ -217,12 +334,22 @@ def main():
         
         for epoch in range(1, 201):
             model.train()
+            proj_head.train()
             train_loss = 0.0
-            for x, mask, labels, _ in train_loader:
+            for x, mask, labels, batch_items in train_loader:
                 x, mask, labels = x.to(device), mask.to(device), labels.to(device)
                 optimizer.zero_grad()
-                logits, _ = model(x, mask)
-                loss = criterion(logits.squeeze(-1), labels)
+                # Encode once: logits fuse the set-pool head with the interaction-aware
+                # localization logit (Stage 4); pooled feeds the SCL projection (Stage 3).
+                node_types = build_node_types(batch_items, x.shape[1], device=device)
+                logits, pooled, _, _ = model.encode(x, mask, node_types)
+                ce_loss = criterion(logits.squeeze(-1), labels)
+                loss = ce_loss
+                if use_scl and args.scl_lambda > 0:
+                    z = proj_head(pooled)
+                    weights = scl_anchor_weights(batch_items, args.scl_hard_neg_weight, device)
+                    scl_loss = supcon(z, labels, weights=weights)
+                    loss = ce_loss + args.scl_lambda * scl_loss
                 loss.backward()
                 optimizer.step()
                 train_loss += loss.item() * x.size(0)
@@ -230,11 +357,14 @@ def main():
             
             # Validation evaluation
             model.eval()
+            proj_head.eval()
             val_loss = 0.0
             with torch.no_grad():
-                for x, mask, labels, _ in val_loader:
+                for x, mask, labels, val_items in val_loader:
                     x, mask, labels = x.to(device), mask.to(device), labels.to(device)
-                    logits, _ = model(x, mask)
+                    node_types = build_node_types(val_items, x.shape[1], device=device)
+                    logits, _ = model(x, mask, node_types)
+                    # Early stopping on CE only (SCL is a training-time regularizer).
                     loss = criterion(logits.squeeze(-1), labels)
                     val_loss += loss.item() * x.size(0)
             val_loss /= len(val_dataset)
@@ -303,9 +433,13 @@ def main():
             "total_neg": neg_count
         })
         
-    # Re-select best K_app based on lowest combined validation FPR in the stable region (50, 100, 150)
-    stable_results = [r for r in sweep_results if r["K"] in (50, 100, 150)]
-    best_sweep = min(stable_results, key=lambda x: (x["combined_val_fpr"], x["val_loss"]))
+    # Select best K_app. With --fix-k there is a single trained model; otherwise pick the
+    # lowest combined validation FPR in the stable region (50, 100, 150).
+    if args.fix_k is not None:
+        best_sweep = sweep_results[0]
+    else:
+        stable_results = [r for r in sweep_results if r["K"] in (50, 100, 150)]
+        best_sweep = min(stable_results, key=lambda x: (x["combined_val_fpr"], x["val_loss"]))
     best_K = best_sweep["K"]
     best_model_state = best_sweep["model_state"]
     best_threshold = best_sweep["threshold"]
@@ -317,16 +451,19 @@ def main():
     print(f"Sweep completed. Selected Best K_app: {best_K} with Combined Val FPR: {best_sweep['combined_val_fpr']*100:.2f}%")
     print("="*60)
     
-    # Save checkpoint
+    # Save checkpoint (tag + seed suffixed to keep ablation runs from clobbering each other)
+    arm = args.out_tag or "run"
+    tag = f"_{arm}_seed{args.seed}"
     checkpoint_dir = PROJECT_ROOT / "model"
     os.makedirs(checkpoint_dir, exist_ok=True)
-    torch.save(best_model_state, checkpoint_dir / "iteration3_checkpoint.pt")
-    
-    with open(checkpoint_dir / "threshold_config_iter3.json", "w") as fh:
+    torch.save(best_model_state, checkpoint_dir / f"iteration3_checkpoint{tag}.pt")
+
+    with open(checkpoint_dir / f"threshold_config_iter3{tag}.json", "w") as fh:
         json.dump({"best_threshold": float(best_threshold), "best_K": best_K, "val_recall": float(best_recall_val)}, fh, indent=2)
         
-    # Re-initialize best model for evaluation
-    model = HyperedgeClassifier(input_dim=768, hidden_dim=256, dropout=0.3).to(device)
+    # Re-initialize best model for evaluation (same localize/input_dim -> matching state_dict keys)
+    model = HyperedgeClassifier(input_dim=input_dim, hidden_dim=256, dropout=0.3,
+                                localize=use_localize).to(device)
     model.load_state_dict({k: v.to(device) for k, v in best_model_state.items()})
     model.eval()
     
@@ -441,8 +578,49 @@ def main():
     else:
         vuln_recalls["Delegatecall (SWC-112)"] = {"count": 0, "recall": "Unevaluated"}
         
+    # ---------------------------------------------------------------------------
+    # Persist machine-readable per-seed/per-arm artifact for cross-run aggregation
+    # (experiments/aggregate_ablation.py pools these into the multi-seed table).
+    # ---------------------------------------------------------------------------
+    def _ids(data_list):
+        return [f"{it.get('contract')}::{it.get('function') or it.get('ast_function')}"
+                for it in data_list]
+
+    def _holdout_record(probs, data_list, threshold):
+        probs = [float(p) for p in probs]
+        preds = [int(p >= threshold) for p in probs]
+        return {"n": len(data_list), "fp": int(sum(preds)),
+                "fpr": (sum(preds) / len(data_list)) if data_list else 0.0,
+                "threshold": float(threshold), "probs": probs, "ids": _ids(data_list)}
+
+    ablation_dir = results_dir / "ablation"
+    os.makedirs(ablation_dir, exist_ok=True)
+    artifact = {
+        "arm": arm, "seed": args.seed, "use_scl": use_scl, "use_localize": use_localize,
+        "sym_mode": args.sym_mode,
+        "scl_lambda": args.scl_lambda, "scl_hard_neg_weight": args.scl_hard_neg_weight,
+        "fix_k": args.fix_k, "K": best_K, "threshold": float(best_threshold),
+        "val_recall": float(best_recall_val),
+        "test": {
+            "n": len(test_data), "precision": float(p_opt), "recall": float(r_opt),
+            "f1": float(f1_opt), "f2": float(f2_opt), "pr_auc": float(pr_auc),
+            "roc_auc": float(roc_auc),
+            "probs": [float(p) for p in test_probs],
+            "labels": [int(l) for l in test_labels], "ids": _ids(test_items),
+        },
+        "holdouts": {
+            "OZ-Holdout": _holdout_record(oz_holdout_probs, oz_holdout_data, best_threshold),
+            "MakerDAO": _holdout_record(makerdao_probs, makerdao_data, best_threshold),
+            "Bancor": _holdout_record(bancor_probs, bancor_data, best_threshold),
+            "Liquity": _holdout_record(liquity_probs, liquity_data, best_threshold),
+        },
+    }
+    with open(ablation_dir / f"{arm}_seed{args.seed}.json", "w") as fh:
+        json.dump(artifact, fh)
+    print(f"Saved ablation artifact -> ablation/{arm}_seed{args.seed}.json")
+
     # Write report to iteration3_results.md
-    report_path = results_dir / "iteration3_results.md"
+    report_path = results_dir / f"iteration3_results{tag}.md"
     
     vuln_table_rows = []
     for vt, stats in vuln_recalls.items():
@@ -477,8 +655,9 @@ def main():
     
     report_content = f"""# HyperVul — Iteration 3 Retrained Classifier Results
 
-> **Model Checkpoint**: [iteration3_checkpoint.pt](file:///home/pollmix/Coding/HyperVul/model/iteration3_checkpoint.pt)  
-> **Best Clean Negative Training Count K_app**: `{best_K}` (Tuned on combined Validation set)  
+> **Model Checkpoint**: `model/iteration3_checkpoint{tag}.pt`
+> **Arm**: `{arm}` (SCL={'ON' if use_scl else 'OFF'}, Localization={'ON' if use_localize else 'OFF'}) · **Seed**: `{args.seed}`
+> **Clean Negative Training Count K_app**: `{best_K}` ({'fixed via --fix-k' if args.fix_k is not None else 'tuned on combined Validation set'})
 > **Chosen Decision Threshold**: `{best_threshold:.4f}`  
 > **Validation Recall**: `{best_recall_val*100:.2f}%`
 
@@ -543,17 +722,18 @@ We analyze the performance separately on cross-contract vs. intra-contract hyper
 
 ---
 
-## 7. Interpretation of Results & Findings
-- **Stable Optimum Selection**: Selected the best $K_{{app}} = {best_K}$ from the stable region (50, 100, 150) of the sweep. Restricting to this stable region prevents knife-edge noise-chasing (such as the artifact at $K_{{app}}=200$).
-- **In-Distribution Validation Bias**: Minimizing the combined validation FPR (which includes `Aave-Val`) favors the trained-on distribution. `Aave-Val` achieves a low 1.52% FPR because it is in-distribution with `Aave-Train`, whereas out-of-distribution holdout sets show significantly higher FPRs.
-- **Data Coverage Intervention is Ineffective**: Sourcing and training on clean application-level negatives did NOT consistently reduce out-of-distribution FPR. The metrics on the never-trained external holdout sets fluctuated marginally compared to the Iteration-2 baseline:
-  - **OZ-Holdout**: 38.10% $\rightarrow$ {fpr_oz_holdout*100:.2f}%
-  - **MakerDAO DSS**: 70.52% $\rightarrow$ {fpr_makerdao*100:.2f}%
-  - **Bancor V3**: 58.37% $\rightarrow$ {fpr_bancor*100:.2f}%
-  - **Liquity V1 (Fresh Probe)**: Sits at {fpr_liquity*100:.2f}%
-- **Persistent External Call Detector Behavior**: The intervention failed to resolve the "external call detector" behavior. The model still flags the majority of clean production interactions (e.g., MakerDAO FPR remains at {fpr_makerdao*100:.2f}%, and Bancor remains at {fpr_bancor*100:.2f}%). Because the flat node embeddings lack semantic awareness of safety checks or invariant sequences, the presence of any external call remains a strong trigger for positive vulnerability predictions.
-- **Rejection of G-HAN Hypothesis**: Cross-contract recall ({cross_r*100:.2f}%) and ROC-AUC ({cross_roc_auc*100:.2f}%) on the test set are higher than or comparable to intra-contract metrics. Thus, there is no cross-contract relational performance gap to close. Transitioning to G-HAN is not supported, as modifying the encoder architecture does not address the model's fundamental behavior of over-flagging external calls.
-- **Future Work Hypothesis**: Since data-coverage expansion provides only marginal/inconsistent impact and fails to resolve the underlying external call detector behavior, future work should focus on alternative representations or architectures that incorporate semantic control-flow logic and checking invariants.
+## 7. Run Configuration & Measured Summary
+> Single run: **seed={args.seed}**, arm=**{arm}** (SCL={'ON' if use_scl else 'OFF'}, Localization={'ON' if use_localize else 'OFF'}), K_app={best_K} ({'fixed' if args.fix_k is not None else 'sweep-selected'}), threshold={best_threshold:.4f}.
+> Numbers below are this single run only — **cross-arm comparison, multi-seed mean±σ, Wilson CIs and paired significance live in the aggregate report** (`experiments/aggregate_ablation.py`). Do not draw conclusions from a single seed.
+
+- **Test (in-distribution)**: F1 {f1_opt*100:.2f}%, Precision {p_opt*100:.2f}%, Recall {r_opt*100:.2f}%, PR-AUC {pr_auc*100:.2f}%, ROC-AUC {roc_auc*100:.2f}%.
+- **OOD holdout FPR (point [95% Wilson])**:
+  - OZ-Holdout (library): {fpr_oz_holdout*100:.2f}% [{oz_ci_lower*100:.2f}%, {oz_ci_upper*100:.2f}%]
+  - MakerDAO DSS: {fpr_makerdao*100:.2f}% [{maker_ci_lower*100:.2f}%, {maker_ci_upper*100:.2f}%]
+  - Bancor V3: {fpr_bancor*100:.2f}% [{bancor_ci_lower*100:.2f}%, {bancor_ci_upper*100:.2f}%]
+  - Liquity V1: {fpr_liquity*100:.2f}% [{liquity_ci_lower*100:.2f}%, {liquity_ci_upper*100:.2f}%]
+- **Cross- vs intra-contract (test)**: cross F1 {cross_f1*100:.2f}% (recall {cross_r*100:.2f}%), intra F1 {intra_f1*100:.2f}% (recall {intra_r*100:.2f}%).
+- **Caveat**: in-distribution `Aave-Val` FPR is optimistic (shares distribution with `Aave-Train`); the OZ/MakerDAO/Bancor/Liquity holdouts are the OOD generalization signal.
 """
     
     with open(report_path, "w") as fh:
@@ -562,4 +742,4 @@ We analyze the performance separately on cross-contract vs. intra-contract hyper
     print("Training and evaluation completed successfully!")
 
 if __name__ == '__main__':
-    main()
+    main(parse_args())

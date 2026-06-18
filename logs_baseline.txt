@@ -1,0 +1,186 @@
+Using device: cuda
+Supervised Contrastive Calibration: OFF (lambda=0.5, temp=0.1, hard_neg_weight=3.0, proj_dim=128)
+Interaction-Aware Localization Head: OFF
+Loading datasets...
+Loaded train: 1381, val: 189, test: 169, OZ: 600, External (Maker/Bancor): 633, Aave: 291, Liquity: 279.
+OZ Splits - Train: 510, Val: 27, Holdout: 63
+Aave Splits - Train: 225, Val: 66
+External Splits - MakerDAO: 424, Bancor: 209
+
+============================================================
+Running Sweep for K_app = 0 (Adding 0 Aave clean negatives to training)
+============================================================
+K_app=0 | Best Val Loss: 0.5435 | Threshold: 0.0781 | Val Recall: 97.30% | Combined Val FPR: 15.05% (OZ: 14.81%, Aave: 15.15%)
+
+============================================================
+Running Sweep for K_app = 50 (Adding 50 Aave clean negatives to training)
+============================================================
+K_app=50 | Best Val Loss: 0.5363 | Threshold: 0.1412 | Val Recall: 97.30% | Combined Val FPR: 9.68% (OZ: 14.81%, Aave: 7.58%)
+
+============================================================
+Running Sweep for K_app = 100 (Adding 100 Aave clean negatives to training)
+============================================================
+K_app=100 | Best Val Loss: 0.5498 | Threshold: 0.1826 | Val Recall: 97.30% | Combined Val FPR: 5.38% (OZ: 11.11%, Aave: 3.03%)
+
+============================================================
+Running Sweep for K_app = 150 (Adding 150 Aave clean negatives to training)
+============================================================
+K_app=150 | Best Val Loss: 0.6334 | Threshold: 0.1925 | Val Recall: 97.30% | Combined Val FPR: 5.38% (OZ: 11.11%, Aave: 3.03%)
+
+============================================================
+Running Sweep for K_app = 200 (Adding 200 Aave clean negatives to training)
+============================================================
+K_app=200 | Best Val Loss: 0.6318 | Threshold: 0.1669 | Val Recall: 97.30% | Combined Val FPR: 9.68% (OZ: 25.93%, Aave: 3.03%)
+
+============================================================
+Running Sweep for K_app = 225 (Adding 225 Aave clean negatives to training)
+============================================================
+K_app=225 | Best Val Loss: 0.5820 | Threshold: 0.1570 | Val Recall: 97.30% | Combined Val FPR: 3.23% (OZ: 11.11%, Aave: 0.00%)
+
+============================================================
+Sweep completed. Selected Best K_app: 100 with Combined Val FPR: 5.38%
+============================================================
+
+Evaluating on holdout sets...
+
+Per-vulnerability-type recall on test set:
+  Reentrancy (SWC-107): count=23, recall=91.30%
+  Front-running / Tx Order (SWC-114): count=15, recall=100.00%
+  Unchecked Call Return (SWC-104): count=6, recall=100.00%
+Saved iteration3_results.md to /home/pollmix/Coding/HyperVul/experiments/results/
+Training and evaluation completed successfully!
+Using device: cuda | seed=42 | fix_k=100
+Supervised Contrastive Calibration: OFF (lambda=0.5, temp=0.1, hard_neg_weight=3.0, proj_dim=128)
+Interaction-Aware Localization Head: OFF
+Loading datasets...
+Loaded train: 1381, val: 189, test: 169, OZ: 600, External (Maker/Bancor): 633, Aave: 291, Liquity: 279.
+OZ Splits - Train: 510, Val: 27, Holdout: 63
+Aave Splits - Train: 225, Val: 66
+External Splits - MakerDAO: 424, Bancor: 209
+
+============================================================
+Running Sweep for K_app = 100 (Adding 100 Aave clean negatives to training)
+============================================================
+K_app=100 | Best Val Loss: 0.5498 | Threshold: 0.1826 | Val Recall: 97.30% | Combined Val FPR: 5.38% (OZ: 11.11%, Aave: 3.03%)
+
+============================================================
+Sweep completed. Selected Best K_app: 100 with Combined Val FPR: 5.38%
+============================================================
+
+Evaluating on holdout sets...
+
+Per-vulnerability-type recall on test set:
+  Reentrancy (SWC-107): count=23, recall=91.30%
+  Front-running / Tx Order (SWC-114): count=15, recall=100.00%
+  Unchecked Call Return (SWC-104): count=6, recall=100.00%
+Saved ablation artifact -> ablation/baseline_seed42.json
+Saved iteration3_results.md to /home/pollmix/Coding/HyperVul/experiments/results/
+Training and evaluation completed successfully!
+Using device: cuda | seed=43 | fix_k=100
+Supervised Contrastive Calibration: OFF (lambda=0.5, temp=0.1, hard_neg_weight=3.0, proj_dim=128)
+Interaction-Aware Localization Head: OFF
+Loading datasets...
+Loaded train: 1381, val: 189, test: 169, OZ: 600, External (Maker/Bancor): 633, Aave: 291, Liquity: 279.
+OZ Splits - Train: 510, Val: 27, Holdout: 63
+Aave Splits - Train: 225, Val: 66
+External Splits - MakerDAO: 424, Bancor: 209
+
+============================================================
+Running Sweep for K_app = 100 (Adding 100 Aave clean negatives to training)
+============================================================
+K_app=100 | Best Val Loss: 0.6166 | Threshold: 0.0948 | Val Recall: 97.30% | Combined Val FPR: 8.60% (OZ: 18.52%, Aave: 4.55%)
+
+============================================================
+Sweep completed. Selected Best K_app: 100 with Combined Val FPR: 8.60%
+============================================================
+
+Evaluating on holdout sets...
+
+Per-vulnerability-type recall on test set:
+  Reentrancy (SWC-107): count=23, recall=91.30%
+  Front-running / Tx Order (SWC-114): count=15, recall=100.00%
+  Unchecked Call Return (SWC-104): count=6, recall=83.33%
+Saved ablation artifact -> ablation/baseline_seed43.json
+Saved iteration3_results.md to /home/pollmix/Coding/HyperVul/experiments/results/
+Training and evaluation completed successfully!
+Using device: cuda | seed=44 | fix_k=100
+Supervised Contrastive Calibration: OFF (lambda=0.5, temp=0.1, hard_neg_weight=3.0, proj_dim=128)
+Interaction-Aware Localization Head: OFF
+Loading datasets...
+Loaded train: 1381, val: 189, test: 169, OZ: 600, External (Maker/Bancor): 633, Aave: 291, Liquity: 279.
+OZ Splits - Train: 510, Val: 27, Holdout: 63
+Aave Splits - Train: 225, Val: 66
+External Splits - MakerDAO: 424, Bancor: 209
+
+============================================================
+Running Sweep for K_app = 100 (Adding 100 Aave clean negatives to training)
+============================================================
+K_app=100 | Best Val Loss: 0.5661 | Threshold: 0.2581 | Val Recall: 97.30% | Combined Val FPR: 4.30% (OZ: 7.41%, Aave: 3.03%)
+
+============================================================
+Sweep completed. Selected Best K_app: 100 with Combined Val FPR: 4.30%
+============================================================
+
+Evaluating on holdout sets...
+
+Per-vulnerability-type recall on test set:
+  Reentrancy (SWC-107): count=23, recall=100.00%
+  Front-running / Tx Order (SWC-114): count=15, recall=100.00%
+  Unchecked Call Return (SWC-104): count=6, recall=100.00%
+Saved ablation artifact -> ablation/baseline_seed44.json
+Saved iteration3_results.md to /home/pollmix/Coding/HyperVul/experiments/results/
+Training and evaluation completed successfully!
+Using device: cuda | seed=45 | fix_k=100
+Supervised Contrastive Calibration: OFF (lambda=0.5, temp=0.1, hard_neg_weight=3.0, proj_dim=128)
+Interaction-Aware Localization Head: OFF
+Loading datasets...
+Loaded train: 1381, val: 189, test: 169, OZ: 600, External (Maker/Bancor): 633, Aave: 291, Liquity: 279.
+OZ Splits - Train: 510, Val: 27, Holdout: 63
+Aave Splits - Train: 225, Val: 66
+External Splits - MakerDAO: 424, Bancor: 209
+
+============================================================
+Running Sweep for K_app = 100 (Adding 100 Aave clean negatives to training)
+============================================================
+K_app=100 | Best Val Loss: 0.5937 | Threshold: 0.1370 | Val Recall: 97.30% | Combined Val FPR: 7.53% (OZ: 14.81%, Aave: 4.55%)
+
+============================================================
+Sweep completed. Selected Best K_app: 100 with Combined Val FPR: 7.53%
+============================================================
+
+Evaluating on holdout sets...
+
+Per-vulnerability-type recall on test set:
+  Reentrancy (SWC-107): count=23, recall=91.30%
+  Front-running / Tx Order (SWC-114): count=15, recall=100.00%
+  Unchecked Call Return (SWC-104): count=6, recall=100.00%
+Saved ablation artifact -> ablation/baseline_seed45.json
+Saved iteration3_results.md to /home/pollmix/Coding/HyperVul/experiments/results/
+Training and evaluation completed successfully!
+Using device: cuda | seed=46 | fix_k=100
+Supervised Contrastive Calibration: OFF (lambda=0.5, temp=0.1, hard_neg_weight=3.0, proj_dim=128)
+Interaction-Aware Localization Head: OFF
+Loading datasets...
+Loaded train: 1381, val: 189, test: 169, OZ: 600, External (Maker/Bancor): 633, Aave: 291, Liquity: 279.
+OZ Splits - Train: 510, Val: 27, Holdout: 63
+Aave Splits - Train: 225, Val: 66
+External Splits - MakerDAO: 424, Bancor: 209
+
+============================================================
+Running Sweep for K_app = 100 (Adding 100 Aave clean negatives to training)
+============================================================
+K_app=100 | Best Val Loss: 0.5403 | Threshold: 0.1559 | Val Recall: 97.30% | Combined Val FPR: 6.45% (OZ: 14.81%, Aave: 3.03%)
+
+============================================================
+Sweep completed. Selected Best K_app: 100 with Combined Val FPR: 6.45%
+============================================================
+
+Evaluating on holdout sets...
+
+Per-vulnerability-type recall on test set:
+  Reentrancy (SWC-107): count=23, recall=91.30%
+  Front-running / Tx Order (SWC-114): count=15, recall=100.00%
+  Unchecked Call Return (SWC-104): count=6, recall=100.00%
+Saved ablation artifact -> ablation/baseline_seed46.json
+Saved iteration3_results.md to /home/pollmix/Coding/HyperVul/experiments/results/
+Training and evaluation completed successfully!
