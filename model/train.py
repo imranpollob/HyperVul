@@ -52,6 +52,12 @@ def parse_args(argv=None):
     p.add_argument("--out-tag", type=str, default="",
                    help="Optional suffix for checkpoint/report filenames to avoid "
                         "clobbering across ablations (e.g. 'scl', 'baseline').")
+    p.add_argument("--seed", type=int, default=42,
+                   help="Single training seed for this run. Multi-seed = invoke once per "
+                        "seed; experiments/aggregate_ablation.py pools the per-seed JSONs.")
+    p.add_argument("--fix-k", type=int, default=None,
+                   help="Train at this fixed K_app (Aave clean negatives) and SKIP the "
+                        "K-sweep. De-confounds the ablation (use e.g. --fix-k 100 in all arms).")
     return p.parse_args(argv)
 
 
@@ -154,9 +160,9 @@ def evaluate_model(model, dataloader, device):
 def main(args=None):
     if args is None:
         args = parse_args([])
-    set_seed(42)
+    set_seed(args.seed)
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    print(f"Using device: {device}")
+    print(f"Using device: {device} | seed={args.seed} | fix_k={args.fix_k}")
     use_scl = not args.no_scl
     use_localize = not args.no_localize
     print(f"Supervised Contrastive Calibration: {'ON' if use_scl else 'OFF'} "
@@ -218,8 +224,8 @@ def main(args=None):
     bancor_data = [item for item in external_data if item.get("source") == "Bancor"]
     print(f"External Splits - MakerDAO: {len(makerdao_data)}, Bancor: {len(bancor_data)}")
     
-    # Sample fixed K_oz = 100 clean negatives from oz_train_data (reproducibly)
-    set_seed(42)
+    # Sample fixed K_oz = 100 clean negatives from oz_train_data (reproducibly, per seed)
+    set_seed(args.seed)
     sorted_oz_train = sorted(oz_train_data, key=lambda x: (x['file'], x['contract'], x['function']))
     sampled_oz_train = random.sample(sorted_oz_train, 100)
     
@@ -236,18 +242,18 @@ def main(args=None):
     test_dataset = HyperedgeDataset(test_data)
     test_loader = DataLoader(test_dataset, batch_size=32, shuffle=False, collate_fn=collate_fn)
     
-    # We sweep K_app (Aave clean negatives added to training)
+    # We sweep K_app (Aave clean negatives added to training); --fix-k pins it (de-confound).
     # Available Aave train: 225
-    sweep_K = [0, 50, 100, 150, 200, 225]
+    sweep_K = [args.fix_k] if args.fix_k is not None else [0, 50, 100, 150, 200, 225]
     sweep_results = []
-    
+
     for K in sweep_K:
         print("\n" + "="*60)
         print(f"Running Sweep for K_app = {K} (Adding {K} Aave clean negatives to training)")
         print("="*60)
-        
+
         # Set seed for reproducibility of sweep sampling and training
-        set_seed(42)
+        set_seed(args.seed)
         
         # Deterministically sample K items from aave_train_data
         sorted_aave_train = sorted(aave_train_data, key=lambda x: (x['file'], x['contract'], x['function']))
@@ -383,9 +389,13 @@ def main(args=None):
             "total_neg": neg_count
         })
         
-    # Re-select best K_app based on lowest combined validation FPR in the stable region (50, 100, 150)
-    stable_results = [r for r in sweep_results if r["K"] in (50, 100, 150)]
-    best_sweep = min(stable_results, key=lambda x: (x["combined_val_fpr"], x["val_loss"]))
+    # Select best K_app. With --fix-k there is a single trained model; otherwise pick the
+    # lowest combined validation FPR in the stable region (50, 100, 150).
+    if args.fix_k is not None:
+        best_sweep = sweep_results[0]
+    else:
+        stable_results = [r for r in sweep_results if r["K"] in (50, 100, 150)]
+        best_sweep = min(stable_results, key=lambda x: (x["combined_val_fpr"], x["val_loss"]))
     best_K = best_sweep["K"]
     best_model_state = best_sweep["model_state"]
     best_threshold = best_sweep["threshold"]
@@ -397,8 +407,9 @@ def main(args=None):
     print(f"Sweep completed. Selected Best K_app: {best_K} with Combined Val FPR: {best_sweep['combined_val_fpr']*100:.2f}%")
     print("="*60)
     
-    # Save checkpoint (tag-suffixed to keep ablation runs from clobbering each other)
-    tag = f"_{args.out_tag}" if args.out_tag else ""
+    # Save checkpoint (tag + seed suffixed to keep ablation runs from clobbering each other)
+    arm = args.out_tag or "run"
+    tag = f"_{arm}_seed{args.seed}"
     checkpoint_dir = PROJECT_ROOT / "model"
     os.makedirs(checkpoint_dir, exist_ok=True)
     torch.save(best_model_state, checkpoint_dir / f"iteration3_checkpoint{tag}.pt")
@@ -523,6 +534,46 @@ def main(args=None):
     else:
         vuln_recalls["Delegatecall (SWC-112)"] = {"count": 0, "recall": "Unevaluated"}
         
+    # ---------------------------------------------------------------------------
+    # Persist machine-readable per-seed/per-arm artifact for cross-run aggregation
+    # (experiments/aggregate_ablation.py pools these into the multi-seed table).
+    # ---------------------------------------------------------------------------
+    def _ids(data_list):
+        return [f"{it.get('contract')}::{it.get('function') or it.get('ast_function')}"
+                for it in data_list]
+
+    def _holdout_record(probs, data_list, threshold):
+        probs = [float(p) for p in probs]
+        preds = [int(p >= threshold) for p in probs]
+        return {"n": len(data_list), "fp": int(sum(preds)),
+                "fpr": (sum(preds) / len(data_list)) if data_list else 0.0,
+                "threshold": float(threshold), "probs": probs, "ids": _ids(data_list)}
+
+    ablation_dir = results_dir / "ablation"
+    os.makedirs(ablation_dir, exist_ok=True)
+    artifact = {
+        "arm": arm, "seed": args.seed, "use_scl": use_scl, "use_localize": use_localize,
+        "scl_lambda": args.scl_lambda, "scl_hard_neg_weight": args.scl_hard_neg_weight,
+        "fix_k": args.fix_k, "K": best_K, "threshold": float(best_threshold),
+        "val_recall": float(best_recall_val),
+        "test": {
+            "n": len(test_data), "precision": float(p_opt), "recall": float(r_opt),
+            "f1": float(f1_opt), "f2": float(f2_opt), "pr_auc": float(pr_auc),
+            "roc_auc": float(roc_auc),
+            "probs": [float(p) for p in test_probs],
+            "labels": [int(l) for l in test_labels], "ids": _ids(test_items),
+        },
+        "holdouts": {
+            "OZ-Holdout": _holdout_record(oz_holdout_probs, oz_holdout_data, best_threshold),
+            "MakerDAO": _holdout_record(makerdao_probs, makerdao_data, best_threshold),
+            "Bancor": _holdout_record(bancor_probs, bancor_data, best_threshold),
+            "Liquity": _holdout_record(liquity_probs, liquity_data, best_threshold),
+        },
+    }
+    with open(ablation_dir / f"{arm}_seed{args.seed}.json", "w") as fh:
+        json.dump(artifact, fh)
+    print(f"Saved ablation artifact -> ablation/{arm}_seed{args.seed}.json")
+
     # Write report to iteration3_results.md
     report_path = results_dir / f"iteration3_results{tag}.md"
     
@@ -559,8 +610,9 @@ def main(args=None):
     
     report_content = f"""# HyperVul — Iteration 3 Retrained Classifier Results
 
-> **Model Checkpoint**: [iteration3_checkpoint.pt](file:///home/pollmix/Coding/HyperVul/model/iteration3_checkpoint.pt)  
-> **Best Clean Negative Training Count K_app**: `{best_K}` (Tuned on combined Validation set)  
+> **Model Checkpoint**: `model/iteration3_checkpoint{tag}.pt`
+> **Arm**: `{arm}` (SCL={'ON' if use_scl else 'OFF'}, Localization={'ON' if use_localize else 'OFF'}) · **Seed**: `{args.seed}`
+> **Clean Negative Training Count K_app**: `{best_K}` ({'fixed via --fix-k' if args.fix_k is not None else 'tuned on combined Validation set'})
 > **Chosen Decision Threshold**: `{best_threshold:.4f}`  
 > **Validation Recall**: `{best_recall_val*100:.2f}%`
 
@@ -625,17 +677,18 @@ We analyze the performance separately on cross-contract vs. intra-contract hyper
 
 ---
 
-## 7. Interpretation of Results & Findings
-- **Stable Optimum Selection**: Selected the best $K_{{app}} = {best_K}$ from the stable region (50, 100, 150) of the sweep. Restricting to this stable region prevents knife-edge noise-chasing (such as the artifact at $K_{{app}}=200$).
-- **In-Distribution Validation Bias**: Minimizing the combined validation FPR (which includes `Aave-Val`) favors the trained-on distribution. `Aave-Val` achieves a low 1.52% FPR because it is in-distribution with `Aave-Train`, whereas out-of-distribution holdout sets show significantly higher FPRs.
-- **Data Coverage Intervention is Ineffective**: Sourcing and training on clean application-level negatives did NOT consistently reduce out-of-distribution FPR. The metrics on the never-trained external holdout sets fluctuated marginally compared to the Iteration-2 baseline:
-  - **OZ-Holdout**: 38.10% $\rightarrow$ {fpr_oz_holdout*100:.2f}%
-  - **MakerDAO DSS**: 70.52% $\rightarrow$ {fpr_makerdao*100:.2f}%
-  - **Bancor V3**: 58.37% $\rightarrow$ {fpr_bancor*100:.2f}%
-  - **Liquity V1 (Fresh Probe)**: Sits at {fpr_liquity*100:.2f}%
-- **Persistent External Call Detector Behavior**: The intervention failed to resolve the "external call detector" behavior. The model still flags the majority of clean production interactions (e.g., MakerDAO FPR remains at {fpr_makerdao*100:.2f}%, and Bancor remains at {fpr_bancor*100:.2f}%). Because the flat node embeddings lack semantic awareness of safety checks or invariant sequences, the presence of any external call remains a strong trigger for positive vulnerability predictions.
-- **Rejection of G-HAN Hypothesis**: Cross-contract recall ({cross_r*100:.2f}%) and ROC-AUC ({cross_roc_auc*100:.2f}%) on the test set are higher than or comparable to intra-contract metrics. Thus, there is no cross-contract relational performance gap to close. Transitioning to G-HAN is not supported, as modifying the encoder architecture does not address the model's fundamental behavior of over-flagging external calls.
-- **Future Work Hypothesis**: Since data-coverage expansion provides only marginal/inconsistent impact and fails to resolve the underlying external call detector behavior, future work should focus on alternative representations or architectures that incorporate semantic control-flow logic and checking invariants.
+## 7. Run Configuration & Measured Summary
+> Single run: **seed={args.seed}**, arm=**{arm}** (SCL={'ON' if use_scl else 'OFF'}, Localization={'ON' if use_localize else 'OFF'}), K_app={best_K} ({'fixed' if args.fix_k is not None else 'sweep-selected'}), threshold={best_threshold:.4f}.
+> Numbers below are this single run only — **cross-arm comparison, multi-seed mean±σ, Wilson CIs and paired significance live in the aggregate report** (`experiments/aggregate_ablation.py`). Do not draw conclusions from a single seed.
+
+- **Test (in-distribution)**: F1 {f1_opt*100:.2f}%, Precision {p_opt*100:.2f}%, Recall {r_opt*100:.2f}%, PR-AUC {pr_auc*100:.2f}%, ROC-AUC {roc_auc*100:.2f}%.
+- **OOD holdout FPR (point [95% Wilson])**:
+  - OZ-Holdout (library): {fpr_oz_holdout*100:.2f}% [{oz_ci_lower*100:.2f}%, {oz_ci_upper*100:.2f}%]
+  - MakerDAO DSS: {fpr_makerdao*100:.2f}% [{maker_ci_lower*100:.2f}%, {maker_ci_upper*100:.2f}%]
+  - Bancor V3: {fpr_bancor*100:.2f}% [{bancor_ci_lower*100:.2f}%, {bancor_ci_upper*100:.2f}%]
+  - Liquity V1: {fpr_liquity*100:.2f}% [{liquity_ci_lower*100:.2f}%, {liquity_ci_upper*100:.2f}%]
+- **Cross- vs intra-contract (test)**: cross F1 {cross_f1*100:.2f}% (recall {cross_r*100:.2f}%), intra F1 {intra_f1*100:.2f}% (recall {intra_r*100:.2f}%).
+- **Caveat**: in-distribution `Aave-Val` FPR is optimistic (shares distribution with `Aave-Train`); the OZ/MakerDAO/Bancor/Liquity holdouts are the OOD generalization signal.
 """
     
     with open(report_path, "w") as fh:
