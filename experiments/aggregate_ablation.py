@@ -20,7 +20,10 @@ import math
 from collections import defaultdict
 from pathlib import Path
 
+import numpy as np
 from scipy.stats import binomtest
+
+TARGET_RECALL = 0.90   # operating point for the matched-recall FPR comparison
 
 PROJECT_ROOT = Path("/home/pollmix/Coding/HyperVul")
 ABLATION_DIR = PROJECT_ROOT / "experiments" / "results" / "ablation"
@@ -28,7 +31,7 @@ OUT_PATH = PROJECT_ROOT / "experiments" / "results" / "ablation_summary.md"
 
 HOLDOUTS = ["OZ-Holdout", "MakerDAO", "Bancor", "Liquity"]
 # Canonical arm display order (only those present are shown).
-ARM_ORDER = ["baseline", "scl", "full"]
+ARM_ORDER = ["baseline", "scl", "full", "secnone", "secsec", "secfull"]
 TEST_METRICS = ["f1", "precision", "recall", "f2", "pr_auc", "roc_auc"]
 
 
@@ -91,8 +94,34 @@ def mcnemar_pooled(runs, arm_a, arm_b, holdout):
     return b, c, p
 
 
+def thr_for_recall(probs, labels, target):
+    """Highest threshold whose test recall >= target (matched operating point)."""
+    probs = np.asarray(probs); labels = np.asarray(labels)
+    pos = labels == 1
+    if pos.sum() == 0:
+        return 0.5
+    best = 0.0
+    for t in np.linspace(0, 1, 2001):
+        rec = ((probs >= t) & pos).sum() / pos.sum()
+        if rec >= target:
+            best = t
+    return best
+
+
+def matched_recall_fpr(runs, arm, holdout, target):
+    """Per-seed holdout FPR at the threshold that hits `target` test recall; returns list."""
+    out = []
+    for s in runs[arm]:
+        art = runs[arm][s]
+        thr = thr_for_recall(art["test"]["probs"], art["test"]["labels"], target)
+        pr = np.asarray(art["holdouts"][holdout]["probs"])
+        out.append(float((pr >= thr).mean()))
+    return out
+
+
 def fmt_arm(a):
-    return {"baseline": "Baseline", "scl": "+SCL", "full": "+SCL+Loc"}.get(a, a)
+    return {"baseline": "Baseline", "scl": "+SCL", "full": "+SCL+Loc",
+            "secnone": "Sym:none", "secsec": "Sym:security", "secfull": "Sym:full"}.get(a, a)
 
 
 def main():
@@ -152,6 +181,24 @@ def main():
     lines.append("")
     lines.append("> Lower-FPR arm = the one with the smaller own-only-FP count. A significant p with "
                  "c < b means Arm B fixed more clean-code false positives than it introduced.")
+
+    # ---- Table 4: matched-recall FPR (the fair comparison) ----
+    lines.append("")
+    lines.append(f"## 4. OOD Holdout FPR at MATCHED test-recall ({TARGET_RECALL:.0%}) — mean ± std\n")
+    lines.append("Fairer than §1: all-clean holdout FPR is threshold-driven, so each arm/seed is "
+                 "evaluated at the threshold that yields the same test recall. Removes the "
+                 "per-arm threshold-tuning confound.\n")
+    lines.append("| Arm | " + " | ".join(HOLDOUTS) + " |")
+    lines.append("| :-- | " + " | ".join([":--:"] * len(HOLDOUTS)) + " |")
+    for a in arms:
+        cells = [fmt_arm(a)]
+        for h in HOLDOUTS:
+            fprs = matched_recall_fpr(runs, a, h, TARGET_RECALL)
+            m, sd = mean_std(fprs)
+            cells.append(f"{m*100:.1f}±{sd*100:.1f}")
+        lines.append("| " + " | ".join(cells) + " |")
+    lines.append("")
+    lines.append("> This is the operating-point-controlled view. Compare arms here, not in §1.")
 
     report = "\n".join(lines)
     OUT_PATH.write_text(report)

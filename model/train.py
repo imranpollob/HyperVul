@@ -22,6 +22,7 @@ except ModuleNotFoundError:
     from model import HyperedgeClassifier
 
 from src.models.ops import ProjectionHead, SupConLoss, build_node_types
+from src.models.symbolic import SYM_DIM, sym_mask
 
 # ---------------------------------------------------------------------------
 # Stage 3 — Supervised Contrastive Calibration defaults
@@ -58,6 +59,11 @@ def parse_args(argv=None):
     p.add_argument("--fix-k", type=int, default=None,
                    help="Train at this fixed K_app (Aave clean negatives) and SKIP the "
                         "K-sweep. De-confounds the ablation (use e.g. --fix-k 100 in all arms).")
+    p.add_argument("--sym-mode", choices=["off", "none", "security", "full"], default="off",
+                   help="Stage-2 symbolic node features concatenated onto embeddings: "
+                        "off=768-d only; none=zeroed symbolic (arch-matched baseline); "
+                        "security=safety slots only (target_kind/security_context/cross/nonReentrant); "
+                        "full=all symbolic. Requires *_sym.json sidecars (build_security_features.py).")
     return p.parse_args(argv)
 
 
@@ -90,33 +96,45 @@ def set_seed(seed=42):
     torch.backends.cudnn.benchmark = False
 
 class HyperedgeDataset(Dataset):
+    # Class-level symbolic mask (length SYM_DIM) set once per run in main(); when not None,
+    # each node's masked Stage-2 symbolic vector is concatenated onto its 768-d embedding.
+    sym_mask = None
+
     def __init__(self, data_list):
         self.items = data_list
-        
+
     def __len__(self):
         return len(self.items)
-        
+
     def __getitem__(self, idx):
         item = self.items[idx]
-        
-        # Extract function features (768)
-        func_emb = item['node_features']['function']
-        
-        # Extract state variables features (dict)
-        sv_embs = list(item['node_features']['state_vars'].values())
-        
-        # Extract external calls features (list of dicts)
-        ec_embs = [ec['embedding'] for ec in item['node_features']['external_calls']]
-        
-        # Combine into a single sequence of node features
-        # Sequence: [func] + [svs] + [ecs]
-        all_node_features = [func_emb] + sv_embs + ec_embs
-        
-        # Convert to tensor
-        x = torch.tensor(all_node_features, dtype=torch.float32)
-        label = float(item.get('label', 0.0))
-        
-        return x, label, item
+        nf = item['node_features']
+        sv_names = list(nf['state_vars'].keys())
+        # Node sequence: [func] + [state vars] + [external calls]
+        emb_nodes = ([nf['function']]
+                     + [nf['state_vars'][n] for n in sv_names]
+                     + [ec['embedding'] for ec in nf['external_calls']])
+
+        mask = HyperedgeDataset.sym_mask
+        if mask is not None:
+            sym = item.get('_sym')
+            ncall = len(nf['external_calls'])
+            zero = [0.0] * SYM_DIM
+            if sym is not None:
+                csym = [(sym['external_calls'][i] if i < len(sym['external_calls']) else zero)
+                        for i in range(ncall)]
+                sym_nodes = ([sym['function']]
+                             + [sym['state_vars'].get(n, zero) for n in sv_names]
+                             + csym)
+            else:                                  # source unresolved -> zero symbolic
+                sym_nodes = [zero for _ in emb_nodes]
+            node_feats = [e + [v * m for v, m in zip(s, mask)]
+                          for e, s in zip(emb_nodes, sym_nodes)]
+        else:
+            node_feats = emb_nodes
+
+        x = torch.tensor(node_feats, dtype=torch.float32)
+        return x, float(item.get('label', 0.0)), item
 
 def collate_fn(batch):
     tensors, labels, items = zip(*batch)
@@ -129,7 +147,7 @@ def collate_fn(batch):
         num_nodes = t.size(0)
         padding_size = max_len - num_nodes
         if padding_size > 0:
-            padded_t = torch.cat([t, torch.zeros(padding_size, 768)], dim=0)
+            padded_t = torch.cat([t, torch.zeros(padding_size, t.size(1))], dim=0)
             mask = torch.cat([torch.ones(num_nodes, dtype=torch.bool), torch.zeros(padding_size, dtype=torch.bool)], dim=0)
         else:
             padded_t = t
@@ -165,10 +183,14 @@ def main(args=None):
     print(f"Using device: {device} | seed={args.seed} | fix_k={args.fix_k}")
     use_scl = not args.no_scl
     use_localize = not args.no_localize
+    use_sym = args.sym_mode != "off"
+    HyperedgeDataset.sym_mask = sym_mask(args.sym_mode) if use_sym else None
+    input_dim = 768 + (SYM_DIM if use_sym else 0)
     print(f"Supervised Contrastive Calibration: {'ON' if use_scl else 'OFF'} "
           f"(lambda={args.scl_lambda}, temp={args.scl_temperature}, "
           f"hard_neg_weight={args.scl_hard_neg_weight}, proj_dim={args.scl_proj_dim})")
     print(f"Interaction-Aware Localization Head: {'ON' if use_localize else 'OFF'}")
+    print(f"Symbolic node features: mode={args.sym_mode} | input_dim={input_dim}")
     
     # 1. Load datasets
     splits_dir = PROJECT_ROOT / "data" / "splits"
@@ -191,7 +213,29 @@ def main(args=None):
         liquity_data = json.load(f)
         
     print(f"Loaded train: {len(train_data)}, val: {len(val_data)}, test: {len(test_data)}, OZ: {len(oz_data)}, External (Maker/Bancor): {len(external_data)}, Aave: {len(aave_data)}, Liquity: {len(liquity_data)}.")
-    
+
+    # Attach Stage-2 symbolic sidecars (index-aligned *_sym.json) when sym features are on.
+    def attach_sym(data, features_path):
+        if not use_sym:
+            return
+        sp = features_path.with_name(features_path.stem + "_sym.json")
+        if not sp.exists():
+            raise FileNotFoundError(
+                f"--sym-mode {args.sym_mode} needs sidecar {sp.name}; "
+                f"run: python scripts/build_security_features.py")
+        syms = json.load(open(sp))
+        assert len(syms) == len(data), f"sidecar length {len(syms)} != data {len(data)} ({sp.name})"
+        for it, s in zip(data, syms):
+            it['_sym'] = s
+
+    attach_sym(train_data, splits_dir / "train_augmented.json")
+    attach_sym(val_data, splits_dir / "val_features.json")
+    attach_sym(test_data, splits_dir / "test_features.json")
+    attach_sym(oz_data, results_dir / "eval_clean_negatives_oz_features.json")
+    attach_sym(external_data, results_dir / "eval_clean_negatives_external.json")
+    attach_sym(aave_data, results_dir / "eval_clean_negatives_aave_split.json")
+    attach_sym(liquity_data, results_dir / "eval_clean_negatives_liquity.json")
+
     # Load OZ split mapping
     mapping_path = PROJECT_ROOT / "scratch" / "oz_split_mapping.json"
     with open(mapping_path) as f:
@@ -274,9 +318,9 @@ def main(args=None):
         pos_upweight = neg_count / pos_count if pos_count > 0 else 1.5
         
         # Initialize model (+ projection head for contrastive calibration)
-        model = HyperedgeClassifier(input_dim=768, hidden_dim=256, dropout=0.3,
+        model = HyperedgeClassifier(input_dim=input_dim, hidden_dim=256, dropout=0.3,
                                     localize=use_localize).to(device)
-        proj_head = ProjectionHead(in_dim=768, hidden=256, out_dim=args.scl_proj_dim).to(device)
+        proj_head = ProjectionHead(in_dim=input_dim, hidden=256, out_dim=args.scl_proj_dim).to(device)
         supcon = SupConLoss(temperature=args.scl_temperature)
         params = list(model.parameters()) + (list(proj_head.parameters()) if use_scl else [])
         optimizer = optim.Adam(params, lr=1e-3, weight_decay=1e-5)
@@ -417,8 +461,8 @@ def main(args=None):
     with open(checkpoint_dir / f"threshold_config_iter3{tag}.json", "w") as fh:
         json.dump({"best_threshold": float(best_threshold), "best_K": best_K, "val_recall": float(best_recall_val)}, fh, indent=2)
         
-    # Re-initialize best model for evaluation (same localize setting -> matching state_dict keys)
-    model = HyperedgeClassifier(input_dim=768, hidden_dim=256, dropout=0.3,
+    # Re-initialize best model for evaluation (same localize/input_dim -> matching state_dict keys)
+    model = HyperedgeClassifier(input_dim=input_dim, hidden_dim=256, dropout=0.3,
                                 localize=use_localize).to(device)
     model.load_state_dict({k: v.to(device) for k, v in best_model_state.items()})
     model.eval()
@@ -553,6 +597,7 @@ def main(args=None):
     os.makedirs(ablation_dir, exist_ok=True)
     artifact = {
         "arm": arm, "seed": args.seed, "use_scl": use_scl, "use_localize": use_localize,
+        "sym_mode": args.sym_mode,
         "scl_lambda": args.scl_lambda, "scl_hard_neg_weight": args.scl_hard_neg_weight,
         "fix_k": args.fix_k, "K": best_K, "threshold": float(best_threshold),
         "val_recall": float(best_recall_val),

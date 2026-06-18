@@ -38,3 +38,15 @@ Seeds per arm: **Baseline**=[42, 43, 44, 45, 46], **+SCL**=[42, 43, 44, 45, 46],
 | +SCL vs +SCL+Loc | Liquity | 201 | 185 | 0.4452 |
 
 > Lower-FPR arm = the one with the smaller own-only-FP count. A significant p with c < b means Arm B fixed more clean-code false positives than it introduced.
+
+## 4. OOD Holdout FPR at MATCHED test-recall (90%) — mean ± std
+
+Fairer than §1: all-clean holdout FPR is threshold-driven, so each arm/seed is evaluated at the threshold that yields the same test recall. Removes the per-arm threshold-tuning confound.
+
+| Arm | OZ-Holdout | MakerDAO | Bancor | Liquity |
+| :-- | :--: | :--: | :--: | :--: |
+| Baseline | 26.0±9.7 | 43.7±6.6 | 41.4±9.1 | 24.4±12.0 |
+| +SCL | 24.4±9.6 | 44.9±8.2 | 43.0±7.5 | 26.9±6.0 |
+| +SCL+Loc | 33.7±7.6 | 60.1±11.2 | 36.7±8.3 | 35.0±16.0 |
+
+> This is the operating-point-controlled view. Compare arms here, not in §1.
