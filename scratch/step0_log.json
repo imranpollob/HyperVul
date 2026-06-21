@@ -1,0 +1,18 @@
+{
+ "task8_dropped": [
+  "train:OctoDistributor.transferHiringDistributions vfp=vfp_00084",
+  "train:OctoDistributor.withdrawAllAgentTokens vfp=vfp_00084",
+  "train:MainFeeDistributor.swapLzToken vfp=vfp_00237",
+  "train:FlashLoans.flashLoan vfp=vfp_00281",
+  "train:FlashLoans.flashLoan vfp=vfp_00281"
+ ],
+ "scaffold_dropped": [],
+ "box_moved": [
+  "Box.maxWithdraw label=0 train->test",
+  "Box.removeFunding label=0 train->test",
+  "Box.addFunding label=0 train->test",
+  "Box._debtBalance label=0 train->test",
+  "Box.addToken label=0 train->test",
+  "Box.maxRedeem label=0 train->test"
+ ]
+}

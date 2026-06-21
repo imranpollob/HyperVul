@@ -6,6 +6,7 @@ import json, sys, statistics
 from pathlib import Path
 from collections import defaultdict
 PROJECT_ROOT = Path("/home/pollmix/Coding/HyperVul")
+SPLITS_DIR = PROJECT_ROOT / (sys.argv[1] if len(sys.argv) > 1 else "data/splits")
 sys.path.append(str(PROJECT_ROOT)); sys.path.append(str(PROJECT_ROOT / "scripts"))
 import negative_hyperedge_sampling as nhs
 import run_diagnostics as rd
@@ -57,7 +58,7 @@ def one_hop_internal(fnode, contract, funcs):
 interaction_set = set()
 items_by = []
 for s in ["train", "val", "test"]:
-    for it in json.load(open(PROJECT_ROOT / "data" / "splits" / f"{s}.json")):
+    for it in json.load(open(SPLITS_DIR / f"{s}.json")):
         fn = it.get("function") or it.get("ast_function")
         interaction_set.add((project_key(it), it["contract"], fn))
         it["_split"] = s; items_by.append(it)
