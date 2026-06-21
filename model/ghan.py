@@ -53,6 +53,103 @@ class GHAN(nn.Module):
         return x
 
 
+class GatedResidualLayer(nn.Module):
+    """Propagation blended into the node's own pooled feature by a LEARNABLE gate,
+    initialized near zero so the model starts equivalent to the 0-layer (no-propagation)
+    config and must *learn* to open the gate if propagation helps.
+
+        x' = x + alpha * sum_{u->v} msg(x_u)        (no LayerNorm -> identity at init)
+
+    per_type=False : single global scalar alpha.
+    per_type=True  : separate alpha per {call, shared_state, shared_callee}
+                     (call_forward/call_reverse share the 'call' gate)."""
+    def __init__(self, dim, per_type=False, init_blend=-5.0):
+        super().__init__()
+        self.msg = nn.Linear(dim, dim)
+        self.per_type = per_type
+        if per_type:
+            self.blend = nn.Parameter(torch.full((3,), init_blend))
+            self.register_buffer("group", torch.tensor([0, 0, 1, 2]))  # type id -> gate group
+        else:
+            self.blend = nn.Parameter(torch.tensor(init_blend))
+
+    def forward(self, x, edge_index, edge_type):
+        if edge_index.numel() == 0:
+            return x
+        src, dst = edge_index[0], edge_index[1]
+        m = self.msg(x[src])
+        if self.per_type:
+            alpha = torch.sigmoid(self.blend)[self.group[edge_type]].unsqueeze(-1)  # (E,1)
+            agg = torch.zeros_like(x).index_add(0, dst, m * alpha)
+            return x + agg
+        agg = torch.zeros_like(x).index_add(0, dst, m)
+        return x + torch.sigmoid(self.blend) * agg
+
+
+class GatedResidualGHAN(nn.Module):
+    def __init__(self, dim=768, layers=1, per_type=False):
+        super().__init__()
+        self.layers = nn.ModuleList([GatedResidualLayer(dim, per_type) for _ in range(layers)])
+
+    def forward(self, x, edge_index, edge_type):
+        for layer in self.layers:
+            x = layer(x, edge_index, edge_type)
+        return x
+
+
+class PooledGatedModel(nn.Module):
+    """Pooled node representation -> gated-residual propagation -> per-interaction head."""
+    def __init__(self, dim=768, hidden=256, layers=1, dropout=0.3, per_type=False, pool_hidden=128):
+        super().__init__()
+        from model.model import AttentionPooling
+        self.pool = AttentionPooling(input_dim=dim, hidden_dim=pool_hidden)
+        self.ghan = GatedResidualGHAN(dim, layers, per_type)
+        self.head = nn.Sequential(
+            nn.Linear(dim, hidden), nn.ReLU(), nn.Dropout(dropout), nn.Linear(hidden, 1))
+
+    def forward(self, members, member_mask, edge_index, edge_type, interaction_mask):
+        node_feat, _ = self.pool(members, member_mask)
+        h = self.ghan(node_feat, edge_index, edge_type)
+        return self.head(h).squeeze(-1)[interaction_mask]
+
+    def gate_values(self):
+        return [torch.sigmoid(l.blend).detach().cpu().tolist() for l in self.ghan.layers]
+
+
+class MoEHead(nn.Module):
+    """Regime-aware mixture-of-experts head: a soft router conditioned on the per-interaction
+    security_context vector mixes N expert MLPs over the pooled node embedding. Load-balancing
+    regularizer (importance^2, minimized at uniform usage) prevents expert collapse."""
+    def __init__(self, dim=768, sec_dim=8, n_experts=4, hidden=256, dropout=0.3):
+        super().__init__()
+        self.router = nn.Linear(sec_dim, n_experts)
+        self.experts = nn.ModuleList([
+            nn.Sequential(nn.Linear(dim, hidden), nn.ReLU(), nn.Dropout(dropout), nn.Linear(hidden, 1))
+            for _ in range(n_experts)])
+        self.n_experts = n_experts
+
+    def forward(self, x, sec):
+        gate = torch.softmax(self.router(sec), dim=-1)        # (N, E)
+        ex = torch.cat([e(x) for e in self.experts], dim=-1)  # (N, E)
+        logit = (gate * ex).sum(dim=-1)                       # (N,)
+        importance = gate.mean(dim=0)                         # (E,)  mean routing mass per expert
+        aux = self.n_experts * (importance ** 2).sum()        # min = 1.0 at uniform usage
+        return logit, aux, importance.detach()
+
+
+class PooledMoEModel(nn.Module):
+    """0-layer pooled representation (propagation closed) + regime-aware MoE head."""
+    def __init__(self, dim=768, sec_dim=8, n_experts=4, hidden=256, dropout=0.3, pool_hidden=128):
+        super().__init__()
+        from model.model import AttentionPooling
+        self.pool = AttentionPooling(input_dim=dim, hidden_dim=pool_hidden)
+        self.moe = MoEHead(dim, sec_dim, n_experts, hidden, dropout)
+
+    def forward(self, members, member_mask, sec, interaction_mask):
+        node_feat, _ = self.pool(members, member_mask)        # (N, dim)
+        return self.moe(node_feat[interaction_mask], sec)     # (logit, aux, importance)
+
+
 def materialize_edges(edges, node_id_to_idx, device="cpu"):
     """Convert emitted edge dicts -> (edge_index[2,E], edge_type[E]).
     call edges keep their forward/reverse type; shared_* are symmetric -> emitted both ways."""
