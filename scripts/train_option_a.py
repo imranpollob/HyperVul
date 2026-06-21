@@ -16,37 +16,18 @@ from sklearn.metrics import average_precision_score, roc_auc_score
 ROOT = Path("/home/pollmix/Coding/HyperVul")
 sys.path.append(str(ROOT)); sys.path.append(str(ROOT / "scripts"))
 import negative_hyperedge_sampling as nhs
-from model.ghan import ContractGraphModel, materialize_edges
-from model.contract_graph_data import load_graphs, node_embeddings, option_a_pos_weight
+from model.ghan import PooledContractGraphModel
+from model.contract_graph_data import (load_graphs, node_embeddings, member_embeddings,
+                                        graph_pooled_tensors, batch_pooled, option_a_pos_weight)
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-EMB = node_embeddings()
+FUNC = node_embeddings(); MEMB = member_embeddings()
 
-def shash(src): return hashlib.sha256(nhs.normalize_source(src).encode()).hexdigest()
-
-def graph_tensors(g):
-    nid = {n["id"]: i for i, n in enumerate(g["nodes"])}
-    x = torch.stack([EMB[shash(n["function_source"])] for n in g["nodes"]])
-    mask = torch.tensor([n["kind"] == "interaction" for n in g["nodes"]])
-    labels = torch.tensor([float(n["label"]) for n in g["nodes"] if n["kind"] == "interaction"])
-    ei, et = materialize_edges(g["edges"], nid)
-    return x, ei, et, mask, labels
-
-# precompute tensors
-DATA = {s: [graph_tensors(g) for g in load_graphs(s)] for s in ["train", "val", "test"]}
+# precompute per-graph POOLED tensors: (members, member_mask, ei, et, interaction_mask, labels)
+DATA = {s: [graph_pooled_tensors(g, FUNC, MEMB) for g in load_graphs(s)] for s in ["train", "val", "test"]}
 
 def batch(graphs):
-    """Combine disconnected graphs into one big graph (offset edges)."""
-    xs, eis, ets, masks, labs = [], [], [], [], []
-    off = 0
-    for x, ei, et, mask, lab in graphs:
-        xs.append(x); masks.append(mask); labs.append(lab); ets.append(et)
-        eis.append(ei + off if ei.numel() else ei); off += x.shape[0]
-    X = torch.cat(xs).to(device)
-    EI = torch.cat([e for e in eis if e.numel()], dim=1).to(device) if any(e.numel() for e in eis) else torch.zeros(2,0,dtype=torch.long,device=device)
-    ET = torch.cat([t for t in ets if t.numel()]).to(device) if any(t.numel() for t in ets) else torch.zeros(0,dtype=torch.long,device=device)
-    M = torch.cat(masks).to(device); L = torch.cat(labs).to(device)
-    return X, EI, ET, M, L
+    return batch_pooled(graphs, device=device)
 
 # --- test-positive 512 stratification ---
 tok = RobertaTokenizer.from_pretrained("web3se/SmartBERT-v3")
@@ -65,9 +46,10 @@ fit_idx = set(i for i, e in test_pos_meta if not e)
 def eval_split(model, data):
     model.eval(); probs, labs = [], []
     with torch.no_grad():
-        for x, ei, et, mask, lab in data:
-            lo = model(x.to(device), ei.to(device), et.to(device), mask.to(device))
-            probs.append(torch.sigmoid(lo).cpu()); labs.append(lab)
+        for g in data:
+            members, mmask, ei, et, imask, L = batch([g])
+            lo = model(members, mmask, ei, et, imask)
+            probs.append(torch.sigmoid(lo).cpu()); labs.append(L.cpu())
     return torch.cat(probs).numpy(), torch.cat(labs).numpy()
 
 def pick_threshold(probs, labels, target_recall=0.95):
@@ -104,7 +86,7 @@ def metrics(probs, labels, thr):
 
 def run_seed(seed, epochs=60, lr=1e-3, bs=64):
     torch.manual_seed(seed); np.random.seed(seed)
-    model = ContractGraphModel(dim=768, hidden=256, layers=2, dropout=0.3).to(device)
+    model = PooledContractGraphModel(dim=768, hidden=256, layers=2, dropout=0.3).to(device)
     opt = torch.optim.Adam(model.parameters(), lr=lr, weight_decay=1e-5)
     pw = torch.tensor([option_a_pos_weight("sqrt")], device=device)  # full weight collapses->all-positive
     lossfn = torch.nn.BCEWithLogitsLoss(pos_weight=pw)
@@ -114,8 +96,8 @@ def run_seed(seed, epochs=60, lr=1e-3, bs=64):
         model.train(); np.random.shuffle(order)
         for i in range(0, len(order), bs):
             gs = [DATA["train"][j] for j in order[i:i+bs]]
-            X, EI, ET, M, L = batch(gs)
-            lo = model(X, EI, ET, M)
+            members, mmask, EI, ET, M, L = batch(gs)
+            lo = model(members, mmask, EI, ET, M)
             loss = lossfn(lo, L)
             opt.zero_grad(); loss.backward()
             torch.nn.utils.clip_grad_norm_(model.parameters(), 5.0); opt.step()

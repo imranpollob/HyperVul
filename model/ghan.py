@@ -84,3 +84,25 @@ class ContractGraphModel(nn.Module):
         h = self.ghan(node_emb, edge_index, edge_type)      # refine all nodes
         logits = self.head(h).squeeze(-1)                   # (N,)
         return logits[interaction_mask]                     # score interaction nodes only
+
+
+class PooledContractGraphModel(nn.Module):
+    """Two composed stages: (1) per-node AttentionPooling over the node's member set
+    {function, state-vars, callees} -> one node vector (the original representation,
+    restored); (2) G-HAN cross-node propagation on top of those pooled vectors -> head.
+    AttentionPooling is mask-driven and handles a variable member count (helpers pool
+    function+state only; no hardcoded 3-component assumption)."""
+    def __init__(self, dim=768, hidden=256, layers=2, dropout=0.3, pool_hidden=128):
+        super().__init__()
+        from model.model import AttentionPooling                      # reuse existing pooling
+        self.pool = AttentionPooling(input_dim=dim, hidden_dim=pool_hidden)
+        self.ghan = GHAN(dim=dim, layers=layers)
+        self.head = nn.Sequential(
+            nn.Linear(dim, hidden), nn.ReLU(), nn.Dropout(dropout), nn.Linear(hidden, 1))
+
+    def forward(self, members, member_mask, edge_index, edge_type, interaction_mask):
+        # members: (N, Mmax, dim)  member_mask: (N, Mmax) bool
+        node_feat, _ = self.pool(members, member_mask)      # (N, dim)  stage 1
+        h = self.ghan(node_feat, edge_index, edge_type)     # (N, dim)  stage 2
+        logits = self.head(h).squeeze(-1)
+        return logits[interaction_mask]

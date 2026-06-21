@@ -36,6 +36,74 @@ def node_embeddings():
     return _EMB
 
 
+_MEMB = None
+def member_embeddings():
+    global _MEMB
+    if _MEMB is None:
+        _MEMB = torch.load(GRAPH_DIR / "member_embeddings.pt", weights_only=False)
+    return _MEMB
+
+
+def _shash(src):
+    return hashlib.sha256(nhs.normalize_source(src).encode()).hexdigest()
+
+
+def node_member_set(n, func_emb, memb):
+    """Member embeddings for one node: [function] + state-vars + callees (helpers: no callees)."""
+    rows = [func_emb[_shash(n["function_source"])]]
+    for t in n.get("state_texts", []):
+        if t in memb["state"]:
+            rows.append(memb["state"][t])
+    for t in n.get("callee_texts", []):
+        if t in memb["callee"]:
+            rows.append(memb["callee"][t])
+    return torch.stack(rows)                                  # (M, dim)
+
+
+def graph_pooled_tensors(graph, func_emb=None, memb=None):
+    """Per-node padded member sets for the pooled model:
+    returns members(N,Mmax,dim), member_mask(N,Mmax), edge_index, edge_type,
+    interaction_mask(N), labels(n_int)."""
+    func_emb = func_emb if func_emb is not None else node_embeddings()
+    memb = memb if memb is not None else member_embeddings()
+    nid = {n["id"]: i for i, n in enumerate(graph["nodes"])}
+    sets = [node_member_set(n, func_emb, memb) for n in graph["nodes"]]
+    Mmax = max(s.shape[0] for s in sets)
+    D = sets[0].shape[1]
+    N = len(sets)
+    members = torch.zeros(N, Mmax, D)
+    mmask = torch.zeros(N, Mmax, dtype=torch.bool)
+    for i, s in enumerate(sets):
+        members[i, :s.shape[0]] = s
+        mmask[i, :s.shape[0]] = True
+    imask = torch.tensor([n["kind"] == "interaction" for n in graph["nodes"]])
+    labels = torch.tensor([float(n["label"]) for n in graph["nodes"] if n["kind"] == "interaction"])
+    ei, et = materialize_edges(graph["edges"], nid)
+    return members, mmask, ei, et, imask, labels
+
+
+def batch_pooled(graph_tensors, device="cpu"):
+    """Combine per-graph pooled tensors into one disconnected batch (offset edges,
+    pad member dim to the batch max)."""
+    Mmax = max(m.shape[1] for m, *_ in graph_tensors)
+    D = graph_tensors[0][0].shape[2]
+    mem_list, mask_list, eis, ets, imasks, labs = [], [], [], [], [], []
+    off = 0
+    for members, mmask, ei, et, imask, labels in graph_tensors:
+        N, Mg, _ = members.shape
+        if Mg < Mmax:
+            pad = torch.zeros(N, Mmax - Mg, D)
+            members = torch.cat([members, pad], dim=1)
+            mmask = torch.cat([mmask, torch.zeros(N, Mmax - Mg, dtype=torch.bool)], dim=1)
+        mem_list.append(members); mask_list.append(mmask)
+        imasks.append(imask); labs.append(labels); ets.append(et)
+        eis.append(ei + off if ei.numel() else ei); off += N
+    EI = torch.cat([e for e in eis if e.numel()], dim=1) if any(e.numel() for e in eis) else torch.zeros(2, 0, dtype=torch.long)
+    ET = torch.cat([t for t in ets if t.numel()]) if any(t.numel() for t in ets) else torch.zeros(0, dtype=torch.long)
+    return (torch.cat(mem_list).to(device), torch.cat(mask_list).to(device),
+            EI.to(device), ET.to(device), torch.cat(imasks).to(device), torch.cat(labs).to(device))
+
+
 def graph_to_tensors(graph, emb=None, device="cpu"):
     """Build (node_emb[N,768], edge_index[2,E], edge_type[E], interaction_mask[N], labels[n_int])."""
     emb = emb if emb is not None else node_embeddings()
