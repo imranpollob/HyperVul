@@ -35,8 +35,8 @@ with torch.no_grad():
     for i in range(0, len(hashes), B):
         batch_h = hashes[i:i + B]
         texts = [span_by_hash[h] for h in batch_h]
-        inp = tok(texts, return_tensors="pt", max_length=256, truncation=True,
-                  padding="max_length").to(device)
+        inp = tok(texts, return_tensors="pt", max_length=512, truncation=True,
+                  padding="longest").to(device)
         cls = enc(**inp).last_hidden_state[:, 0, :].cpu()   # (B, 768)
         for h, v in zip(batch_h, cls):
             emb[h] = v.clone()
