@@ -13,15 +13,46 @@ NOTE: node embeddings are populated by the later encode pass (SmartBERT-v3 over 
 node's `function_source`); this module consumes structure + a feature hook so it is
 ready before that compute is spent. The G-HAN model itself is the next build.
 """
-import json
+import json, hashlib, sys
 from pathlib import Path
 import torch
 
-GRAPH_DIR = Path(__file__).resolve().parents[1] / "data" / "contract_graphs"
+ROOT = Path(__file__).resolve().parents[1]
+GRAPH_DIR = ROOT / "data" / "contract_graphs"
+sys.path.append(str(ROOT / "scripts"))
+import negative_hyperedge_sampling as nhs
+from model.ghan import materialize_edges
 
 
 def load_graphs(split):
     return json.load(open(GRAPH_DIR / f"{split}.json"))
+
+
+_EMB = None
+def node_embeddings():
+    global _EMB
+    if _EMB is None:
+        _EMB = torch.load(GRAPH_DIR / "node_embeddings.pt", weights_only=False)["by_hash"]
+    return _EMB
+
+
+def graph_to_tensors(graph, emb=None, device="cpu"):
+    """Build (node_emb[N,768], edge_index[2,E], edge_type[E], interaction_mask[N], labels[n_int])."""
+    emb = emb if emb is not None else node_embeddings()
+    nid = {n["id"]: i for i, n in enumerate(graph["nodes"])}
+    rows, mask, labels = [], [], []
+    for n in graph["nodes"]:
+        h = hashlib.sha256(nhs.normalize_source(n["function_source"]).encode()).hexdigest()
+        rows.append(emb[h])
+        is_int = n["kind"] == "interaction"
+        mask.append(is_int)
+        if is_int:
+            labels.append(float(n["label"]))
+    x = torch.stack(rows).to(device)
+    ei, et = materialize_edges(graph["edges"], nid, device=device)
+    return (x, ei, et,
+            torch.tensor(mask, device=device),
+            torch.tensor(labels, device=device))
 
 
 def class_balance(splits=("train", "val", "test")):
