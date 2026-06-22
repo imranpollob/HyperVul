@@ -50,6 +50,10 @@ def parse_args(argv=None):
     p.add_argument("--scl-hard-neg-weight", type=float, default=SCL_HARD_NEG_WEIGHT,
                    help="Per-anchor SCL weight for clean (label=0) items with external calls.")
     p.add_argument("--scl-proj-dim", type=int, default=SCL_PROJ_DIM)
+    p.add_argument("--scl-pretrain-epochs", type=int, default=15,
+                   help="Number of epochs for SCL pre-training (Stage 3 sequence).")
+    p.add_argument("--no-asl", action="store_true",
+                   help="Disable Asymmetric Loss (ASL) and use standard Binary Cross Entropy (BCE).")
     p.add_argument("--out-tag", type=str, default="",
                    help="Optional suffix for checkpoint/report filenames to avoid "
                         "clobbering across ablations (e.g. 'scl', 'baseline').")
@@ -65,6 +69,33 @@ def parse_args(argv=None):
                         "security=safety slots only (target_kind/security_context/cross/nonReentrant); "
                         "full=all symbolic. Requires *_sym.json sidecars (build_security_features.py).")
     return p.parse_args(argv)
+
+
+class AsymmetricLoss(nn.Module):
+    def __init__(self, gamma_neg=4, gamma_pos=1, clip=0.05, eps=1e-8, pos_weight=None):
+        super().__init__()
+        self.gamma_neg = gamma_neg
+        self.gamma_pos = gamma_pos
+        self.clip = clip
+        self.eps = eps
+        self.pos_weight = pos_weight
+
+    def forward(self, x, y):
+        # x: logits, y: labels (0 or 1)
+        xs_p = torch.sigmoid(x)
+        xs_n = 1.0 - xs_p
+
+        if self.clip is not None and self.clip > 0:
+            xs_n = (xs_n + self.clip).clamp(max=1.0)
+
+        loss_pos = y * torch.log(xs_p.clamp(min=self.eps)) * ((1.0 - xs_p) ** self.gamma_pos)
+        loss_neg = (1.0 - y) * torch.log(xs_n.clamp(min=self.eps)) * ((1.0 - xs_n) ** self.gamma_neg)
+        
+        if self.pos_weight is not None:
+            loss_pos = loss_pos * self.pos_weight
+            
+        loss = -loss_pos - loss_neg
+        return loss.mean()
 
 
 def has_external_calls(item) -> bool:
@@ -324,8 +355,34 @@ def main(args=None):
         supcon = SupConLoss(temperature=args.scl_temperature)
         params = list(model.parameters()) + (list(proj_head.parameters()) if use_scl else [])
         optimizer = optim.Adam(params, lr=1e-3, weight_decay=1e-5)
-        criterion = nn.BCEWithLogitsLoss(pos_weight=torch.tensor([pos_upweight], device=device))
         
+        if args.no_asl:
+            criterion = nn.BCEWithLogitsLoss(pos_weight=torch.tensor([pos_upweight], device=device))
+        else:
+            criterion = AsymmetricLoss(pos_weight=torch.tensor([pos_upweight], device=device))
+        
+        # SCL pre-training phase (if use_scl and args.scl_pretrain_epochs > 0)
+        if use_scl and args.scl_pretrain_epochs > 0:
+            print(f"SCL pre-training phase for {args.scl_pretrain_epochs} epochs...")
+            for ep in range(1, args.scl_pretrain_epochs + 1):
+                model.train()
+                proj_head.train()
+                epoch_scl_loss = 0.0
+                for x, mask, labels, batch_items in train_loader:
+                    x, mask, labels = x.to(device), mask.to(device), labels.to(device)
+                    optimizer.zero_grad()
+                    node_types = build_node_types(batch_items, x.shape[1], device=device)
+                    _, pooled, _, _ = model.encode(x, mask, node_types)
+                    z = proj_head(pooled)
+                    weights = scl_anchor_weights(batch_items, args.scl_hard_neg_weight, device)
+                    scl_loss = supcon(z, labels, weights=weights)
+                    scl_loss.backward()
+                    optimizer.step()
+                    epoch_scl_loss += scl_loss.item() * x.size(0)
+                epoch_scl_loss /= len(train_dataset)
+                if ep % 5 == 0 or ep == args.scl_pretrain_epochs:
+                    print(f"  SCL Pre-train Epoch {ep}/{args.scl_pretrain_epochs} | SCL Loss: {epoch_scl_loss:.4f}")
+
         # Train with early stopping on val_data
         patience = 20
         best_val_loss = float('inf')
@@ -364,7 +421,7 @@ def main(args=None):
                     x, mask, labels = x.to(device), mask.to(device), labels.to(device)
                     node_types = build_node_types(val_items, x.shape[1], device=device)
                     logits, _ = model(x, mask, node_types)
-                    # Early stopping on CE only (SCL is a training-time regularizer).
+                    # Early stopping on CE/ASL only (SCL is a training-time regularizer).
                     loss = criterion(logits.squeeze(-1), labels)
                     val_loss += loss.item() * x.size(0)
             val_loss /= len(val_dataset)

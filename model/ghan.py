@@ -53,6 +53,42 @@ class GHAN(nn.Module):
         return x
 
 
+class APPNPLayer(nn.Module):
+    """
+    APPNP propagation step blending gated message passing with the root feature x0:
+      x^{(k+1)} = (1 - alpha) * Propagate(x^{(k)}) + alpha * x^{(0)}
+    """
+    def __init__(self, dim, alpha=0.1, n_edge_types=N_EDGE_TYPES):
+        super().__init__()
+        self.alpha = alpha
+        self.msg = nn.Linear(dim, dim)
+        self.gate = nn.Embedding(n_edge_types, dim)
+        self.norm = nn.LayerNorm(dim)
+        nn.init.zeros_(self.gate.weight)
+
+    def forward(self, x, x0, edge_index, edge_type):
+        if edge_index.numel() == 0:
+            return (1.0 - self.alpha) * self.norm(x) + self.alpha * x0
+        src, dst = edge_index[0], edge_index[1]
+        g = torch.sigmoid(self.gate(edge_type))       # (E, dim)
+        m = g * self.msg(x[src])                       # (E, dim) gated messages
+        agg = torch.zeros_like(x).index_add(0, dst, m)  # sum into destinations
+        prop = self.norm(x + agg)
+        return (1.0 - self.alpha) * prop + self.alpha * x0
+
+
+class APPNP(nn.Module):
+    def __init__(self, dim=768, layers=2, alpha=0.1, n_edge_types=N_EDGE_TYPES):
+        super().__init__()
+        self.layers = nn.ModuleList([APPNPLayer(dim, alpha, n_edge_types) for _ in range(layers)])
+
+    def forward(self, x, edge_index, edge_type):
+        x0 = x
+        for layer in self.layers:
+            x = layer(x, x0, edge_index, edge_type)
+        return x
+
+
 class GatedResidualLayer(nn.Module):
     """Propagation blended into the node's own pooled feature by a LEARNABLE gate,
     initialized near zero so the model starts equivalent to the 0-layer (no-propagation)
@@ -184,22 +220,41 @@ class ContractGraphModel(nn.Module):
 
 
 class PooledContractGraphModel(nn.Module):
-    """Two composed stages: (1) per-node AttentionPooling over the node's member set
-    {function, state-vars, callees} -> one node vector (the original representation,
-    restored); (2) G-HAN cross-node propagation on top of those pooled vectors -> head.
-    AttentionPooling is mask-driven and handles a variable member count (helpers pool
-    function+state only; no hardcoded 3-component assumption)."""
-    def __init__(self, dim=768, hidden=256, layers=2, dropout=0.3, pool_hidden=128):
+    """Two composed stages: (1) per-node Sequence-aware / Attention pooling over the node's member set
+    {function, state-vars, callees} -> one node vector; (2) G-HAN / APPNP cross-node propagation
+    on top of those pooled vectors -> head."""
+    def __init__(self, dim=768, hidden=256, layers=2, dropout=0.3, pool_hidden=128,
+                 pool_type="sequence", propagation="appnp", appnp_alpha=0.1, sec_dim=32):
         super().__init__()
-        from model.model import AttentionPooling                      # reuse existing pooling
-        self.pool = AttentionPooling(input_dim=dim, hidden_dim=pool_hidden)
-        self.ghan = GHAN(dim=dim, layers=layers)
+        from model.model import AttentionPooling, SequenceAwarePooling
+        self.pool_type = pool_type.lower()
+        if self.pool_type == "sequence":
+            self.pool = SequenceAwarePooling(input_dim=dim, hidden_dim=pool_hidden)
+        else:
+            self.pool = AttentionPooling(input_dim=dim, hidden_dim=pool_hidden)
+            
+        self.sec_dim = sec_dim
+        if sec_dim > 0:
+            self.sec_proj = nn.Linear(8, sec_dim)
+            gnn_dim = dim + sec_dim
+        else:
+            gnn_dim = dim
+            
+        self.propagation = propagation.lower()
+        if self.propagation == "appnp":
+            self.ghan = APPNP(dim=gnn_dim, layers=layers, alpha=appnp_alpha)
+        else:
+            self.ghan = GHAN(dim=gnn_dim, layers=layers)
+            
         self.head = nn.Sequential(
-            nn.Linear(dim, hidden), nn.ReLU(), nn.Dropout(dropout), nn.Linear(hidden, 1))
+            nn.Linear(gnn_dim, hidden), nn.ReLU(), nn.Dropout(dropout), nn.Linear(hidden, 1))
 
-    def forward(self, members, member_mask, edge_index, edge_type, interaction_mask):
+    def forward(self, members, member_mask, edge_index, edge_type, interaction_mask, sec=None):
         # members: (N, Mmax, dim)  member_mask: (N, Mmax) bool
-        node_feat, _ = self.pool(members, member_mask)      # (N, dim)  stage 1
-        h = self.ghan(node_feat, edge_index, edge_type)     # (N, dim)  stage 2
+        node_feat, _ = self.pool(members, member_mask)      # (N, dim)
+        if self.sec_dim > 0 and sec is not None:
+            s_proj = self.sec_proj(sec)                     # (N, sec_dim)
+            node_feat = torch.cat([node_feat, s_proj], dim=-1) # (N, dim + sec_dim)
+        h = self.ghan(node_feat, edge_index, edge_type)     # (N, gnn_dim)
         logits = self.head(h).squeeze(-1)
         return logits[interaction_mask]

@@ -190,10 +190,10 @@ def extract_features_for_dataset(input_file_path, output_file_path):
         # Override source type from path if needed
         filepath = item.get('file') or item.get('filePath')
         if not source_type:
-            if "openzeppelin" in str(filepath).lower():
-                source_type = "OpenZeppelin"
-            elif "dappscan" in str(filepath).lower() or 'project_root' in item:
+            if "dappscan" in str(filepath).lower() or 'project_root' in item:
                 source_type = "DAppSCAN"
+            elif "openzeppelin" in str(filepath).lower():
+                source_type = "OpenZeppelin"
             else:
                 source_type = "FORGE"
                 

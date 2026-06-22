@@ -47,8 +47,8 @@ def eval_split(model, data):
     model.eval(); probs, labs = [], []
     with torch.no_grad():
         for g in data:
-            members, mmask, ei, et, imask, L = batch([g])
-            lo = model(members, mmask, ei, et, imask)
+            members, mmask, ei, et, imask, L, sec = batch([g])
+            lo = model(members, mmask, ei, et, imask, sec)
             probs.append(torch.sigmoid(lo).cpu()); labs.append(L.cpu())
     return torch.cat(probs).numpy(), torch.cat(labs).numpy()
 
@@ -96,8 +96,8 @@ def run_seed(seed, epochs=60, lr=1e-3, bs=64):
         model.train(); np.random.shuffle(order)
         for i in range(0, len(order), bs):
             gs = [DATA["train"][j] for j in order[i:i+bs]]
-            members, mmask, EI, ET, M, L = batch(gs)
-            lo = model(members, mmask, EI, ET, M)
+            members, mmask, EI, ET, M, L, sec = batch(gs)
+            lo = model(members, mmask, EI, ET, M, sec)
             loss = lossfn(lo, L)
             opt.zero_grad(); loss.backward()
             torch.nn.utils.clip_grad_norm_(model.parameters(), 5.0); opt.step()

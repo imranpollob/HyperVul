@@ -1,5 +1,5 @@
 {
-  "best_threshold": 0.3154,
+  "best_threshold": 0.45640000000000003,
   "best_K": 100,
-  "val_recall": 0.972972972972973
+  "val_recall": 0.9736842105263158
 }

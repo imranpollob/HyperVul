@@ -162,6 +162,17 @@ Expert usage **[0.236, 0.227, 0.274, 0.263]** (uniform 0.25) — load-balancing 
 **0-layer pooled representation + Option B 20:1 balanced sampling, plain MLP head:**
 **ROC-AUC 0.817 ± 0.006 · PR-AUC 0.313 ± 0.014** (full-pool test, 41 pos / 732 neg, 3 seeds).
 
+**Standard metric table** (precision/recall/F1 require a threshold; reported at two):
+
+| metric | @ val-F1-optimal threshold (~0.63) | @ ≥95%-val-recall threshold (~0) |
+|---|---:|---:|
+| Precision | **0.200 ± 0.014** | 0.054 |
+| Recall | **0.423 ± 0.061** | 1.000 |
+| F1 | **0.268 ± 0.004** | 0.102 |
+| F2 | 0.342 ± 0.027 | 0.220 |
+
+These absolute values are low primarily because the **test pool is ~1:18 (732 negatives)** — a harsh, realistic false-positive test. The original isolated model on this *same* pool sits at precision 0.078 / recall 1.000 / F1 0.144 (catch-all, ~92% false alarms); the rebuild moves to a balanced **20% precision / 42% recall** regime. The original's often-quoted F1 ≈ 0.67 was measured on the easier sampled 3:1 test (44p/125n), not this pool — so F1 is not directly comparable across the two evaluation sets. The threshold-free ROC-AUC/PR-AUC remain the fairer cross-setup summary. The ≥95%-recall column reflects the project's standing rule, which collapses to predict-all-positive at this imbalance.
+
 Full arc:
 
 | milestone | ROC-AUC | PR-AUC |
