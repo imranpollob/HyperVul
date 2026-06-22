@@ -11,7 +11,7 @@ To fully train the baselines, train the HyperVul models across multiple seeds, a
 ### Step 1: Run Static Analysis Benchmarks
 Run the Slither and Mythril analysis harnesses on the test split. The harnesses automatically resolve imports, determine Solidity compiler versions, apply syntax transpilation to fix early `0.8.x` compatibility, compile contracts, and evaluate performance.
 
-```bash
+```bashgenerate_final_paper_tables.py
 # Run Slither evaluation
 python3 scripts/latest1/run_slither_harness.py
 

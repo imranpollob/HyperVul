@@ -36,8 +36,8 @@ To resolve these problems, HyperVul introduces:
 | Mythril* | 8.89% | 33.33% | 14.04% | 10.42% | — | — |
 | **GNN Baselines** | | | | | | |
 | Set-Pooling | 96.89% | 34.81% | 51.09% | 71.19% | 61.12% | 83.99% |
-| Pairwise-GCN | 94.67% | 42.59% | 58.71% | 76.01% | 62.72% | 86.40% |
-| Pairwise-GAT | 96.00% | 44.79% | 61.02% | 78.06% | 68.10% | 88.10% |
+| Pairwise-GCN | 96.00% | 42.67% | 59.00% | 76.69% | 61.88% | 87.36% |
+| Pairwise-GAT | 97.33% | 42.35% | 58.86% | 77.05% | 63.01% | 87.68% |
 | **HyperVul (Ours)** | **96.44%** | **39.38%** | **55.90%** | **74.74%** | **60.48%** | **84.20%** |
 
 *(Note: Mythril metrics are inferred based on Slither's 19.35% compilation success rate, as both tools fail on the exact same unbundled dependencies in the dataset).*
@@ -78,8 +78,8 @@ To resolve these problems, HyperVul introduces:
 
 | Evaluation Regime | Metric | Slither | Mythril* | GAT Baseline | HyperVul (Ours) |
 | :--- | :--- | :---: | :---: | :---: | :---: |
-| **Intra-Contract** | F1-Score | 33.33% | 15.38% | 68.89% | **64.44%** |
+| **Intra-Contract** | F1-Score | 33.33% | 15.38% | 66.64% | **64.44%** |
 | *(Local Calls)* | PR-AUC | — | — | 70.24% | **48.79%** |
-| **Cross-Contract** | F1-Score | 35.71% | 11.11% | 50.44% | **40.58%** |
+| **Cross-Contract** | F1-Score | 35.71% | 11.11% | 48.67% | **40.58%** |
 | *(Cross-Interface Calls)*| PR-AUC | — | — | 61.19% | **66.07%** |
 
