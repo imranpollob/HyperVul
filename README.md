@@ -8,10 +8,18 @@ This repository contains the official implementation of **HyperVul**, a framewor
 
 To fully train the baselines, train the HyperVul models across multiple seeds, and reproduce the tables for the paper, execute the steps below in order.
 
+### ⚡ Automated Master Script
+
+For convenience, you can run the entire pipeline sequentially using the provided master script. The script uses `set -e` to abort immediately and inform you if any error occurs:
+
+```bash
+./run_all.sh
+```
+
 ### Step 1: Run Static Analysis Benchmarks
 Run the Slither and Mythril analysis harnesses on the test split. The harnesses automatically resolve imports, determine Solidity compiler versions, apply syntax transpilation to fix early `0.8.x` compatibility, compile contracts, and evaluate performance.
 
-```bashgenerate_final_paper_tables.py
+```bash
 # Run Slither evaluation
 python3 scripts/latest1/run_slither_harness.py
 
