@@ -10,7 +10,8 @@ No skip to the raw set readout, so no representation gets a structure-free short
 import torch
 import torch.nn as nn
 from torch_geometric.nn import GCNConv, GATConv, HypergraphConv
-from .ops import SegmentAttentionPool, MLPHead
+from torch_geometric.utils import scatter
+from .ops import MLPHead
 
 
 class GNNClassifier(nn.Module):
@@ -18,7 +19,7 @@ class GNNClassifier(nn.Module):
         super().__init__()
         self.conv_type = conv
         self.name = {"gcn": "pairwise-gcn (clique)", "gat": "pairwise-gat (clique)",
-                     "hyper": "hypergraph (ours)"}[conv]
+                     "hyper": "hypergraph (vanilla)"}[conv]
         self.in_proj = nn.Linear(dim, hidden)
         self.convs = nn.ModuleList()
         for _ in range(layers):
@@ -30,9 +31,7 @@ class GNNClassifier(nn.Module):
                 self.convs.append(HypergraphConv(hidden, hidden))
             else:
                 raise ValueError(conv)
-        self.norm = nn.ModuleList([nn.LayerNorm(hidden) for _ in range(layers)])
         self.drop = nn.Dropout(dropout)
-        self.pool = SegmentAttentionPool(hidden, hidden=128)
         self.head = MLPHead(hidden, hidden, dropout)
 
     def _struct(self, batch):
@@ -43,7 +42,7 @@ class GNNClassifier(nn.Module):
     def forward(self, batch):
         h = torch.relu(self.in_proj(batch.node_feats))
         struct = self._struct(batch)
-        for conv, norm in zip(self.convs, self.norm):
-            h = norm(h + self.drop(torch.relu(conv(h, struct))))
-        edge_h = self.pool(h[batch.inc_node], batch.inc_edge, batch.num_edges)
+        for conv in self.convs:
+            h = self.drop(torch.relu(conv(h, struct)))
+        edge_h = scatter(h[batch.inc_node], batch.inc_edge, dim=0, dim_size=batch.num_edges, reduce="mean")
         return self.head(edge_h)

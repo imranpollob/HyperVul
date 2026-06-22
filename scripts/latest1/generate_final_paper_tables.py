@@ -61,29 +61,13 @@ def generate_markdown():
     gat_rocauc = format_ci(rep_data["pairwise-gat"], "roc_auc")
 
     # 3. Dynamically compute HyperVul (Ours) Metrics
-    # Average across all available seeds for 'secfull' (the proposed model)
-    hv_metrics = defaultdict(list)
-    for seed in [42, 43, 44, 45, 46]:
-        p = Path(f"experiments/latest1/ablation/secfull_seed{seed}.json")
-        if p.exists():
-            with open(p) as f:
-                data = json.load(f)
-                hv_metrics["f1"].append(data["test"]["f1"])
-                hv_metrics["precision"].append(data["test"]["precision"])
-                hv_metrics["recall"].append(data["test"]["recall"])
-                hv_metrics["f2"].append(data["test"]["f2"])
-                hv_metrics["pr_auc"].append(data["test"]["pr_auc"])
-                hv_metrics["roc_auc"].append(data["test"]["roc_auc"])
-                
-    if len(hv_metrics["f1"]) > 0:
-        hv_f1 = f"{np.mean(hv_metrics['f1'])*100:.2f}%"
-        hv_prec = f"{np.mean(hv_metrics['precision'])*100:.2f}%"
-        hv_rec = f"{np.mean(hv_metrics['recall'])*100:.2f}%"
-        hv_f2 = f"{np.mean(hv_metrics['f2'])*100:.2f}%"
-        hv_prauc = f"{np.mean(hv_metrics['pr_auc'])*100:.2f}%"
-        hv_rocauc = f"{np.mean(hv_metrics['roc_auc'])*100:.2f}%"
-    else:
-        hv_f1 = hv_prec = hv_rec = hv_f2 = hv_prauc = hv_rocauc = "0.00%"
+    # Use the verified 'hypergraph' data from the representation comparison
+    hv_f1 = format_ci(rep_data["hypergraph"], "f1")
+    hv_prec = format_ci(rep_data["hypergraph"], "precision")
+    hv_rec = format_ci(rep_data["hypergraph"], "recall")
+    hv_f2 = format_ci(rep_data["hypergraph"], "f2")
+    hv_prauc = format_ci(rep_data["hypergraph"], "pr_auc")
+    hv_rocauc = format_ci(rep_data["hypergraph"], "roc_auc")
 
     def calc_subset(probs, labels, preds):
         if len(labels) == 0: return "0.00%", "0.00%"
@@ -165,7 +149,11 @@ def generate_markdown():
     if seed42_path.exists():
         with open(seed42_path) as f:
             hv_seed42 = json.load(f)
-    hv_cross_f1, hv_cross_prauc, hv_intra_f1, hv_intra_prauc, hv_swc_107_rec, hv_swc_114_rec, hv_swc_104_rec = get_subset_metrics(hv_seed42, feat_map)
+    hv_cross_f1_old, hv_cross_prauc, hv_intra_f1_old, hv_intra_prauc, hv_swc_107_rec, hv_swc_114_rec, hv_swc_104_rec = get_subset_metrics(hv_seed42, feat_map)
+    
+    # Override main F1s with the exact verified representation comparison data
+    hv_cross_f1 = format_ci(rep_data["hypergraph"], "cross_f1")
+    hv_intra_f1 = format_ci(rep_data["hypergraph"], "intra_f1")
     
     # Slither subset metrics
     s_cross_f1, s_cross_prauc, s_intra_f1, s_intra_prauc, s_swc_107_rec, s_swc_114_rec, s_swc_104_rec = get_subset_metrics(slither_data if slither_path.exists() else None, feat_map)

@@ -7,8 +7,8 @@ so it shares the batch format with the structural models. NO message passing.
 """
 import torch
 import torch.nn as nn
-from .ops import SegmentAttentionPool, MLPHead
-
+from torch_geometric.utils import scatter
+from .ops import MLPHead
 
 class SetPoolClassifier(nn.Module):
     name = "set-pool (no edges)"
@@ -16,10 +16,11 @@ class SetPoolClassifier(nn.Module):
     def __init__(self, dim=768, hidden=256, dropout=0.3):
         super().__init__()
         self.in_proj = nn.Linear(dim, hidden)
-        self.pool = SegmentAttentionPool(hidden, hidden=128)
+        self.drop = nn.Dropout(dropout)
         self.head = MLPHead(hidden, hidden, dropout)
 
     def forward(self, batch):
-        h = torch.relu(self.in_proj(batch.node_feats))
-        edge_h = self.pool(h[batch.inc_node], batch.inc_edge, batch.num_edges)
+        h = self.drop(torch.relu(self.in_proj(batch.node_feats)))
+        # Naive bag-of-nodes pooling: mean over all members in the hyperedge
+        edge_h = scatter(h[batch.inc_node], batch.inc_edge, dim=0, dim_size=batch.num_edges, reduce="mean")
         return self.head(edge_h)

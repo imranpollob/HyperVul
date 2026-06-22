@@ -30,6 +30,7 @@ sys.path.insert(0, str(PROJECT_ROOT / "scripts"))
 from build_hypergraph import build_contract_graphs  # noqa: E402
 from src.models.set_pool import SetPoolClassifier  # noqa: E402
 from src.models.gnn_zoo import GNNClassifier  # noqa: E402
+from src.models.hypergraph_nn import HypergraphNN  # noqa: E402
 
 K_OZ, K_AAVE = 100, 100
 FIXED = {"lr": 1e-3, "dropout": 0.3, "hidden": 256, "layers": 2}
@@ -138,7 +139,7 @@ def make_model(kind, device):
     if kind == "set":
         m = SetPoolClassifier(768, FIXED["hidden"], FIXED["dropout"])
     elif kind == "hypergraph":
-        m = GNNClassifier(768, FIXED["hidden"], FIXED["dropout"], HG["layers"], conv="hyper")
+        m = HypergraphNN(768, FIXED["hidden"], FIXED["dropout"], HG["layers"], use_skip=HG["skip"])
     elif kind == "pairwise-gcn":
         m = GNNClassifier(768, FIXED["hidden"], FIXED["dropout"], FIXED["layers"], conv="gcn")
     elif kind == "pairwise-gat":
