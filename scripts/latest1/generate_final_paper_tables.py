@@ -1,5 +1,8 @@
 import json
 from pathlib import Path
+import numpy as np
+from sklearn.metrics import precision_recall_fscore_support, precision_recall_curve, auc
+from collections import defaultdict
 
 def generate_markdown():
     # 1. Load Slither Data
@@ -12,7 +15,7 @@ def generate_markdown():
             s_f1 = slither_data["f1"] * 100
             s_f2 = slither_data["f2"] * 100
     else:
-        s_rec, s_prec, s_f1, s_f2 = 11.11, 35.71, 16.95, 12.89 # Fallback
+        s_rec = s_prec = s_f1 = s_f2 = 0.00 # Strict zero fallback
 
     # Load Mythril Data
     mythril_path = Path("experiments/latest1/mythril_comparison_results.json")
@@ -24,7 +27,7 @@ def generate_markdown():
             m_f1_val = mythril_data["f1"] * 100
             m_f2_val = mythril_data["f2"] * 100
     else:
-        m_rec_val, m_prec_val, m_f1_val, m_f2_val = s_rec - 2.11, s_prec - 3.11, s_f1 - 1.0, s_f2 - 1.0
+        m_rec_val = m_prec_val = m_f1_val = m_f2_val = 0.00 # Strict zero fallback
 
     # 2. Load Representation Baseline Data
     rep_path = Path("experiments/latest1/representation_comparison.json")
@@ -57,25 +60,118 @@ def generate_markdown():
     gat_prauc = format_ci(rep_data["pairwise-gat"], "pr_auc")
     gat_rocauc = format_ci(rep_data["pairwise-gat"], "roc_auc")
 
-    # 3. Load HyperVul (Ours) Full Seed 42 Data
-    # For global metrics across 5 seeds, we use the `run` arm from ablation_summary or we can just use hypergraph with SCL/ASL if we have it aggregated.
-    # From our previous known data:
-    hv_f1 = "55.90%"
-    hv_prec = "39.40%"
-    hv_rec = "96.40%"
-    hv_f2 = "74.70%"
-    hv_prauc = "60.50%"
-    hv_rocauc = "84.20%"
+    # 3. Dynamically compute HyperVul (Ours) Metrics
+    # Average across all available seeds for 'secfull' (the proposed model)
+    hv_metrics = defaultdict(list)
+    for seed in [42, 43, 44, 45, 46]:
+        p = Path(f"experiments/latest1/ablation/secfull_seed{seed}.json")
+        if p.exists():
+            with open(p) as f:
+                data = json.load(f)
+                hv_metrics["f1"].append(data["test"]["f1"])
+                hv_metrics["precision"].append(data["test"]["precision"])
+                hv_metrics["recall"].append(data["test"]["recall"])
+                hv_metrics["f2"].append(data["test"]["f2"])
+                hv_metrics["pr_auc"].append(data["test"]["pr_auc"])
+                hv_metrics["roc_auc"].append(data["test"]["roc_auc"])
+                
+    if len(hv_metrics["f1"]) > 0:
+        hv_f1 = f"{np.mean(hv_metrics['f1'])*100:.2f}%"
+        hv_prec = f"{np.mean(hv_metrics['precision'])*100:.2f}%"
+        hv_rec = f"{np.mean(hv_metrics['recall'])*100:.2f}%"
+        hv_f2 = f"{np.mean(hv_metrics['f2'])*100:.2f}%"
+        hv_prauc = f"{np.mean(hv_metrics['pr_auc'])*100:.2f}%"
+        hv_rocauc = f"{np.mean(hv_metrics['roc_auc'])*100:.2f}%"
+    else:
+        hv_f1 = hv_prec = hv_rec = hv_f2 = hv_prauc = hv_rocauc = "0.00%"
 
-    # Seed 42 specific HyperVul (from iteration3_results_full_seed42.md)
-    hv_cross_f1 = "57.14%"
-    hv_cross_prauc = "62.03%"
-    hv_intra_f1 = "72.97%"
-    hv_intra_prauc = "74.80%"
+    def calc_subset(probs, labels, preds):
+        if len(labels) == 0: return "0.00%", "0.00%"
+        p_val, r_val, f1_val, _ = precision_recall_fscore_support(labels, preds, average='binary', zero_division=0)
+        if len(np.unique(labels)) > 1:
+            precisions, recalls, _ = precision_recall_curve(labels, probs)
+            prauc_val = auc(recalls, precisions)
+        else:
+            prauc_val = 0.0
+        return f"{f1_val*100:.2f}%", f"{prauc_val*100:.2f}%"
 
-    hv_swc_107_rec = "86.96%"
-    hv_swc_114_rec = "100.00%"
-    hv_swc_104_rec = "100.00%"
+    def get_subset_metrics(json_data, feat_map):
+        if not json_data:
+            return "0.00%", "0.00%", "0.00%", "0.00%", "0.00%", "0.00%", "0.00%"
+            
+        data_block = json_data.get("test", json_data)
+        if "probs" not in data_block:
+            return "0.00%", "0.00%", "0.00%", "0.00%", "0.00%", "0.00%", "0.00%"
+            
+        probs = np.array(data_block.get("probs", []))
+        labels = np.array(data_block.get("labels", []))
+        ids = data_block.get("ids", [])
+        thr = json_data.get("threshold", 0.5)
+        preds = (probs >= thr).astype(int)
+        
+        cross_probs, cross_labels, cross_preds = [], [], []
+        intra_probs, intra_labels, intra_preds = [], [], []
+        swc_tps = {"SWC-107": 0, "SWC-114": 0, "SWC-104": 0}
+        swc_counts = {"SWC-107": 0, "SWC-114": 0, "SWC-104": 0}
+        
+        for p, l, pred, key in zip(probs, labels, preds, ids):
+            feat = feat_map.get(key)
+            if feat:
+                is_cross = feat.get("is_cross_contract", False)
+                if is_cross:
+                    cross_probs.append(p); cross_labels.append(l); cross_preds.append(pred)
+                else:
+                    intra_probs.append(p); intra_labels.append(l); intra_preds.append(pred)
+                    
+                if l == 1:
+                    vtype = feat.get("vtype", "").lower()
+                    cat = None
+                    if "107" in vtype or "reentrancy" in vtype:
+                        cat = "SWC-107"
+                    elif "114" in vtype or "front" in vtype:
+                        cat = "SWC-114"
+                    elif "104" in vtype or "unchecked" in vtype:
+                        cat = "SWC-104"
+                    
+                    if cat:
+                        swc_counts[cat] += 1
+                        if pred == 1:
+                            swc_tps[cat] += 1
+                            
+        cross_f1, cross_prauc = calc_subset(cross_probs, cross_labels, cross_preds)
+        intra_f1, intra_prauc = calc_subset(intra_probs, intra_labels, intra_preds)
+        
+        swc_107_rec = f"{(swc_tps['SWC-107']/swc_counts['SWC-107']*100):.2f}%" if swc_counts['SWC-107'] > 0 else "0.00%"
+        swc_114_rec = f"{(swc_tps['SWC-114']/swc_counts['SWC-114']*100):.2f}%" if swc_counts['SWC-114'] > 0 else "0.00%"
+        swc_104_rec = f"{(swc_tps['SWC-104']/swc_counts['SWC-104']*100):.2f}%" if swc_counts['SWC-104'] > 0 else "0.00%"
+        
+        return cross_f1, cross_prauc, intra_f1, intra_prauc, swc_107_rec, swc_114_rec, swc_104_rec
+
+    # Seed 42 specific metrics (Cross/Intra and SWC categories)
+    test_features_path = Path("data/splits/test_features.json")
+    feat_map = {}
+    if test_features_path.exists():
+        with open(test_features_path) as f:
+            test_features = json.load(f)
+        for item in test_features:
+            contract = item.get("contract")
+            func = item.get("function") or item.get("ast_function")
+            key = f"{contract}::{func}"
+            feat_map[key] = item
+            
+    # HyperVul subset metrics
+    seed42_path = Path("experiments/latest1/ablation/secfull_seed42.json")
+    hv_seed42 = {}
+    if seed42_path.exists():
+        with open(seed42_path) as f:
+            hv_seed42 = json.load(f)
+    hv_cross_f1, hv_cross_prauc, hv_intra_f1, hv_intra_prauc, hv_swc_107_rec, hv_swc_114_rec, hv_swc_104_rec = get_subset_metrics(hv_seed42, feat_map)
+    
+    # Slither subset metrics
+    s_cross_f1, s_cross_prauc, s_intra_f1, s_intra_prauc, s_swc_107_rec, s_swc_114_rec, s_swc_104_rec = get_subset_metrics(slither_data if slither_path.exists() else None, feat_map)
+    
+    # Mythril subset metrics
+    m_cross_f1, m_cross_prauc, m_intra_f1, m_intra_prauc, m_swc_107_rec, m_swc_114_rec, m_swc_104_rec = get_subset_metrics(mythril_data if mythril_path.exists() else None, feat_map)
 
     # 4. Load GAT Seed 42 Specific Data
     gat_seed42_path = Path("experiments/latest1/gat_baseline_metrics_seed42.json")
@@ -171,11 +267,11 @@ To resolve these problems, HyperVul introduces:
 
 | SWC Class | Metric | Slither | Mythril* | GAT Baseline | HyperVul (Ours) |
 | :--- | :--- | :---: | :---: | :---: | :---: |
-| **SWC-107 (Reentrancy)** | Recall | 21.74% | 17.39% | {gat_swc_107_rec} | **{hv_swc_107_rec}** |
+| **SWC-107 (Reentrancy)** | Recall | {s_swc_107_rec} | {m_swc_107_rec} | {gat_swc_107_rec} | **{hv_swc_107_rec}** |
 | *(count = 23)* | Precision | 35.71% | 31.00% | Global Avg | **Global Avg** |
-| **SWC-114 (Front-running)**| Recall | 0.00% | 0.00% | {gat_swc_114_rec} | **{hv_swc_114_rec}** |
+| **SWC-114 (Front-running)**| Recall | {s_swc_114_rec} | {m_swc_114_rec} | {gat_swc_114_rec} | **{hv_swc_114_rec}** |
 | *(count = 15)* | Precision | 0.00% | 0.00% | Global Avg | **Global Avg** |
-| **SWC-104 (Unchecked Call)**| Recall | 0.00% | 0.00% | {gat_swc_104_rec} | **{hv_swc_104_rec}** |
+| **SWC-104 (Unchecked Call)**| Recall | {s_swc_104_rec} | {m_swc_104_rec} | {gat_swc_104_rec} | **{hv_swc_104_rec}** |
 | *(count = 6)* | Precision | 0.00% | 0.00% | Global Avg | **Global Avg** |
 
 ---
@@ -185,9 +281,9 @@ To resolve these problems, HyperVul introduces:
 
 | Evaluation Regime | Metric | Slither | Mythril* | GAT Baseline | HyperVul (Ours) |
 | :--- | :--- | :---: | :---: | :---: | :---: |
-| **Intra-Contract** | F1-Score | 25.12% | 21.00% | {gat_intra_f1} | **{hv_intra_f1}** |
+| **Intra-Contract** | F1-Score | {s_intra_f1} | {m_intra_f1} | {gat_intra_f1} | **{hv_intra_f1}** |
 | *(Local Calls)* | PR-AUC | — | — | {gat_intra_prauc} | **{hv_intra_prauc}** |
-| **Cross-Contract** | F1-Score | 18.40% | 15.00% | {gat_cross_f1} | **{hv_cross_f1}** |
+| **Cross-Contract** | F1-Score | {s_cross_f1} | {m_cross_f1} | {gat_cross_f1} | **{hv_cross_f1}** |
 | *(Cross-Interface Calls)*| PR-AUC | — | — | {gat_cross_prauc} | **{hv_cross_prauc}** |
 
 """

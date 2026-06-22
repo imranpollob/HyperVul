@@ -458,10 +458,13 @@ def main():
     print(f"F1-Score: {f1*100:.2f}%")
     print(f"F2-Score: {f2*100:.2f}%")
     
-    # Save results to experiments/results/slither_comparison_results.json
+    # Save results to experiments/latest1/slither_comparison_results.json
     res_dict = {
         "tp": int(tp), "fp": int(fp), "fn": int(fn), "tn": int(tn),
-        "precision": float(precision), "recall": float(recall), "f1": float(f1), "f2": float(f2)
+        "precision": float(precision), "recall": float(recall), "f1": float(f1), "f2": float(f2),
+        "probs": y_pred.tolist(),
+        "labels": y_true.tolist(),
+        "ids": [f"{item.get('contract')}::{item.get('function') or item.get('ast_function')}" for item in test_items]
     }
     with open(PROJECT_ROOT / "experiments/latest1/slither_comparison_results.json", "w") as fh:
         json.dump(res_dict, fh, indent=2)

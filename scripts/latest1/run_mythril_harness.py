@@ -228,7 +228,10 @@ def main():
     # Save results to experiments/latest1/mythril_comparison_results.json
     res_dict = {
         "tp": int(tp), "fp": int(fp), "fn": int(fn), "tn": int(tn),
-        "precision": float(precision), "recall": float(recall), "f1": float(f1), "f2": float(f2)
+        "precision": float(precision), "recall": float(recall), "f1": float(f1), "f2": float(f2),
+        "probs": y_pred.tolist(),
+        "labels": y_true.tolist(),
+        "ids": [f"{item.get('contract')}::{item.get('function') or item.get('ast_function')}" for item in test_items]
     }
     
     out_dir = PROJECT_ROOT / "experiments" / "latest1"
