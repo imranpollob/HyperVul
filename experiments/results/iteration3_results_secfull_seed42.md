@@ -1,10 +1,10 @@
 # HyperVul — Iteration 3 Retrained Classifier Results
 
 > **Model Checkpoint**: `model/iteration3_checkpoint_secfull_seed42.pt`
-> **Arm**: `secfull` (SCL=OFF, Localization=OFF) · **Seed**: `42`
+> **Arm**: `secfull` (SCL=ON, Localization=ON) · **Seed**: `42`
 > **Clean Negative Training Count K_app**: `100` (fixed via --fix-k)
-> **Chosen Decision Threshold**: `0.3154`  
-> **Validation Recall**: `97.30%`
+> **Chosen Decision Threshold**: `0.4564`  
+> **Validation Recall**: `97.37%`
 
 ---
 
@@ -13,16 +13,16 @@ These metrics show the validation performance across different ratios of clean n
 
 | K_app (Clean Negatives) | Validation Loss | Tuned Threshold | Validation Recall | Combined Val FPR |
 | :--- | :--- | :--- | :--- | :--- |
-| **100** | **0.5821** | **0.3154** | **97.30%** | **3.23%** |
+| **100** | **0.1214** | **0.4564** | **97.37%** | **7.53%** |
 
 ---
 
 ## 2. Final Negative Training Set Composition
-*   **Total Positives in Training**: 552 (Base Codebase Positives: 552)
-*   **Total Negatives in Training**: 1029 (100% of negative class)
-    *   *Codebase (Tier-A) Hard Negatives*: 829 (80.56%)
-    *   *Clean Library (OpenZeppelin) Negatives*: 100 (9.72%)
-    *   *Clean Application (Aave V3) Negatives*: 100 (9.72%)
+*   **Total Positives in Training**: 539 (Base Codebase Positives: 539)
+*   **Total Negatives in Training**: 1019 (100% of negative class)
+    *   *Codebase (Tier-A) Hard Negatives*: 819 (80.37%)
+    *   *Clean Library (OpenZeppelin) Negatives*: 100 (9.81%)
+    *   *Clean Application (Aave V3) Negatives*: 100 (9.81%)
 
 ---
 
@@ -31,24 +31,24 @@ These results represent the final, single-evaluation run on all mathematically i
 
 | Holdout Set | Type | Size | False Positives | FPR (Point Estimate) | 95% Wilson Confidence Interval |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| **OZ-Holdout** | Internal (Library) | 63 | 15 | 23.81% | [14.99%, 35.64%] |
-| **MakerDAO DSS** | External (DeFi Application) | 424 | 248 | 58.49% | [53.74%, 63.08%] |
-| **Bancor V3** | External (DeFi Application) | 209 | 73 | 34.93% | [28.79%, 41.61%] |
-| **Liquity V1 (Fresh Probe)** | External (DeFi Application) | 279 | 92 | 32.97% | [27.72%, 38.69%] |
+| **OZ-Holdout** | Internal (Library) | 63 | 19 | 30.16% | [20.24%, 42.36%] |
+| **MakerDAO DSS** | External (DeFi Application) | 424 | 351 | 82.78% | [78.90%, 86.08%] |
+| **Bancor V3** | External (DeFi Application) | 209 | 98 | 46.89% | [40.24%, 53.65%] |
+| **Liquity V1 (Fresh Probe)** | External (DeFi Application) | 279 | 116 | 41.58% | [35.95%, 47.44%] |
 
 ---
 
 ## 4. Overall Test Performance (at Tuned Decision Threshold)
-These metrics are evaluated on the real, un-augmented test split (169 items: 44 positives, 125 negatives).
+These metrics are evaluated on the real, un-augmented test split (176 items: 45 positives, 131 negatives).
 
 | Metric | Value |
 | :--- | :--- |
-| **Precision** | 51.85% |
-| **Recall** | 95.45% |
-| **F1-Score** | 67.20% |
-| **F2-Score** | 81.71% |
-| **PR-AUC** | 71.64% |
-| **ROC-AUC** | 89.07% |
+| **Precision** | 37.72% |
+| **Recall** | 95.56% |
+| **F1-Score** | 54.09% |
+| **F2-Score** | 73.13% |
+| **PR-AUC** | 55.92% |
+| **ROC-AUC** | 81.98% |
 
 ---
 
@@ -57,8 +57,8 @@ We analyze the performance separately on cross-contract vs. intra-contract hyper
 
 | Subset | Count (Pos/Neg) | Precision | Recall | F1-Score | F2-Score | PR-AUC | ROC-AUC |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| **Cross-Contract** | 79 (16/63) | 41.67% | 93.75% | 57.69% | 75.00% | 64.27% | 87.50% |
-| **Intra-Contract** | 90 (28/62) | 60.00% | 96.43% | 73.97% | 85.99% | 78.28% | 90.38% |
+| **Cross-Contract** | 79 (16/63) | 26.42% | 87.50% | 40.58% | 59.83% | 66.07% | 81.75% |
+| **Intra-Contract** | 97 (29/68) | 47.54% | 100.00% | 64.44% | 81.92% | 48.79% | 79.87% |
 
 ---
 
@@ -67,22 +67,22 @@ We analyze the performance separately on cross-contract vs. intra-contract hyper
 
 | Vulnerability Type | Test Positives | Recall |
 | :--- | :--- | :--- |
-| Reentrancy (SWC-107) | 23 | 91.30% |
+| Reentrancy (SWC-107) | 24 | 95.83% |
 | Front-running / Tx Order (SWC-114) | 15 | 100.00% |
-| Unchecked Call Return (SWC-104) | 6 | 100.00% |
+| Unchecked Call Return (SWC-104) | 6 | 83.33% |
 | Delegatecall (SWC-112) | 0 | Unevaluated |
 
 ---
 
 ## 7. Run Configuration & Measured Summary
-> Single run: **seed=42**, arm=**secfull** (SCL=OFF, Localization=OFF), K_app=100 (fixed), threshold=0.3154.
+> Single run: **seed=42**, arm=**secfull** (SCL=ON, Localization=ON), K_app=100 (fixed), threshold=0.4564.
 > Numbers below are this single run only — **cross-arm comparison, multi-seed mean±σ, Wilson CIs and paired significance live in the aggregate report** (`experiments/aggregate_ablation.py`). Do not draw conclusions from a single seed.
 
-- **Test (in-distribution)**: F1 67.20%, Precision 51.85%, Recall 95.45%, PR-AUC 71.64%, ROC-AUC 89.07%.
+- **Test (in-distribution)**: F1 54.09%, Precision 37.72%, Recall 95.56%, PR-AUC 55.92%, ROC-AUC 81.98%.
 - **OOD holdout FPR (point [95% Wilson])**:
-  - OZ-Holdout (library): 23.81% [14.99%, 35.64%]
-  - MakerDAO DSS: 58.49% [53.74%, 63.08%]
-  - Bancor V3: 34.93% [28.79%, 41.61%]
-  - Liquity V1: 32.97% [27.72%, 38.69%]
-- **Cross- vs intra-contract (test)**: cross F1 57.69% (recall 93.75%), intra F1 73.97% (recall 96.43%).
+  - OZ-Holdout (library): 30.16% [20.24%, 42.36%]
+  - MakerDAO DSS: 82.78% [78.90%, 86.08%]
+  - Bancor V3: 46.89% [40.24%, 53.65%]
+  - Liquity V1: 41.58% [35.95%, 47.44%]
+- **Cross- vs intra-contract (test)**: cross F1 40.58% (recall 87.50%), intra F1 64.44% (recall 100.00%).
 - **Caveat**: in-distribution `Aave-Val` FPR is optimistic (shares distribution with `Aave-Train`); the OZ/MakerDAO/Bancor/Liquity holdouts are the OOD generalization signal.

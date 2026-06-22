@@ -1,9 +1,9 @@
 # HyperVul — Train Split Augmentation Report
 
 > **Date**: 2026-06-11  
-> **Original Train Set**: 874 (223 Positives / 651 Negatives)  
-> **Augmented Train Set**: 1381 (552 Positives / 829 Negatives)  
-> **Ratio**: 552:829 (0.67:1)
+> **Original Train Set**: 863 (218 Positives / 645 Negatives)  
+> **Augmented Train Set**: 1358 (539 Positives / 819 Negatives)  
+> **Ratio**: 539:819 (0.66:1)
 
 ---
 
@@ -21,13 +21,13 @@ We enforced strict tree-sitter AST validation checks to ensure semantic identity
 4. **Leakage check**: No variant's hash matches any hash in validation or test splits.
 
 ### Discard Statistics
-* **Total Variants Generated**: 2417
-* **Accepted Variants**: 507
-* **Discarded Variants**: 1910
+* **Total Variants Generated**: 2380
+* **Accepted Variants**: 495
+* **Discarded Variants**: 1885
 
 ### Discard Reasons
-- **sequence_order_changed**: 973 variants
-- **duplicate_variant**: 932 variants
+- **sequence_order_changed**: 959 variants
+- **duplicate_variant**: 921 variants
 - **state_vars_mismatch**: 5 variants
 
 

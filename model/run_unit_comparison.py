@@ -50,25 +50,79 @@ def set_seed(seed=42):
     torch.backends.cudnn.benchmark = False
 
 
-class AttentionPooling(nn.Module):
-    def __init__(self, input_dim=768, hidden_dim=128):
+class AsymmetricLoss(nn.Module):
+    def __init__(self, gamma_neg=4, gamma_pos=1, clip=0.05, eps=1e-8, pos_weight=None):
         super().__init__()
+        self.gamma_neg = gamma_neg
+        self.gamma_pos = gamma_pos
+        self.clip = clip
+        self.eps = eps
+        self.pos_weight = pos_weight
+
+    def forward(self, x, y):
+        # x: logits, y: labels (0 or 1)
+        xs_p = torch.sigmoid(x)
+        xs_n = 1.0 - xs_p
+
+        if self.clip is not None and self.clip > 0:
+            xs_n = (xs_n + self.clip).clamp(max=1.0)
+
+        loss_pos = y * torch.log(xs_p.clamp(min=self.eps)) * ((1.0 - xs_p) ** self.gamma_pos)
+        loss_neg = (1.0 - y) * torch.log(xs_n.clamp(min=self.eps)) * ((1.0 - xs_n) ** self.gamma_neg)
+        
+        if self.pos_weight is not None:
+            loss_pos = loss_pos * self.pos_weight
+            
+        loss = -loss_pos - loss_neg
+        return loss.mean()
+
+
+class SequenceAwarePooling(nn.Module):
+    def __init__(self, input_dim=768, hidden_dim=128, num_layers=2, encoder_type="lstm"):
+        super().__init__()
+        self.encoder_type = encoder_type.lower()
+        if self.encoder_type == "lstm":
+            self.lstm = nn.LSTM(
+                input_size=input_dim,
+                hidden_size=hidden_dim,
+                num_layers=num_layers,
+                batch_first=True,
+                bidirectional=True
+            )
+            self.proj = nn.Linear(hidden_dim * 2, input_dim)
+        elif self.encoder_type == "transformer":
+            encoder_layer = nn.TransformerEncoderLayer(
+                d_model=input_dim,
+                nhead=4,
+                dim_feedforward=hidden_dim * 2,
+                batch_first=True,
+                norm_first=True
+            )
+            self.transformer = nn.TransformerEncoder(encoder_layer, num_layers=num_layers)
+        
         self.w_a = nn.Linear(input_dim, hidden_dim)
         self.v = nn.Linear(hidden_dim, 1, bias=False)
 
     def forward(self, x, mask=None):
-        scores = self.v(torch.tanh(self.w_a(x))).squeeze(-1)
+        if self.encoder_type == "lstm":
+            h, _ = self.lstm(x)
+            x_seq = self.proj(h)
+        else:
+            src_key_padding_mask = ~mask if mask is not None else None
+            x_seq = self.transformer(x, src_key_padding_mask=src_key_padding_mask)
+            
+        scores = self.v(torch.tanh(self.w_a(x_seq))).squeeze(-1)
         if mask is not None:
             scores = scores.masked_fill(~mask, -1e9)
         attn_weights = torch.softmax(scores, dim=-1)
-        pooled = torch.sum(attn_weights.unsqueeze(-1) * x, dim=1)
+        pooled = torch.sum(attn_weights.unsqueeze(-1) * x_seq, dim=1)
         return pooled, attn_weights
 
 
 class HyperedgeClassifier(nn.Module):
     def __init__(self, input_dim=768, hidden_dim=256, dropout=0.3):
         super().__init__()
-        self.pool = AttentionPooling(input_dim=input_dim, hidden_dim=128)
+        self.pool = SequenceAwarePooling(input_dim=input_dim, hidden_dim=128)
         self.mlp = nn.Sequential(
             nn.Linear(input_dim, hidden_dim),
             nn.ReLU(),
@@ -190,7 +244,7 @@ def train_one(mode, train_items, val_items, device):
 
     model = HyperedgeClassifier(768, FIXED_CONFIG["hidden_dim"], FIXED_CONFIG["dropout"]).to(device)
     opt = optim.Adam(model.parameters(), lr=FIXED_CONFIG["lr"], weight_decay=1e-5)
-    crit = nn.BCEWithLogitsLoss(pos_weight=torch.tensor([pos_w], device=device))
+    crit = AsymmetricLoss(pos_weight=torch.tensor([pos_w], device=device))
 
     patience, min_loss, no_improve, best_state = 20, float("inf"), 0, None
     for epoch in range(1, 201):

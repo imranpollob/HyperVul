@@ -37,6 +37,72 @@ class AttentionPooling(nn.Module):
         pooled = torch.sum(attn_weights_unsqueezed * x, dim=1)  # (B, input_dim)
         return pooled, attn_weights
 
+
+class SequenceAwarePooling(nn.Module):
+    """
+    Sequence-aware bidirectional LSTM or Transformer encoder pooling to replace permutation-invariant AttentionPooling.
+    """
+    def __init__(self, input_dim=768, hidden_dim=128, num_layers=2, encoder_type="lstm"):
+        super().__init__()
+        self.encoder_type = encoder_type.lower()
+        if self.encoder_type == "lstm":
+            self.lstm = nn.LSTM(
+                input_size=input_dim,
+                hidden_size=hidden_dim,
+                num_layers=num_layers,
+                batch_first=True,
+                bidirectional=True
+            )
+            self.proj = nn.Linear(hidden_dim * 2, input_dim)
+        elif self.encoder_type == "transformer":
+            encoder_layer = nn.TransformerEncoderLayer(
+                d_model=input_dim,
+                nhead=4,
+                dim_feedforward=hidden_dim * 2,
+                batch_first=True,
+                norm_first=True
+            )
+            self.transformer = nn.TransformerEncoder(encoder_layer, num_layers=num_layers)
+        
+        self.w_a = nn.Linear(input_dim, hidden_dim)
+        self.v = nn.Linear(hidden_dim, 1, bias=False)
+
+    def forward(self, x, mask=None):
+        # x shape: (B, N, input_dim)
+        # mask shape: (B, N)
+        if self.encoder_type == "lstm":
+            h, _ = self.lstm(x) # (B, N, hidden_dim * 2)
+            x_seq = self.proj(h) # (B, N, input_dim)
+        else:
+            src_key_padding_mask = ~mask if mask is not None else None
+            x_seq = self.transformer(x, src_key_padding_mask=src_key_padding_mask)
+            
+        scores = self.v(torch.tanh(self.w_a(x_seq))).squeeze(-1)  # (B, N)
+        if mask is not None:
+            scores = scores.masked_fill(~mask, -1e9)
+        attn_weights = torch.softmax(scores, dim=-1)  # (B, N)
+        pooled = torch.sum(attn_weights.unsqueeze(-1) * x_seq, dim=1)  # (B, input_dim)
+        return pooled, attn_weights
+
+
+def configure_lora(model, r=8, lora_alpha=16, lora_dropout=0.1):
+    from peft import LoraConfig, get_peft_model
+    config = LoraConfig(
+        r=r,
+        lora_alpha=lora_alpha,
+        target_modules=["query", "key", "value"],
+        lora_dropout=lora_dropout,
+        bias="none",
+        modules_to_save=[]
+    )
+    return get_peft_model(model, config)
+
+
+def get_lora_smartbert(r=8, alpha=16, dropout=0.1):
+    from transformers import RobertaModel
+    model = RobertaModel.from_pretrained("web3se/SmartBERT-v3")
+    return configure_lora(model, r=r, lora_alpha=alpha, lora_dropout=dropout)
+
 class HyperedgeClassifier(nn.Module):
     """
     Pools node embeddings and feeds the pooled hyperedge embedding into a 2-layer MLP
@@ -45,9 +111,13 @@ class HyperedgeClassifier(nn.Module):
     vulnerability logit (so it trains jointly with the binary loss) and, at inference,
     points at the specific (function, state, callee) tuple responsible for the flag.
     """
-    def __init__(self, input_dim=768, hidden_dim=256, dropout=0.3, localize=True):
+    def __init__(self, input_dim=768, hidden_dim=256, dropout=0.3, localize=True, pool_type="sequence", pool_hidden=128):
         super().__init__()
-        self.pool = AttentionPooling(input_dim=input_dim, hidden_dim=128)
+        self.pool_type = pool_type.lower()
+        if self.pool_type == "sequence":
+            self.pool = SequenceAwarePooling(input_dim=input_dim, hidden_dim=pool_hidden)
+        else:
+            self.pool = AttentionPooling(input_dim=input_dim, hidden_dim=pool_hidden)
         self.mlp = nn.Sequential(
             nn.Linear(input_dim, hidden_dim),
             nn.ReLU(),
