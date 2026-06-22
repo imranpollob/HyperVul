@@ -1394,7 +1394,7 @@ library SafeERC20 {
  * those functions `private`, and then adding `external` `nonReentrant` entry
  * points to them.
  *
- * TIP: If EIP-1153 (transient storage) is available on the chain you're deploying at,
+ * TIP: If EIP-1153 (  storage) is available on the chain you're deploying at,
  * consider using {ReentrancyGuardTransient} instead.
  *
  * TIP: If you would like to learn more about reentrancy and alternative ways

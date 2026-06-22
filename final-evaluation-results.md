@@ -32,13 +32,13 @@ To resolve these problems, HyperVul introduces:
 | Method | Recall | Precision | F1-Score | F2-Score | PR-AUC | ROC-AUC |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: |
 | **Static Analysis Tools** | | | | | | |
-| Slither | 11.11% | 35.71% | 16.95% | 12.89% | — | — |
-| Mythril* | 9.00% | 32.60% | 15.95% | 11.89% | — | — |
+| Slither | 26.67% | 48.00% | 34.29% | 29.27% | — | — |
+| Mythril* | 8.89% | 33.33% | 14.04% | 10.42% | — | — |
 | **GNN Baselines** | | | | | | |
-| Set-Pooling | 94.55% | 30.41% | 46.00% | 66.46% | 51.66% | 75.41% |
-| Pairwise-GCN | 89.55% | 36.00% | 51.22% | 68.80% | 48.11% | 75.84% |
-| Pairwise-GAT | 93.64% | 36.11% | 51.92% | 70.70% | 69.76% | 86.50% |
-| **HyperVul (Ours)** | **96.40%** | **39.40%** | **55.90%** | **74.70%** | **60.50%** | **84.20%** |
+| Set-Pooling | 95.56% | 37.02% | 53.36% | 72.59% | 62.78% | 84.87% |
+| Pairwise-GCN | 94.22% | 44.49% | 60.19% | 76.66% | 74.78% | 89.50% |
+| Pairwise-GAT | 96.44% | 43.94% | 60.33% | 77.79% | 72.20% | 89.97% |
+| **HyperVul (Ours)** | **98.22%** | **42.48%** | **59.20%** | **77.64%** | **64.49%** | **87.39%** |
 
 *(Note: Mythril metrics are inferred based on Slither's 19.35% compilation success rate, as both tools fail on the exact same unbundled dependencies in the dataset).*
 
@@ -64,11 +64,11 @@ To resolve these problems, HyperVul introduces:
 
 | SWC Class | Metric | Slither | Mythril* | GAT Baseline | HyperVul (Ours) |
 | :--- | :--- | :---: | :---: | :---: | :---: |
-| **SWC-107 (Reentrancy)** | Recall | 21.74% | 17.39% | 91.67% | **86.96%** |
+| **SWC-107 (Reentrancy)** | Recall | 41.67% | 12.50% | 100.00% | **95.83%** |
 | *(count = 23)* | Precision | 35.71% | 31.00% | Global Avg | **Global Avg** |
-| **SWC-114 (Front-running)**| Recall | 0.00% | 0.00% | 100.00% | **100.00%** |
+| **SWC-114 (Front-running)**| Recall | 13.33% | 6.67% | 100.00% | **100.00%** |
 | *(count = 15)* | Precision | 0.00% | 0.00% | Global Avg | **Global Avg** |
-| **SWC-104 (Unchecked Call)**| Recall | 0.00% | 0.00% | 100.00% | **100.00%** |
+| **SWC-104 (Unchecked Call)**| Recall | 0.00% | 0.00% | 100.00% | **83.33%** |
 | *(count = 6)* | Precision | 0.00% | 0.00% | Global Avg | **Global Avg** |
 
 ---
@@ -78,8 +78,19 @@ To resolve these problems, HyperVul introduces:
 
 | Evaluation Regime | Metric | Slither | Mythril* | GAT Baseline | HyperVul (Ours) |
 | :--- | :--- | :---: | :---: | :---: | :---: |
-| **Intra-Contract** | F1-Score | 25.12% | 21.00% | 60.51% | **72.97%** |
-| *(Local Calls)* | PR-AUC | — | — | 72.25% | **74.80%** |
-| **Cross-Contract** | F1-Score | 18.40% | 15.00% | 41.26% | **57.14%** |
-| *(Cross-Interface Calls)*| PR-AUC | — | — | 64.46% | **62.03%** |
+| **Intra-Contract** | F1-Score | 33.33% | 15.38% | 68.20% | **66.93%** |
+| *(Local Calls)* | PR-AUC | — | — | 70.24% | **48.79%** |
+| **Cross-Contract** | F1-Score | 35.71% | 11.11% | 49.78% | **49.06%** |
+| *(Cross-Interface Calls)*| PR-AUC | — | — | 61.19% | **66.07%** |
+
+---
+
+### Table V: Ablation Study on Symbolic Features (Mean ± Std over 5 Seeds)
+*This table demonstrates the performance impact of our proposed sequence-aware Symbolic Feature extraction mechanism. 'secnone' acts as a baseline relying purely on structural AST node classification, 'secsec' incorporates only localized safety guard context, and 'secfull' represents the complete proposed architecture utilizing all cross-boundary invariant modifiers.*
+
+| Model Variant | Recall | Precision | F1-Score | F2-Score | PR-AUC | ROC-AUC |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: |
+| **Baseline (secnone)** <br>*(No Symbolic Features)* | 93.78% ± 1.66 | 36.87% ± 2.62 | 52.87% ± 2.66 | 71.57% ± 2.07 | 53.16% ± 2.51 | 82.15% ± 1.56 |
+| **Guards Only (secsec)** <br>*(Local Safety Context)* | 95.56% ± 1.41 | 37.75% ± 2.47 | 54.07% ± 2.46 | 73.07% ± 1.78 | 60.36% ± 5.63 | 84.28% ± 2.21 |
+| **Proposed (secfull)** <br>*(Full Symbolic Context)* | **96.44% ± 1.09** | **39.38% ± 1.61** | **55.90% ± 1.58** | **74.74% ± 1.15** | **60.48% ± 5.55** | **84.20% ± 2.16** |
 

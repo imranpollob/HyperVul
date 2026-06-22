@@ -559,9 +559,9 @@ interface IERC1155Errors {
  * applications.
  */
 abstract contract ERC20 is Context, IERC20, IERC20Metadata, IERC20Errors {
-    mapping(address account => uint256) private _balances;
+    mapping(address => uint256) private _balances;
 
-    mapping(address account => mapping(address spender => uint256)) private _allowances;
+    mapping(address => mapping(address => uint256)) private _allowances;
 
     uint256 private _totalSupply;
 
@@ -1137,7 +1137,7 @@ library SafeERC20 {
     /// @dev Attempts to fetch the token decimals. A return value of false indicates that the attempt failed in some way.
     function tryGetDecimals(IERC20 token) internal view returns (bool success, uint8 decimals) {
         bytes4 selector = IERC20Metadata.decimals.selector;
-        assembly ("memory-safe") {
+        assembly {
             mstore(0x00, selector)
             success := staticcall(gas(), token, 0x00, 4, 0x00, 0x20)
             success := and(and(success, gt(returndatasize(), 0x1f)), lt(mload(0x00), 0x100))
@@ -1157,7 +1157,7 @@ library SafeERC20 {
     function _safeTransfer(IERC20 token, address to, uint256 value, bool bubble) private returns (bool success) {
         bytes4 selector = IERC20.transfer.selector;
 
-        assembly ("memory-safe") {
+        assembly {
             let fmp := mload(0x40)
             mstore(0x00, selector)
             mstore(0x04, and(to, shr(96, not(0))))
@@ -1199,7 +1199,7 @@ library SafeERC20 {
     ) private returns (bool success) {
         bytes4 selector = IERC20.transferFrom.selector;
 
-        assembly ("memory-safe") {
+        assembly {
             let fmp := mload(0x40)
             mstore(0x00, selector)
             mstore(0x04, and(from, shr(96, not(0))))
@@ -1236,7 +1236,7 @@ library SafeERC20 {
     function _safeApprove(IERC20 token, address spender, uint256 value, bool bubble) private returns (bool success) {
         bytes4 selector = IERC20.approve.selector;
 
-        assembly ("memory-safe") {
+        assembly {
             let fmp := mload(0x40)
             mstore(0x00, selector)
             mstore(0x04, and(spender, shr(96, not(0))))
@@ -1315,7 +1315,7 @@ library Panic {
     /// @dev Reverts with a panic code. Recommended to use with
     /// the internal constants with predefined codes.
     function panic(uint256 code) internal pure {
-        assembly ("memory-safe") {
+        assembly {
             mstore(0x00, 0x4e487b71)
             mstore(0x20, code)
             revert(0x1c, 0x24)
@@ -2480,7 +2480,7 @@ library SafeCast {
      * @dev Cast a boolean (false or true) to a uint256 (0 or 1) with no jump.
      */
     function toUint(bool b) internal pure returns (uint256 u) {
-        assembly ("memory-safe") {
+        assembly {
             u := iszero(iszero(b))
         }
     }
@@ -2504,7 +2504,7 @@ library Math {
      * The result is stored in two 256 variables such that sum = high * 2²⁵⁶ + low.
      */
     function add512(uint256 a, uint256 b) internal pure returns (uint256 high, uint256 low) {
-        assembly ("memory-safe") {
+        assembly {
             low := add(a, b)
             high := lt(low, a)
         }
@@ -2519,7 +2519,7 @@ library Math {
         // 512-bit multiply [high low] = x * y. Compute the product mod 2²⁵⁶ and mod 2²⁵⁶ - 1, then use
         // the Chinese Remainder Theorem to reconstruct the 512 bit result. The result is stored in two 256
         // variables such that product = high * 2²⁵⁶ + low.
-        assembly ("memory-safe") {
+        assembly {
             let mm := mulmod(a, b, not(0))
             low := mul(a, b)
             high := sub(sub(mm, low), lt(mm, low))
@@ -2554,7 +2554,7 @@ library Math {
     function tryMul(uint256 a, uint256 b) internal pure returns (bool success, uint256 result) {
         unchecked {
             uint256 c = a * b;
-            assembly ("memory-safe") {
+            assembly {
                 // Only true when the multiplication doesn't overflow
                 // (c / a == b) || (a == 0)
                 success := or(eq(div(c, a), b), iszero(a))
@@ -2570,7 +2570,7 @@ library Math {
     function tryDiv(uint256 a, uint256 b) internal pure returns (bool success, uint256 result) {
         unchecked {
             success = b > 0;
-            assembly ("memory-safe") {
+            assembly {
                 // The `DIV` opcode returns zero when the denominator is 0.
                 result := div(a, b)
             }
@@ -2583,7 +2583,7 @@ library Math {
     function tryMod(uint256 a, uint256 b) internal pure returns (bool success, uint256 result) {
         unchecked {
             success = b > 0;
-            assembly ("memory-safe") {
+            assembly {
                 // The `MOD` opcode returns zero when the denominator is 0.
                 result := mod(a, b)
             }
@@ -2707,7 +2707,7 @@ library Math {
 
             // Make division exact by subtracting the remainder from [high low].
             uint256 remainder;
-            assembly ("memory-safe") {
+            assembly {
                 // Compute remainder using mulmod.
                 remainder := mulmod(x, y, denominator)
 
@@ -2720,7 +2720,7 @@ library Math {
             // Always >= 1. See https://cs.stackexchange.com/q/138556/92363.
 
             uint256 twos = denominator & (0 - denominator);
-            assembly ("memory-safe") {
+            assembly {
                 // Divide denominator by twos.
                 denominator := div(denominator, twos)
 
@@ -2891,7 +2891,7 @@ library Math {
      */
     function tryModExp(uint256 b, uint256 e, uint256 m) internal view returns (bool success, uint256 result) {
         if (m == 0) return (false, 0);
-        assembly ("memory-safe") {
+        assembly {
             let ptr := mload(0x40)
             // | Offset    | Content    | Content (Hex)                                                      |
             // |-----------|------------|--------------------------------------------------------------------|
@@ -2941,7 +2941,7 @@ library Math {
         // Encode call args in result and move the free memory pointer
         result = abi.encodePacked(b.length, e.length, mLen, b, e, m);
 
-        assembly ("memory-safe") {
+        assembly {
             let dataPtr := add(result, 0x20)
             // Write result on top of args to avoid allocating extra memory.
             success := staticcall(gas(), 0x05, dataPtr, mload(result), dataPtr, mLen)
@@ -2960,7 +2960,7 @@ library Math {
         uint256 chunk;
         for (uint256 i = 0; i < buffer.length; i += 0x20) {
             // See _unsafeReadBytesOffset from utils/Bytes.sol
-            assembly ("memory-safe") {
+            assembly {
                 chunk := mload(add(add(buffer, 0x20), i))
             }
             if (chunk >> (8 * saturatingSub(i + 0x20, buffer.length)) != 0) {
@@ -3133,7 +3133,7 @@ library Math {
         // |    1111    |   15    |        table[15] = 3        |
         //
         // The lookup table is represented as a 32-byte value with the MSB positions for 0-15 in the first 16 bytes (most significant half).
-        assembly ("memory-safe") {
+        assembly {
             r := or(r, byte(shr(r, x), 0x0000010102020202030303030303030300000000000000000000000000000000))
         }
     }
@@ -3315,7 +3315,7 @@ library StorageSlot {
      * @dev Returns an `AddressSlot` with member `value` located at `slot`.
      */
     function getAddressSlot(bytes32 slot) internal pure returns (AddressSlot storage r) {
-        assembly ("memory-safe") {
+        assembly {
             r.slot := slot
         }
     }
@@ -3324,7 +3324,7 @@ library StorageSlot {
      * @dev Returns a `BooleanSlot` with member `value` located at `slot`.
      */
     function getBooleanSlot(bytes32 slot) internal pure returns (BooleanSlot storage r) {
-        assembly ("memory-safe") {
+        assembly {
             r.slot := slot
         }
     }
@@ -3333,7 +3333,7 @@ library StorageSlot {
      * @dev Returns a `Bytes32Slot` with member `value` located at `slot`.
      */
     function getBytes32Slot(bytes32 slot) internal pure returns (Bytes32Slot storage r) {
-        assembly ("memory-safe") {
+        assembly {
             r.slot := slot
         }
     }
@@ -3342,7 +3342,7 @@ library StorageSlot {
      * @dev Returns a `Uint256Slot` with member `value` located at `slot`.
      */
     function getUint256Slot(bytes32 slot) internal pure returns (Uint256Slot storage r) {
-        assembly ("memory-safe") {
+        assembly {
             r.slot := slot
         }
     }
@@ -3351,7 +3351,7 @@ library StorageSlot {
      * @dev Returns a `Int256Slot` with member `value` located at `slot`.
      */
     function getInt256Slot(bytes32 slot) internal pure returns (Int256Slot storage r) {
-        assembly ("memory-safe") {
+        assembly {
             r.slot := slot
         }
     }
@@ -3360,7 +3360,7 @@ library StorageSlot {
      * @dev Returns a `StringSlot` with member `value` located at `slot`.
      */
     function getStringSlot(bytes32 slot) internal pure returns (StringSlot storage r) {
-        assembly ("memory-safe") {
+        assembly {
             r.slot := slot
         }
     }
@@ -3369,7 +3369,7 @@ library StorageSlot {
      * @dev Returns an `StringSlot` representation of the string storage pointer `store`.
      */
     function getStringSlot(string storage store) internal pure returns (StringSlot storage r) {
-        assembly ("memory-safe") {
+        assembly {
             r.slot := store.slot
         }
     }
@@ -3378,7 +3378,7 @@ library StorageSlot {
      * @dev Returns a `BytesSlot` with member `value` located at `slot`.
      */
     function getBytesSlot(bytes32 slot) internal pure returns (BytesSlot storage r) {
-        assembly ("memory-safe") {
+        assembly {
             r.slot := slot
         }
     }
@@ -3387,7 +3387,7 @@ library StorageSlot {
      * @dev Returns an `BytesSlot` representation of the bytes storage pointer `store`.
      */
     function getBytesSlot(bytes storage store) internal pure returns (BytesSlot storage r) {
-        assembly ("memory-safe") {
+        assembly {
             r.slot := store.slot
         }
     }
@@ -3406,7 +3406,7 @@ library StorageSlot {
  * those functions `private`, and then adding `external` `nonReentrant` entry
  * points to them.
  *
- * TIP: If EIP-1153 (transient storage) is available on the chain you're deploying at,
+ * TIP: If EIP-1153 (  storage) is available on the chain you're deploying at,
  * consider using {ReentrancyGuardTransient} instead.
  *
  * TIP: If you would like to learn more about reentrancy and alternative ways
@@ -3725,7 +3725,88 @@ uint256 constant ORACLE_PRECISION = 1e36;
 // Maximum number of tokens allowed in a box
 uint256 constant MAX_TOKENS = 20;
 
-import {ErrorsLib} from "./libraries/ErrorsLib.sol";
+
+
+
+library ErrorsLib {
+    // General errors
+    error InvalidAddress();
+    error InvalidAmount();
+    error InvalidValue();
+    error CannotRemove();
+    error AlreadyWhitelisted();
+    error NotWhitelisted();
+    error NotClean();
+    error NotAllowed();
+
+    // Access control errors
+    error OnlyOwner();
+    error OnlyCurator();
+    error OnlyGuardian();
+    error OnlyCuratorOrGuardian();
+    error OnlyAllocators();
+    error OnlyFeeders();
+    error OnlySkimRecipient();
+    error OnlyAllocatorsOrWinddown();
+    error OnlyMorpho();
+    error OnlyBox();
+    error OnlyPool();
+    error OnlyThisContract();
+    error CannotDuringShutdown();
+    error CannotDuringWinddown();
+
+    // Withdraw/Redeem errors
+    error InsufficientShares();
+    error InsufficientAllowance();
+    error InsufficientLiquidity();
+    error DataAlreadyTimelocked();
+
+    // Token errors
+    error TokenNotWhitelisted();
+    error TokenAlreadyWhitelisted();
+    error OracleRequired();
+    error NoOracleForToken();
+    error TokenBalanceMustBeZero();
+    error TooManyTokens();
+
+    // Slippage errors
+    error SwapperDidSpendTooMuch();
+    error AllocationTooExpensive();
+    error TokenSaleNotGeneratingEnoughAssets();
+    error ReallocationSlippageTooHigh();
+    error TooMuchAccumulatedSlippage();
+    error SlippageTooHigh();
+
+    // Shutdown/Recover errors
+    error OnlyGuardianOrCuratorCanShutdown();
+    error OnlyGuardianCanRecover();
+    error AlreadyShutdown();
+    error NotShutdown();
+    error CannotRecoverAfterWinddown();
+
+    // Timelock errors
+    error TimelockNotExpired();
+    error DataNotTimelocked();
+    error InvalidTimelock();
+    error TimelockNotIncreasing();
+    error TimelockNotDecreasing();
+    error FunctionDisabled();
+
+    // Skim errors
+    error CannotSkimToken();
+    error CannotSkimZero();
+    error SkimChangedNav();
+    error TransferFailed();
+
+    // Funding module errors
+    error ExcessiveLTV();
+    error NoNavDuringCache();
+    error InvalidFacilityData();
+
+    // Flash callback errors
+    error ReentryNotAllowed();
+}
+
 
 
 
@@ -3916,10 +3997,10 @@ contract Box is IBox, ERC20, ReentrancyGuard {
     mapping(IFunding => bool) internal fundingMap;
 
     /// @notice Depth counter for nested NAV-caching operations (flash and swaps)
-    uint8 private transient _cachedNavDepth;
+    uint8 private   _cachedNavDepth;
 
     /// @notice Cached NAV value during flash and swap operations to prevent manipulation
-    uint256 private transient _cachedNav;
+    uint256 private   _cachedNav;
 
     // ========== CONSTRUCTOR ==========
 
@@ -3963,10 +4044,10 @@ contract Box is IBox, ERC20, ReentrancyGuard {
         _requireNonZeroAddress(_asset);
         _requireNonZeroAddress(_owner);
         _requireNonZeroAddress(_curator);
-        require(_maxSlippage <= MAX_SLIPPAGE_LIMIT, ErrorsLib.SlippageTooHigh());
+        if (!(_maxSlippage <= MAX_SLIPPAGE_LIMIT)) revert ErrorsLib.SlippageTooHigh();
         _requireNotEqual(_slippageEpochDuration, 0);
         _requireNotEqual(_shutdownSlippageDuration, 0);
-        require(_shutdownWarmup <= MAX_SHUTDOWN_WARMUP, ErrorsLib.InvalidValue());
+        if (!(_shutdownWarmup <= MAX_SHUTDOWN_WARMUP)) revert ErrorsLib.InvalidValue();
 
         asset = _asset;
         owner = _owner;
@@ -4072,7 +4153,7 @@ contract Box is IBox, ERC20, ReentrancyGuard {
 
     /// @dev Internal helper for deposit and mint to reduce bytecode duplication
     function _depositMint(uint256 assets, uint256 shares, address receiver) internal {
-        require(_cachedNavDepth == 0, ErrorsLib.ReentryNotAllowed());
+        if (!(_cachedNavDepth == 0)) revert ErrorsLib.ReentryNotAllowed();
         _onlyFeeder();
         _requireNotShutdown();
         _requireNonZeroAddress(receiver);
@@ -4131,7 +4212,7 @@ contract Box is IBox, ERC20, ReentrancyGuard {
 
     /// @dev Internal helper for withdraw and redeem to reduce bytecode duplication
     function _withdrawRedeem(uint256 assets, uint256 shares, address receiver, address owner_) internal {
-        require(_cachedNavDepth == 0, ErrorsLib.ReentryNotAllowed());
+        if (!(_cachedNavDepth == 0)) revert ErrorsLib.ReentryNotAllowed();
         _requireNonZeroAddress(receiver);
 
         if (msg.sender != owner_) {
@@ -4159,23 +4240,23 @@ contract Box is IBox, ERC20, ReentrancyGuard {
      * @dev Cannot skim the base asset or whitelisted investment tokens
      */
     function skim(IERC20 token) external nonReentrant {
-        require(msg.sender == skimRecipient, ErrorsLib.OnlySkimRecipient());
+        if (!(msg.sender == skimRecipient)) revert ErrorsLib.OnlySkimRecipient();
         _requireNotEqualAddress(address(token), asset);
-        require(!isToken(token), ErrorsLib.CannotSkimToken());
+        if (!(!isToken(token))) revert ErrorsLib.CannotSkimToken();
 
         uint256 balance;
 
         if (address(token) != address(0)) {
             // ERC-20 tokens
             balance = token.balanceOf(address(this));
-            require(balance > 0, ErrorsLib.CannotSkimZero());
+            if (!(balance > 0)) revert ErrorsLib.CannotSkimZero();
             token.safeTransfer(skimRecipient, balance);
         } else {
             // ETH
             balance = address(this).balance;
-            require(balance > 0, ErrorsLib.CannotSkimZero());
+            if (!(balance > 0)) revert ErrorsLib.CannotSkimZero();
             (bool ok, ) = skimRecipient.call{value: balance}("");
-            require(ok, ErrorsLib.TransferFailed());
+            if (!(ok)) revert ErrorsLib.TransferFailed();
         }
 
         emit EventsLib.Skim(token, skimRecipient, balance);
@@ -4201,7 +4282,7 @@ contract Box is IBox, ERC20, ReentrancyGuard {
         _startNavCache();
 
         bool winddown = isWinddown();
-        require((isAllocator[msg.sender] && !winddown) || (winddown && _debtBalance(token) > 0), ErrorsLib.OnlyAllocatorsOrWinddown());
+        if (!((isAllocator[msg.sender] && !winddown) || (winddown && _debtBalance(token) > 0))) revert ErrorsLib.OnlyAllocatorsOrWinddown();
         _requireIsToken(token);
 
         uint256 oraclePrice = oracles[token].price();
@@ -4214,7 +4295,7 @@ contract Box is IBox, ERC20, ReentrancyGuard {
             uint256 neededTokens = debtAmount > existingBalance ? debtAmount - existingBalance : 0;
             uint256 neededValue = neededTokens.mulDiv(oraclePrice, ORACLE_PRECISION, Math.Rounding.Ceil);
             uint256 maxAllocation = neededValue.mulDiv(PRECISION, PRECISION - slippageTolerance, Math.Rounding.Ceil);
-            require(assetsAmount <= maxAllocation, ErrorsLib.InvalidAmount());
+            if (!(assetsAmount <= maxAllocation)) revert ErrorsLib.InvalidAmount();
         }
 
         // Execute swap
@@ -4223,7 +4304,7 @@ contract Box is IBox, ERC20, ReentrancyGuard {
         // Calculate and validate slippage
         uint256 expectedTokens = assetsAmount.mulDiv(ORACLE_PRECISION, oraclePrice, Math.Rounding.Ceil);
         uint256 minTokens = _calculateMinAmount(expectedTokens, slippageTolerance);
-        require(tokensReceived >= minTokens, ErrorsLib.AllocationTooExpensive());
+        if (!(tokensReceived >= minTokens)) revert ErrorsLib.AllocationTooExpensive();
 
         int256 slippagePct = _calculateSlippagePct(expectedTokens, tokensReceived);
 
@@ -4259,7 +4340,7 @@ contract Box is IBox, ERC20, ReentrancyGuard {
         _startNavCache();
 
         bool winddown = isWinddown();
-        require((isAllocator[msg.sender] && !winddown) || (winddown && _debtBalance(token) == 0), ErrorsLib.OnlyAllocatorsOrWinddown());
+        if (!((isAllocator[msg.sender] && !winddown) || (winddown && _debtBalance(token) == 0))) revert ErrorsLib.OnlyAllocatorsOrWinddown();
         _requireIsToken(token);
 
         uint256 oraclePrice = oracles[token].price();
@@ -4271,7 +4352,7 @@ contract Box is IBox, ERC20, ReentrancyGuard {
         // Calculate and validate slippage
         uint256 expectedAssets = tokensAmount.mulDiv(oraclePrice, ORACLE_PRECISION, Math.Rounding.Ceil);
         uint256 minAssets = _calculateMinAmount(expectedAssets, slippageTolerance);
-        require(assetsReceived >= minAssets, ErrorsLib.TokenSaleNotGeneratingEnoughAssets());
+        if (!(assetsReceived >= minAssets)) revert ErrorsLib.TokenSaleNotGeneratingEnoughAssets();
 
         int256 slippagePct = _calculateSlippagePct(expectedAssets, assetsReceived);
 
@@ -4323,7 +4404,7 @@ contract Box is IBox, ERC20, ReentrancyGuard {
         uint256 fromValue = tokensAmount.mulDiv(fromOraclePrice, ORACLE_PRECISION, Math.Rounding.Ceil);
         uint256 expectedToTokens = fromValue.mulDiv(ORACLE_PRECISION, toOraclePrice, Math.Rounding.Ceil);
         uint256 minToTokens = _calculateMinAmount(expectedToTokens, maxSlippage);
-        require(toReceived >= minToTokens, ErrorsLib.ReallocationSlippageTooHigh());
+        if (!(toReceived >= minToTokens)) revert ErrorsLib.ReallocationSlippageTooHigh();
 
         int256 slippagePct = _calculateSlippagePct(expectedToTokens, toReceived);
 
@@ -4460,7 +4541,7 @@ contract Box is IBox, ERC20, ReentrancyGuard {
         _requireNonZeroAddress(address(flashToken));
         _requireIsTokenOrAsset(flashToken);
         // Prevent re-entrancy. Can't use nonReentrant modifier because of conflict with allocate/deallocate/reallocate
-        require(_cachedNavDepth == 0, ErrorsLib.ReentryNotAllowed());
+        if (!(_cachedNavDepth == 0)) revert ErrorsLib.ReentryNotAllowed();
 
         // Cache NAV before starting flash operation for slippage calculations
         _startNavCache();
@@ -4489,7 +4570,7 @@ contract Box is IBox, ERC20, ReentrancyGuard {
         for (uint256 i = 0; i < length; i++) {
             (bool success, bytes memory returnData) = address(this).delegatecall(data[i]);
             if (!success) {
-                assembly ("memory-safe") {
+                assembly {
                     revert(add(32, returnData), mload(returnData))
                 }
             }
@@ -4573,7 +4654,7 @@ contract Box is IBox, ERC20, ReentrancyGuard {
     function setIsAllocator(address account, bool newIsAllocator) external {
         _onlyCurator();
         _requireNonZeroAddress(account);
-        require(isAllocator[account] != newIsAllocator, ErrorsLib.InvalidValue());
+        if (!(isAllocator[account] != newIsAllocator)) revert ErrorsLib.InvalidValue();
 
         isAllocator[account] = newIsAllocator;
 
@@ -4586,8 +4667,8 @@ contract Box is IBox, ERC20, ReentrancyGuard {
      * @dev Guardian or curator can trigger shutdown
      */
     function shutdown() external {
-        require(msg.sender == guardian || msg.sender == curator, ErrorsLib.OnlyGuardianOrCuratorCanShutdown());
-        require(!isShutdown(), ErrorsLib.AlreadyShutdown());
+        if (!(msg.sender == guardian || msg.sender == curator)) revert ErrorsLib.OnlyGuardianOrCuratorCanShutdown();
+        if (!(!isShutdown())) revert ErrorsLib.AlreadyShutdown();
 
         shutdownTime = block.timestamp;
 
@@ -4599,9 +4680,9 @@ contract Box is IBox, ERC20, ReentrancyGuard {
      * @dev Only guardian can recover, must be before wind-down phase starts
      */
     function recover() external {
-        require(msg.sender == guardian, ErrorsLib.OnlyGuardianCanRecover());
-        require(isShutdown(), ErrorsLib.NotShutdown());
-        require(!isWinddown(), ErrorsLib.CannotRecoverAfterWinddown());
+        if (!(msg.sender == guardian)) revert ErrorsLib.OnlyGuardianCanRecover();
+        if (!(isShutdown())) revert ErrorsLib.NotShutdown();
+        if (!(!isWinddown())) revert ErrorsLib.CannotRecoverAfterWinddown();
 
         shutdownTime = type(uint256).max;
 
@@ -4620,12 +4701,12 @@ contract Box is IBox, ERC20, ReentrancyGuard {
      */
     function submit(bytes calldata data) external {
         _onlyCurator();
-        require(executableAt[data] == 0, ErrorsLib.DataAlreadyTimelocked());
-        require(data.length >= 4, ErrorsLib.InvalidAmount());
+        if (!(executableAt[data] == 0)) revert ErrorsLib.DataAlreadyTimelocked();
+        if (!(data.length >= 4)) revert ErrorsLib.InvalidAmount();
 
         bytes4 selector = bytes4(data);
         uint256 delay = selector == IBox.decreaseTimelock.selector ? timelock[bytes4(data[4:8])] : timelock[selector];
-        require(delay != TIMELOCK_DISABLED, ErrorsLib.FunctionDisabled());
+        if (!(delay != TIMELOCK_DISABLED)) revert ErrorsLib.FunctionDisabled();
         executableAt[data] = block.timestamp + delay;
 
         emit EventsLib.TimelockSubmitted(selector, data, executableAt[data], msg.sender);
@@ -4636,8 +4717,8 @@ contract Box is IBox, ERC20, ReentrancyGuard {
      * @dev Checks if current calldata is timelocked and ready for execution
      */
     function timelocked() internal {
-        require(executableAt[msg.data] > 0, ErrorsLib.DataNotTimelocked());
-        require(block.timestamp >= executableAt[msg.data], ErrorsLib.TimelockNotExpired());
+        if (!(executableAt[msg.data] > 0)) revert ErrorsLib.DataNotTimelocked();
+        if (!(block.timestamp >= executableAt[msg.data])) revert ErrorsLib.TimelockNotExpired();
 
         executableAt[msg.data] = 0;
 
@@ -4650,8 +4731,8 @@ contract Box is IBox, ERC20, ReentrancyGuard {
      * @dev Guardian or curator can revoke pending transactions
      */
     function revoke(bytes calldata data) external {
-        require(msg.sender == curator || msg.sender == guardian, ErrorsLib.OnlyCuratorOrGuardian());
-        require(executableAt[data] > 0, ErrorsLib.DataNotTimelocked());
+        if (!(msg.sender == curator || msg.sender == guardian)) revert ErrorsLib.OnlyCuratorOrGuardian();
+        if (!(executableAt[data] > 0)) revert ErrorsLib.DataNotTimelocked();
 
         executableAt[data] = 0;
 
@@ -4666,8 +4747,8 @@ contract Box is IBox, ERC20, ReentrancyGuard {
      */
     function increaseTimelock(bytes4 selector, uint256 newDuration) external {
         _onlyCurator();
-        require(newDuration <= TIMELOCK_CAP, ErrorsLib.InvalidTimelock());
-        require(newDuration > timelock[selector], ErrorsLib.TimelockNotIncreasing());
+        if (!(newDuration <= TIMELOCK_CAP)) revert ErrorsLib.InvalidTimelock();
+        if (!(newDuration > timelock[selector])) revert ErrorsLib.TimelockNotIncreasing();
 
         timelock[selector] = newDuration;
 
@@ -4684,8 +4765,8 @@ contract Box is IBox, ERC20, ReentrancyGuard {
         timelocked();
         _onlyCurator();
         uint256 currentTimelock = timelock[selector];
-        require(currentTimelock != TIMELOCK_DISABLED, ErrorsLib.InvalidTimelock());
-        require(newDuration < currentTimelock, ErrorsLib.TimelockNotDecreasing());
+        if (!(currentTimelock != TIMELOCK_DISABLED)) revert ErrorsLib.InvalidTimelock();
+        if (!(newDuration < currentTimelock)) revert ErrorsLib.TimelockNotDecreasing();
 
         timelock[selector] = newDuration;
 
@@ -4717,7 +4798,7 @@ contract Box is IBox, ERC20, ReentrancyGuard {
     function setIsFeeder(address account, bool newIsFeeder) external {
         timelocked();
         _requireNonZeroAddress(account);
-        require(isFeeder[account] != newIsFeeder, ErrorsLib.InvalidValue());
+        if (!(isFeeder[account] != newIsFeeder)) revert ErrorsLib.InvalidValue();
 
         isFeeder[account] = newIsFeeder;
 
@@ -4731,7 +4812,7 @@ contract Box is IBox, ERC20, ReentrancyGuard {
      */
     function setMaxSlippage(uint256 newMaxSlippage) external {
         timelocked();
-        require(newMaxSlippage <= MAX_SLIPPAGE_LIMIT, ErrorsLib.SlippageTooHigh());
+        if (!(newMaxSlippage <= MAX_SLIPPAGE_LIMIT)) revert ErrorsLib.SlippageTooHigh();
         _requireNotEqual(newMaxSlippage, maxSlippage);
 
         uint256 oldMaxSlippage = maxSlippage;
@@ -4750,9 +4831,9 @@ contract Box is IBox, ERC20, ReentrancyGuard {
         timelocked();
         _requireNonZeroAddress(address(token));
         _requireNotEqualAddress(address(token), asset);
-        require(address(oracle) != address(0), ErrorsLib.OracleRequired());
-        require(!isToken(token), ErrorsLib.TokenAlreadyWhitelisted());
-        require(tokens.length < MAX_TOKENS, ErrorsLib.TooManyTokens());
+        if (!(address(oracle) != address(0))) revert ErrorsLib.OracleRequired();
+        if (!(!isToken(token))) revert ErrorsLib.TokenAlreadyWhitelisted();
+        if (!(tokens.length < MAX_TOKENS)) revert ErrorsLib.TooManyTokens();
 
         tokens.push(token);
         oracles[token] = oracle;
@@ -4768,8 +4849,8 @@ contract Box is IBox, ERC20, ReentrancyGuard {
     function removeToken(IERC20 token) external {
         _onlyCurator();
         _requireIsToken(token);
-        require(token.balanceOf(address(this)) == 0, ErrorsLib.TokenBalanceMustBeZero());
-        require(!_isTokenUsedInFunding(token), ErrorsLib.CannotRemove());
+        if (!(token.balanceOf(address(this)) == 0)) revert ErrorsLib.TokenBalanceMustBeZero();
+        if (!(!_isTokenUsedInFunding(token))) revert ErrorsLib.CannotRemove();
 
         uint256 length = tokens.length;
         for (uint256 i; i < length; i++) {
@@ -4793,7 +4874,7 @@ contract Box is IBox, ERC20, ReentrancyGuard {
      */
     function changeTokenOracle(IERC20 token, IOracle oracle) external {
         if (isWinddown()) {
-            require(block.timestamp >= shutdownTime + shutdownWarmup + shutdownSlippageDuration, ErrorsLib.NotAllowed());
+            if (!(block.timestamp >= shutdownTime + shutdownWarmup + shutdownSlippageDuration)) revert ErrorsLib.NotAllowed();
             _onlyGuardian();
         } else {
             _onlyCurator();
@@ -4815,16 +4896,16 @@ contract Box is IBox, ERC20, ReentrancyGuard {
      */
     function addFunding(IFunding fundingModule) external {
         timelocked();
-        require(!fundingMap[fundingModule], ErrorsLib.AlreadyWhitelisted());
+        if (!(!fundingMap[fundingModule])) revert ErrorsLib.AlreadyWhitelisted();
         _requireNonZeroAddress(address(fundingModule));
         // Check that Box is the owner of the funding module
         (bool success, bytes memory data) = address(fundingModule).staticcall(abi.encodeWithSignature("owner()"));
-        require(success && data.length == 32, ErrorsLib.InvalidValue());
+        if (!(success && data.length == 32)) revert ErrorsLib.InvalidValue();
         address fundingOwner = abi.decode(data, (address));
-        require(fundingOwner == address(this), ErrorsLib.InvalidValue());
-        require(fundingModule.facilitiesLength() == 0, ErrorsLib.NotClean());
-        require(fundingModule.collateralTokensLength() == 0, ErrorsLib.NotClean());
-        require(fundingModule.debtTokensLength() == 0, ErrorsLib.NotClean());
+        if (!(fundingOwner == address(this))) revert ErrorsLib.InvalidValue();
+        if (!(fundingModule.facilitiesLength() == 0)) revert ErrorsLib.NotClean();
+        if (!(fundingModule.collateralTokensLength() == 0)) revert ErrorsLib.NotClean();
+        if (!(fundingModule.debtTokensLength() == 0)) revert ErrorsLib.NotClean();
 
         fundingMap[fundingModule] = true;
         fundings.push(fundingModule);
@@ -4888,9 +4969,9 @@ contract Box is IBox, ERC20, ReentrancyGuard {
         _onlyCurator();
         _requireIsFunding(fundingModule);
 
-        require(fundingModule.facilitiesLength() == 0, ErrorsLib.CannotRemove());
-        require(fundingModule.collateralTokensLength() == 0, ErrorsLib.CannotRemove());
-        require(fundingModule.debtTokensLength() == 0, ErrorsLib.CannotRemove());
+        if (!(fundingModule.facilitiesLength() == 0)) revert ErrorsLib.CannotRemove();
+        if (!(fundingModule.collateralTokensLength() == 0)) revert ErrorsLib.CannotRemove();
+        if (!(fundingModule.debtTokensLength() == 0)) revert ErrorsLib.CannotRemove();
 
         fundingMap[fundingModule] = false;
         uint256 index = _findFundingIndex(fundingModule);
@@ -5011,105 +5092,105 @@ contract Box is IBox, ERC20, ReentrancyGuard {
      * @dev Checks if msg.sender is the owner
      */
     function _onlyOwner() internal view {
-        require(msg.sender == owner, ErrorsLib.OnlyOwner());
+        if (!(msg.sender == owner)) revert ErrorsLib.OnlyOwner();
     }
 
     /**
      * @dev Checks if msg.sender is the curator
      */
     function _onlyCurator() internal view {
-        require(msg.sender == curator, ErrorsLib.OnlyCurator());
+        if (!(msg.sender == curator)) revert ErrorsLib.OnlyCurator();
     }
 
     /**
      * @dev Checks that an address is not zero
      */
     function _requireNonZeroAddress(address addr) internal pure {
-        require(addr != address(0), ErrorsLib.InvalidAddress());
+        if (!(addr != address(0))) revert ErrorsLib.InvalidAddress();
     }
 
     /**
      * @dev Checks if a token is whitelisted
      */
     function _requireIsToken(IERC20 token) internal view {
-        require(isToken(token), ErrorsLib.TokenNotWhitelisted());
+        if (!(isToken(token))) revert ErrorsLib.TokenNotWhitelisted();
     }
 
     /**
      * @dev Checks if a funding module is whitelisted
      */
     function _requireIsFunding(IFunding fundingModule) internal view {
-        require(isFunding(fundingModule), ErrorsLib.NotWhitelisted());
+        if (!(isFunding(fundingModule))) revert ErrorsLib.NotWhitelisted();
     }
 
     /**
      * @dev Checks that vault is not in winddown
      */
     function _requireNotWinddown() internal view {
-        require(!isWinddown(), ErrorsLib.CannotDuringWinddown());
+        if (!(!isWinddown())) revert ErrorsLib.CannotDuringWinddown();
     }
 
     /**
      * @dev Checks if msg.sender is allocator and not in winddown
      */
     function _onlyAllocatorNotWinddown() internal view {
-        require(isAllocator[msg.sender] && !isWinddown(), ErrorsLib.OnlyAllocators());
+        if (!(isAllocator[msg.sender] && !isWinddown())) revert ErrorsLib.OnlyAllocators();
     }
 
     /**
      * @dev Checks if msg.sender is allocator or in winddown
      */
     function _onlyAllocatorOrWinddown() internal view {
-        require(isAllocator[msg.sender] || isWinddown(), ErrorsLib.OnlyAllocatorsOrWinddown());
+        if (!(isAllocator[msg.sender] || isWinddown())) revert ErrorsLib.OnlyAllocatorsOrWinddown();
     }
 
     /**
      * @dev Checks that two values are not equal
      */
     function _requireNotEqual(uint256 a, uint256 b) internal pure {
-        require(a != b, ErrorsLib.InvalidValue());
+        if (!(a != b)) revert ErrorsLib.InvalidValue();
     }
 
     /**
      * @dev Checks that two addresses are not equal
      */
     function _requireNotEqualAddress(address a, address b) internal pure {
-        require(a != b, ErrorsLib.InvalidValue());
+        if (!(a != b)) revert ErrorsLib.InvalidValue();
     }
 
     /**
      * @dev Checks if msg.sender is the guardian
      */
     function _onlyGuardian() internal view {
-        require(msg.sender == guardian, ErrorsLib.OnlyGuardian());
+        if (!(msg.sender == guardian)) revert ErrorsLib.OnlyGuardian();
     }
 
     /**
      * @dev Checks if msg.sender is allocator
      */
     function _onlyAllocator() internal view {
-        require(isAllocator[msg.sender], ErrorsLib.OnlyAllocators());
+        if (!(isAllocator[msg.sender])) revert ErrorsLib.OnlyAllocators();
     }
 
     /**
      * @dev Checks if msg.sender is feeder
      */
     function _onlyFeeder() internal view {
-        require(isFeeder[msg.sender], ErrorsLib.OnlyFeeders());
+        if (!(isFeeder[msg.sender])) revert ErrorsLib.OnlyFeeders();
     }
 
     /**
      * @dev Checks that vault is not shutdown
      */
     function _requireNotShutdown() internal view {
-        require(!isShutdown(), ErrorsLib.CannotDuringShutdown());
+        if (!(!isShutdown())) revert ErrorsLib.CannotDuringShutdown();
     }
 
     /**
      * @dev Checks if token is whitelisted or is the base asset
      */
     function _requireIsTokenOrAsset(IERC20 token) internal view {
-        require(isTokenOrAsset(token), ErrorsLib.TokenNotWhitelisted());
+        if (!(isTokenOrAsset(token))) revert ErrorsLib.TokenNotWhitelisted();
     }
 
     /**
@@ -5159,7 +5240,7 @@ contract Box is IBox, ERC20, ReentrancyGuard {
         spent = fromBefore - fromToken.balanceOf(address(this));
         received = toToken.balanceOf(address(this)) - toBefore;
 
-        require(spent <= maxAmount, ErrorsLib.SwapperDidSpendTooMuch());
+        if (!(spent <= maxAmount)) revert ErrorsLib.SwapperDidSpendTooMuch();
     }
 
     /**
@@ -5207,7 +5288,7 @@ contract Box is IBox, ERC20, ReentrancyGuard {
             accumulatedSlippage += slippagePct;
         }
 
-        require(accumulatedSlippage < maxSlippage, ErrorsLib.TooMuchAccumulatedSlippage());
+        if (!(accumulatedSlippage < maxSlippage)) revert ErrorsLib.TooMuchAccumulatedSlippage();
 
         emit EventsLib.SlippageAccumulated(slippagePct, accumulatedSlippage);
     }
@@ -5219,7 +5300,7 @@ contract Box is IBox, ERC20, ReentrancyGuard {
      * @dev Reverts if called during NAV-cached operations (swaps or flash) to prevent read-only reentrancy
      */
     function _nav() internal view returns (uint256 nav) {
-        require(_cachedNavDepth == 0, ErrorsLib.NoNavDuringCache());
+        if (!(_cachedNavDepth == 0)) revert ErrorsLib.NoNavDuringCache();
         nav = IERC20(asset).balanceOf(address(this));
 
         // Add value of all tokens

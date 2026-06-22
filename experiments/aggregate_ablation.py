@@ -26,8 +26,8 @@ from scipy.stats import binomtest
 TARGET_RECALL = 0.90   # operating point for the matched-recall FPR comparison
 
 PROJECT_ROOT = Path("/home/pollmix/Coding/HyperVul")
-ABLATION_DIR = PROJECT_ROOT / "experiments" / "results" / "ablation"
-OUT_PATH = PROJECT_ROOT / "experiments" / "results" / "ablation_summary.md"
+ABLATION_DIR = PROJECT_ROOT / "experiments" / "latest1" / "ablation"
+OUT_PATH = PROJECT_ROOT / "experiments" / "latest1" / "ablation_summary.md"
 
 HOLDOUTS = ["OZ-Holdout", "MakerDAO", "Bancor", "Liquity"]
 # Canonical arm display order (only those present are shown).

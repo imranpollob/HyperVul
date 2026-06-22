@@ -1,10 +1,10 @@
-// SPDX-License-Identifier: BSD
+// SPDX-License-Identifier: BSD 3-Clause
 pragma solidity 0.6.10;
- 3-Clause
 
 
 
- 3-Clause
+
+
 
 
 
