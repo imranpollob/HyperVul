@@ -15,6 +15,23 @@ sys.path.append(str(PROJECT_ROOT))
 DETECTORS_REENTRANCY = {"reentrancy-eth", "reentrancy-no-eth", "reentrancy-benign", "reentrancy-events"}
 DETECTORS_UNCHECKED = {"unchecked-lowlevel", "unchecked-send", "unchecked-transfer"}
 
+GLOBAL_FILE_MAP = defaultdict(list)
+
+def build_global_file_map():
+    global GLOBAL_FILE_MAP
+    search_dirs = [PROJECT_ROOT / "data", PROJECT_ROOT / "data/external"]
+    for sdir in search_dirs:
+        if not sdir.exists():
+            continue
+        for root, _, files in os.walk(str(sdir)):
+            if "scratch" in root:
+                continue
+            for f in files:
+                if f.endswith(".sol"):
+                    path = Path(root) / f
+                    if path.resolve() not in GLOBAL_FILE_MAP[f]:
+                        GLOBAL_FILE_MAP[f].append(path.resolve())
+
 def find_sol_file(rel_path):
     prefixes = [
         PROJECT_ROOT,
@@ -52,8 +69,8 @@ def get_project_root(file_path):
 
 def parse_imports(content):
     patterns = [
-        r'import\s+["\']([^"\']+)["\']\s*;',
-        r'import\s+[\s\S]*?\s+from\s+["\']([^"\']+)["\']\s*;'
+        r'import\s+["\']([^"\';]+)["\']\s*;',
+        r'import\s+[^;]+\s+from\s+["\']([^"\']+)["\']\s*;'
     ]
     imports = []
     for pat in patterns:
@@ -61,15 +78,23 @@ def parse_imports(content):
             imports.append((match.group(0), match.group(1)))
     return imports
 
+def score_path_match(candidate_path, import_path):
+    import_parts = [p.lower() for p in import_path.replace("@", "").split("/") if p]
+    candidate_str = str(candidate_path).lower()
+    score = 0
+    for ip in import_parts:
+        if ip in candidate_str:
+            score += 1
+    return score
+
 def resolve_import(import_path, current_dir, project_root):
     # 1. Try relative
     p = (current_dir / import_path).resolve()
     if p.exists():
         return p
-    # 2. OpenZeppelin Mapping
-    if import_path.startswith("@openzeppelin/"):
+    # 2. OpenZeppelin Mapping (non-upgradeable only)
+    if import_path.startswith("@openzeppelin/contracts/"):
         rel = import_path.replace("@openzeppelin/contracts/", "")
-        rel = rel.replace("@openzeppelin/contracts-upgradeable/", "")
         p = (PROJECT_ROOT / "data/external/openzeppelin-contracts/contracts" / rel).resolve()
         if p.exists():
             return p
@@ -78,22 +103,24 @@ def resolve_import(import_path, current_dir, project_root):
     for root, dirs, files in os.walk(str(project_root)):
         if name in files:
             return (Path(root) / name).resolve()
-    # 4. Recursive search in external openzeppelin
-    for root, dirs, files in os.walk(str(PROJECT_ROOT / "data/external")):
-        if name in files:
-            return (Path(root) / name).resolve()
+    # 4. Global fallback with path scoring
+    if name in GLOBAL_FILE_MAP:
+        candidates = GLOBAL_FILE_MAP[name]
+        best_candidate = max(candidates, key=lambda c: score_path_match(c, import_path))
+        return best_candidate
     return None
 
 def inline_file(file_path, project_root, inlined_files):
     file_path = Path(file_path).resolve()
-    if file_path in inlined_files:
+    file_key = (file_path.parts[-2], file_path.name) if len(file_path.parts) >= 2 else file_path.name
+    if file_key in inlined_files:
         return ""
-    inlined_files.add(file_path)
+    inlined_files.add(file_key)
     if not file_path.exists():
         return f"// Warning: imported file {file_path.name} not found\n"
     content = file_path.read_text(errors='ignore')
     content = re.sub(r'pragma\s+solidity\s+[^;]+;', '', content)
-    content = re.sub(r'//\s*SPDX-License-Identifier:\s*\S+', '', content)
+    content = re.sub(r'//\s*SPDX-License-Identifier:\s*[^\r\n]*', '', content)
     
     imports = parse_imports(content)
     for import_line, import_path in imports:
@@ -105,16 +132,60 @@ def inline_file(file_path, project_root, inlined_files):
             content = content.replace(import_line, f"// Failed to resolve import: {import_line}")
     return content
 
+def deduplicate_declarations(content):
+    pattern = re.compile(r'\b(contract|interface|library|abstract\s+contract)\s+([A-Za-z0-9_]+)\s*(?:is\s+[^{]+)?\{')
+    seen_names = set()
+    pos = 0
+    while True:
+        match = pattern.search(content, pos)
+        if not match:
+            break
+        
+        decl_type = match.group(1)
+        name = match.group(2)
+        start_idx = match.start()
+        open_brace_idx = match.end() - 1
+        
+        if name in seen_names:
+            depth = 1
+            close_brace_idx = -1
+            for i in range(open_brace_idx + 1, len(content)):
+                if content[i] == '{':
+                    depth += 1
+                elif content[i] == '}':
+                    depth -= 1
+                    if depth == 0:
+                        close_brace_idx = i
+                        break
+            if close_brace_idx != -1:
+                decl_len = close_brace_idx + 1 - start_idx
+                replacement = f"/* Duplicate {decl_type} {name} removed */"
+                if len(replacement) < decl_len:
+                    replacement += " " * (decl_len - len(replacement))
+                else:
+                    replacement = replacement[:decl_len]
+                content = content[:start_idx] + replacement + content[close_brace_idx + 1:]
+                pos = start_idx + len(replacement)
+                continue
+        else:
+            seen_names.add(name)
+            
+        pos = open_brace_idx + 1
+        
+    return content
+
 def flatten_solidity_file(src_path, dst_path, solc_ver):
     project_root = get_project_root(src_path)
     inlined_files = set()
+    src_key = (src_path.parts[-2], src_path.name) if len(src_path.parts) >= 2 else src_path.name
+    inlined_files.add(src_key)
     content = src_path.read_text(errors='ignore')
     
     # Extract SPDX & pragma to prepend
-    spdx = re.findall(r'//\s*SPDX-License-Identifier:\s*\S+', content)
+    spdx = re.findall(r'//\s*SPDX-License-Identifier:\s*[^\r\n]*', content)
     
     content = re.sub(r'pragma\s+solidity\s+[^;]+;', '', content)
-    content = re.sub(r'//\s*SPDX-License-Identifier:\s*\S+', '', content)
+    content = re.sub(r'//\s*SPDX-License-Identifier:\s*[^\r\n]*', '', content)
     
     imports = parse_imports(content)
     for import_line, import_path in imports:
@@ -125,6 +196,28 @@ def flatten_solidity_file(src_path, dst_path, solc_ver):
         else:
             content = content.replace(import_line, f"// Failed to resolve import: {import_line}")
             
+    # Downgrade syntax to compile on 0.8.11
+    # 1. Strip memory-safe annotation
+    content = re.sub(r'assembly\s*\(\s*["\']memory-safe["\']\s*\)', 'assembly', content)
+    # 2. Strip parameter labels in mappings: mapping(type label => type) -> mapping(type => type)
+    for _ in range(5):
+        content = re.sub(r'mapping\s*\(\s*([a-zA-Z0-9_.]+(?:\[\])?)\s+[a-zA-Z0-9_]+\s*=>', r'mapping(\1 =>', content)
+    # 3. Strip transient storage keyword
+    content = re.sub(r'\btransient\b', ' ', content)
+    # 4. Convert require(cond, CustomError(...)) to if (!(cond)) revert CustomError(...)
+    content = re.sub(
+        r'require\s*\(([^;]*?),\s*([a-zA-Z0-9_.]+\s*\([\s\S]*?\))\s*\)\s*;',
+        lambda m: f"if (!({m.group(1).strip()})) revert {m.group(2).strip()};",
+        content
+    )
+    # 5. Convert abi.encodeCall(Interface.func, (args)) to abi.encodeWithSelector(Interface.func.selector, args)
+    content = re.sub(
+        r'abi\.encodeCall\s*\(\s*([a-zA-Z0-9_.]+)\s*,\s*\(([^)]*?)\)\s*\)',
+        r'abi.encodeWithSelector(\1.selector, \2)',
+        content
+    )
+    
+    content = deduplicate_declarations(content)
     prefix = ""
     if spdx:
         prefix += spdx[0] + "\n"
@@ -177,22 +270,53 @@ def run_slither(flat_file, solc_ver):
     cmd = ["slither", str(flat_file)]
     if solc_path.exists():
         cmd += ["--solc", str(solc_path)]
-    cmd += ["--json", "-"]
     
-    res = subprocess.run(cmd, capture_output=True, text=True)
+    try_via_ir = False
+    try:
+        parts = [int(x) for x in solc_ver.split(".")]
+        if len(parts) >= 3 and (parts[0] > 0 or parts[1] >= 8):
+            try_via_ir = True
+    except Exception:
+        pass
+        
+    solc_args = ["--optimize"]
+    if try_via_ir:
+        solc_args.append("--experimental-via-ir")
+        
+    cmd_run = cmd + [f"--solc-args={' '.join(solc_args)}", "--json", "-"]
+    res = subprocess.run(cmd_run, capture_output=True, text=True)
+    
+    data = None
     try:
         data = json.loads(res.stdout)
-        return data
     except Exception:
         match = re.search(r'\{.*\}', res.stdout, re.DOTALL)
         if match:
             try:
-                return json.loads(match.group(0))
+                data = json.loads(match.group(0))
             except Exception:
                 pass
-        return None
+                
+    # Fallback: if failed and we tried via-ir, try without via-ir
+    if data is None and try_via_ir:
+        solc_args = ["--optimize"]
+        cmd_run = cmd + [f"--solc-args={' '.join(solc_args)}", "--json", "-"]
+        res = subprocess.run(cmd_run, capture_output=True, text=True)
+        try:
+            data = json.loads(res.stdout)
+        except Exception:
+            match = re.search(r'\{.*\}', res.stdout, re.DOTALL)
+            if match:
+                try:
+                    data = json.loads(match.group(0))
+                except Exception:
+                    pass
+                    
+    return data
 
 def main():
+    print("Building global file map...")
+    build_global_file_map()
     print("Starting Slither Comparison Harness...")
     test_json_path = PROJECT_ROOT / "data" / "splits" / "test_features.json"
     if not test_json_path.exists():

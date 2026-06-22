@@ -1,0 +1,30 @@
+{
+  "step1_total_vfps": 303,
+  "step1_total_findings": 695,
+  "step1_interaction_findings": 212,
+  "step1_cwe_only_matches": 116,
+  "step1_keyword_only_matches": 65,
+  "step1_both_matches": 31,
+  "step1_distinct_vfps_with_interaction": 133,
+  "step1_severity_distribution": {
+    "High": 78,
+    "Medium": 120,
+    "Critical": 14
+  },
+  "step2_findings_with_func_loc": 148,
+  "step2_findings_without_func_loc": 64,
+  "step2_total_func_locations": 301,
+  "step3_source_found": 251,
+  "step3_source_not_found": 50,
+  "step3_has_external_call": 107,
+  "step3_has_state_var_access": 108,
+  "step3_has_both": 66,
+  "step4_constructable_hyperedges": 61,
+  "step4_from_unique_findings": 47,
+  "step4_from_unique_vfps": 30,
+  "step4_severity_distribution": {
+    "High": 27,
+    "Medium": 26,
+    "Critical": 8
+  }
+}

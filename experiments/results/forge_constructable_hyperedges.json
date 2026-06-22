@@ -1,0 +1,1019 @@
+[
+  {
+    "vfp_id": "vfp_00001",
+    "finding_id": 2,
+    "finding_title": "Wrong approval in fullfillImage",
+    "severity": "High",
+    "file": "AgentImageService.sol",
+    "function": "fulfillImage",
+    "external_calls": [
+      "(request.amount - treasuryCut); IERC20Upgradeable(agentToken).safeTransfer(spectralTreasury, (r"
+    ],
+    "state_vars_accessed": [
+      "spectralTreasury",
+      "pendingFees",
+      "accumulatedFees",
+      "parameters"
+    ]
+  },
+  {
+    "vfp_id": "vfp_00001",
+    "finding_id": 3,
+    "finding_title": "Duplicate requestId values can occur",
+    "severity": "Medium",
+    "file": "AgentImageService.sol",
+    "function": "requestImage",
+    "external_calls": [
+      "kens from user to this contract token.safeTransferFrom(msg.sender, address("
+    ],
+    "state_vars_accessed": [
+      "agentConfigs",
+      "pendingFees"
+    ]
+  },
+  {
+    "vfp_id": "vfp_00001",
+    "finding_id": 4,
+    "finding_title": "The requestRefund function contains an incorrect check",
+    "severity": "Medium",
+    "file": "AgentImageService.sol",
+    "function": "requestRefund",
+    "external_calls": [
+      "// Transfer tokens back to user IERC20Upgradeable(agentToken).safeTransfer(msg.sender, request."
+    ],
+    "state_vars_accessed": [
+      "agentConfigs",
+      "pendingFees"
+    ]
+  },
+  {
+    "vfp_id": "vfp_00007",
+    "finding_id": 6,
+    "finding_title": "Unbounded Iteration in Folio Functions",
+    "severity": "Medium",
+    "file": "Folio.sol",
+    "function": "mint",
+    "external_calls": [
+      "_amounts[i] != 0) { SafeERC20.safeTransferFrom(IERC20(_assets[i]),"
+    ],
+    "state_vars_accessed": [
+      "daoFeeRegistry"
+    ]
+  },
+  {
+    "vfp_id": "vfp_00019",
+    "finding_id": 1,
+    "finding_title": "Creation of contract OPSuccinctDisputeGame could be blocked by front-running the output proposal",
+    "severity": "Medium",
+    "file": "OPSuccinctDisputeGame.sol",
+    "function": "initialize",
+    "external_calls": [
+      "OutputOracle(L2_OUTPUT_ORACLE); oracle.proposeL2Output( configN"
+    ],
+    "state_vars_accessed": [
+      "L2_OUTPUT_ORACLE",
+      "wasRespectedGameTypeWhenCreated",
+      "status",
+      "createdAt"
+    ]
+  },
+  {
+    "vfp_id": "vfp_00032",
+    "finding_id": 8,
+    "finding_title": "Hardcoded useEth = true in remove_liquidity_one_coin or remove_liquidity lead to stuck fund",
+    "severity": "High",
+    "file": "CurveConvex2Token.sol",
+    "function": "unstakeAndExitPool",
+    "external_calls": [
+      "KEN_1 == ETH_ADDRESS) { WETH.deposit{value: exitBalances[0]}(); } els",
+      "KEN_2 == ETH_ADDRESS) { WETH.deposit{value: exitBalances[1]}(); }"
+    ],
+    "state_vars_accessed": [
+      "TOKEN_1",
+      "TOKEN_2"
+    ]
+  },
+  {
+    "vfp_id": "vfp_00032",
+    "finding_id": 8,
+    "finding_title": "Hardcoded useEth = true in remove_liquidity_one_coin or remove_liquidity lead to stuck fund",
+    "severity": "High",
+    "file": "AbstractYieldStrategy.sol",
+    "function": "_burnShares",
+    "external_calls": [
+      "uint256 initialAssetBalance = TokenUtils.tokenBalance(asset); //",
+      "n; uint256 finalAssetBalance = TokenUtils.tokenBalance(asset); asse"
+    ],
+    "state_vars_accessed": [
+      "s_escrowedShares",
+      "asset"
+    ]
+  },
+  {
+    "vfp_id": "vfp_00032",
+    "finding_id": 29,
+    "finding_title": "Users will be unfairly liquidated if collateral value drops after initiating withdraw request",
+    "severity": "High",
+    "file": "AbstractYieldStrategy.sol",
+    "function": "mintShares",
+    "external_calls": [
+      "notEnterPosition(); ERC20(asset).safeTransferFrom(t_CurrentLendingRout"
+    ],
+    "state_vars_accessed": [
+      "asset"
+    ]
+  },
+  {
+    "vfp_id": "vfp_00045",
+    "finding_id": 0,
+    "finding_title": "Proof-set owner can reset proofSetLastProvenEpoch to avoid accumulated fees",
+    "severity": "Medium",
+    "file": "PDPVerifier.sol",
+    "function": "nextProvingPeriod",
+    "external_calls": [
+      "ee amount\"); (bool success, ) = BURN_ACTOR.call{value: amount}(\"\"); require",
+      "rpayment payable(msg.sender).transfer(msg.value - sybilFee",
+      "erAddr != address(0)) { PDPListener(listenerAddr).proofSetCreated(setId, msg.sender, e",
+      "erAddr != address(0)) { PDPListener(listenerAddr).proofSetDeleted(setId, deletedLeafCo",
+      "erAddr != address(0)) { PDPListener(listenerAddr).rootsAdded(setId, firstAdded, r",
+      "erAddr != address(0)) { PDPListener(listenerAddr).rootsScheduledRemove(setId, rootIds, extr",
+      "erAddr != address(0)) { PDPListener(listenerAddr).possessionProven(setId, proofSetLeafC",
+      "rpayment payable(msg.sender).transfer(msg.value - proofFee",
+      "s memory result) = RANDOMNESS_PRECOMPILE.staticcall(abi.encodePacked(epo",
+      "erAddr != address(0)) { PDPListener(listenerAddr).nextProvingPeriod(setId, nextChallenge"
+    ],
+    "state_vars_accessed": [
+      "proofSetProposedOwner",
+      "NO_PROVEN_EPOCH",
+      "EXTRA_DATA_MAX_SIZE",
+      "proofSetListener",
+      "nextProofSetId",
+      "BURN_ACTOR",
+      "FIL_USD_PRICE_FEED_ID",
+      "proofSetLastProvenEpoch",
+      "SECONDS_IN_DAY",
+      "MAX_ENQUEUED_REMOVALS",
+      "scheduledRemovals",
+      "PYTH",
+      "LEAF_SIZE",
+      "challengeFinality",
+      "proofSetLeafCount",
+      "challengeRange",
+      "nextRootId",
+      "proofSetOwner",
+      "RANDOMNESS_PRECOMPILE",
+      "nextChallengeEpoch"
+    ]
+  },
+  {
+    "vfp_id": "vfp_00058",
+    "finding_id": 15,
+    "finding_title": "The old pairReserves is used for margin level checks in the margin",
+    "severity": "Medium",
+    "file": "LikwidMarginPosition.sol",
+    "function": "_margin",
+    "external_calls": [
+      "e(delta.action, callbackData); vault.unlock(data); emit"
+    ],
+    "state_vars_accessed": [
+      "marginLevels",
+      "positionInfos"
+    ]
+  },
+  {
+    "vfp_id": "vfp_00058",
+    "finding_id": 16,
+    "finding_title": "The borrow level check blocks positive margin adjustments in the modify function",
+    "severity": "Medium",
+    "file": "LikwidMarginPosition.sol",
+    "function": "modify",
+    "external_calls": [
+      "e(delta.action, callbackData); vault.unlock(data); emit"
+    ],
+    "state_vars_accessed": [
+      "marginLevels",
+      "positionInfos"
+    ]
+  },
+  {
+    "vfp_id": "vfp_00058",
+    "finding_id": 19,
+    "finding_title": "Inconsistent level check when modifying margin position",
+    "severity": "Medium",
+    "file": "LikwidMarginPosition.sol",
+    "function": "modify",
+    "external_calls": [
+      "e(delta.action, callbackData); vault.unlock(data); emit"
+    ],
+    "state_vars_accessed": [
+      "marginLevels",
+      "positionInfos"
+    ]
+  },
+  {
+    "vfp_id": "vfp_00084",
+    "finding_id": 2,
+    "finding_title": "The OctoDistributor doesn't work when the agent token is set to address(0)",
+    "severity": "Medium",
+    "file": "OctoDistributor.sol",
+    "function": "transferHiringDistributions",
+    "external_calls": [
+      "ddress(0), \"ZERO_ADDRESS\"); usdc_token.safeTransferFrom(msg.sender, address(",
+      "ress(this), totalUsdc); spectral_token.safeTransferFrom(msg.sender, address(",
+      "der, address(this), totalSpec); IERC20Upgradeable(agentToken).safeTransferFrom(msg.sender, address("
+    ],
+    "state_vars_accessed": [
+      "usdc_token",
+      "userBalances",
+      "spectral_token",
+      "systemAddresses"
+    ]
+  },
+  {
+    "vfp_id": "vfp_00084",
+    "finding_id": 3,
+    "finding_title": "The withdrawAllAgentTokens function works incorrectly in OctoDistributor",
+    "severity": "Medium",
+    "file": "OctoDistributor.sol",
+    "function": "withdrawAllAgentTokens",
+    "external_calls": [
+      "lances[msg.sender], token); IERC20Upgradeable(token).safeTransfer(msg.sender, amount);"
+    ],
+    "state_vars_accessed": [
+      "userBalances"
+    ]
+  },
+  {
+    "vfp_id": "vfp_00088",
+    "finding_id": 0,
+    "finding_title": "Reentrancy Vulnerability in _claimWithdrawal Function",
+    "severity": "Critical",
+    "file": "EnjoyoorsVaultWithdrawals.sol",
+    "function": "_claimWithdrawal",
+    "external_calls": [
+      "Approved(requestId, approverData); IERC20(token).safeTransfer(request.user, amount"
+    ],
+    "state_vars_accessed": [
+      "lastRequestId",
+      "withdrawalRequests"
+    ]
+  },
+  {
+    "vfp_id": "vfp_00102",
+    "finding_id": 2,
+    "finding_title": "Lack of nonReentrant modifier in fillOrder() and modifyOrder() allows attacker to steal funds",
+    "severity": "High",
+    "file": "OracleLess.sol",
+    "function": "fillOrder",
+    "external_calls": [
+      "if (feeAmount != 0) { order.tokenOut.safeTransfer(address(MASTER), fee",
+      "end tokenOut to recipient order.tokenOut.safeTransfer(order.recipient, adj",
+      "tokenInRefund != 0) { order.tokenIn.safeTransfer(order.recipient, tok"
+    ],
+    "state_vars_accessed": [
+      "orders",
+      "MASTER",
+      "pendingOrderIds"
+    ]
+  },
+  {
+    "vfp_id": "vfp_00102",
+    "finding_id": 7,
+    "finding_title": "Insecure Use of Recipient in safeTransferFrom Leading to Unauthorized Token Transfers",
+    "severity": "High",
+    "file": "OracleLess.sol",
+    "function": "procureTokens",
+    "external_calls": [
+      "); } else { token.safeTransferFrom(owner, address(this)"
+    ],
+    "state_vars_accessed": [
+      "permit2"
+    ]
+  },
+  {
+    "vfp_id": "vfp_00102",
+    "finding_id": 7,
+    "finding_title": "Insecure Use of Recipient in safeTransferFrom Leading to Unauthorized Token Transfers",
+    "severity": "High",
+    "file": "StopLimit.sol",
+    "function": "modifyOrder",
+    "external_calls": [
+      "rior approval order.tokenIn.safeTransferFrom(",
+      "osition partially order.tokenIn.safeTransfer(order.recipient, _am"
+    ],
+    "state_vars_accessed": [
+      "orders",
+      "permit2",
+      "MASTER"
+    ]
+  },
+  {
+    "vfp_id": "vfp_00102",
+    "finding_id": 18,
+    "finding_title": "Unbounded Iteration in _cancelOrder Leading to DoS",
+    "severity": "Medium",
+    "file": "OracleLess.sol",
+    "function": "_cancelOrder",
+    "external_calls": [
+      "ntIn to recipient order.tokenIn.safeTransfer(order.recipient, ord"
+    ],
+    "state_vars_accessed": [
+      "pendingOrderIds"
+    ]
+  },
+  {
+    "vfp_id": "vfp_00122",
+    "finding_id": 3,
+    "finding_title": "Zappers Can Lose User Funds",
+    "severity": "High",
+    "file": "BorrowerOperations.sol",
+    "function": "_adjustTrove",
+    "external_calls": [
+      "uint256 avgInterestRate = vars.activePool.getNewApproxAvgInterestRateFromTroveChange(_troveChange);",
+      "eChange); } vars.activePool.mintAggInterestAndAccountForTroveChange(_troveChange, batchM"
+    ],
+    "state_vars_accessed": [
+      "CCR",
+      "interestBatchManagerOf",
+      "boldToken"
+    ]
+  },
+  {
+    "vfp_id": "vfp_00123",
+    "finding_id": 1,
+    "finding_title": "BalancerFlashLoan Missing Access Control",
+    "severity": "High",
+    "file": "BalancerFlashLoan.sol",
+    "function": "makeFlashLoan",
+    "external_calls": [
+      ": Wrong Operation\"); } vault.flashLoan(this, tokens, amount"
+    ],
+    "state_vars_accessed": [
+      "vault"
+    ]
+  },
+  {
+    "vfp_id": "vfp_00123",
+    "finding_id": 1,
+    "finding_title": "BalancerFlashLoan Missing Access Control",
+    "severity": "High",
+    "file": "BalancerFlashLoan.sol",
+    "function": "receiveFlashLoan",
+    "external_calls": [
+      "keeping fees here tokens[0].safeTransfer(address(receiver), e",
+      "keeping fees here tokens[0].safeTransfer(address(receiver), e",
+      "keeping fees here tokens[0].safeTransfer(address(receiver), e",
+      "// Return flash loan tokens[0].safeTransfer(address(vault), amou"
+    ],
+    "state_vars_accessed": [
+      "vault"
+    ]
+  },
+  {
+    "vfp_id": "vfp_00126",
+    "finding_id": 2,
+    "finding_title": "Compromised Messengers Cannot Be Removed",
+    "severity": "Medium",
+    "file": "SpokePool.sol",
+    "function": "_setOftMessenger",
+    "external_calls": [
+      "ress _messenger) internal { if (IOFT(_messenger).token() != _token) {"
+    ],
+    "state_vars_accessed": [
+      "oftMessengers"
+    ]
+  },
+  {
+    "vfp_id": "vfp_00153",
+    "finding_id": 0,
+    "finding_title": "Incorrect minimum unbond quantity calculation",
+    "severity": "High",
+    "file": "PolygonStrategy.sol",
+    "function": "unbond",
+    "external_calls": [
+      "sUnbonded; uint256 preBalance = token.balanceOf(address(this));",
+      "[i]; uint256 deposits = vault.getTotalDeposits();",
+      "uint256 principalDeposits = vault.getPrincipalDeposits();",
+      "ards >= toUnbondRemaining && rewards >= vault.minRewardClaimAmount()) {",
+      "laimAmount()) { vault.withdrawRewards();",
+      "cipalDeposits; vault.unbond(vaultToUnbond);",
+      "} uint256 rewardsClaimed = token.balanceOf(address(this)) - pre"
+    ],
+    "state_vars_accessed": [
+      "vaults",
+      "totalQueued",
+      "validatorWithdrawalIndex",
+      "numVaultsUnbonding",
+      "validatorRemoval"
+    ]
+  },
+  {
+    "vfp_id": "vfp_00156",
+    "finding_id": 0,
+    "finding_title": "Incorrect Execution Context for Transfer on Core When Finalizing a Swap",
+    "severity": "High",
+    "file": "HyperCoreFlowExecutor.sol",
+    "function": "finalizeSwapFlows",
+    "external_calls": [
+      "totalAdditionalToSendEVM); IERC20(finalToken).safeTransfer(address(finalTokenIn"
+    ],
+    "state_vars_accessed": [
+      "finalTokenInfos",
+      "lastPullFundsBlock",
+      "cumulativeSponsoredAmount",
+      "swaps",
+      "donationBox"
+    ]
+  },
+  {
+    "vfp_id": "vfp_00156",
+    "finding_id": 2,
+    "finding_title": "Partial Conversion of Initial Token Leads to Stranded Funds",
+    "severity": "High",
+    "file": "ArbitraryEVMFlowExecutor.sol",
+    "function": "_executeFlow",
+    "external_calls": [
+      "uint256 initialAmountSnapshot = IERC20(params.initialToken).balanceOf(address(this));",
+      "; uint256 finalAmountSnapshot = IERC20(params.commonParams.finalToken).balanceOf(address(this));",
+      "sfer tokens to MulticallHandler IERC20(params.initialToken).safeTransfer(multicallHandler, pa",
+      "n. if (initialAmountSnapshot == IERC20(params.initialToken).balanceOf(address(this))) {",
+      "se { uint256 finalBalance = IERC20(params.commonParams.finalToken).balanceOf(address(this));"
+    ],
+    "state_vars_accessed": [
+      "multicallHandler"
+    ]
+  },
+  {
+    "vfp_id": "vfp_00156",
+    "finding_id": 3,
+    "finding_title": "Incorrect `finalToken` in `HyperEVMFallback`",
+    "severity": "Medium",
+    "file": "HyperCoreFlowExecutor.sol",
+    "function": "_initiateSwapFlow",
+    "external_calls": [
+      "r = finalTokenInfo.swapHandler; IERC20(initialToken).safeTransfer(address(swapHandler)"
+    ],
+    "state_vars_accessed": [
+      "PPM_SCALAR",
+      "ONEX1e8",
+      "PPM_DECIMALS",
+      "swaps",
+      "coreTokenInfos",
+      "baseToken"
+    ]
+  },
+  {
+    "vfp_id": "vfp_00156",
+    "finding_id": 3,
+    "finding_title": "Incorrect `finalToken` in `HyperEVMFallback`",
+    "severity": "Medium",
+    "file": "HyperCoreFlowExecutor.sol",
+    "function": "_fallbackHyperEVMFlow",
+    "external_calls": [
+      "VM + sponsorshipFundsToForward; IERC20(params.finalToken).safeTransfer(params.finalRecipien"
+    ],
+    "state_vars_accessed": [
+      "cumulativeSponsoredAmount",
+      "donationBox"
+    ]
+  },
+  {
+    "vfp_id": "vfp_00174",
+    "finding_id": 2,
+    "finding_title": "Extra Reward Tokens from ResolvStaking Stuck in P2pResolvProxy",
+    "severity": "Medium",
+    "file": "P2pResolvProxy.sol",
+    "function": "withdrawRESOLV",
+    "external_calls": [
+      "rP2pOperator { bool isEnabled = IResolvStaking(i_stRESOLV).claimEnabled(); _withdra"
+    ],
+    "state_vars_accessed": [
+      "i_RESOLV",
+      "i_stRESOLV"
+    ]
+  },
+  {
+    "vfp_id": "vfp_00174",
+    "finding_id": 5,
+    "finding_title": "initiateWithdrawalRESOLVAccruedRewards() Withdraws Both Principal and Rewards Instead of Only Rewards",
+    "severity": "Medium",
+    "file": "P2pResolvProxy.sol",
+    "function": "initiateWithdrawalRESOLVAccruedRewards",
+    "external_calls": [
+      "__ZeroAccruedRewards()); return IResolvStaking(i_stRESOLV).initiateWithdrawal(uint256(amount));"
+    ],
+    "state_vars_accessed": [
+      "i_stRESOLV"
+    ]
+  },
+  {
+    "vfp_id": "vfp_00181",
+    "finding_id": 2,
+    "finding_title": "Insufficient Slippage Check",
+    "severity": "High",
+    "file": "BaseCustomAccounting.sol",
+    "function": "addLiquidity",
+    "external_calls": [
+      "{ (uint160 sqrtPriceX96,,,) = poolManager.getSlot0(poolKey.toId());",
+      "sqrtPriceX96,,,) = poolManager.getSlot0(poolKey.toId()); if (sqr",
+      "low revert poolKey.currency0.transfer(msg.sender, msg.valu"
+    ],
+    "state_vars_accessed": [
+      "poolKey"
+    ]
+  },
+  {
+    "vfp_id": "vfp_00181",
+    "finding_id": 2,
+    "finding_title": "Insufficient Slippage Check",
+    "severity": "High",
+    "file": "BaseCustomAccounting.sol",
+    "function": "removeLiquidity",
+    "external_calls": [
+      "{ (uint160 sqrtPriceX96,,,) = poolManager.getSlot0(poolKey.toId());",
+      "sqrtPriceX96,,,) = poolManager.getSlot0(poolKey.toId()); if (sqr"
+    ],
+    "state_vars_accessed": [
+      "poolKey"
+    ]
+  },
+  {
+    "vfp_id": "vfp_00186",
+    "finding_id": 0,
+    "finding_title": "Anyone can call claim for any account",
+    "severity": "Medium",
+    "file": "MerkleDistributor.sol",
+    "function": "claim",
+    "external_calls": [
+      "if (amounts[i] > 0) { IERC20(tokens[i]).safeTransfer(account, amounts[i])"
+    ],
+    "state_vars_accessed": [
+      "supportedTokens",
+      "merkleRoot"
+    ]
+  },
+  {
+    "vfp_id": "vfp_00189",
+    "finding_id": 2,
+    "finding_title": "Read-only Reentrancy",
+    "severity": "High",
+    "file": "Box.sol",
+    "function": "allocate",
+    "external_calls": [
+      "; uint256 existingBalance = token.balanceOf(address(this));",
+      "uint256 neededValue = neededTokens.mulDiv(oraclePrice, ORACLE_"
+    ],
+    "state_vars_accessed": [
+      "asset",
+      "isAllocator",
+      "maxSlippage",
+      "oracles"
+    ]
+  },
+  {
+    "vfp_id": "vfp_00189",
+    "finding_id": 2,
+    "finding_title": "Read-only Reentrancy",
+    "severity": "High",
+    "file": "Box.sol",
+    "function": "deallocate",
+    "external_calls": [
+      "ippage uint256 expectedAssets = tokensAmount.mulDiv(oraclePrice, ORACLE_"
+    ],
+    "state_vars_accessed": [
+      "asset",
+      "isAllocator",
+      "maxSlippage",
+      "oracles"
+    ]
+  },
+  {
+    "vfp_id": "vfp_00189",
+    "finding_id": 2,
+    "finding_title": "Read-only Reentrancy",
+    "severity": "High",
+    "file": "Box.sol",
+    "function": "reallocate",
+    "external_calls": [
+      "te slippage uint256 fromValue = tokensAmount.mulDiv(fromOraclePrice, ORA"
+    ],
+    "state_vars_accessed": [
+      "maxSlippage",
+      "oracles"
+    ]
+  },
+  {
+    "vfp_id": "vfp_00190",
+    "finding_id": 3,
+    "finding_title": "BoxAdapterCached Can Be Arbitraged",
+    "severity": "Medium",
+    "file": "BoxAdapterCached.sol",
+    "function": "updateTotalAssets",
+    "external_calls": [
+      "ateTotalAssets() external { require( IVaultV2(parentVault).isAllocator(msg.sender) ||",
+      "llocator(msg.sender) || IVaultV2(parentVault).isSentinel(msg.sender) ||"
+    ],
+    "state_vars_accessed": [
+      "totalAssetsTimestamp",
+      "totalAssets",
+      "parentVault"
+    ]
+  },
+  {
+    "vfp_id": "vfp_00200",
+    "finding_id": 2,
+    "finding_title": "M1: processExitDelayReport griefing",
+    "severity": "Medium",
+    "file": "ValidatorExitDelayVerifier.sol",
+    "function": "verifyValidatorExitDelay",
+    "external_calls": [
+      "pubkey, valIndex); stakingRouter.reportValidatorExitDelay(moduleId, nodeOpId,"
+    ],
+    "state_vars_accessed": [
+      "header"
+    ]
+  },
+  {
+    "vfp_id": "vfp_00209",
+    "finding_id": 1,
+    "finding_title": "User can inflate number of rewards by staking additional amount of rewards right before claiming them",
+    "severity": "Critical",
+    "file": "StakingManager.sol",
+    "function": "stake",
+    "external_calls": [
+      "+= _wad; // Mint stKITE stakingToken.mint(_account, _wad);",
+      "wad); // transfer KITE protocolToken.safeTransferFrom(msg.sender, address(",
+      "_rewardType.rewardPool); _rewardPool.stake(_wad); } }"
+    ],
+    "state_vars_accessed": [
+      "stakedBalances",
+      "stakingToken",
+      "protocolToken",
+      "rewards",
+      "_rewardTypes"
+    ]
+  },
+  {
+    "vfp_id": "vfp_00209",
+    "finding_id": 1,
+    "finding_title": "User can inflate number of rewards by staking additional amount of rewards right before claiming them",
+    "severity": "Critical",
+    "file": "StakingManager.sol",
+    "function": "withdraw",
+    "external_calls": [
+      "ingWithdrawals[msg.sender]; stakingToken.burnFrom(msg.sender, _withdra",
+      "ender, _withdrawalAmount); protocolToken.safeTransfer(msg.sender, _withdra"
+    ],
+    "state_vars_accessed": [
+      "_params",
+      "stakingToken",
+      "protocolToken",
+      "_pendingWithdrawals"
+    ]
+  },
+  {
+    "vfp_id": "vfp_00215",
+    "finding_id": 1,
+    "finding_title": "Front-running the encryption-key\u2013registration transaction can deny service to function finalizeBundle",
+    "severity": "High",
+    "file": "ScrollChainValidium.sol",
+    "function": "registerNewEncryptionKey",
+    "external_calls": [
+      "yption key. uint256 _msgIndex = IL1MessageQueueV2(messageQueueV2).nextCrossDomainMessageIndex(); encryptio"
+    ],
+    "state_vars_accessed": [
+      "messageQueueV2",
+      "encryptionKeys",
+      "KEY_MANAGER_ROLE"
+    ]
+  },
+  {
+    "vfp_id": "vfp_00215",
+    "finding_id": 1,
+    "finding_title": "Front-running the encryption-key\u2013registration transaction can deny service to function finalizeBundle",
+    "severity": "High",
+    "file": "ScrollChainValidium.sol",
+    "function": "_finalizeBundle",
+    "external_calls": [
+      "? bytes32(0) : IL1MessageQueueV2(messageQueueV2).getMessageRollingHash(totalL1MessagesPoppe",
+      "es have the same batch version. IRollupVerifier(verifier).verifyBundleProof(version, batchIndex,"
+    ],
+    "state_vars_accessed": [
+      "stateRoots",
+      "withdrawRoots",
+      "layer2ChainId",
+      "messageQueueV2",
+      "verifier",
+      "committedBatches"
+    ]
+  },
+  {
+    "vfp_id": "vfp_00220",
+    "finding_id": 1,
+    "finding_title": "Asymmetric First In-Block Swap Initialization Leads to Stale State",
+    "severity": "Critical",
+    "file": "AntiSandwichHook.sol",
+    "function": "_beforeSwap",
+    "external_calls": [
+      "_lastCheckpoint.slot0 = Slot0.wrap(poolManager.extsload(StateLibrary._getPoo"
+    ],
+    "state_vars_accessed": [
+      "_lastCheckpoints"
+    ]
+  },
+  {
+    "vfp_id": "vfp_00220",
+    "finding_id": 1,
+    "finding_title": "Asymmetric First In-Block Swap Initialization Leads to Stale State",
+    "severity": "Critical",
+    "file": "AntiSandwichHook.sol",
+    "function": "_afterSwap",
+    "external_calls": [
+      "cks (, int24 tickAfter,,) = poolManager.getSlot0(poolId);",
+      "eGrowthOutside1X128 ) = poolManager.getTickInfo(poolId, tick);",
+      "lastCheckpoint.state.slot0 = Slot0.wrap(poolManager.extsload(StateLibrary._getPoo",
+      "feeGrowthGlobal1X128) = poolManager.getFeeGrowthGlobals(poolId);",
+      "_lastCheckpoint.state.liquidity = poolManager.getLiquidity(poolId); }"
+    ],
+    "state_vars_accessed": [
+      "_lastCheckpoints"
+    ]
+  },
+  {
+    "vfp_id": "vfp_00220",
+    "finding_id": 2,
+    "finding_title": "Integer Underflow in `_getTargetOutput` Due to Improper Type Casting",
+    "severity": "Critical",
+    "file": "AntiSandwichHook.sol",
+    "function": "_getTargetOutput",
+    "external_calls": [
+      "(BalanceDelta targetDelta,,,) = Pool.swap( _lastCh",
+      "_lastCheckpoint.state, Pool.SwapParams({ ti"
+    ],
+    "state_vars_accessed": [
+      "_lastCheckpoints"
+    ]
+  },
+  {
+    "vfp_id": "vfp_00220",
+    "finding_id": 6,
+    "finding_title": "Incorrect Unspecified Amount Handling Breaks Anti-Sandwich Logic",
+    "severity": "High",
+    "file": "AntiSandwichHook.sol",
+    "function": "_getTargetOutput",
+    "external_calls": [
+      "(BalanceDelta targetDelta,,,) = Pool.swap( _lastCh",
+      "_lastCheckpoint.state, Pool.SwapParams({ ti"
+    ],
+    "state_vars_accessed": [
+      "_lastCheckpoints"
+    ]
+  },
+  {
+    "vfp_id": "vfp_00220",
+    "finding_id": 7,
+    "finding_title": "Incorrect Handling of `unspecifiedAmount` Leads to Overcharging",
+    "severity": "High",
+    "file": "AntiSandwichHook.sol",
+    "function": "_afterSwap",
+    "external_calls": [
+      "cks (, int24 tickAfter,,) = poolManager.getSlot0(poolId);",
+      "eGrowthOutside1X128 ) = poolManager.getTickInfo(poolId, tick);",
+      "lastCheckpoint.state.slot0 = Slot0.wrap(poolManager.extsload(StateLibrary._getPoo",
+      "feeGrowthGlobal1X128) = poolManager.getFeeGrowthGlobals(poolId);",
+      "_lastCheckpoint.state.liquidity = poolManager.getLiquidity(poolId); }"
+    ],
+    "state_vars_accessed": [
+      "_lastCheckpoints"
+    ]
+  },
+  {
+    "vfp_id": "vfp_00220",
+    "finding_id": 7,
+    "finding_title": "Incorrect Handling of `unspecifiedAmount` Leads to Overcharging",
+    "severity": "High",
+    "file": "AntiSandwichHook.sol",
+    "function": "_getTargetOutput",
+    "external_calls": [
+      "(BalanceDelta targetDelta,,,) = Pool.swap( _lastCh",
+      "_lastCheckpoint.state, Pool.SwapParams({ ti"
+    ],
+    "state_vars_accessed": [
+      "_lastCheckpoints"
+    ]
+  },
+  {
+    "vfp_id": "vfp_00221",
+    "finding_id": 9,
+    "finding_title": "Incorrect Timing of `removingAllLiquidity` Flag Calculation in `cancelOrder`",
+    "severity": "High",
+    "file": "LimitOrderHook.sol",
+    "function": "cancelOrder",
+    "external_calls": [
+      "6 amount1Fee) = abi.decode( poolManager.unlock( abi"
+    ],
+    "state_vars_accessed": [
+      "orderInfos"
+    ]
+  },
+  {
+    "vfp_id": "vfp_00221",
+    "finding_id": 9,
+    "finding_title": "Incorrect Timing of `removingAllLiquidity` Flag Calculation in `cancelOrder`",
+    "severity": "High",
+    "file": "LimitOrderHook.sol",
+    "function": "_handleCancelCallback",
+    "external_calls": [
+      "ancelDelta, BalanceDelta feesAccrued) = poolManager.modifyLiquidity( cancelD",
+      "cancelData.key, IPoolManager.ModifyLiquidityParams({ ti",
+      "ccrued.amount0() > 0) { poolManager.mint(",
+      "ccrued.amount1() > 0) { poolManager.mint("
+    ],
+    "state_vars_accessed": [
+      "ZERO_BYTES"
+    ]
+  },
+  {
+    "vfp_id": "vfp_00221",
+    "finding_id": 12,
+    "finding_title": "Incorrect Usage of Returned Balance Delta",
+    "severity": "Medium",
+    "file": "LimitOrderHook.sol",
+    "function": "_handlePlaceCallback",
+    "external_calls": [
+      "he pool (BalanceDelta delta,) = poolManager.modifyLiquidity( key,",
+      "iquidity( key, IPoolManager.ModifyLiquidityParams({ ti"
+    ],
+    "state_vars_accessed": [
+      "ZERO_BYTES"
+    ]
+  },
+  {
+    "vfp_id": "vfp_00234",
+    "finding_id": 8,
+    "finding_title": "mErc20Host: Permissionless calls to external endpoints fail when source chain is Eth mainnet",
+    "severity": "Medium",
+    "file": "mErc20Host.sol",
+    "function": "_verifyProof",
+    "external_calls": [
+      "(,,,,,, bool L1Inclusion) = mTokenProofDecoderLib.decodeJournal(journals[i]);"
+    ],
+    "state_vars_accessed": [
+      "verifier"
+    ]
+  },
+  {
+    "vfp_id": "vfp_00237",
+    "finding_id": 3,
+    "finding_title": "MainFeeDistributor.sol#swapLzToken function always revert because of interface mismatch",
+    "severity": "High",
+    "file": "MainFeeDistributor.sol",
+    "function": "swapLzToken",
+    "external_calls": [
+      "d { uint256 balance = bridgeableToken.balanceOf(address(this));"
+    ],
+    "state_vars_accessed": [
+      "bridgeableToken"
+    ]
+  },
+  {
+    "vfp_id": "vfp_00260",
+    "finding_id": 3,
+    "finding_title": "relayTokens Calls Made By Forwarders May Fail",
+    "severity": "Medium",
+    "file": "Router_Adapter.sol",
+    "function": "relayTokens",
+    "external_calls": [
+      "L1 to L2. address l2Token = HUB_POOL.poolRebalanceRoute(L2_CHAIN_ID, l1Token",
+      "r. (bool success, ) = L1_ADAPTER.delegatecall( abi.enc",
+      "); (success, ) = L1_ADAPTER.delegatecall(abi.encodeCall(Adapt"
+    ],
+    "state_vars_accessed": [
+      "L2_CHAIN_ID",
+      "L1_ADAPTER",
+      "L3_CHAIN_ID",
+      "L2_TARGET",
+      "HUB_POOL"
+    ]
+  },
+  {
+    "vfp_id": "vfp_00260",
+    "finding_id": 3,
+    "finding_title": "relayTokens Calls Made By Forwarders May Fail",
+    "severity": "Medium",
+    "file": "Router_Adapter.sol",
+    "function": "relayMessage",
+    "external_calls": [
+      "); (bool success, ) = L1_ADAPTER.delegatecall( abi.enc"
+    ],
+    "state_vars_accessed": [
+      "L1_ADAPTER",
+      "L3_CHAIN_ID",
+      "L2_TARGET"
+    ]
+  },
+  {
+    "vfp_id": "vfp_00262",
+    "finding_id": 1,
+    "finding_title": "Inflation Attack in DIAExternalStaking Allows Stealing First Depositor's Stake",
+    "severity": "Critical",
+    "file": "DIAExternalStaking.sol",
+    "function": "addRewardToPool",
+    "external_calls": [
+      "uint256 amount) public { STAKING_TOKEN.safeTransferFrom(msg.sender, address("
+    ],
+    "state_vars_accessed": [
+      "totalPoolSize",
+      "STAKING_TOKEN"
+    ]
+  },
+  {
+    "vfp_id": "vfp_00262",
+    "finding_id": 1,
+    "finding_title": "Inflation Attack in DIAExternalStaking Allows Stealing First Depositor's Stake",
+    "severity": "Critical",
+    "file": "DIAExternalStaking.sol",
+    "function": "_stake",
+    "external_calls": [
+      "take(amount); } STAKING_TOKEN.safeTransferFrom(staker, address(this"
+    ],
+    "state_vars_accessed": [
+      "stakingLimit",
+      "tokensStaked",
+      "stakingIndicesByBeneficiary",
+      "totalPoolSize",
+      "stakingIndex",
+      "stakingIndicesByPayoutWallet",
+      "stakingIndicesByPrincipalUnstaker",
+      "STAKING_TOKEN",
+      "stakingStores",
+      "totalShareAmount"
+    ]
+  },
+  {
+    "vfp_id": "vfp_00281",
+    "finding_id": 1,
+    "finding_title": "Flashloan Functionality is Blocked",
+    "severity": "High",
+    "file": "FlashLoans.sol",
+    "function": "flashLoan",
+    "external_calls": [
+      "rrent balance uint256 prevBalance = IERC20(token).balanceOf(address(this));",
+      "// transfer token to receiver IERC20(token).safeTransfer(address(receiver), a",
+      "he network uint256 returnedAmount = IERC20(token).balanceOf(address(this)) - pre",
+      "turn(); } if (fee > 0) { IERC20(token).safeTransfer(treasury, fee);"
+    ],
+    "state_vars_accessed": [
+      "CALLBACK_SUCCESS"
+    ]
+  },
+  {
+    "vfp_id": "vfp_00281",
+    "finding_id": 3,
+    "finding_title": "Flashloan Functionality Does Not Follow ERC-3156 Standard",
+    "severity": "Medium",
+    "file": "FlashLoans.sol",
+    "function": "flashLoan",
+    "external_calls": [
+      "rrent balance uint256 prevBalance = IERC20(token).balanceOf(address(this));",
+      "// transfer token to receiver IERC20(token).safeTransfer(address(receiver), a",
+      "he network uint256 returnedAmount = IERC20(token).balanceOf(address(this)) - pre",
+      "turn(); } if (fee > 0) { IERC20(token).safeTransfer(treasury, fee);"
+    ],
+    "state_vars_accessed": [
+      "CALLBACK_SUCCESS"
+    ]
+  },
+  {
+    "vfp_id": "vfp_00288",
+    "finding_id": 2,
+    "finding_title": "Missing Slippage Protection in Token Swap Execution",
+    "severity": "Medium",
+    "file": "src/helpers/DelegationMetaSwapAdapter.sol",
+    "function": "swapTokens",
+    "external_calls": [
+      "else { uint256 allowance_ = _tokenFrom.allowance(address(this), addre",
+      "wance_ < _amountFrom) { _tokenFrom.safeIncreaseAllowance(address(metaSwap), t",
+      ".max); } } metaSwap.swap{ value: value_ }(_aggregatorId, _toke"
+    ],
+    "state_vars_accessed": [
+      "metaSwap"
+    ]
+  },
+  {
+    "vfp_id": "vfp_00288",
+    "finding_id": 3,
+    "finding_title": "Re-Entrancy Risk in swapTokens()",
+    "severity": "Medium",
+    "file": "src/helpers/DelegationMetaSwapAdapter.sol",
+    "function": "swapTokens",
+    "external_calls": [
+      "else { uint256 allowance_ = _tokenFrom.allowance(address(this), addre",
+      "wance_ < _amountFrom) { _tokenFrom.safeIncreaseAllowance(address(metaSwap), t",
+      ".max); } } metaSwap.swap{ value: value_ }(_aggregatorId, _toke"
+    ],
+    "state_vars_accessed": [
+      "metaSwap"
+    ]
+  }
+]

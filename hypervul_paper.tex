@@ -47,7 +47,7 @@ Recently, Graph Neural Networks (GNNs) have emerged as a promising alternative f
 \begin{enumerate}
     \item \textbf{Granularity vs. Isolation}: Existing methods perform either coarse contract-level classification, which fails to pinpoint the exact location of a bug, or function-level classification, which analyzes functions in isolation. In reality, modern DeFi exploits (e.g., Reentrancy) are relational, spanning cross-contract call boundaries and state variable mutations.
     \item \textbf{Sequence Blindness}: Vulnerabilities like reentrancy are order-dependent: state mutations must occur after external calls to allow re-entry. Standard GNNs use permutation-invariant pooling (e.g., average or max pooling) to aggregate node features, discarding the chronological sequence of statements and rendering them sequence-blind.
-    \item \textbf{Semantic Dilution & Over-smoothing}: Deep GNNs suffer from over-smoothing, where repeated neighborhood message-passing dilutes node representations. Additionally, pre-trained code models (such as SmartBERT) represent general syntax but lack domain-specific security context, such as whether an external call is guarded by a modifier.
+    \item \textbf{Semantic Dilution \& Over-smoothing}: Deep GNNs suffer from over-smoothing, where repeated neighborhood message-passing dilutes node representations. Additionally, pre-trained code models (such as SmartBERT) represent general syntax but lack domain-specific security context, such as whether an external call is guarded by a modifier.
 \end{enumerate}
 
 To address these limitations, we present \textbf{HyperVul}, a framework that formulates vulnerability detection as an interaction-level hyperedge classification problem. We structure each interaction as a hyperedge that spans its entry function signature, accessed state variables, and external callees. 
@@ -72,12 +72,7 @@ A vulnerability is often triggered by the ordering of local execution and cross-
 \subsection{Class Imbalance}
 In production-grade smart contracts, vulnerabilities are extremely rare. Our dataset exhibits an imbalanced class ratio of approximately 1:40 (positives to negatives). Training standard cross-entropy loss functions on such datasets leads to severe bias towards the majority negative class, resulting in poor recall. We address this using Asymmetric Loss (ASL) and Supervised Contrastive Learning (SCL).
 
-\begin{figure*}[t]
-\centering
-\includegraphics[width=0.9\textwidth]{placeholder_architecture.pdf}
-\caption{System Architecture of HyperVul. Smart contract code is parsed to build an interaction-level hypergraph, sequence-aware pooling preserves execution event order, and LoRA unfreezes the encoder while incorporating safety-context modifier embeddings.}
-\label{fig:arch}
-\end{figure*}
+
 
 \section{The HyperVul Architecture}
 The system architecture of HyperVul consists of three core phases: hypergraph construction, sequence-aware encoding, and contrastive classifier calibration.

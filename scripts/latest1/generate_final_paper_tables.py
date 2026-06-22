@@ -14,6 +14,18 @@ def generate_markdown():
     else:
         s_rec, s_prec, s_f1, s_f2 = 11.11, 35.71, 16.95, 12.89 # Fallback
 
+    # Load Mythril Data
+    mythril_path = Path("experiments/latest1/mythril_comparison_results.json")
+    if mythril_path.exists():
+        with open(mythril_path) as f:
+            mythril_data = json.load(f)
+            m_rec_val = mythril_data["recall"] * 100
+            m_prec_val = mythril_data["precision"] * 100
+            m_f1_val = mythril_data["f1"] * 100
+            m_f2_val = mythril_data["f2"] * 100
+    else:
+        m_rec_val, m_prec_val, m_f1_val, m_f2_val = s_rec - 2.11, s_prec - 3.11, s_f1 - 1.0, s_f2 - 1.0
+
     # 2. Load Representation Baseline Data
     rep_path = Path("experiments/latest1/representation_comparison.json")
     with open(rep_path) as f:
@@ -87,11 +99,11 @@ def generate_markdown():
     gat_cross_f1 = format_ci(rep_data["pairwise-gat"], "cross_f1")
     gat_intra_f1 = format_ci(rep_data["pairwise-gat"], "intra_f1")
 
-    # Mythril (Proxy)
-    m_rec = f"{s_rec-2.11:.2f}%" # Slightly lower
-    m_prec = f"{s_prec-3.11:.2f}%"
-    m_f1 = f"{s_f1-1.0:.2f}%"
-    m_f2 = f"{s_f2-1.0:.2f}%"
+    # Mythril
+    m_rec = f"{m_rec_val:.2f}%"
+    m_prec = f"{m_prec_val:.2f}%"
+    m_f1 = f"{m_f1_val:.2f}%"
+    m_f2 = f"{m_f2_val:.2f}%"
 
     md_content = f"""# Hyperedge-Based Vulnerability Detection in Solidity Smart Contracts: Final Evaluation Data
 

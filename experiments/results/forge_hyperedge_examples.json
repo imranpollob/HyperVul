@@ -1,0 +1,52 @@
+[
+  {
+    "vfp_id": "vfp_00001",
+    "finding_id": 2,
+    "finding_title": "Wrong approval in fullfillImage",
+    "severity": "High",
+    "file": "AgentImageService.sol",
+    "function": "fulfillImage",
+    "function_source": "function fulfillImage(\n        address agentToken,\n        bytes32 requestId\n    ) external onlyAgentOwner(agentToken) onlyValidAgent(agentToken) nonReentrant {\n        ImageRequest storage request = imageRequests[agentToken][requestId];\n        require(request.fulfilled == 0 && request.refunded == 0, \"Request already processed\");\n        require(request.user != address(0), \"Request does not exist\");\n        \n        request.fulfilled = block.timestamp;\n        \n        // Move fee from pending to accumulated\n        pendingFees[agentToken] -= request.amount;\n        uint256 treasuryCut = (request.amount * parameters[Parameter.TREASURY_CUT]) / 10000;\n        accumulatedFees[agentToken] += (request.amount - treasuryCut);\n        IERC20Upgradeable(agentToken).safeTransfer(spectralTreasury, (request.amount * parameters[Parameter.TREASURY_CUT]) / 10000);\n        \n        emit ImageFulfilled(agentToken, requestId);\n    }",
+    "external_calls": [
+      "(request.amount - treasuryCut); IERC20Upgradeable(agentToken).safeTransfer(spectralTreasury, (r"
+    ],
+    "state_vars_accessed": [
+      "spectralTreasury",
+      "pendingFees",
+      "accumulatedFees",
+      "parameters"
+    ]
+  },
+  {
+    "vfp_id": "vfp_00001",
+    "finding_id": 3,
+    "finding_title": "Duplicate requestId values can occur",
+    "severity": "Medium",
+    "file": "AgentImageService.sol",
+    "function": "requestImage",
+    "function_source": "function requestImage(\n        address agentToken,\n        string calldata prompt,\n        uint256 width,\n        uint256 height\n    ) external nonReentrant onlyValidAgent(agentToken) {\n        AgentConfig memory config = agentConfigs[agentToken];\n        require(config.isConfigured, \"Agent not configured\");\n        require(bytes(prompt).length > 0, \"Prompt cannot be empty\");\n        require(width >= 64 && height >= 64, \"Width and height must be greater or equal than 64\");\n        IERC20Upgradeable token = IERC20Upgradeable(agentToken);\n        \n        // Generate request ID from prompt and timestamp\n        bytes32 requestId = keccak256(abi.encodePacked(prompt, block.timestamp, msg.sender));\n        \n        // Transfer tokens from user to this contract\n        token.safeTransferFrom(msg.sender, address(this), config.pricePerImage);\n        \n        // Record the request\n        imageRequests[agentToken][requestId] = ImageRequest({\n            user: msg.sender,\n            amount: config.pricePerImage,\n            width: width,\n            height: height,\n            timestamp: block.timestamp,\n            fulfilled: 0,\n            refunded: 0,\n            prompt: prompt\n        });\n\n        // Add to pending fees instead of accumulated\n        pendingFees[agentToken] += config.pricePerImage;\n        \n        emit ImageRequested(agentToken, msg.sender, requestId, config.pricePerImage, width, height, prompt);\n    }",
+    "external_calls": [
+      "kens from user to this contract token.safeTransferFrom(msg.sender, address("
+    ],
+    "state_vars_accessed": [
+      "agentConfigs",
+      "pendingFees"
+    ]
+  },
+  {
+    "vfp_id": "vfp_00001",
+    "finding_id": 4,
+    "finding_title": "The requestRefund function contains an incorrect check",
+    "severity": "Medium",
+    "file": "AgentImageService.sol",
+    "function": "requestRefund",
+    "function_source": "function requestRefund(\n        address agentToken,\n        bytes32 requestId\n    ) external nonReentrant {\n        ImageRequest storage request = imageRequests[agentToken][requestId];\n        AgentConfig memory config = agentConfigs[agentToken];\n        \n        require(request.user == msg.sender, \"Not request owner\");\n        require(request.fulfilled == 0 && request.refunded == 0, \"Request already processed\");\n        require(\n            block.timestamp >= request.timestamp + config.refundTimeLimit,\n            \"Refund time limit not reached\"\n        );\n\n        request.refunded = block.timestamp;\n        \n        // Remove from pending fees\n        pendingFees[agentToken] -= request.amount;\n        \n        // Transfer tokens back to user\n        IERC20Upgradeable(agentToken).safeTransfer(msg.sender, request.amount);\n        \n        emit RefundIssued(agentToken, requestId, request.amount);\n    }",
+    "external_calls": [
+      "// Transfer tokens back to user IERC20Upgradeable(agentToken).safeTransfer(msg.sender, request."
+    ],
+    "state_vars_accessed": [
+      "agentConfigs",
+      "pendingFees"
+    ]
+  }
+]

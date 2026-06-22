@@ -1498,15 +1498,257 @@ library SafeCast {
      * @dev Cast a boolean (false or true) to a uint256 (0 or 1) with no jump.
      */
     function toUint(bool b) internal pure returns (uint256 u) {
-        assembly ("memory-safe") {
+        assembly {
             u := iszero(iszero(b))
         }
     }
 }
 
-// Failed to resolve import: import {IVaultV2} from "./../lib/vault-v2/src/interfaces/IVaultV2.sol";
-// Failed to resolve import: import {MathLib} from "./../lib/vault-v2/src/libraries/MathLib.sol";
-// Failed to resolve import: import {SafeERC20Lib} from "./../lib/vault-v2/src/libraries/SafeERC20Lib.sol";
+
+// Copyright (c) 2025 Morpho Association
+
+
+
+// Copyright (c) 2025 Morpho Association
+
+
+/* Duplicate interface IERC20 removed */                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
+
+
+
+// Copyright (c) 2025 Morpho Association
+
+
+interface IERC2612 {
+    function permit(address owner, address spender, uint256 shares, uint256 deadline, uint8 v, bytes32 r, bytes32 s)
+        external;
+    function nonces(address owner) external view returns (uint256);
+    function DOMAIN_SEPARATOR() external view returns (bytes32);
+}
+
+
+struct Caps {
+    uint256 allocation;
+    uint128 absoluteCap;
+    uint128 relativeCap;
+}
+
+interface IVaultV2 is IERC4626, IERC2612 {
+    // State variables
+    function virtualShares() external view returns (uint256);
+    function owner() external view returns (address);
+    function curator() external view returns (address);
+    function receiveSharesGate() external view returns (address);
+    function sendSharesGate() external view returns (address);
+    function receiveAssetsGate() external view returns (address);
+    function sendAssetsGate() external view returns (address);
+    function adapterRegistry() external view returns (address);
+    function isSentinel(address account) external view returns (bool);
+    function isAllocator(address account) external view returns (bool);
+    function firstTotalAssets() external view returns (uint256);
+    function _totalAssets() external view returns (uint128);
+    function lastUpdate() external view returns (uint64);
+    function maxRate() external view returns (uint64);
+    function adapters(uint256 index) external view returns (address);
+    function adaptersLength() external view returns (uint256);
+    function isAdapter(address account) external view returns (bool);
+    function allocation(bytes32 id) external view returns (uint256);
+    function absoluteCap(bytes32 id) external view returns (uint256);
+    function relativeCap(bytes32 id) external view returns (uint256);
+    function forceDeallocatePenalty(address adapter) external view returns (uint256);
+    function liquidityAdapter() external view returns (address);
+    function liquidityData() external view returns (bytes memory);
+    function timelock(bytes4 selector) external view returns (uint256);
+    function executableAt(bytes memory data) external view returns (uint256);
+    function performanceFee() external view returns (uint96);
+    function performanceFeeRecipient() external view returns (address);
+    function managementFee() external view returns (uint96);
+    function managementFeeRecipient() external view returns (address);
+
+    // Gating
+    function canSendShares(address account) external view returns (bool);
+    function canReceiveShares(address account) external view returns (bool);
+    function canSendAssets(address account) external view returns (bool);
+    function canReceiveAssets(address account) external view returns (bool);
+
+    // Multicall
+    function multicall(bytes[] memory data) external;
+
+    // Owner functions
+    function setOwner(address newOwner) external;
+    function setCurator(address newCurator) external;
+    function setIsSentinel(address account, bool isSentinel) external;
+    function setName(string memory newName) external;
+    function setSymbol(string memory newSymbol) external;
+
+    // Timelocks for curator functions
+    function submit(bytes memory data) external;
+    function revoke(bytes memory data) external;
+
+    // Curator functions
+    function setIsAllocator(address account, bool newIsAllocator) external;
+    function setReceiveSharesGate(address newReceiveSharesGate) external;
+    function setSendSharesGate(address newSendSharesGate) external;
+    function setReceiveAssetsGate(address newReceiveAssetsGate) external;
+    function setSendAssetsGate(address newSendAssetsGate) external;
+    function setAdapterRegistry(address newAdapterRegistry) external;
+    function addAdapter(address account) external;
+    function removeAdapter(address account) external;
+    function increaseTimelock(bytes4 selector, uint256 newDuration) external;
+    function abdicateSubmit(bytes4 selector) external;
+    function decreaseTimelock(bytes4 selector, uint256 newDuration) external;
+    function setPerformanceFee(uint256 newPerformanceFee) external;
+    function setManagementFee(uint256 newManagementFee) external;
+    function setPerformanceFeeRecipient(address newPerformanceFeeRecipient) external;
+    function setManagementFeeRecipient(address newManagementFeeRecipient) external;
+    function increaseAbsoluteCap(bytes memory idData, uint256 newAbsoluteCap) external;
+    function decreaseAbsoluteCap(bytes memory idData, uint256 newAbsoluteCap) external;
+    function increaseRelativeCap(bytes memory idData, uint256 newRelativeCap) external;
+    function decreaseRelativeCap(bytes memory idData, uint256 newRelativeCap) external;
+    function setMaxRate(uint256 newMaxRate) external;
+    function setForceDeallocatePenalty(address adapter, uint256 newForceDeallocatePenalty) external;
+
+    // Allocator functions
+    function allocate(address adapter, bytes memory data, uint256 assets) external;
+    function deallocate(address adapter, bytes memory data, uint256 assets) external;
+    function setLiquidityAdapterAndData(address newLiquidityAdapter, bytes memory newLiquidityData) external;
+
+    // Exchange rate
+    function accrueInterest() external;
+    function accrueInterestView()
+        external
+        view
+        returns (uint256 newTotalAssets, uint256 performanceFeeShares, uint256 managementFeeShares);
+
+    // Force deallocate
+    function forceDeallocate(address adapter, bytes memory data, uint256 assets, address onBehalf)
+        external
+        returns (uint256 penaltyShares);
+}
+
+
+// Copyright (c) 2025 Morpho Association
+
+
+
+// Copyright (c) 2025 Morpho Association
+
+
+library ErrorsLib {
+    error Abdicated();
+    error AbsoluteCapExceeded();
+    error AbsoluteCapNotDecreasing();
+    error AbsoluteCapNotIncreasing();
+    error ApproveReturnedFalse();
+    error ApproveReverted();
+    error CannotReceiveShares();
+    error CannotReceiveAssets();
+    error CannotSendShares();
+    error CannotSendAssets();
+    error CapExceeded();
+    error CastOverflow();
+    error DataAlreadyPending();
+    error DataNotTimelocked();
+    error FeeInvariantBroken();
+    error FeeTooHigh();
+    error InvalidSigner();
+    error MaxRateTooHigh();
+    error NoCode();
+    error NotAdapter();
+    error NotInAdapterRegistry();
+    error PenaltyTooHigh();
+    error PermitDeadlineExpired();
+    error RelativeCapAboveOne();
+    error RelativeCapExceeded();
+    error RelativeCapNotDecreasing();
+    error RelativeCapNotIncreasing();
+    error TimelockCapIsFixed();
+    error TimelockDurationTooHigh();
+    error TimelockNotDecreasing();
+    error TimelockNotExpired();
+    error TimelockNotIncreasing();
+    error TransferFromReturnedFalse();
+    error TransferFromReverted();
+    error TransferReturnedFalse();
+    error TransferReverted();
+    error Unauthorized();
+    error ZeroAbsoluteCap();
+    error ZeroAddress();
+    error ZeroAllocation();
+}
+
+
+library MathLib {
+    /// @dev Returns (x * y) / d rounded down.
+    function mulDivDown(uint256 x, uint256 y, uint256 d) internal pure returns (uint256) {
+        return (x * y) / d;
+    }
+
+    /// @dev Returns (x * y) / d rounded up.
+    function mulDivUp(uint256 x, uint256 y, uint256 d) internal pure returns (uint256) {
+        return (x * y + (d - 1)) / d;
+    }
+
+    /// @dev Returns max(0, x - y).
+    function zeroFloorSub(uint256 x, uint256 y) internal pure returns (uint256 z) {
+        assembly {
+            z := mul(gt(x, y), sub(x, y))
+        }
+    }
+
+    /// @dev Casts from uint256 to uint128, reverting if input number is too large.
+    function toUint128(uint256 x) internal pure returns (uint128) {
+        if (!(x <= type(uint128).max)) revert ErrorsLib.CastOverflow();
+        return uint128(x);
+    }
+
+    /// @dev Casts from int256 to uint256, reverting if input number is negative.
+    function toUint256(int256 x) internal pure returns (uint256) {
+        if (!(x >= 0)) revert ErrorsLib.CastOverflow();
+        return uint256(x);
+    }
+
+    /// @dev Returns min(x, y).
+    function min(uint256 x, uint256 y) internal pure returns (uint256 z) {
+        assembly {
+            z := xor(x, mul(xor(x, y), lt(y, x)))
+        }
+    }
+}
+
+
+// Copyright (c) 2025 Morpho Association
+
+
+
+
+
+library SafeERC20Lib {
+    function safeTransfer(address token, address to, uint256 value) internal {
+        if (!(token.code.length > 0)) revert ErrorsLib.NoCode();
+
+        (bool success, bytes memory returndata) = token.call(abi.encodeWithSelector(IERC20.transfer.selector, to, value));
+        if (!(success)) revert ErrorsLib.TransferReverted();
+        if (!(returndata.length == 0 || abi.decode(returndata, (bool)))) revert ErrorsLib.TransferReturnedFalse();
+    }
+
+    function safeTransferFrom(address token, address from, address to, uint256 value) internal {
+        if (!(token.code.length > 0)) revert ErrorsLib.NoCode();
+
+        (bool success, bytes memory returndata) = token.call(abi.encodeWithSelector(IERC20.transferFrom.selector, from, to, value));
+        if (!(success)) revert ErrorsLib.TransferFromReverted();
+        if (!(returndata.length == 0 || abi.decode(returndata, (bool)))) revert ErrorsLib.TransferFromReturnedFalse();
+    }
+
+    function safeApprove(address token, address spender, uint256 value) internal {
+        if (!(token.code.length > 0)) revert ErrorsLib.NoCode();
+
+        (bool success, bytes memory returndata) = token.call(abi.encodeWithSelector(IERC20.approve.selector, spender, value));
+        if (!(success)) revert ErrorsLib.ApproveReverted();
+        if (!(returndata.length == 0 || abi.decode(returndata, (bool)))) revert ErrorsLib.ApproveReturnedFalse();
+    }
+}
+
 
 // Copyright (c) 2025 Steakhouse
 
@@ -1706,7 +1948,26 @@ interface IBox is IERC4626, IOracleCallback {
 // Copyright (c) 2025 Steakhouse
 
 
-// Failed to resolve import: import {IAdapter} from "../../lib/vault-v2/src/interfaces/IAdapter.sol";
+
+// Copyright (c) 2025 Morpho Association
+
+
+/// @dev See VaultV2 NatSpec comments for more details on adapter's spec.
+interface IAdapter {
+    /// @dev Returns the market' ids and the change in assets on this market.
+    function allocate(bytes memory data, uint256 assets, bytes4 selector, address sender)
+        external
+        returns (bytes32[] memory ids, int256 change);
+
+    /// @dev Returns the market' ids and the change in assets on this market.
+    function deallocate(bytes memory data, uint256 assets, bytes4 selector, address sender)
+        external
+        returns (bytes32[] memory ids, int256 change);
+
+    /// @dev Returns the current value of the investments of the adapter (in underlying asset).
+    function realAssets() external view returns (uint256 assets);
+}
+
 
 
 interface IBoxAdapter is IAdapter {
@@ -1767,13 +2028,13 @@ contract BoxAdapterCached is IBoxAdapter {
         box = _box;
         adapterId = keccak256(abi.encode("this", address(this)));
         address asset = IVaultV2(_parentVault).asset();
-        require(asset == _box.asset(), AssetMismatch());
+        if (!(asset == _box.asset())) revert AssetMismatch();
         SafeERC20Lib.safeApprove(asset, _parentVault, type(uint256).max);
         SafeERC20Lib.safeApprove(asset, address(_box), type(uint256).max);
     }
 
     function setSkimRecipient(address newSkimRecipient) external {
-        require(msg.sender == IVaultV2(parentVault).owner(), NotAuthorized());
+        if (!(msg.sender == IVaultV2(parentVault).owner())) revert NotAuthorized();
         skimRecipient = newSkimRecipient;
         emit SetSkimRecipient(newSkimRecipient);
     }
@@ -1781,8 +2042,8 @@ contract BoxAdapterCached is IBoxAdapter {
     /// @dev Skims the adapter's balance of `token` and sends it to `skimRecipient`.
     /// @dev This is useful to handle rewards that the adapter has earned.
     function skim(address token) external {
-        require(msg.sender == skimRecipient, NotAuthorized());
-        require(token != address(box), CannotSkimBoxShares());
+        if (!(msg.sender == skimRecipient)) revert NotAuthorized();
+        if (!(token != address(box))) revert CannotSkimBoxShares();
         uint256 balance = IERC20(token).balanceOf(address(this));
         SafeERC20Lib.safeTransfer(token, skimRecipient, balance);
         emit Skim(token, balance);
@@ -1791,8 +2052,8 @@ contract BoxAdapterCached is IBoxAdapter {
     /// @dev Does not log anything because the ids (logged in the parent vault) are enough.
     /// @dev Returns the ids of the allocation and the change in allocation.
     function allocate(bytes memory data, uint256 assets, bytes4, address) external returns (bytes32[] memory, int256) {
-        require(data.length == 0, InvalidData());
-        require(msg.sender == parentVault, NotAuthorized());
+        if (!(data.length == 0)) revert InvalidData();
+        if (!(msg.sender == parentVault)) revert NotAuthorized();
 
         if (assets > 0) IERC4626(box).deposit(assets, address(this));
         // Safe casts because bounded by Vault V2 which requires totalAssets to stay below ~10^35
@@ -1806,8 +2067,8 @@ contract BoxAdapterCached is IBoxAdapter {
     /// @dev Does not log anything because the ids (logged in the parent vault) are enough.
     /// @dev Returns the ids of the deallocation and the change in allocation.
     function deallocate(bytes memory data, uint256 assets, bytes4, address) external returns (bytes32[] memory, int256) {
-        require(data.length == 0, InvalidData());
-        require(msg.sender == parentVault, NotAuthorized());
+        if (!(data.length == 0)) revert InvalidData();
+        if (!(msg.sender == parentVault)) revert NotAuthorized();
 
         if (assets > 0) IERC4626(box).withdraw(assets, address(this), address(this));
         // Safe casts because bounded by Vault V2 which requires totalAssets to stay below ~10^35
@@ -1836,12 +2097,9 @@ contract BoxAdapterCached is IBoxAdapter {
     /// @dev Updates the cached total assets of the adapter.
     /// @dev Allowed: Vault allocator, sentinel or anyone after 24 hours of inactivity
     function updateTotalAssets() external {
-        require(
-            IVaultV2(parentVault).isAllocator(msg.sender) ||
+        if (!(IVaultV2(parentVault).isAllocator(msg.sender) ||
                 IVaultV2(parentVault).isSentinel(msg.sender) ||
-                totalAssetsTimestamp + 1 days < block.timestamp,
-            NotAuthorized()
-        );
+                totalAssetsTimestamp + 1 days < block.timestamp)) revert NotAuthorized();
 
         uint256 oldTotalAssets = totalAssets;
         uint256 newTotalAssets = _updateTotalAssets();

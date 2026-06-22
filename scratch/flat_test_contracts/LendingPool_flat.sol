@@ -4,7 +4,166 @@ pragma solidity 0.6.8;
 
 pragma experimental ABIEncoderV2;
 
-// Failed to resolve import: import {SafeMath} from '@openzeppelin/contracts/math/SafeMath.sol';
+
+
+
+
+/**
+ * @dev Wrappers over Solidity's arithmetic operations with added overflow
+ * checks.
+ *
+ * Arithmetic operations in Solidity wrap on overflow. This can easily result
+ * in bugs, because programmers usually assume that an overflow raises an
+ * error, which is the standard behavior in high level programming languages.
+ * `SafeMath` restores this intuition by reverting the transaction when an
+ * operation overflows.
+ *
+ * Using this library instead of the unchecked operations eliminates an entire
+ * class of bugs, so it's recommended to use it always.
+ */
+library SafeMath {
+    /**
+     * @dev Returns the addition of two unsigned integers, reverting on
+     * overflow.
+     *
+     * Counterpart to Solidity's `+` operator.
+     *
+     * Requirements:
+     *
+     * - Addition cannot overflow.
+     */
+    function add(uint256 a, uint256 b) internal pure returns (uint256) {
+        uint256 c = a + b;
+        require(c >= a, "SafeMath: addition overflow");
+
+        return c;
+    }
+
+    /**
+     * @dev Returns the subtraction of two unsigned integers, reverting on
+     * overflow (when the result is negative).
+     *
+     * Counterpart to Solidity's `-` operator.
+     *
+     * Requirements:
+     *
+     * - Subtraction cannot overflow.
+     */
+    function sub(uint256 a, uint256 b) internal pure returns (uint256) {
+        return sub(a, b, "SafeMath: subtraction overflow");
+    }
+
+    /**
+     * @dev Returns the subtraction of two unsigned integers, reverting with custom message on
+     * overflow (when the result is negative).
+     *
+     * Counterpart to Solidity's `-` operator.
+     *
+     * Requirements:
+     *
+     * - Subtraction cannot overflow.
+     */
+    function sub(uint256 a, uint256 b, string memory errorMessage) internal pure returns (uint256) {
+        require(b <= a, errorMessage);
+        uint256 c = a - b;
+
+        return c;
+    }
+
+    /**
+     * @dev Returns the multiplication of two unsigned integers, reverting on
+     * overflow.
+     *
+     * Counterpart to Solidity's `*` operator.
+     *
+     * Requirements:
+     *
+     * - Multiplication cannot overflow.
+     */
+    function mul(uint256 a, uint256 b) internal pure returns (uint256) {
+        // Gas optimization: this is cheaper than requiring 'a' not being zero, but the
+        // benefit is lost if 'b' is also tested.
+        // See: https://github.com/OpenZeppelin/openzeppelin-contracts/pull/522
+        if (a == 0) {
+            return 0;
+        }
+
+        uint256 c = a * b;
+        require(c / a == b, "SafeMath: multiplication overflow");
+
+        return c;
+    }
+
+    /**
+     * @dev Returns the integer division of two unsigned integers. Reverts on
+     * division by zero. The result is rounded towards zero.
+     *
+     * Counterpart to Solidity's `/` operator. Note: this function uses a
+     * `revert` opcode (which leaves remaining gas untouched) while Solidity
+     * uses an invalid opcode to revert (consuming all remaining gas).
+     *
+     * Requirements:
+     *
+     * - The divisor cannot be zero.
+     */
+    function div(uint256 a, uint256 b) internal pure returns (uint256) {
+        return div(a, b, "SafeMath: division by zero");
+    }
+
+    /**
+     * @dev Returns the integer division of two unsigned integers. Reverts with custom message on
+     * division by zero. The result is rounded towards zero.
+     *
+     * Counterpart to Solidity's `/` operator. Note: this function uses a
+     * `revert` opcode (which leaves remaining gas untouched) while Solidity
+     * uses an invalid opcode to revert (consuming all remaining gas).
+     *
+     * Requirements:
+     *
+     * - The divisor cannot be zero.
+     */
+    function div(uint256 a, uint256 b, string memory errorMessage) internal pure returns (uint256) {
+        require(b > 0, errorMessage);
+        uint256 c = a / b;
+        // assert(a == b * c + a % b); // There is no case in which this doesn't hold
+
+        return c;
+    }
+
+    /**
+     * @dev Returns the remainder of dividing two unsigned integers. (unsigned integer modulo),
+     * Reverts when dividing by zero.
+     *
+     * Counterpart to Solidity's `%` operator. This function uses a `revert`
+     * opcode (which leaves remaining gas untouched) while Solidity uses an
+     * invalid opcode to revert (consuming all remaining gas).
+     *
+     * Requirements:
+     *
+     * - The divisor cannot be zero.
+     */
+    function mod(uint256 a, uint256 b) internal pure returns (uint256) {
+        return mod(a, b, "SafeMath: modulo by zero");
+    }
+
+    /**
+     * @dev Returns the remainder of dividing two unsigned integers. (unsigned integer modulo),
+     * Reverts with custom message when dividing by zero.
+     *
+     * Counterpart to Solidity's `%` operator. This function uses a `revert`
+     * opcode (which leaves remaining gas untouched) while Solidity uses an
+     * invalid opcode to revert (consuming all remaining gas).
+     *
+     * Requirements:
+     *
+     * - The divisor cannot be zero.
+     */
+    function mod(uint256 a, uint256 b, string memory errorMessage) internal pure returns (uint256) {
+        require(b != 0, errorMessage);
+        return a % b;
+    }
+}
+
 
 // OpenZeppelin Contracts (last updated v5.4.0) (token/ERC20/IERC20.sol)
 
@@ -213,80 +372,7 @@ interface ILendingPoolAddressesProvider {
 /**
  * @dev Interface of the ERC20 standard as defined in the EIP.
  */
-interface IERC20 {
-  /**
-   * @dev Returns the amount of tokens in existence.
-   */
-  function totalSupply() external view returns (uint256);
-
-  /**
-   * @dev Returns the amount of tokens owned by `account`.
-   */
-  function balanceOf(address account) external view returns (uint256);
-
-  /**
-   * @dev Moves `amount` tokens from the caller's account to `recipient`.
-   *
-   * Returns a boolean value indicating whether the operation succeeded.
-   *
-   * Emits a {Transfer} event.
-   */
-  function transfer(address recipient, uint256 amount) external returns (bool);
-
-  /**
-   * @dev Returns the remaining number of tokens that `spender` will be
-   * allowed to spend on behalf of `owner` through {transferFrom}. This is
-   * zero by default.
-   *
-   * This value changes when {approve} or {transferFrom} are called.
-   */
-  function allowance(address owner, address spender) external view returns (uint256);
-
-  /**
-   * @dev Sets `amount` as the allowance of `spender` over the caller's tokens.
-   *
-   * Returns a boolean value indicating whether the operation succeeded.
-   *
-   * IMPORTANT: Beware that changing an allowance with this method brings the risk
-   * that someone may use both the old and the new allowance by unfortunate
-   * transaction ordering. One possible solution to mitigate this race
-   * condition is to first reduce the spender's allowance to 0 and set the
-   * desired value afterwards:
-   * https://github.com/ethereum/EIPs/issues/20#issuecomment-263524729
-   *
-   * Emits an {Approval} event.
-   */
-  function approve(address spender, uint256 amount) external returns (bool);
-
-  /**
-   * @dev Moves `amount` tokens from `sender` to `recipient` using the
-   * allowance mechanism. `amount` is then deducted from the caller's
-   * allowance.
-   *
-   * Returns a boolean value indicating whether the operation succeeded.
-   *
-   * Emits a {Transfer} event.
-   */
-  function transferFrom(
-    address sender,
-    address recipient,
-    uint256 amount
-  ) external returns (bool);
-
-  /**
-   * @dev Emitted when `value` tokens are moved from one account (`from`) to
-   * another (`to`).
-   *
-   * Note that `value` may be zero.
-   */
-  event Transfer(address indexed from, address indexed to, uint256 value);
-
-  /**
-   * @dev Emitted when the allowance of a `spender` for an `owner` is set by
-   * a call to {approve}. `value` is the new allowance.
-   */
-  event Approval(address indexed owner, address indexed spender, uint256 value);
-}
+/* Duplicate interface IERC20 removed */                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
 
 
 
@@ -419,6 +505,44 @@ interface IAToken is IERC20, IScaledBalanceToken {
 
 
 
+
+
+
+/*
+ * @dev Provides information about the current execution context, including the
+ * sender of the transaction and its data. While these are generally available
+ * via msg.sender and msg.data, they should not be accessed in such a direct
+ * manner, since when dealing with GSN meta-transactions the account sending and
+ * paying for execution may not be the actual sender (as far as an application
+ * is concerned).
+ *
+ * This contract is only required for intermediate, library-like contracts.
+ */
+abstract contract Context {
+    function _msgSender() internal view virtual returns (address payable) {
+        return msg.sender;
+    }
+
+    function _msgData() internal view virtual returns (bytes memory) {
+        this; // silence state mutability warning without generating bytecode - see https://github.com/ethereum/solidity/issues/2691
+        return msg.data;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+// OpenZeppelin Contracts (last updated v5.0.0) (access/Ownable.sol)
+
+
+
+
 // OpenZeppelin Contracts (last updated v5.0.1) (utils/Context.sol)
 
 
@@ -433,33 +557,7 @@ interface IAToken is IERC20, IScaledBalanceToken {
  *
  * This contract is only required for intermediate, library-like contracts.
  */
-abstract contract Context {
-    function _msgSender() internal view virtual returns (address) {
-        return msg.sender;
-    }
-
-    function _msgData() internal view virtual returns (bytes calldata) {
-        return msg.data;
-    }
-
-    function _contextSuffixLength() internal view virtual returns (uint256) {
-        return 0;
-    }
-}
-
-// Failed to resolve import: import {SafeMath} from '@openzeppelin/contracts/math/SafeMath.sol';
-
-
-
-
-
-
-
-
-// OpenZeppelin Contracts (last updated v5.0.0) (access/Ownable.sol)
-
-
-
+/* Duplicate abstract contract Context removed */                                                                                                                                                                                                                                                                                                 
 
 
 /**
@@ -700,7 +798,7 @@ library LowLevelCall {
 
     /// @dev Same as {callNoReturn-address-bytes}, but allows specifying the value to be sent in the call.
     function callNoReturn(address target, uint256 value, bytes memory data) internal returns (bool success) {
-        assembly ("memory-safe") {
+        assembly {
             success := call(gas(), target, value, add(data, 0x20), mload(data), 0x00, 0x00)
         }
     }
@@ -723,7 +821,7 @@ library LowLevelCall {
         uint256 value,
         bytes memory data
     ) internal returns (bool success, bytes32 result1, bytes32 result2) {
-        assembly ("memory-safe") {
+        assembly {
             success := call(gas(), target, value, add(data, 0x20), mload(data), 0x00, 0x40)
             result1 := mload(0x00)
             result2 := mload(0x20)
@@ -732,7 +830,7 @@ library LowLevelCall {
 
     /// @dev Performs a Solidity function call using a low level `staticcall` and ignoring the return data.
     function staticcallNoReturn(address target, bytes memory data) internal view returns (bool success) {
-        assembly ("memory-safe") {
+        assembly {
             success := staticcall(gas(), target, add(data, 0x20), mload(data), 0x00, 0x00)
         }
     }
@@ -746,7 +844,7 @@ library LowLevelCall {
         address target,
         bytes memory data
     ) internal view returns (bool success, bytes32 result1, bytes32 result2) {
-        assembly ("memory-safe") {
+        assembly {
             success := staticcall(gas(), target, add(data, 0x20), mload(data), 0x00, 0x40)
             result1 := mload(0x00)
             result2 := mload(0x20)
@@ -755,7 +853,7 @@ library LowLevelCall {
 
     /// @dev Performs a Solidity function call using a low level `delegatecall` and ignoring the return data.
     function delegatecallNoReturn(address target, bytes memory data) internal returns (bool success) {
-        assembly ("memory-safe") {
+        assembly {
             success := delegatecall(gas(), target, add(data, 0x20), mload(data), 0x00, 0x00)
         }
     }
@@ -769,7 +867,7 @@ library LowLevelCall {
         address target,
         bytes memory data
     ) internal returns (bool success, bytes32 result1, bytes32 result2) {
-        assembly ("memory-safe") {
+        assembly {
             success := delegatecall(gas(), target, add(data, 0x20), mload(data), 0x00, 0x40)
             result1 := mload(0x00)
             result2 := mload(0x20)
@@ -778,14 +876,14 @@ library LowLevelCall {
 
     /// @dev Returns the size of the return data buffer.
     function returnDataSize() internal pure returns (uint256 size) {
-        assembly ("memory-safe") {
+        assembly {
             size := returndatasize()
         }
     }
 
     /// @dev Returns a buffer containing the return data from the last call.
     function returnData() internal pure returns (bytes memory result) {
-        assembly ("memory-safe") {
+        assembly {
             result := mload(0x40)
             mstore(result, returndatasize())
             returndatacopy(add(result, 0x20), 0x00, returndatasize())
@@ -795,7 +893,7 @@ library LowLevelCall {
 
     /// @dev Revert with the return data from the last call.
     function bubbleRevert() internal pure {
-        assembly ("memory-safe") {
+        assembly {
             let fmp := mload(0x40)
             returndatacopy(fmp, 0x00, returndatasize())
             revert(fmp, returndatasize())
@@ -803,7 +901,7 @@ library LowLevelCall {
     }
 
     function bubbleRevert(bytes memory returndata) internal pure {
-        assembly ("memory-safe") {
+        assembly {
             revert(add(returndata, 0x20), mload(returndata))
         }
     }
@@ -1384,17 +1482,17 @@ contract LendingPoolAddressesProvider is Ownable, ILendingPoolAddressesProvider 
 
 
 
-// Failed to resolve import: import {SafeMath} from '@openzeppelin/contracts/math/SafeMath.sol';
 
 
 
 
-// Failed to resolve import: import {SafeMath} from '@openzeppelin/contracts/math/SafeMath.sol';
 
 
 
 
-// Failed to resolve import: import {SafeMath} from '@openzeppelin/contracts/math/SafeMath.sol';
+
+
+
 
 
 
@@ -1406,92 +1504,7 @@ contract LendingPoolAddressesProvider is Ownable, ILendingPoolAddressesProvider 
  * @author Aave
  * @notice Implements error messages.
  */
-library Errors {
-  // require error messages - ValidationLogic
-  string public constant AMOUNT_NOT_GREATER_THAN_0 = '1'; // 'Amount must be greater than 0'
-  string public constant NO_ACTIVE_RESERVE = '2'; // 'Action requires an active reserve'
-  string public constant NO_UNFREEZED_RESERVE = '3'; // 'Action requires an unfreezed reserve'
-  string public constant CURRENT_AVAILABLE_LIQUIDITY_NOT_ENOUGH = '4'; // 'The current liquidity is not enough'
-  string public constant NOT_ENOUGH_AVAILABLE_USER_BALANCE = '5'; // 'User cannot withdraw more than the available balance'
-  string public constant TRANSFER_NOT_ALLOWED = '6'; // 'Transfer cannot be allowed.'
-  string public constant BORROWING_NOT_ENABLED = '7'; // 'Borrowing is not enabled'
-  string public constant INVALID_INTEREST_RATE_MODE_SELECTED = '8'; // 'Invalid interest rate mode selected'
-  string public constant COLLATERAL_BALANCE_IS_0 = '9'; // 'The collateral balance is 0'
-  string public constant HEALTH_FACTOR_LOWER_THAN_LIQUIDATION_THRESHOLD = '10'; // 'Health factor is lesser than the liquidation threshold'
-  string public constant COLLATERAL_CANNOT_COVER_NEW_BORROW = '11'; // 'There is not enough collateral to cover a new borrow'
-  string public constant STABLE_BORROWING_NOT_ENABLED = '12'; // stable borrowing not enabled
-  string public constant CALLATERAL_SAME_AS_BORROWING_CURRENCY = '13'; // collateral is (mostly) the same currency that is being borrowed
-  string public constant AMOUNT_BIGGER_THAN_MAX_LOAN_SIZE_STABLE = '14'; // 'The requested amount is greater than the max loan size in stable rate mode
-  string public constant NO_DEBT_OF_SELECTED_TYPE = '15'; // 'for repayment of stable debt, the user needs to have stable debt, otherwise, he needs to have variable debt'
-  string public constant NO_EXPLICIT_AMOUNT_TO_REPAY_ON_BEHALF = '16'; // 'To repay on behalf of an user an explicit amount to repay is needed'
-  string public constant NO_STABLE_RATE_LOAN_IN_RESERVE = '17'; // 'User does not have a stable rate loan in progress on this reserve'
-  string public constant NO_VARIABLE_RATE_LOAN_IN_RESERVE = '18'; // 'User does not have a variable rate loan in progress on this reserve'
-  string public constant UNDERLYING_BALANCE_NOT_GREATER_THAN_0 = '19'; // 'The underlying balance needs to be greater than 0'
-  string public constant DEPOSIT_ALREADY_IN_USE = '20'; // 'User deposit is already being used as collateral'
-
-  // require error messages - LendingPool
-  string public constant NOT_ENOUGH_STABLE_BORROW_BALANCE = '21'; // 'User does not have any stable rate loan for this reserve'
-  string public constant INTEREST_RATE_REBALANCE_CONDITIONS_NOT_MET = '22'; // 'Interest rate rebalance conditions were not met'
-  string public constant LIQUIDATION_CALL_FAILED = '23'; // 'Liquidation call failed'
-  string public constant NOT_ENOUGH_LIQUIDITY_TO_BORROW = '24'; // 'There is not enough liquidity available to borrow'
-  string public constant REQUESTED_AMOUNT_TOO_SMALL = '25'; // 'The requested amount is too small for a FlashLoan.'
-  string public constant INCONSISTENT_PROTOCOL_ACTUAL_BALANCE = '26'; // 'The actual balance of the protocol is inconsistent'
-  string public constant CALLER_NOT_LENDING_POOL_CONFIGURATOR = '27'; // 'The actual balance of the protocol is inconsistent'
-  string public constant INVALID_FLASHLOAN_MODE = '43'; //Invalid flashloan mode selected
-  string public constant BORROW_ALLOWANCE_ARE_NOT_ENOUGH = '54'; // User borrows on behalf, but allowance are too small
-  string public constant REENTRANCY_NOT_ALLOWED = '57';
-  string public constant FAILED_REPAY_WITH_COLLATERAL = '53';
-  string public constant FAILED_COLLATERAL_SWAP = '55';
-  string public constant INVALID_EQUAL_ASSETS_TO_SWAP = '56';
-  string public constant NO_MORE_RESERVES_ALLOWED = '59';
-
-  // require error messages - aToken
-  string public constant CALLER_MUST_BE_LENDING_POOL = '28'; // 'The caller of this function must be a lending pool'
-  string public constant CANNOT_GIVE_ALLOWANCE_TO_HIMSELF = '30'; // 'User cannot give allowance to himself'
-  string public constant TRANSFER_AMOUNT_NOT_GT_0 = '31'; // 'Transferred amount needs to be greater than zero'
-
-  // require error messages - ReserveLogic
-  string public constant RESERVE_ALREADY_INITIALIZED = '34'; // 'Reserve has already been initialized'
-  string public constant LIQUIDITY_INDEX_OVERFLOW = '47'; //  Liquidity index overflows uint128
-  string public constant VARIABLE_BORROW_INDEX_OVERFLOW = '48'; //  Variable borrow index overflows uint128
-  string public constant LIQUIDITY_RATE_OVERFLOW = '49'; //  Liquidity rate overflows uint128
-  string public constant VARIABLE_BORROW_RATE_OVERFLOW = '50'; //  Variable borrow rate overflows uint128
-  string public constant STABLE_BORROW_RATE_OVERFLOW = '51'; //  Stable borrow rate overflows uint128
-
-  //require error messages - LendingPoolConfiguration
-  string public constant CALLER_NOT_AAVE_ADMIN = '35'; // 'The caller must be the aave admin'
-  string public constant RESERVE_LIQUIDITY_NOT_0 = '36'; // 'The liquidity of the reserve needs to be 0'
-
-  //require error messages - LendingPoolAddressesProviderRegistry
-  string public constant PROVIDER_NOT_REGISTERED = '37'; // 'Provider is not registered'
-
-  //return error messages - LendingPoolCollateralManager
-  string public constant HEALTH_FACTOR_NOT_BELOW_THRESHOLD = '38'; // 'Health factor is not below the threshold'
-  string public constant COLLATERAL_CANNOT_BE_LIQUIDATED = '39'; // 'The collateral chosen cannot be liquidated'
-  string public constant SPECIFIED_CURRENCY_NOT_BORROWED_BY_USER = '40'; // 'User did not borrow the specified currency'
-  string public constant NOT_ENOUGH_LIQUIDITY_TO_LIQUIDATE = '41'; // "There isn't enough liquidity available to liquidate"
-  string public constant NO_ERRORS = '42'; // 'No errors'
-
-  //require error messages - Math libraries
-  string public constant MULTIPLICATION_OVERFLOW = '44';
-  string public constant ADDITION_OVERFLOW = '45';
-  string public constant DIVISION_BY_ZERO = '46';
-
-  // pausable error message
-  string public constant IS_PAUSED = '58'; // 'Pool is paused'
-  enum CollateralManagerErrors {
-    NO_ERROR,
-    NO_COLLATERAL_AVAILABLE,
-    COLLATERAL_CANNOT_BE_LIQUIDATED,
-    CURRRENCY_NOT_BORROWED,
-    HEALTH_FACTOR_ABOVE_THRESHOLD,
-    NOT_ENOUGH_LIQUIDITY,
-    NO_ACTIVE_RESERVE,
-    HEALTH_FACTOR_LOWER_THAN_LIQUIDATION_THRESHOLD,
-    INVALID_EQUAL_ASSETS_TO_SWAP,
-    NO_UNFREEZED_RESERVE
-  }
-}
+/* Duplicate library Errors removed */                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
 
 
 /**
@@ -1737,172 +1750,16 @@ interface IPriceOracleGetter {
 }
 
 
-// OpenZeppelin Contracts (last updated v5.5.0) (token/ERC20/utils/SafeERC20.sol)
 
 
 
 
-
-// OpenZeppelin Contracts (last updated v5.4.0) (interfaces/IERC1363.sol)
-
-
-
-
-// OpenZeppelin Contracts (last updated v5.4.0) (interfaces/IERC20.sol)
-
-
-
-
-
-
-// OpenZeppelin Contracts (last updated v5.4.0) (interfaces/IERC165.sol)
-
-
-
-
-// OpenZeppelin Contracts (last updated v5.4.0) (utils/introspection/IERC165.sol)
-
-
-
-/**
- * @dev Interface of the ERC-165 standard, as defined in the
- * https://eips.ethereum.org/EIPS/eip-165[ERC].
- *
- * Implementers can declare support of contract interfaces, which can then be
- * queried by others ({ERC165Checker}).
- *
- * For an implementation, see {ERC165}.
- */
-interface IERC165 {
-    /**
-     * @dev Returns true if this contract implements the interface defined by
-     * `interfaceId`. See the corresponding
-     * https://eips.ethereum.org/EIPS/eip-165#how-interfaces-are-identified[ERC section]
-     * to learn more about how these ids are created.
-     *
-     * This function call must use less than 30 000 gas.
-     */
-    function supportsInterface(bytes4 interfaceId) external view returns (bool);
-}
-
-
-
-/**
- * @title IERC1363
- * @dev Interface of the ERC-1363 standard as defined in the https://eips.ethereum.org/EIPS/eip-1363[ERC-1363].
- *
- * Defines an extension interface for ERC-20 tokens that supports executing code on a recipient contract
- * after `transfer` or `transferFrom`, or code on a spender contract after `approve`, in a single transaction.
- */
-interface IERC1363 is IERC20, IERC165 {
-    /*
-     * Note: the ERC-165 identifier for this interface is 0xb0202a11.
-     * 0xb0202a11 ===
-     *   bytes4(keccak256('transferAndCall(address,uint256)')) ^
-     *   bytes4(keccak256('transferAndCall(address,uint256,bytes)')) ^
-     *   bytes4(keccak256('transferFromAndCall(address,address,uint256)')) ^
-     *   bytes4(keccak256('transferFromAndCall(address,address,uint256,bytes)')) ^
-     *   bytes4(keccak256('approveAndCall(address,uint256)')) ^
-     *   bytes4(keccak256('approveAndCall(address,uint256,bytes)'))
-     */
-
-    /**
-     * @dev Moves a `value` amount of tokens from the caller's account to `to`
-     * and then calls {IERC1363Receiver-onTransferReceived} on `to`.
-     * @param to The address which you want to transfer to.
-     * @param value The amount of tokens to be transferred.
-     * @return A boolean value indicating whether the operation succeeded unless throwing.
-     */
-    function transferAndCall(address to, uint256 value) external returns (bool);
-
-    /**
-     * @dev Moves a `value` amount of tokens from the caller's account to `to`
-     * and then calls {IERC1363Receiver-onTransferReceived} on `to`.
-     * @param to The address which you want to transfer to.
-     * @param value The amount of tokens to be transferred.
-     * @param data Additional data with no specified format, sent in call to `to`.
-     * @return A boolean value indicating whether the operation succeeded unless throwing.
-     */
-    function transferAndCall(address to, uint256 value, bytes calldata data) external returns (bool);
-
-    /**
-     * @dev Moves a `value` amount of tokens from `from` to `to` using the allowance mechanism
-     * and then calls {IERC1363Receiver-onTransferReceived} on `to`.
-     * @param from The address which you want to send tokens from.
-     * @param to The address which you want to transfer to.
-     * @param value The amount of tokens to be transferred.
-     * @return A boolean value indicating whether the operation succeeded unless throwing.
-     */
-    function transferFromAndCall(address from, address to, uint256 value) external returns (bool);
-
-    /**
-     * @dev Moves a `value` amount of tokens from `from` to `to` using the allowance mechanism
-     * and then calls {IERC1363Receiver-onTransferReceived} on `to`.
-     * @param from The address which you want to send tokens from.
-     * @param to The address which you want to transfer to.
-     * @param value The amount of tokens to be transferred.
-     * @param data Additional data with no specified format, sent in call to `to`.
-     * @return A boolean value indicating whether the operation succeeded unless throwing.
-     */
-    function transferFromAndCall(address from, address to, uint256 value, bytes calldata data) external returns (bool);
-
-    /**
-     * @dev Sets a `value` amount of tokens as the allowance of `spender` over the
-     * caller's tokens and then calls {IERC1363Spender-onApprovalReceived} on `spender`.
-     * @param spender The address which will spend the funds.
-     * @param value The amount of tokens to be spent.
-     * @return A boolean value indicating whether the operation succeeded unless throwing.
-     */
-    function approveAndCall(address spender, uint256 value) external returns (bool);
-
-    /**
-     * @dev Sets a `value` amount of tokens as the allowance of `spender` over the
-     * caller's tokens and then calls {IERC1363Spender-onApprovalReceived} on `spender`.
-     * @param spender The address which will spend the funds.
-     * @param value The amount of tokens to be spent.
-     * @param data Additional data with no specified format, sent in call to `spender`.
-     * @return A boolean value indicating whether the operation succeeded unless throwing.
-     */
-    function approveAndCall(address spender, uint256 value, bytes calldata data) external returns (bool);
-}
-
-
-// OpenZeppelin Contracts (last updated v5.4.0) (interfaces/IERC20Metadata.sol)
-
-
-
-
-// OpenZeppelin Contracts (last updated v5.4.0) (token/ERC20/extensions/IERC20Metadata.sol)
-
-
-
-
-
-/**
- * @dev Interface for the optional metadata functions from the ERC-20 standard.
- */
-interface IERC20Metadata is IERC20 {
-    /**
-     * @dev Returns the name of the token.
-     */
-    function name() external view returns (string memory);
-
-    /**
-     * @dev Returns the symbol of the token.
-     */
-    function symbol() external view returns (string memory);
-
-    /**
-     * @dev Returns the decimals places of the token.
-     */
-    function decimals() external view returns (uint8);
-}
 
 
 
 /**
  * @title SafeERC20
- * @dev Wrappers around ERC-20 operations that throw on failure (when the token
+ * @dev Wrappers around ERC20 operations that throw on failure (when the token
  * contract returns false). Tokens that return no value (and instead revert or
  * throw on failure) are also supported, non-reverting calls are assumed to be
  * successful.
@@ -1910,276 +1767,60 @@ interface IERC20Metadata is IERC20 {
  * which allows you to call the safe operations as `token.safeTransfer(...)`, etc.
  */
 library SafeERC20 {
-    /**
-     * @dev An operation with an ERC-20 token failed.
-     */
-    error SafeERC20FailedOperation(address token);
+    using SafeMath for uint256;
+    using Address for address;
 
-    /**
-     * @dev Indicates a failed `decreaseAllowance` request.
-     */
-    error SafeERC20FailedDecreaseAllowance(address spender, uint256 currentAllowance, uint256 requestedDecrease);
-
-    /**
-     * @dev Transfer `value` amount of `token` from the calling contract to `to`. If `token` returns no value,
-     * non-reverting calls are assumed to be successful.
-     */
     function safeTransfer(IERC20 token, address to, uint256 value) internal {
-        if (!_safeTransfer(token, to, value, true)) {
-            revert SafeERC20FailedOperation(address(token));
-        }
+        _callOptionalReturn(token, abi.encodeWithSelector(token.transfer.selector, to, value));
     }
 
-    /**
-     * @dev Transfer `value` amount of `token` from `from` to `to`, spending the approval given by `from` to the
-     * calling contract. If `token` returns no value, non-reverting calls are assumed to be successful.
-     */
     function safeTransferFrom(IERC20 token, address from, address to, uint256 value) internal {
-        if (!_safeTransferFrom(token, from, to, value, true)) {
-            revert SafeERC20FailedOperation(address(token));
-        }
+        _callOptionalReturn(token, abi.encodeWithSelector(token.transferFrom.selector, from, to, value));
     }
 
     /**
-     * @dev Variant of {safeTransfer} that returns a bool instead of reverting if the operation is not successful.
-     */
-    function trySafeTransfer(IERC20 token, address to, uint256 value) internal returns (bool) {
-        return _safeTransfer(token, to, value, false);
-    }
-
-    /**
-     * @dev Variant of {safeTransferFrom} that returns a bool instead of reverting if the operation is not successful.
-     */
-    function trySafeTransferFrom(IERC20 token, address from, address to, uint256 value) internal returns (bool) {
-        return _safeTransferFrom(token, from, to, value, false);
-    }
-
-    /**
-     * @dev Increase the calling contract's allowance toward `spender` by `value`. If `token` returns no value,
-     * non-reverting calls are assumed to be successful.
+     * @dev Deprecated. This function has issues similar to the ones found in
+     * {IERC20-approve}, and its usage is discouraged.
      *
-     * IMPORTANT: If the token implements ERC-7674 (ERC-20 with temporary allowance), and if the "client"
-     * smart contract uses ERC-7674 to set temporary allowances, then the "client" smart contract should avoid using
-     * this function. Performing a {safeIncreaseAllowance} or {safeDecreaseAllowance} operation on a token contract
-     * that has a non-zero temporary allowance (for that particular owner-spender) will result in unexpected behavior.
+     * Whenever possible, use {safeIncreaseAllowance} and
+     * {safeDecreaseAllowance} instead.
      */
+    function safeApprove(IERC20 token, address spender, uint256 value) internal {
+        // safeApprove should only be called when setting an initial allowance,
+        // or when resetting it to zero. To increase and decrease it, use
+        // 'safeIncreaseAllowance' and 'safeDecreaseAllowance'
+        // solhint-disable-next-line max-line-length
+        require((value == 0) || (token.allowance(address(this), spender) == 0),
+            "SafeERC20: approve from non-zero to non-zero allowance"
+        );
+        _callOptionalReturn(token, abi.encodeWithSelector(token.approve.selector, spender, value));
+    }
+
     function safeIncreaseAllowance(IERC20 token, address spender, uint256 value) internal {
-        uint256 oldAllowance = token.allowance(address(this), spender);
-        forceApprove(token, spender, oldAllowance + value);
+        uint256 newAllowance = token.allowance(address(this), spender).add(value);
+        _callOptionalReturn(token, abi.encodeWithSelector(token.approve.selector, spender, newAllowance));
+    }
+
+    function safeDecreaseAllowance(IERC20 token, address spender, uint256 value) internal {
+        uint256 newAllowance = token.allowance(address(this), spender).sub(value, "SafeERC20: decreased allowance below zero");
+        _callOptionalReturn(token, abi.encodeWithSelector(token.approve.selector, spender, newAllowance));
     }
 
     /**
-     * @dev Decrease the calling contract's allowance toward `spender` by `requestedDecrease`. If `token` returns no
-     * value, non-reverting calls are assumed to be successful.
-     *
-     * IMPORTANT: If the token implements ERC-7674 (ERC-20 with temporary allowance), and if the "client"
-     * smart contract uses ERC-7674 to set temporary allowances, then the "client" smart contract should avoid using
-     * this function. Performing a {safeIncreaseAllowance} or {safeDecreaseAllowance} operation on a token contract
-     * that has a non-zero temporary allowance (for that particular owner-spender) will result in unexpected behavior.
-     */
-    function safeDecreaseAllowance(IERC20 token, address spender, uint256 requestedDecrease) internal {
-        unchecked {
-            uint256 currentAllowance = token.allowance(address(this), spender);
-            if (currentAllowance < requestedDecrease) {
-                revert SafeERC20FailedDecreaseAllowance(spender, currentAllowance, requestedDecrease);
-            }
-            forceApprove(token, spender, currentAllowance - requestedDecrease);
-        }
-    }
-
-    /**
-     * @dev Set the calling contract's allowance toward `spender` to `value`. If `token` returns no value,
-     * non-reverting calls are assumed to be successful. Meant to be used with tokens that require the approval
-     * to be set to zero before setting it to a non-zero value, such as USDT.
-     *
-     * NOTE: If the token implements ERC-7674, this function will not modify any temporary allowance. This function
-     * only sets the "standard" allowance. Any temporary allowance will remain active, in addition to the value being
-     * set here.
-     */
-    function forceApprove(IERC20 token, address spender, uint256 value) internal {
-        if (!_safeApprove(token, spender, value, false)) {
-            if (!_safeApprove(token, spender, 0, true)) revert SafeERC20FailedOperation(address(token));
-            if (!_safeApprove(token, spender, value, true)) revert SafeERC20FailedOperation(address(token));
-        }
-    }
-
-    /**
-     * @dev Performs an {ERC1363} transferAndCall, with a fallback to the simple {ERC20} transfer if the target has no
-     * code. This can be used to implement an {ERC721}-like safe transfer that relies on {ERC1363} checks when
-     * targeting contracts.
-     *
-     * Reverts if the returned value is other than `true`.
-     */
-    function transferAndCallRelaxed(IERC1363 token, address to, uint256 value, bytes memory data) internal {
-        if (to.code.length == 0) {
-            safeTransfer(token, to, value);
-        } else if (!token.transferAndCall(to, value, data)) {
-            revert SafeERC20FailedOperation(address(token));
-        }
-    }
-
-    /**
-     * @dev Performs an {ERC1363} transferFromAndCall, with a fallback to the simple {ERC20} transferFrom if the target
-     * has no code. This can be used to implement an {ERC721}-like safe transfer that relies on {ERC1363} checks when
-     * targeting contracts.
-     *
-     * Reverts if the returned value is other than `true`.
-     */
-    function transferFromAndCallRelaxed(
-        IERC1363 token,
-        address from,
-        address to,
-        uint256 value,
-        bytes memory data
-    ) internal {
-        if (to.code.length == 0) {
-            safeTransferFrom(token, from, to, value);
-        } else if (!token.transferFromAndCall(from, to, value, data)) {
-            revert SafeERC20FailedOperation(address(token));
-        }
-    }
-
-    /**
-     * @dev Performs an {ERC1363} approveAndCall, with a fallback to the simple {ERC20} approve if the target has no
-     * code. This can be used to implement an {ERC721}-like safe transfer that rely on {ERC1363} checks when
-     * targeting contracts.
-     *
-     * NOTE: When the recipient address (`to`) has no code (i.e. is an EOA), this function behaves as {forceApprove}.
-     * Oppositely, when the recipient address (`to`) has code, this function only attempts to call {ERC1363-approveAndCall}
-     * once without retrying, and relies on the returned value to be true.
-     *
-     * Reverts if the returned value is other than `true`.
-     */
-    function approveAndCallRelaxed(IERC1363 token, address to, uint256 value, bytes memory data) internal {
-        if (to.code.length == 0) {
-            forceApprove(token, to, value);
-        } else if (!token.approveAndCall(to, value, data)) {
-            revert SafeERC20FailedOperation(address(token));
-        }
-    }
-
-    /// @dev Attempts to fetch the token decimals. A return value of false indicates that the attempt failed in some way.
-    function tryGetDecimals(IERC20 token) internal view returns (bool success, uint8 decimals) {
-        bytes4 selector = IERC20Metadata.decimals.selector;
-        assembly ("memory-safe") {
-            mstore(0x00, selector)
-            success := staticcall(gas(), token, 0x00, 4, 0x00, 0x20)
-            success := and(and(success, gt(returndatasize(), 0x1f)), lt(mload(0x00), 0x100))
-            decimals := mul(success, mload(0x00))
-        }
-    }
-
-    /**
-     * @dev Imitates a Solidity `token.transfer(to, value)` call, relaxing the requirement on the return value: the
-     * return value is optional (but if data is returned, it must not be false).
-     *
+     * @dev Imitates a Solidity high-level call (i.e. a regular function call to a contract), relaxing the requirement
+     * on the return value: the return value is optional (but if data is returned, it must not be false).
      * @param token The token targeted by the call.
-     * @param to The recipient of the tokens
-     * @param value The amount of token to transfer
-     * @param bubble Behavior switch if the transfer call reverts: bubble the revert reason or return a false boolean.
+     * @param data The call data (encoded using abi.encode or one of its variants).
      */
-    function _safeTransfer(IERC20 token, address to, uint256 value, bool bubble) private returns (bool success) {
-        bytes4 selector = IERC20.transfer.selector;
+    function _callOptionalReturn(IERC20 token, bytes memory data) private {
+        // We need to perform a low level call here, to bypass Solidity's return data size checking mechanism, since
+        // we're implementing it ourselves. We use {Address.functionCall} to perform this call, which verifies that
+        // the target address contains contract code and also asserts for success in the low-level call.
 
-        assembly ("memory-safe") {
-            let fmp := mload(0x40)
-            mstore(0x00, selector)
-            mstore(0x04, and(to, shr(96, not(0))))
-            mstore(0x24, value)
-            success := call(gas(), token, 0, 0x00, 0x44, 0x00, 0x20)
-            // if call success and return is true, all is good.
-            // otherwise (not success or return is not true), we need to perform further checks
-            if iszero(and(success, eq(mload(0x00), 1))) {
-                // if the call was a failure and bubble is enabled, bubble the error
-                if and(iszero(success), bubble) {
-                    returndatacopy(fmp, 0x00, returndatasize())
-                    revert(fmp, returndatasize())
-                }
-                // if the return value is not true, then the call is only successful if:
-                // - the token address has code
-                // - the returndata is empty
-                success := and(success, and(iszero(returndatasize()), gt(extcodesize(token), 0)))
-            }
-            mstore(0x40, fmp)
-        }
-    }
-
-    /**
-     * @dev Imitates a Solidity `token.transferFrom(from, to, value)` call, relaxing the requirement on the return
-     * value: the return value is optional (but if data is returned, it must not be false).
-     *
-     * @param token The token targeted by the call.
-     * @param from The sender of the tokens
-     * @param to The recipient of the tokens
-     * @param value The amount of token to transfer
-     * @param bubble Behavior switch if the transfer call reverts: bubble the revert reason or return a false boolean.
-     */
-    function _safeTransferFrom(
-        IERC20 token,
-        address from,
-        address to,
-        uint256 value,
-        bool bubble
-    ) private returns (bool success) {
-        bytes4 selector = IERC20.transferFrom.selector;
-
-        assembly ("memory-safe") {
-            let fmp := mload(0x40)
-            mstore(0x00, selector)
-            mstore(0x04, and(from, shr(96, not(0))))
-            mstore(0x24, and(to, shr(96, not(0))))
-            mstore(0x44, value)
-            success := call(gas(), token, 0, 0x00, 0x64, 0x00, 0x20)
-            // if call success and return is true, all is good.
-            // otherwise (not success or return is not true), we need to perform further checks
-            if iszero(and(success, eq(mload(0x00), 1))) {
-                // if the call was a failure and bubble is enabled, bubble the error
-                if and(iszero(success), bubble) {
-                    returndatacopy(fmp, 0x00, returndatasize())
-                    revert(fmp, returndatasize())
-                }
-                // if the return value is not true, then the call is only successful if:
-                // - the token address has code
-                // - the returndata is empty
-                success := and(success, and(iszero(returndatasize()), gt(extcodesize(token), 0)))
-            }
-            mstore(0x40, fmp)
-            mstore(0x60, 0)
-        }
-    }
-
-    /**
-     * @dev Imitates a Solidity `token.approve(spender, value)` call, relaxing the requirement on the return value:
-     * the return value is optional (but if data is returned, it must not be false).
-     *
-     * @param token The token targeted by the call.
-     * @param spender The spender of the tokens
-     * @param value The amount of token to transfer
-     * @param bubble Behavior switch if the transfer call reverts: bubble the revert reason or return a false boolean.
-     */
-    function _safeApprove(IERC20 token, address spender, uint256 value, bool bubble) private returns (bool success) {
-        bytes4 selector = IERC20.approve.selector;
-
-        assembly ("memory-safe") {
-            let fmp := mload(0x40)
-            mstore(0x00, selector)
-            mstore(0x04, and(spender, shr(96, not(0))))
-            mstore(0x24, value)
-            success := call(gas(), token, 0, 0x00, 0x44, 0x00, 0x20)
-            // if call success and return is true, all is good.
-            // otherwise (not success or return is not true), we need to perform further checks
-            if iszero(and(success, eq(mload(0x00), 1))) {
-                // if the call was a failure and bubble is enabled, bubble the error
-                if and(iszero(success), bubble) {
-                    returndatacopy(fmp, 0x00, returndatasize())
-                    revert(fmp, returndatasize())
-                }
-                // if the return value is not true, then the call is only successful if:
-                // - the token address has code
-                // - the returndata is empty
-                success := and(success, and(iszero(returndatasize()), gt(extcodesize(token), 0)))
-            }
-            mstore(0x40, fmp)
+        bytes memory returndata = address(token).functionCall(data, "SafeERC20: low-level call failed");
+        if (returndata.length > 0) { // Return data is optional
+            // solhint-disable-next-line max-line-length
+            require(abi.decode(returndata, (bool)), "SafeERC20: ERC20 operation did not succeed");
         }
     }
 }
@@ -3549,16 +3190,7 @@ interface ILendingPool {
  *
  * This contract is only required for intermediate, library-like contracts.
  */
-abstract contract Context {
-  function _msgSender() internal virtual view returns (address payable) {
-    return msg.sender;
-  }
-
-  function _msgData() internal virtual view returns (bytes memory) {
-    this; // silence state mutability warning without generating bytecode - see https://github.com/ethereum/solidity/issues/2691
-    return msg.data;
-  }
-}
+/* Duplicate abstract contract Context removed */                                                                                                                                                                                                                                                                                                                 
 
 
 
@@ -3574,169 +3206,6 @@ interface IERC20Detailed is IERC20 {
   function decimals() external view returns (uint8);
 }
 
-
-
-
-/**
- * @dev Wrappers over Solidity's arithmetic operations with added overflow
- * checks.
- *
- * Arithmetic operations in Solidity wrap on overflow. This can easily result
- * in bugs, because programmers usually assume that an overflow raises an
- * error, which is the standard behavior in high level programming languages.
- * `SafeMath` restores this intuition by reverting the transaction when an
- * operation overflows.
- *
- * Using this library instead of the unchecked operations eliminates an entire
- * class of bugs, so it's recommended to use it always.
- */
-library SafeMath {
-  /**
-   * @dev Returns the addition of two unsigned integers, reverting on
-   * overflow.
-   *
-   * Counterpart to Solidity's `+` operator.
-   *
-   * Requirements:
-   * - Addition cannot overflow.
-   */
-  function add(uint256 a, uint256 b) internal pure returns (uint256) {
-    uint256 c = a + b;
-    require(c >= a, 'SafeMath: addition overflow');
-
-    return c;
-  }
-
-  /**
-   * @dev Returns the subtraction of two unsigned integers, reverting on
-   * overflow (when the result is negative).
-   *
-   * Counterpart to Solidity's `-` operator.
-   *
-   * Requirements:
-   * - Subtraction cannot overflow.
-   */
-  function sub(uint256 a, uint256 b) internal pure returns (uint256) {
-    return sub(a, b, 'SafeMath: subtraction overflow');
-  }
-
-  /**
-   * @dev Returns the subtraction of two unsigned integers, reverting with custom message on
-   * overflow (when the result is negative).
-   *
-   * Counterpart to Solidity's `-` operator.
-   *
-   * Requirements:
-   * - Subtraction cannot overflow.
-   */
-  function sub(
-    uint256 a,
-    uint256 b,
-    string memory errorMessage
-  ) internal pure returns (uint256) {
-    require(b <= a, errorMessage);
-    uint256 c = a - b;
-
-    return c;
-  }
-
-  /**
-   * @dev Returns the multiplication of two unsigned integers, reverting on
-   * overflow.
-   *
-   * Counterpart to Solidity's `*` operator.
-   *
-   * Requirements:
-   * - Multiplication cannot overflow.
-   */
-  function mul(uint256 a, uint256 b) internal pure returns (uint256) {
-    // Gas optimization: this is cheaper than requiring 'a' not being zero, but the
-    // benefit is lost if 'b' is also tested.
-    // See: https://github.com/OpenZeppelin/openzeppelin-contracts/pull/522
-    if (a == 0) {
-      return 0;
-    }
-
-    uint256 c = a * b;
-    require(c / a == b, 'SafeMath: multiplication overflow');
-
-    return c;
-  }
-
-  /**
-   * @dev Returns the integer division of two unsigned integers. Reverts on
-   * division by zero. The result is rounded towards zero.
-   *
-   * Counterpart to Solidity's `/` operator. Note: this function uses a
-   * `revert` opcode (which leaves remaining gas untouched) while Solidity
-   * uses an invalid opcode to revert (consuming all remaining gas).
-   *
-   * Requirements:
-   * - The divisor cannot be zero.
-   */
-  function div(uint256 a, uint256 b) internal pure returns (uint256) {
-    return div(a, b, 'SafeMath: division by zero');
-  }
-
-  /**
-   * @dev Returns the integer division of two unsigned integers. Reverts with custom message on
-   * division by zero. The result is rounded towards zero.
-   *
-   * Counterpart to Solidity's `/` operator. Note: this function uses a
-   * `revert` opcode (which leaves remaining gas untouched) while Solidity
-   * uses an invalid opcode to revert (consuming all remaining gas).
-   *
-   * Requirements:
-   * - The divisor cannot be zero.
-   */
-  function div(
-    uint256 a,
-    uint256 b,
-    string memory errorMessage
-  ) internal pure returns (uint256) {
-    // Solidity only automatically asserts when dividing by 0
-    require(b > 0, errorMessage);
-    uint256 c = a / b;
-    // assert(a == b * c + a % b); // There is no case in which this doesn't hold
-
-    return c;
-  }
-
-  /**
-   * @dev Returns the remainder of dividing two unsigned integers. (unsigned integer modulo),
-   * Reverts when dividing by zero.
-   *
-   * Counterpart to Solidity's `%` operator. This function uses a `revert`
-   * opcode (which leaves remaining gas untouched) while Solidity uses an
-   * invalid opcode to revert (consuming all remaining gas).
-   *
-   * Requirements:
-   * - The divisor cannot be zero.
-   */
-  function mod(uint256 a, uint256 b) internal pure returns (uint256) {
-    return mod(a, b, 'SafeMath: modulo by zero');
-  }
-
-  /**
-   * @dev Returns the remainder of dividing two unsigned integers. (unsigned integer modulo),
-   * Reverts with custom message when dividing by zero.
-   *
-   * Counterpart to Solidity's `%` operator. This function uses a `revert`
-   * opcode (which leaves remaining gas untouched) while Solidity uses an
-   * invalid opcode to revert (consuming all remaining gas).
-   *
-   * Requirements:
-   * - The divisor cannot be zero.
-   */
-  function mod(
-    uint256 a,
-    uint256 b,
-    string memory errorMessage
-  ) internal pure returns (uint256) {
-    require(b != 0, errorMessage);
-    return a % b;
-  }
-}
 
 
 
@@ -4148,14 +3617,14 @@ library Helpers {
 
 pragma experimental ABIEncoderV2;
 
-// Failed to resolve import: import {SafeMath} from '@openzeppelin/contracts/math/SafeMath.sol';
 
 
 
 
 
 
-// Failed to resolve import: import {SafeMath} from '@openzeppelin/contracts/math/SafeMath.sol';
+
+
 
 
 
@@ -4540,7 +4009,7 @@ library GenericLogic {
 
 pragma experimental ABIEncoderV2;
 
-// Failed to resolve import: import {SafeMath} from '@openzeppelin/contracts/math/SafeMath.sol';
+
 
 
 
@@ -5057,7 +4526,7 @@ interface ISwapAdapter {
 
 
 
-// Failed to resolve import: import {SafeMath} from '@openzeppelin/contracts/math/SafeMath.sol';
+
 
 
 

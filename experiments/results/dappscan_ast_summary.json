@@ -1,0 +1,21 @@
+{
+  "method": "tree-sitter AST (Changes #1-4)",
+  "total_annotations_processed": 342,
+  "located_in_ast": 333,
+  "name_matched_in_ast": 326,
+  "match_rate": 0.978978978978979,
+  "ambiguous_project_roots": 0,
+  "total_constructable_positives": 227,
+  "forge_duplicates_excluded": 0,
+  "unique_dappscan_positives": 227,
+  "swc_distribution": {
+    "SWC-107": 99,
+    "SWC-114": 40,
+    "SWC-104": 82,
+    "SWC-112": 6
+  },
+  "cross_contract_count": 147,
+  "intra_contract_count": 80,
+  "forge_positives": 83,
+  "final_combined_unique_total": 310
+}
