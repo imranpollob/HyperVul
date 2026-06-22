@@ -173,6 +173,33 @@ def generate_markdown():
     # Mythril subset metrics
     m_cross_f1, m_cross_prauc, m_intra_f1, m_intra_prauc, m_swc_107_rec, m_swc_114_rec, m_swc_104_rec = get_subset_metrics(mythril_data if mythril_path.exists() else None, feat_map)
 
+    # Calculate Ablation Study Stats (Mean ± Std)
+    def get_ablation_metrics(arm):
+        metrics = defaultdict(list)
+        for seed in [42, 43, 44, 45, 46]:
+            p = Path(f"experiments/latest1/ablation/{arm}_seed{seed}.json")
+            if p.exists():
+                with open(p) as f:
+                    data = json.load(f)
+                    metrics["f1"].append(data["test"]["f1"])
+                    metrics["precision"].append(data["test"]["precision"])
+                    metrics["recall"].append(data["test"]["recall"])
+                    metrics["f2"].append(data["test"]["f2"])
+                    metrics["pr_auc"].append(data["test"]["pr_auc"])
+                    metrics["roc_auc"].append(data["test"]["roc_auc"])
+        
+        formatted = {}
+        for k in ["f1", "precision", "recall", "f2", "pr_auc", "roc_auc"]:
+            if metrics[k]:
+                formatted[k] = f"{np.mean(metrics[k])*100:.2f}% ± {np.std(metrics[k])*100:.2f}"
+            else:
+                formatted[k] = "N/A"
+        return formatted
+
+    secnone_metrics = get_ablation_metrics("secnone")
+    secsec_metrics = get_ablation_metrics("secsec")
+    secfull_metrics = get_ablation_metrics("secfull")
+
     # 4. Load GAT Seed 42 Specific Data
     gat_seed42_path = Path("experiments/latest1/gat_baseline_metrics_seed42.json")
     with open(gat_seed42_path) as f:
@@ -285,6 +312,17 @@ To resolve these problems, HyperVul introduces:
 | *(Local Calls)* | PR-AUC | — | — | {gat_intra_prauc} | **{hv_intra_prauc}** |
 | **Cross-Contract** | F1-Score | {s_cross_f1} | {m_cross_f1} | {gat_cross_f1} | **{hv_cross_f1}** |
 | *(Cross-Interface Calls)*| PR-AUC | — | — | {gat_cross_prauc} | **{hv_cross_prauc}** |
+
+---
+
+### Table V: Ablation Study on Symbolic Features (Mean ± Std over 5 Seeds)
+*This table demonstrates the performance impact of our proposed sequence-aware Symbolic Feature extraction mechanism. 'secnone' acts as a baseline relying purely on structural AST node classification, 'secsec' incorporates only localized safety guard context, and 'secfull' represents the complete proposed architecture utilizing all cross-boundary invariant modifiers.*
+
+| Model Variant | Recall | Precision | F1-Score | F2-Score | PR-AUC | ROC-AUC |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: |
+| **Baseline (secnone)** <br>*(No Symbolic Features)* | {secnone_metrics['recall']} | {secnone_metrics['precision']} | {secnone_metrics['f1']} | {secnone_metrics['f2']} | {secnone_metrics['pr_auc']} | {secnone_metrics['roc_auc']} |
+| **Guards Only (secsec)** <br>*(Local Safety Context)* | {secsec_metrics['recall']} | {secsec_metrics['precision']} | {secsec_metrics['f1']} | {secsec_metrics['f2']} | {secsec_metrics['pr_auc']} | {secsec_metrics['roc_auc']} |
+| **Proposed (secfull)** <br>*(Full Symbolic Context)* | **{secfull_metrics['recall']}** | **{secfull_metrics['precision']}** | **{secfull_metrics['f1']}** | **{secfull_metrics['f2']}** | **{secfull_metrics['pr_auc']}** | **{secfull_metrics['roc_auc']}** |
 
 """
     out_path = Path("final-evaluation-results.md")

@@ -83,3 +83,14 @@ To resolve these problems, HyperVul introduces:
 | **Cross-Contract** | F1-Score | 35.71% | 11.11% | 50.44% | **40.58%** |
 | *(Cross-Interface Calls)*| PR-AUC | — | — | 61.19% | **66.07%** |
 
+---
+
+### Table V: Ablation Study on Symbolic Features (Mean ± Std over 5 Seeds)
+*This table demonstrates the performance impact of our proposed sequence-aware Symbolic Feature extraction mechanism. 'secnone' acts as a baseline relying purely on structural AST node classification, 'secsec' incorporates only localized safety guard context, and 'secfull' represents the complete proposed architecture utilizing all cross-boundary invariant modifiers.*
+
+| Model Variant | Recall | Precision | F1-Score | F2-Score | PR-AUC | ROC-AUC |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: |
+| **Baseline (secnone)** <br>*(No Symbolic Features)* | 93.78% ± 1.66 | 36.87% ± 2.62 | 52.87% ± 2.66 | 71.57% ± 2.07 | 53.16% ± 2.51 | 82.15% ± 1.56 |
+| **Guards Only (secsec)** <br>*(Local Safety Context)* | 95.56% ± 1.41 | 37.75% ± 2.47 | 54.07% ± 2.46 | 73.07% ± 1.78 | 60.36% ± 5.63 | 84.28% ± 2.21 |
+| **Proposed (secfull)** <br>*(Full Symbolic Context)* | **96.44% ± 1.09** | **39.38% ± 1.61** | **55.90% ± 1.58** | **74.74% ± 1.15** | **60.48% ± 5.55** | **84.20% ± 2.16** |
+
