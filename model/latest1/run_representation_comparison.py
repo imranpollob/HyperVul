@@ -35,6 +35,30 @@ K_OZ, K_AAVE = 100, 100
 FIXED = {"lr": 1e-3, "dropout": 0.3, "hidden": 256, "layers": 2}
 HG = {"layers": 2, "skip": True}  # hypergraph config, overridable via CLI
 
+class AsymmetricLoss(nn.Module):
+    def __init__(self, gamma_neg=4, gamma_pos=1, clip=0.05, eps=1e-8, pos_weight=None):
+        super().__init__()
+        self.gamma_neg = gamma_neg
+        self.gamma_pos = gamma_pos
+        self.clip = clip
+        self.eps = eps
+        self.pos_weight = pos_weight
+
+    def forward(self, x, y):
+        xs_p = torch.sigmoid(x)
+        xs_n = 1.0 - xs_p
+
+        if self.clip is not None and self.clip > 0:
+            xs_n = (xs_n + self.clip).clamp(max=1.0)
+
+        loss_pos = y * torch.log(xs_p.clamp(min=self.eps)) * ((1.0 - xs_p) ** self.gamma_pos)
+        loss_neg = (1.0 - y) * torch.log(xs_n.clamp(min=self.eps)) * ((1.0 - xs_n) ** self.gamma_neg)
+        
+        if self.pos_weight is not None:
+            loss_pos = loss_pos * self.pos_weight
+            
+        loss = -loss_pos - loss_neg
+        return loss.mean()
 
 def set_seed(seed):
     random.seed(seed); np.random.seed(seed); torch.manual_seed(seed)
@@ -186,7 +210,7 @@ def train_eval(kind, train_g, val_g, test_g, device, seed):
     opt = optim.Adam(model.parameters(), lr=FIXED["lr"], weight_decay=1e-5)
     tl = np.concatenate([g.edge_label for g in train_g])
     pos, neg = (tl == 1).sum(), (tl == 0).sum()
-    crit = nn.BCEWithLogitsLoss(pos_weight=torch.tensor([neg / max(pos, 1)], device=device))
+    crit = AsymmetricLoss(pos_weight=torch.tensor([neg / max(pos, 1)], device=device))
 
     best_loss, no_imp, best_state, patience = float("inf"), 0, None, 20
     for epoch in range(1, 201):
