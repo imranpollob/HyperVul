@@ -559,9 +559,9 @@ interface IERC1155Errors {
  * applications.
  */
 abstract contract ERC20 is Context, IERC20, IERC20Metadata, IERC20Errors {
-    mapping(address account => uint256) private _balances;
+    mapping(address => uint256) private _balances;
 
-    mapping(address account => mapping(address spender => uint256)) private _allowances;
+    mapping(address => mapping(address => uint256)) private _allowances;
 
     uint256 private _totalSupply;
 
@@ -1137,7 +1137,7 @@ library SafeERC20 {
     /// @dev Attempts to fetch the token decimals. A return value of false indicates that the attempt failed in some way.
     function tryGetDecimals(IERC20 token) internal view returns (bool success, uint8 decimals) {
         bytes4 selector = IERC20Metadata.decimals.selector;
-        assembly ("memory-safe") {
+        assembly {
             mstore(0x00, selector)
             success := staticcall(gas(), token, 0x00, 4, 0x00, 0x20)
             success := and(and(success, gt(returndatasize(), 0x1f)), lt(mload(0x00), 0x100))
@@ -1157,7 +1157,7 @@ library SafeERC20 {
     function _safeTransfer(IERC20 token, address to, uint256 value, bool bubble) private returns (bool success) {
         bytes4 selector = IERC20.transfer.selector;
 
-        assembly ("memory-safe") {
+        assembly {
             let fmp := mload(0x40)
             mstore(0x00, selector)
             mstore(0x04, and(to, shr(96, not(0))))
@@ -1199,7 +1199,7 @@ library SafeERC20 {
     ) private returns (bool success) {
         bytes4 selector = IERC20.transferFrom.selector;
 
-        assembly ("memory-safe") {
+        assembly {
             let fmp := mload(0x40)
             mstore(0x00, selector)
             mstore(0x04, and(from, shr(96, not(0))))
@@ -1236,7 +1236,7 @@ library SafeERC20 {
     function _safeApprove(IERC20 token, address spender, uint256 value, bool bubble) private returns (bool success) {
         bytes4 selector = IERC20.approve.selector;
 
-        assembly ("memory-safe") {
+        assembly {
             let fmp := mload(0x40)
             mstore(0x00, selector)
             mstore(0x04, and(spender, shr(96, not(0))))
@@ -1315,7 +1315,7 @@ library Panic {
     /// @dev Reverts with a panic code. Recommended to use with
     /// the internal constants with predefined codes.
     function panic(uint256 code) internal pure {
-        assembly ("memory-safe") {
+        assembly {
             mstore(0x00, 0x4e487b71)
             mstore(0x20, code)
             revert(0x1c, 0x24)
@@ -2480,7 +2480,7 @@ library SafeCast {
      * @dev Cast a boolean (false or true) to a uint256 (0 or 1) with no jump.
      */
     function toUint(bool b) internal pure returns (uint256 u) {
-        assembly ("memory-safe") {
+        assembly {
             u := iszero(iszero(b))
         }
     }
@@ -2504,7 +2504,7 @@ library Math {
      * The result is stored in two 256 variables such that sum = high * 2²⁵⁶ + low.
      */
     function add512(uint256 a, uint256 b) internal pure returns (uint256 high, uint256 low) {
-        assembly ("memory-safe") {
+        assembly {
             low := add(a, b)
             high := lt(low, a)
         }
@@ -2519,7 +2519,7 @@ library Math {
         // 512-bit multiply [high low] = x * y. Compute the product mod 2²⁵⁶ and mod 2²⁵⁶ - 1, then use
         // the Chinese Remainder Theorem to reconstruct the 512 bit result. The result is stored in two 256
         // variables such that product = high * 2²⁵⁶ + low.
-        assembly ("memory-safe") {
+        assembly {
             let mm := mulmod(a, b, not(0))
             low := mul(a, b)
             high := sub(sub(mm, low), lt(mm, low))
@@ -2554,7 +2554,7 @@ library Math {
     function tryMul(uint256 a, uint256 b) internal pure returns (bool success, uint256 result) {
         unchecked {
             uint256 c = a * b;
-            assembly ("memory-safe") {
+            assembly {
                 // Only true when the multiplication doesn't overflow
                 // (c / a == b) || (a == 0)
                 success := or(eq(div(c, a), b), iszero(a))
@@ -2570,7 +2570,7 @@ library Math {
     function tryDiv(uint256 a, uint256 b) internal pure returns (bool success, uint256 result) {
         unchecked {
             success = b > 0;
-            assembly ("memory-safe") {
+            assembly {
                 // The `DIV` opcode returns zero when the denominator is 0.
                 result := div(a, b)
             }
@@ -2583,7 +2583,7 @@ library Math {
     function tryMod(uint256 a, uint256 b) internal pure returns (bool success, uint256 result) {
         unchecked {
             success = b > 0;
-            assembly ("memory-safe") {
+            assembly {
                 // The `MOD` opcode returns zero when the denominator is 0.
                 result := mod(a, b)
             }
@@ -2707,7 +2707,7 @@ library Math {
 
             // Make division exact by subtracting the remainder from [high low].
             uint256 remainder;
-            assembly ("memory-safe") {
+            assembly {
                 // Compute remainder using mulmod.
                 remainder := mulmod(x, y, denominator)
 
@@ -2720,7 +2720,7 @@ library Math {
             // Always >= 1. See https://cs.stackexchange.com/q/138556/92363.
 
             uint256 twos = denominator & (0 - denominator);
-            assembly ("memory-safe") {
+            assembly {
                 // Divide denominator by twos.
                 denominator := div(denominator, twos)
 
@@ -2891,7 +2891,7 @@ library Math {
      */
     function tryModExp(uint256 b, uint256 e, uint256 m) internal view returns (bool success, uint256 result) {
         if (m == 0) return (false, 0);
-        assembly ("memory-safe") {
+        assembly {
             let ptr := mload(0x40)
             // | Offset    | Content    | Content (Hex)                                                      |
             // |-----------|------------|--------------------------------------------------------------------|
@@ -2941,7 +2941,7 @@ library Math {
         // Encode call args in result and move the free memory pointer
         result = abi.encodePacked(b.length, e.length, mLen, b, e, m);
 
-        assembly ("memory-safe") {
+        assembly {
             let dataPtr := add(result, 0x20)
             // Write result on top of args to avoid allocating extra memory.
             success := staticcall(gas(), 0x05, dataPtr, mload(result), dataPtr, mLen)
@@ -2960,7 +2960,7 @@ library Math {
         uint256 chunk;
         for (uint256 i = 0; i < buffer.length; i += 0x20) {
             // See _unsafeReadBytesOffset from utils/Bytes.sol
-            assembly ("memory-safe") {
+            assembly {
                 chunk := mload(add(add(buffer, 0x20), i))
             }
             if (chunk >> (8 * saturatingSub(i + 0x20, buffer.length)) != 0) {
@@ -3133,7 +3133,7 @@ library Math {
         // |    1111    |   15    |        table[15] = 3        |
         //
         // The lookup table is represented as a 32-byte value with the MSB positions for 0-15 in the first 16 bytes (most significant half).
-        assembly ("memory-safe") {
+        assembly {
             r := or(r, byte(shr(r, x), 0x0000010102020202030303030303030300000000000000000000000000000000))
         }
     }
@@ -3315,7 +3315,7 @@ library StorageSlot {
      * @dev Returns an `AddressSlot` with member `value` located at `slot`.
      */
     function getAddressSlot(bytes32 slot) internal pure returns (AddressSlot storage r) {
-        assembly ("memory-safe") {
+        assembly {
             r.slot := slot
         }
     }
@@ -3324,7 +3324,7 @@ library StorageSlot {
      * @dev Returns a `BooleanSlot` with member `value` located at `slot`.
      */
     function getBooleanSlot(bytes32 slot) internal pure returns (BooleanSlot storage r) {
-        assembly ("memory-safe") {
+        assembly {
             r.slot := slot
         }
     }
@@ -3333,7 +3333,7 @@ library StorageSlot {
      * @dev Returns a `Bytes32Slot` with member `value` located at `slot`.
      */
     function getBytes32Slot(bytes32 slot) internal pure returns (Bytes32Slot storage r) {
-        assembly ("memory-safe") {
+        assembly {
             r.slot := slot
         }
     }
@@ -3342,7 +3342,7 @@ library StorageSlot {
      * @dev Returns a `Uint256Slot` with member `value` located at `slot`.
      */
     function getUint256Slot(bytes32 slot) internal pure returns (Uint256Slot storage r) {
-        assembly ("memory-safe") {
+        assembly {
             r.slot := slot
         }
     }
@@ -3351,7 +3351,7 @@ library StorageSlot {
      * @dev Returns a `Int256Slot` with member `value` located at `slot`.
      */
     function getInt256Slot(bytes32 slot) internal pure returns (Int256Slot storage r) {
-        assembly ("memory-safe") {
+        assembly {
             r.slot := slot
         }
     }
@@ -3360,7 +3360,7 @@ library StorageSlot {
      * @dev Returns a `StringSlot` with member `value` located at `slot`.
      */
     function getStringSlot(bytes32 slot) internal pure returns (StringSlot storage r) {
-        assembly ("memory-safe") {
+        assembly {
             r.slot := slot
         }
     }
@@ -3369,7 +3369,7 @@ library StorageSlot {
      * @dev Returns an `StringSlot` representation of the string storage pointer `store`.
      */
     function getStringSlot(string storage store) internal pure returns (StringSlot storage r) {
-        assembly ("memory-safe") {
+        assembly {
             r.slot := store.slot
         }
     }
@@ -3378,7 +3378,7 @@ library StorageSlot {
      * @dev Returns a `BytesSlot` with member `value` located at `slot`.
      */
     function getBytesSlot(bytes32 slot) internal pure returns (BytesSlot storage r) {
-        assembly ("memory-safe") {
+        assembly {
             r.slot := slot
         }
     }
@@ -3387,7 +3387,7 @@ library StorageSlot {
      * @dev Returns an `BytesSlot` representation of the bytes storage pointer `store`.
      */
     function getBytesSlot(bytes storage store) internal pure returns (BytesSlot storage r) {
-        assembly ("memory-safe") {
+        assembly {
             r.slot := store.slot
         }
     }
@@ -3406,7 +3406,7 @@ library StorageSlot {
  * those functions `private`, and then adding `external` `nonReentrant` entry
  * points to them.
  *
- * TIP: If EIP-1153 (transient storage) is available on the chain you're deploying at,
+ * TIP: If EIP-1153 (  storage) is available on the chain you're deploying at,
  * consider using {ReentrancyGuardTransient} instead.
  *
  * TIP: If you would like to learn more about reentrancy and alternative ways
@@ -3916,10 +3916,10 @@ contract Box is IBox, ERC20, ReentrancyGuard {
     mapping(IFunding => bool) internal fundingMap;
 
     /// @notice Depth counter for nested NAV-caching operations (flash and swaps)
-    uint8 private transient _cachedNavDepth;
+    uint8 private   _cachedNavDepth;
 
     /// @notice Cached NAV value during flash and swap operations to prevent manipulation
-    uint256 private transient _cachedNav;
+    uint256 private   _cachedNav;
 
     // ========== CONSTRUCTOR ==========
 
@@ -4489,7 +4489,7 @@ contract Box is IBox, ERC20, ReentrancyGuard {
         for (uint256 i = 0; i < length; i++) {
             (bool success, bytes memory returnData) = address(this).delegatecall(data[i]);
             if (!success) {
-                assembly ("memory-safe") {
+                assembly {
                     revert(add(32, returnData), mload(returnData))
                 }
             }

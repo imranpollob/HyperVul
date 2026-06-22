@@ -137,7 +137,7 @@ library LowLevelCall {
 
     /// @dev Same as {callNoReturn-address-bytes}, but allows specifying the value to be sent in the call.
     function callNoReturn(address target, uint256 value, bytes memory data) internal returns (bool success) {
-        assembly ("memory-safe") {
+        assembly {
             success := call(gas(), target, value, add(data, 0x20), mload(data), 0x00, 0x00)
         }
     }
@@ -160,7 +160,7 @@ library LowLevelCall {
         uint256 value,
         bytes memory data
     ) internal returns (bool success, bytes32 result1, bytes32 result2) {
-        assembly ("memory-safe") {
+        assembly {
             success := call(gas(), target, value, add(data, 0x20), mload(data), 0x00, 0x40)
             result1 := mload(0x00)
             result2 := mload(0x20)
@@ -169,7 +169,7 @@ library LowLevelCall {
 
     /// @dev Performs a Solidity function call using a low level `staticcall` and ignoring the return data.
     function staticcallNoReturn(address target, bytes memory data) internal view returns (bool success) {
-        assembly ("memory-safe") {
+        assembly {
             success := staticcall(gas(), target, add(data, 0x20), mload(data), 0x00, 0x00)
         }
     }
@@ -183,7 +183,7 @@ library LowLevelCall {
         address target,
         bytes memory data
     ) internal view returns (bool success, bytes32 result1, bytes32 result2) {
-        assembly ("memory-safe") {
+        assembly {
             success := staticcall(gas(), target, add(data, 0x20), mload(data), 0x00, 0x40)
             result1 := mload(0x00)
             result2 := mload(0x20)
@@ -192,7 +192,7 @@ library LowLevelCall {
 
     /// @dev Performs a Solidity function call using a low level `delegatecall` and ignoring the return data.
     function delegatecallNoReturn(address target, bytes memory data) internal returns (bool success) {
-        assembly ("memory-safe") {
+        assembly {
             success := delegatecall(gas(), target, add(data, 0x20), mload(data), 0x00, 0x00)
         }
     }
@@ -206,7 +206,7 @@ library LowLevelCall {
         address target,
         bytes memory data
     ) internal returns (bool success, bytes32 result1, bytes32 result2) {
-        assembly ("memory-safe") {
+        assembly {
             success := delegatecall(gas(), target, add(data, 0x20), mload(data), 0x00, 0x40)
             result1 := mload(0x00)
             result2 := mload(0x20)
@@ -215,14 +215,14 @@ library LowLevelCall {
 
     /// @dev Returns the size of the return data buffer.
     function returnDataSize() internal pure returns (uint256 size) {
-        assembly ("memory-safe") {
+        assembly {
             size := returndatasize()
         }
     }
 
     /// @dev Returns a buffer containing the return data from the last call.
     function returnData() internal pure returns (bytes memory result) {
-        assembly ("memory-safe") {
+        assembly {
             result := mload(0x40)
             mstore(result, returndatasize())
             returndatacopy(add(result, 0x20), 0x00, returndatasize())
@@ -232,7 +232,7 @@ library LowLevelCall {
 
     /// @dev Revert with the return data from the last call.
     function bubbleRevert() internal pure {
-        assembly ("memory-safe") {
+        assembly {
             let fmp := mload(0x40)
             returndatacopy(fmp, 0x00, returndatasize())
             revert(fmp, returndatasize())
@@ -240,7 +240,7 @@ library LowLevelCall {
     }
 
     function bubbleRevert(bytes memory returndata) internal pure {
-        assembly ("memory-safe") {
+        assembly {
             revert(add(returndata, 0x20), mload(returndata))
         }
     }
@@ -473,7 +473,7 @@ library StorageSlot {
      * @dev Returns an `AddressSlot` with member `value` located at `slot`.
      */
     function getAddressSlot(bytes32 slot) internal pure returns (AddressSlot storage r) {
-        assembly ("memory-safe") {
+        assembly {
             r.slot := slot
         }
     }
@@ -482,7 +482,7 @@ library StorageSlot {
      * @dev Returns a `BooleanSlot` with member `value` located at `slot`.
      */
     function getBooleanSlot(bytes32 slot) internal pure returns (BooleanSlot storage r) {
-        assembly ("memory-safe") {
+        assembly {
             r.slot := slot
         }
     }
@@ -491,7 +491,7 @@ library StorageSlot {
      * @dev Returns a `Bytes32Slot` with member `value` located at `slot`.
      */
     function getBytes32Slot(bytes32 slot) internal pure returns (Bytes32Slot storage r) {
-        assembly ("memory-safe") {
+        assembly {
             r.slot := slot
         }
     }
@@ -500,7 +500,7 @@ library StorageSlot {
      * @dev Returns a `Uint256Slot` with member `value` located at `slot`.
      */
     function getUint256Slot(bytes32 slot) internal pure returns (Uint256Slot storage r) {
-        assembly ("memory-safe") {
+        assembly {
             r.slot := slot
         }
     }
@@ -509,7 +509,7 @@ library StorageSlot {
      * @dev Returns a `Int256Slot` with member `value` located at `slot`.
      */
     function getInt256Slot(bytes32 slot) internal pure returns (Int256Slot storage r) {
-        assembly ("memory-safe") {
+        assembly {
             r.slot := slot
         }
     }
@@ -518,7 +518,7 @@ library StorageSlot {
      * @dev Returns a `StringSlot` with member `value` located at `slot`.
      */
     function getStringSlot(bytes32 slot) internal pure returns (StringSlot storage r) {
-        assembly ("memory-safe") {
+        assembly {
             r.slot := slot
         }
     }
@@ -527,7 +527,7 @@ library StorageSlot {
      * @dev Returns an `StringSlot` representation of the string storage pointer `store`.
      */
     function getStringSlot(string storage store) internal pure returns (StringSlot storage r) {
-        assembly ("memory-safe") {
+        assembly {
             r.slot := store.slot
         }
     }
@@ -536,7 +536,7 @@ library StorageSlot {
      * @dev Returns a `BytesSlot` with member `value` located at `slot`.
      */
     function getBytesSlot(bytes32 slot) internal pure returns (BytesSlot storage r) {
-        assembly ("memory-safe") {
+        assembly {
             r.slot := slot
         }
     }
@@ -545,7 +545,7 @@ library StorageSlot {
      * @dev Returns an `BytesSlot` representation of the bytes storage pointer `store`.
      */
     function getBytesSlot(bytes storage store) internal pure returns (BytesSlot storage r) {
-        assembly ("memory-safe") {
+        assembly {
             r.slot := store.slot
         }
     }
