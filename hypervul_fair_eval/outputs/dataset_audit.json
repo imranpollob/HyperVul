@@ -1,0 +1,438 @@
+{
+  "generated_at": "2026-06-25T12:51:02",
+  "project_root": "/home/pollmix/Coding/HyperVul",
+  "contract_graphs": {
+    "stats_by_split": {
+      "train": {
+        "split": "train",
+        "graphs": 1614,
+        "graphs_with_edges": 1341,
+        "graphs_with_positive": 153,
+        "total_nodes": 12221,
+        "interaction_nodes": 10740,
+        "helper_nodes": 1481,
+        "total_edges": 51277,
+        "positive_interactions": 215,
+        "negative_interactions": 10525,
+        "labeled_interactions": 10740,
+        "positive_rate_pct": 2.0019,
+        "source_counts": {
+          "DAPP": 1570,
+          "FORGE": 44
+        },
+        "node_kinds": {
+          "interaction": 10740,
+          "helper": 1481
+        },
+        "edge_types": {
+          "shared_state": 30255,
+          "call": 12552,
+          "shared_callee": 8470
+        },
+        "interaction_feature_coverage": {
+          "state_vars_pct": 100.0,
+          "external_calls_pct": 100.0,
+          "security_vector_pct": 100.0,
+          "function_source_pct": 100.0
+        },
+        "missing_graph_fields": {},
+        "missing_node_fields": {},
+        "missing_edge_fields": {}
+      },
+      "val": {
+        "split": "val",
+        "graphs": 167,
+        "graphs_with_edges": 112,
+        "graphs_with_positive": 28,
+        "total_nodes": 987,
+        "interaction_nodes": 844,
+        "helper_nodes": 143,
+        "total_edges": 4343,
+        "positive_interactions": 38,
+        "negative_interactions": 806,
+        "labeled_interactions": 844,
+        "positive_rate_pct": 4.5024,
+        "source_counts": {
+          "DAPP": 157,
+          "FORGE": 10
+        },
+        "node_kinds": {
+          "interaction": 844,
+          "helper": 143
+        },
+        "edge_types": {
+          "shared_state": 2512,
+          "call": 1078,
+          "shared_callee": 753
+        },
+        "interaction_feature_coverage": {
+          "state_vars_pct": 100.0,
+          "external_calls_pct": 100.0,
+          "security_vector_pct": 100.0,
+          "function_source_pct": 100.0
+        },
+        "missing_graph_fields": {},
+        "missing_node_fields": {},
+        "missing_edge_fields": {}
+      },
+      "test": {
+        "split": "test",
+        "graphs": 138,
+        "graphs_with_edges": 105,
+        "graphs_with_positive": 25,
+        "total_nodes": 945,
+        "interaction_nodes": 773,
+        "helper_nodes": 172,
+        "total_edges": 4639,
+        "positive_interactions": 41,
+        "negative_interactions": 732,
+        "labeled_interactions": 773,
+        "positive_rate_pct": 5.304,
+        "source_counts": {
+          "DAPP": 124,
+          "FORGE": 14
+        },
+        "node_kinds": {
+          "interaction": 773,
+          "helper": 172
+        },
+        "edge_types": {
+          "shared_state": 2269,
+          "call": 1294,
+          "shared_callee": 1076
+        },
+        "interaction_feature_coverage": {
+          "state_vars_pct": 100.0,
+          "external_calls_pct": 100.0,
+          "security_vector_pct": 100.0,
+          "function_source_pct": 100.0
+        },
+        "missing_graph_fields": {},
+        "missing_node_fields": {},
+        "missing_edge_fields": {}
+      }
+    },
+    "overlaps": {
+      "graph_id": {
+        "train_vs_val": {
+          "count": 0,
+          "examples": []
+        },
+        "train_vs_test": {
+          "count": 0,
+          "examples": []
+        },
+        "val_vs_test": {
+          "count": 0,
+          "examples": []
+        }
+      },
+      "project": {
+        "train_vs_val": {
+          "count": 0,
+          "examples": []
+        },
+        "train_vs_test": {
+          "count": 0,
+          "examples": []
+        },
+        "val_vs_test": {
+          "count": 0,
+          "examples": []
+        }
+      },
+      "project_contract": {
+        "train_vs_val": {
+          "count": 0,
+          "examples": []
+        },
+        "train_vs_test": {
+          "count": 0,
+          "examples": []
+        },
+        "val_vs_test": {
+          "count": 0,
+          "examples": []
+        }
+      },
+      "raw_contract_name": {
+        "train_vs_val": {
+          "count": 30,
+          "examples": [
+            "AToken",
+            "AaveLendingBridge",
+            "AdminUpgradeabilityProxy",
+            "ElementBridge",
+            "ExampleBridgeContract",
+            "GovernorAlpha",
+            "HeapTestContract",
+            "IssuanceBridge",
+            "LidoBridge",
+            "MStableBridge"
+          ]
+        },
+        "train_vs_test": {
+          "count": 27,
+          "examples": [
+            "AToken",
+            "AdminUpgradeabilityProxy",
+            "AntiSandwichHook",
+            "AprOracle",
+            "BscAprOracle",
+            "ChessRoles",
+            "ChessSchedule",
+            "ERC721",
+            "Exchange",
+            "ExchangeRoles"
+          ]
+        },
+        "val_vs_test": {
+          "count": 20,
+          "examples": [
+            "AToken",
+            "AdminUpgradeabilityProxy",
+            "BaseAdminUpgradeabilityProxy",
+            "BaseUpgradeabilityProxy",
+            "BorrowerOperations",
+            "DefaultReserveInterestRateStrategy",
+            "GenericLogic",
+            "InitializableAdminUpgradeabilityProxy",
+            "InitializableUpgradeabilityProxy",
+            "LendingPool"
+          ]
+        }
+      }
+    }
+  },
+  "split_file_inventory": {
+    "raw_splits": {
+      "train": {
+        "exists": true,
+        "records": 863,
+        "positive": 218,
+        "negative": 645,
+        "positive_rate_pct": 25.2607,
+        "normalized_source_hashes": 824
+      },
+      "val": {
+        "exists": true,
+        "records": 190,
+        "positive": 38,
+        "negative": 152,
+        "positive_rate_pct": 20.0,
+        "normalized_source_hashes": 185
+      },
+      "test": {
+        "exists": true,
+        "records": 182,
+        "positive": 45,
+        "negative": 137,
+        "positive_rate_pct": 24.7253,
+        "normalized_source_hashes": 171
+      }
+    },
+    "clean_splits": {
+      "train": {
+        "exists": true,
+        "records": 863,
+        "positive": 218,
+        "negative": 645,
+        "positive_rate_pct": 25.2607,
+        "normalized_source_hashes": 824
+      },
+      "val": {
+        "exists": true,
+        "records": 190,
+        "positive": 38,
+        "negative": 152,
+        "positive_rate_pct": 20.0,
+        "normalized_source_hashes": 185
+      },
+      "test": {
+        "exists": true,
+        "records": 182,
+        "positive": 45,
+        "negative": 137,
+        "positive_rate_pct": 24.7253,
+        "normalized_source_hashes": 171
+      }
+    }
+  },
+  "embedding_coverage": {
+    "torch_available": true,
+    "node_embeddings": {
+      "exists": true,
+      "dim": 768,
+      "by_hash_count": 7521,
+      "split_hash_coverage": {
+        "data/splits/train.json": {
+          "hashes": 863,
+          "covered": 857,
+          "coverage_pct": 99.3048
+        },
+        "data/splits/val.json": {
+          "hashes": 190,
+          "covered": 190,
+          "coverage_pct": 100.0
+        },
+        "data/splits/test.json": {
+          "hashes": 182,
+          "covered": 152,
+          "coverage_pct": 83.5165
+        },
+        "data/splits/train_augmented.json": {
+          "hashes": 1358,
+          "covered": 859,
+          "coverage_pct": 63.2548
+        },
+        "data/splits/val_features.json": {
+          "hashes": 190,
+          "covered": 190,
+          "coverage_pct": 100.0
+        },
+        "data/splits/test_features.json": {
+          "hashes": 176,
+          "covered": 146,
+          "coverage_pct": 82.9545
+        }
+      }
+    },
+    "member_embeddings": {
+      "exists": true,
+      "state_count": 5196,
+      "callee_count": 11263,
+      "contract_graph_coverage": {
+        "train": {
+          "state_texts": 29601,
+          "state_covered": 29601,
+          "state_coverage_pct": 100.0,
+          "callee_texts": 24639,
+          "callee_covered": 24639,
+          "callee_coverage_pct": 100.0
+        },
+        "val": {
+          "state_texts": 2137,
+          "state_covered": 2137,
+          "state_coverage_pct": 100.0,
+          "callee_texts": 2218,
+          "callee_covered": 2218,
+          "callee_coverage_pct": 100.0
+        },
+        "test": {
+          "state_texts": 2066,
+          "state_covered": 2066,
+          "state_coverage_pct": 100.0,
+          "callee_texts": 1989,
+          "callee_covered": 1989,
+          "callee_coverage_pct": 100.0
+        }
+      }
+    }
+  },
+  "clean_negative_inventory": {
+    "experiments/latest1/eval_clean_negatives_oz_features.json": {
+      "records": 600,
+      "positive": 0,
+      "negative": 600,
+      "all_negative": true
+    },
+    "experiments/latest1/eval_clean_negatives_aave_split.json": {
+      "records": 291,
+      "positive": 0,
+      "negative": 291,
+      "all_negative": true
+    },
+    "experiments/latest1/eval_clean_negatives_external.json": {
+      "records": 633,
+      "positive": 0,
+      "negative": 633,
+      "all_negative": true
+    },
+    "experiments/latest1/eval_clean_negatives_liquity.json": {
+      "records": 279,
+      "positive": 0,
+      "negative": 279,
+      "all_negative": true
+    },
+    "experiments/results/eval_clean_negatives_oz_features.json": {
+      "records": 600,
+      "positive": 0,
+      "negative": 600,
+      "all_negative": true
+    },
+    "experiments/results/eval_clean_negatives_aave_split.json": {
+      "records": 291,
+      "positive": 0,
+      "negative": 291,
+      "all_negative": true
+    },
+    "experiments/results/eval_clean_negatives_external.json": {
+      "records": 633,
+      "positive": 0,
+      "negative": 633,
+      "all_negative": true
+    },
+    "experiments/results/eval_clean_negatives_liquity.json": {
+      "records": 279,
+      "positive": 0,
+      "negative": 279,
+      "all_negative": true
+    }
+  },
+  "clean_negative_summary": {
+    "candidate_files": 8,
+    "canonical_files": 4,
+    "canonical_records": 1803,
+    "canonical_negative": 1803,
+    "canonical_positive": 0,
+    "canonical_all_negative": true,
+    "canonical_file_paths": [
+      "experiments/latest1/eval_clean_negatives_aave_split.json",
+      "experiments/latest1/eval_clean_negatives_external.json",
+      "experiments/latest1/eval_clean_negatives_liquity.json",
+      "experiments/latest1/eval_clean_negatives_oz_features.json"
+    ]
+  },
+  "readiness_checks": [
+    {
+      "check": "contract_graph_files_exist",
+      "status": "pass",
+      "detail": "All train/val/test graph files exist."
+    },
+    {
+      "check": "project_disjoint_splits",
+      "status": "pass",
+      "detail": "Project overlap count across pairwise splits: 0."
+    },
+    {
+      "check": "project_contract_disjoint_splits",
+      "status": "pass",
+      "detail": "Project-contract overlap count across pairwise splits: 0."
+    },
+    {
+      "check": "train_has_both_classes",
+      "status": "pass",
+      "detail": "pos=215, neg=10525, positive_rate=2.0019%"
+    },
+    {
+      "check": "val_has_both_classes",
+      "status": "pass",
+      "detail": "pos=38, neg=806, positive_rate=4.5024%"
+    },
+    {
+      "check": "test_has_both_classes",
+      "status": "pass",
+      "detail": "pos=41, neg=732, positive_rate=5.304%"
+    },
+    {
+      "check": "member_embedding_coverage",
+      "status": "pass",
+      "detail": "State/callee member embedding coverage is >=95%."
+    },
+    {
+      "check": "clean_negative_inventory",
+      "status": "pass",
+      "detail": "Found 1803 canonical clean-negative records across 4 pools (8 candidate files including mirrors)."
+    }
+  ]
+}

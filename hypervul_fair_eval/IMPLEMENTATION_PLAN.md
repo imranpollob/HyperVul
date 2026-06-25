@@ -463,16 +463,16 @@ The values below are demo placeholders only. They show the intended final report
 - [ ] Add `README.md` for the new codebase.
 - [ ] Add `configs/`.
 - [ ] Add `src/` module layout.
-- [ ] Add `scripts/` runners.
-- [ ] Add `outputs/` for generated results.
+- [x] Add `scripts/` runners.
+- [x] Add `outputs/` for generated results.
 
 ### Step 2: Data Schemas and Split Validation
 
 - [ ] Define canonical data schemas for function, graph, and hyperedge views.
-- [ ] Implement loaders for existing split files.
-- [ ] Implement split statistics report.
-- [ ] Implement label distribution and source distribution report.
-- [ ] Add duplicate/leakage checks if available from existing metadata.
+- [x] Implement loaders for existing split files.
+- [x] Implement split statistics report.
+- [x] Implement label distribution and source distribution report.
+- [x] Add duplicate/leakage checks if available from existing metadata.
 
 ### Step 3: Generic Baseline Builders
 
@@ -564,4 +564,4 @@ Use this section as the running implementation log.
 | Date | Step | Files Changed | Command / Action | Result | Notes |
 |---|---|---|---|---|---|
 | 2026-06-25 | Planning | `hypervul_fair_eval/IMPLEMENTATION_PLAN.md` | Created implementation plan | Pending review | No code implemented |
-
+| 2026-06-25 | Dataset audit | `hypervul_fair_eval/scripts/audit_dataset.py`, `hypervul_fair_eval/outputs/dataset_audit.json`, `hypervul_fair_eval/outputs/dataset_audit.md`, `hypervul_fair_eval/IMPLEMENTATION_PLAN.md` | `python3 hypervul_fair_eval/scripts/audit_dataset.py` | Passed: 0 failures, 0 warnings | Existing `data/contract_graphs` are suitable canonical project-disjoint splits; 1803 canonical clean negatives found across 4 pools |
