@@ -19,26 +19,42 @@ from scripts.latest1.run_slither_harness import (
     get_installed_solc_versions
 )
 
+def setup_solcx_binaries():
+    solc_select_artifacts = Path.home() / ".solc-select" / "artifacts"
+    solcx_dir = PROJECT_ROOT / "scratch" / "solcx_binaries"
+    solcx_dir.mkdir(parents=True, exist_ok=True)
+    
+    if not solc_select_artifacts.exists():
+        print(f"Warning: solc-select artifacts not found at {solc_select_artifacts}")
+        return
+        
+    for p in solc_select_artifacts.iterdir():
+        if p.is_dir() and p.name.startswith("solc-"):
+            ver = p.name[5:]  # extract X.Y.Z
+            src_binary = p / f"solc-{ver}"
+            dst_binary = solcx_dir / f"solc-v{ver}"
+            if src_binary.exists() and not dst_binary.exists():
+                try:
+                    dst_binary.symlink_to(src_binary.resolve())
+                except Exception:
+                    import shutil
+                    shutil.copy2(src_binary, dst_binary)
+
 def run_mythril(flat_file, solc_ver):
-    solc_path = Path.home() / f".solc-select/artifacts/solc-{solc_ver}/solc-{solc_ver}"
-    
-    # Check if myth is installed
-    try:
-        subprocess.run(["myth", "--version"], capture_output=True, check=True)
-    except (subprocess.CalledProcessError, FileNotFoundError):
-        return None
-        
-    cmd = ["myth", "analyze", str(flat_file), "-o", "json"]
-    
-    # Set the SOLC environment variable for Mythril
-    env = os.environ.copy()
-    if solc_path.exists():
-        env["SOLC"] = str(solc_path)
-        
-    cmd += ["--solc-args", "--optimize"]
+    cmd = [
+        "docker", "run", "--rm",
+        "-v", f"{Path.home() / '.solc-select'}:{Path.home() / '.solc-select'}",
+        "-v", f"{PROJECT_ROOT / 'scratch' / 'solcx_binaries'}:/home/mythril/.solcx",
+        "-v", f"{PROJECT_ROOT}:{PROJECT_ROOT}",
+        "mythril/myth:latest",
+        "analyze", str(flat_file),
+        "--solv", solc_ver,
+        "-o", "json",
+        f"--solc-args=--optimize --allow-paths {PROJECT_ROOT}"
+    ]
     
     try:
-        res = subprocess.run(cmd, env=env, capture_output=True, text=True, timeout=60)
+        res = subprocess.run(cmd, capture_output=True, text=True, timeout=90)
         if res.stdout:
             try:
                 return json.loads(res.stdout)
@@ -50,13 +66,16 @@ def run_mythril(flat_file, solc_ver):
                     except Exception:
                         pass
     except subprocess.TimeoutExpired:
-        print("  Warning: Mythril analysis timed out (60s).")
+        print("  Warning: Mythril analysis timed out (90s).")
     except Exception as e:
         print(f"  Warning: Mythril execution failed: {e}")
         
     return None
 
+
 def main():
+    print("Setting up solcx binaries from solc-select...")
+    setup_solcx_binaries()
     print("Building global file map...")
     build_global_file_map()
     print("Starting Mythril Comparison Harness...")
@@ -84,9 +103,9 @@ def main():
     # Check if we should use fallback/proxy mode
     use_fallback = False
     try:
-        subprocess.run(["myth", "--version"], capture_output=True, check=True)
+        subprocess.run(["docker", "ps"], capture_output=True, check=True)
     except (subprocess.CalledProcessError, FileNotFoundError):
-        print("  Warning: Mythril ('myth') is not installed or not in PATH.")
+        print("  Warning: Docker is not installed or not running.")
         print("  Running in proxy/fallback evaluation mode to generate comparison data.")
         use_fallback = True
         
@@ -110,7 +129,7 @@ def main():
                 continue
             
             mythril_out = run_mythril(flat_path, solc_ver)
-            if not mythril_out:
+            if not mythril_out or mythril_out.get("success") is False:
                 print(f"  Warning: Mythril failed to analyze contract.")
                 continue
                 

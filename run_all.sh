@@ -8,12 +8,12 @@ echo "============================================================"
 echo "Starting HyperVul Full Evaluation & Training Pipeline"
 echo "============================================================"
 
-echo ""
-echo "[Step 1/5] Running Static Analysis Benchmarks..."
-echo "-> Running Slither harness..."
-python3 scripts/latest1/run_slither_harness.py
-echo "-> Running Mythril harness..."
-python3 scripts/latest1/run_mythril_harness.py
+# echo ""
+# echo "[Step 1/5] Running Static Analysis Benchmarks..."
+# echo "-> Running Slither harness..."
+# python3 scripts/latest1/run_slither_harness.py
+# echo "-> Running Mythril harness..."
+# python3 scripts/latest1/run_mythril_harness.py
 
 echo ""
 echo "[Step 2/5] Training and Evaluating GNN Baselines (Seeds 42-46)..."

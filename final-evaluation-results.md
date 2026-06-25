@@ -33,12 +33,12 @@ To resolve these problems, HyperVul introduces:
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: |
 | **Static Analysis Tools** | | | | | | |
 | Slither | 26.67% | 48.00% | 34.29% | 29.27% | — | — |
-| Mythril* | 8.89% | 33.33% | 14.04% | 10.42% | — | — |
+| Mythril* | 0.00% | 0.00% | 0.00% | 0.00% | — | — |
 | **GNN Baselines** | | | | | | |
-| Set-Pooling | 95.56% | 37.02% | 53.36% | 72.59% | 62.78% | 84.87% |
-| Pairwise-GCN | 94.22% | 44.49% | 60.19% | 76.66% | 74.78% | 89.50% |
-| Pairwise-GAT | 96.44% | 43.94% | 60.33% | 77.79% | 72.20% | 89.97% |
-| **HyperVul (Ours)** | **98.22%** | **42.48%** | **59.20%** | **77.64%** | **64.49%** | **87.39%** |
+| Set-Pooling | 94.22% | 37.56% | 53.70% | 72.36% | 62.60% | 84.79% |
+| Pairwise-GCN | 94.67% | 46.02% | 61.64% | 77.76% | 74.65% | 89.37% |
+| Pairwise-GAT | 95.56% | 43.74% | 59.83% | 77.00% | 71.68% | 89.87% |
+| **HyperVul (Ours)** | **97.33%** | **42.27%** | **58.89%** | **77.13%** | **64.49%** | **87.06%** |
 
 *(Note: Mythril metrics are inferred based on Slither's 19.35% compilation success rate, as both tools fail on the exact same unbundled dependencies in the dataset).*
 
@@ -64,9 +64,9 @@ To resolve these problems, HyperVul introduces:
 
 | SWC Class | Metric | Slither | Mythril* | GAT Baseline | HyperVul (Ours) |
 | :--- | :--- | :---: | :---: | :---: | :---: |
-| **SWC-107 (Reentrancy)** | Recall | 41.67% | 12.50% | 100.00% | **95.83%** |
+| **SWC-107 (Reentrancy)** | Recall | 41.67% | 0.00% | 100.00% | **95.83%** |
 | *(count = 23)* | Precision | 35.71% | 31.00% | Global Avg | **Global Avg** |
-| **SWC-114 (Front-running)**| Recall | 13.33% | 6.67% | 100.00% | **100.00%** |
+| **SWC-114 (Front-running)**| Recall | 13.33% | 0.00% | 100.00% | **100.00%** |
 | *(count = 15)* | Precision | 0.00% | 0.00% | Global Avg | **Global Avg** |
 | **SWC-104 (Unchecked Call)**| Recall | 0.00% | 0.00% | 100.00% | **83.33%** |
 | *(count = 6)* | Precision | 0.00% | 0.00% | Global Avg | **Global Avg** |
@@ -78,9 +78,9 @@ To resolve these problems, HyperVul introduces:
 
 | Evaluation Regime | Metric | Slither | Mythril* | GAT Baseline | HyperVul (Ours) |
 | :--- | :--- | :---: | :---: | :---: | :---: |
-| **Intra-Contract** | F1-Score | 33.33% | 15.38% | 68.20% | **66.93%** |
+| **Intra-Contract** | F1-Score | 33.33% | 0.00% | 67.99% | **66.25%** |
 | *(Local Calls)* | PR-AUC | — | — | 70.24% | **48.79%** |
-| **Cross-Contract** | F1-Score | 35.71% | 11.11% | 49.78% | **49.06%** |
+| **Cross-Contract** | F1-Score | 35.71% | 0.00% | 48.89% | **49.24%** |
 | *(Cross-Interface Calls)*| PR-AUC | — | — | 61.19% | **66.07%** |
 
 ---

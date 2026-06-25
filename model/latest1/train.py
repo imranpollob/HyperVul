@@ -54,6 +54,12 @@ def parse_args(argv=None):
                    help="Number of epochs for SCL pre-training (Stage 3 sequence).")
     p.add_argument("--no-asl", action="store_true",
                    help="Disable Asymmetric Loss (ASL) and use standard Binary Cross Entropy (BCE).")
+    p.add_argument("--asl-gamma-neg", type=float, default=4.0,
+                   help="ASL gamma parameter for negative class (hard negative penalty).")
+    p.add_argument("--asl-gamma-pos", type=float, default=1.0,
+                   help="ASL gamma parameter for positive class.")
+    p.add_argument("--target-recall", type=float, default=0.95,
+                   help="Target minimum validation recall for threshold selection.")
     p.add_argument("--out-tag", type=str, default="",
                    help="Optional suffix for checkpoint/report filenames to avoid "
                         "clobbering across ablations (e.g. 'scl', 'baseline').")
@@ -359,7 +365,7 @@ def main(args=None):
         if args.no_asl:
             criterion = nn.BCEWithLogitsLoss(pos_weight=torch.tensor([pos_upweight], device=device))
         else:
-            criterion = AsymmetricLoss(pos_weight=torch.tensor([pos_upweight], device=device))
+            criterion = AsymmetricLoss(gamma_neg=args.asl_gamma_neg, gamma_pos=args.asl_gamma_pos, pos_weight=torch.tensor([pos_upweight], device=device))
         
         # SCL pre-training phase (if use_scl and args.scl_pretrain_epochs > 0)
         if use_scl and args.scl_pretrain_epochs > 0:
@@ -438,20 +444,20 @@ def main(args=None):
         # Restore best weights for this sweep
         model.load_state_dict({k: v.to(device) for k, v in sweep_model_state.items()})
         
-        # Tune threshold on val_loader to achieve >= 95% recall
+        # Tune threshold on val_loader to achieve >= target_recall
         val_probs, val_labels, _ = evaluate_model(model, val_loader, device)
         thresholds = np.linspace(0.000, 1.000, 10001)
-        recall_above_95 = []
+        recall_above_target = []
         for t in thresholds:
             preds = (val_probs >= t).astype(int)
             tp = np.sum((preds == 1) & (val_labels == 1))
             fn = np.sum((preds == 0) & (val_labels == 1))
             recall = tp / (tp + fn) if (tp + fn) > 0 else 0.0
-            if recall >= 0.95:
-                recall_above_95.append((t, recall))
+            if recall >= args.target_recall:
+                recall_above_target.append((t, recall))
                 
-        if recall_above_95:
-            t_opt, r_opt = max(recall_above_95, key=lambda x: x[0])
+        if recall_above_target:
+            t_opt, r_opt = max(recall_above_target, key=lambda x: x[0])
         else:
             recalls = []
             for t in thresholds:

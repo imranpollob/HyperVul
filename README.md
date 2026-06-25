@@ -23,9 +23,29 @@ Run the Slither and Mythril analysis harnesses on the test split. The harnesses 
 # Run Slither evaluation
 python3 scripts/latest1/run_slither_harness.py
 
-# Run Mythril evaluation (falls back to proxy mode if Mythril is not installed)
+# Run Mythril evaluation
+# (The harness now automatically runs Mythril via Docker using 'mythril/myth:latest' 
+# to avoid Python 3.12+ dependency issues. Ensure Docker is running).
 python3 scripts/latest1/run_mythril_harness.py
 ```
+
+#### 🐳 Running Mythril Manually (Using Docker)
+If you want to run Mythril manually on individual files yourself without using the python harness, you can use the same Dockerized setup:
+
+```bash
+# Run Mythril analysis on a flattened contract using Docker
+docker run --rm \
+  -v ~/.solc-select:/home/pollmix/.solc-select \
+  -v $(pwd)/scratch/solcx_binaries:/home/mythril/.solcx \
+  -v $(pwd):$(pwd) \
+  mythril/myth:latest \
+  analyze $(pwd)/scratch/flat_test_contracts/WstETH_flat.sol \
+  --solv 0.6.12 \
+  -o json \
+  --solc-args="--optimize --allow-paths $(pwd)"
+```
+*(Note: Replace `0.6.12` and the file path with your target version and contract path as needed).*
+
 
 ### Step 2: Train GNN Baselines
 Train and evaluate GNN representation baselines (Set-Pooling, Pairwise-GCN, Pairwise-GAT, and Hypergraph) across 5 seeds (42–46). This generates `experiments/latest1/representation_comparison.json`.

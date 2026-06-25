@@ -1,6 +1,6 @@
 # HyperVul — Multi-Seed Ablation Summary
 
-Seeds per arm: **Sym:none**=[42, 43, 44, 45, 46], **Sym:security**=[42, 43, 44, 45, 46], **Sym:full**=[42, 43, 44, 45, 46], **run**=[42]
+Seeds per arm: **Sym:none**=[42, 43, 44, 45, 46], **Sym:security**=[42, 43, 44, 45, 46], **Sym:full**=[42, 43, 44, 45, 46], **run**=[42], **testrun**=[42]
 
 ## 1. OOD Holdout FPR (mean ± std across seeds; [pooled 95% Wilson CI])
 
@@ -10,6 +10,7 @@ Seeds per arm: **Sym:none**=[42, 43, 44, 45, 46], **Sym:security**=[42, 43, 44, 
 | Sym:security | 38.1±7.7 [33,44] | 75.8±7.4 [74,78] | 57.5±2.6 [54,60] | 51.6±17.0 [49,54] |
 | Sym:full | 33.0±8.3 [28,38] | 79.9±5.4 [78,82] | 46.9±4.8 [44,50] | 42.2±9.0 [40,45] |
 | run | 46.0±0.0 [34,58] | 87.0±0.0 [83,90] | 63.2±0.0 [56,69] | 69.9±0.0 [64,75] |
+| testrun | 41.3±0.0 [30,54] | 64.6±0.0 [60,69] | 38.8±0.0 [32,46] | 54.1±0.0 [48,60] |
 
 ## 2. Test Performance (mean ± std across seeds)
 
@@ -19,6 +20,7 @@ Seeds per arm: **Sym:none**=[42, 43, 44, 45, 46], **Sym:security**=[42, 43, 44, 
 | Sym:security | 54.1±2.7 | 37.8±2.8 | 95.6±1.6 | 73.1±2.0 | 60.4±6.3 | 84.3±2.5 |
 | Sym:full | 55.9±1.8 | 39.4±1.8 | 96.4±1.2 | 74.7±1.3 | 60.5±6.2 | 84.2±2.4 |
 | run | 52.7±0.0 | 36.1±0.0 | 97.8±0.0 | 72.8±0.0 | 62.3±0.0 | 85.3±0.0 |
+| testrun | 59.2±0.0 | 43.3±0.0 | 93.3±0.0 | 75.8±0.0 | 56.6±0.0 | 84.5±0.0 |
 
 ## 3. Paired Significance — McNemar on holdout FP decisions (pooled over seeds)
 
@@ -38,6 +40,10 @@ Seeds per arm: **Sym:none**=[42, 43, 44, 45, 46], **Sym:security**=[42, 43, 44, 
 | Sym:none vs run | MakerDAO | 3 | 28 | 0.0000 **\*** |
 | Sym:none vs run | Bancor | 2 | 28 | 0.0000 **\*** |
 | Sym:none vs run | Liquity | 0 | 47 | 0.0000 **\*** |
+| Sym:none vs testrun | OZ-Holdout | 0 | 3 | 0.2500 |
+| Sym:none vs testrun | MakerDAO | 64 | 5 | 0.0000 **\*** |
+| Sym:none vs testrun | Bancor | 31 | 6 | 0.0000 **\*** |
+| Sym:none vs testrun | Liquity | 19 | 22 | 0.7552 |
 | Sym:security vs Sym:full | OZ-Holdout | 23 | 7 | 0.0052 **\*** |
 | Sym:security vs Sym:full | MakerDAO | 24 | 96 | 0.0000 **\*** |
 | Sym:security vs Sym:full | Bancor | 119 | 8 | 0.0000 **\*** |
@@ -46,10 +52,22 @@ Seeds per arm: **Sym:none**=[42, 43, 44, 45, 46], **Sym:security**=[42, 43, 44, 
 | Sym:security vs run | MakerDAO | 2 | 6 | 0.2891 |
 | Sym:security vs run | Bancor | 4 | 10 | 0.1796 |
 | Sym:security vs run | Liquity | 3 | 8 | 0.2266 |
+| Sym:security vs testrun | OZ-Holdout | 0 | 0 | 1.0000 |
+| Sym:security vs testrun | MakerDAO | 80 | 0 | 0.0000 **\*** |
+| Sym:security vs testrun | Bancor | 48 | 3 | 0.0000 **\*** |
+| Sym:security vs testrun | Liquity | 39 | 0 | 0.0000 **\*** |
 | Sym:full vs run | OZ-Holdout | 0 | 10 | 0.0020 **\*** |
 | Sym:full vs run | MakerDAO | 4 | 17 | 0.0072 **\*** |
 | Sym:full vs run | Bancor | 0 | 34 | 0.0000 **\*** |
 | Sym:full vs run | Liquity | 2 | 81 | 0.0000 **\*** |
+| Sym:full vs testrun | OZ-Holdout | 0 | 7 | 0.0156 **\*** |
+| Sym:full vs testrun | MakerDAO | 75 | 4 | 0.0000 **\*** |
+| Sym:full vs testrun | Bancor | 30 | 13 | 0.0137 **\*** |
+| Sym:full vs testrun | Liquity | 20 | 55 | 0.0001 **\*** |
+| run vs testrun | OZ-Holdout | 3 | 0 | 0.2500 |
+| run vs testrun | MakerDAO | 84 | 0 | 0.0000 **\*** |
+| run vs testrun | Bancor | 51 | 0 | 0.0000 **\*** |
+| run vs testrun | Liquity | 44 | 0 | 0.0000 **\*** |
 
 > Lower-FPR arm = the one with the smaller own-only-FP count. A significant p with c < b means Arm B fixed more clean-code false positives than it introduced.
 
@@ -63,5 +81,6 @@ Fairer than §1: all-clean holdout FPR is threshold-driven, so each arm/seed is 
 | Sym:security | 24.1±3.1 | 52.9±7.3 | 37.8±8.1 | 23.8±9.9 |
 | Sym:full | 19.0±4.0 | 62.3±7.9 | 29.3±9.5 | 20.1±3.5 |
 | run | 20.6±0.0 | 36.6±0.0 | 19.1±0.0 | 14.7±0.0 |
+| testrun | 31.7±0.0 | 64.2±0.0 | 38.8±0.0 | 52.3±0.0 |
 
 > This is the operating-point-controlled view. Compare arms here, not in §1.
