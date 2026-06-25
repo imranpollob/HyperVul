@@ -72,10 +72,13 @@ class GraphAttentionLayer(nn.Module):
         src, dst = edge_index
         scores = self.leaky_relu(self.attn_src(h[src]).squeeze(-1) + self.attn_dst(h[dst]).squeeze(-1))
         out = torch.zeros_like(h)
-        for node_idx in torch.unique(dst):
-            mask = dst == node_idx
-            weights = torch.softmax(scores[mask], dim=0)
-            out[node_idx] = (weights.unsqueeze(-1) * h[src[mask]]).sum(dim=0)
+        max_per_dst = torch.full((h.shape[0],), -torch.inf, device=h.device, dtype=h.dtype)
+        max_per_dst.scatter_reduce_(0, dst, scores, reduce="amax", include_self=True)
+        exp_scores = torch.exp(scores - max_per_dst[dst])
+        denom = torch.zeros(h.shape[0], device=h.device, dtype=h.dtype)
+        denom.index_add_(0, dst, exp_scores)
+        weights = exp_scores / denom[dst].clamp_min(1e-12)
+        out.index_add_(0, dst, h[src] * weights.unsqueeze(-1))
         no_incoming = torch.ones(h.shape[0], device=h.device, dtype=torch.bool)
         no_incoming[dst] = False
         out[no_incoming] = h[no_incoming]
@@ -134,4 +137,3 @@ class GraphNodeClassifier(nn.Module):
                 msg = conv(h, edge_index)
             h = norm(h + self.drop(torch.relu(msg)))
         return self.head(h).squeeze(-1)
-

@@ -500,30 +500,32 @@ The values below are demo placeholders only. They show the intended final report
 
 ### Step 6: Training and Evaluation Core
 
-- [ ] Implement shared seed control.
-- [ ] Implement class-weighted loss.
-- [ ] Implement threshold selection using validation recall.
-- [ ] Implement metrics.
-- [ ] Implement per-seed JSON output.
-- [ ] Implement Markdown report output.
+- [x] Implement shared seed control.
+- [x] Implement class-weighted loss.
+- [x] Implement threshold selection using validation recall.
+- [x] Implement metrics.
+- [x] Implement per-seed JSON output.
+- [x] Implement Markdown report output.
 
 ### Step 7: RQ1 Generic Baseline Experiment
 
-- [ ] Run static analyzer baselines or import existing results.
-- [ ] Run Function-MLP over 5 seeds.
-- [ ] Run Function+Features MLP over 5 seeds.
-- [ ] Run Sequence model over 5 seeds.
-- [ ] Run CallGraph-GCN over 5 seeds.
-- [ ] Run PairwiseGraph-GCN over 5 seeds.
+- [x] Implement and smoke-test generic baseline runner.
+- [ ] Run static analyzer baselines or import existing results. Deferred until compiler/toolchain handling is stabilized; not abandoned.
+- [x] Run Function-MLP over 5 seeds.
+- [x] Run Function+Features MLP over 5 seeds.
+- [x] Run Sequence model over 5 seeds.
+- [x] Run CallGraph-GCN over 5 seeds.
+- [x] Run PairwiseGraph-GCN over 5 seeds.
+- [x] Run PairwiseGraph-GAT over 5 seeds.
 - [ ] Compare against HyperVul-Full.
 
 ### Step 8: RQ2 Representation Ablation
 
-- [ ] Run Set-Pool over same interaction candidates.
-- [ ] Run Pairwise-GCN over same interaction candidates.
-- [ ] Run Pairwise-GAT over same interaction candidates.
-- [ ] Run HyperedgeNN over same interaction candidates.
-- [ ] Add paired significance tests.
+- [x] Run Set-Pool over same interaction candidates.
+- [x] Run Pairwise-GCN over same interaction candidates.
+- [x] Run Pairwise-GAT over same interaction candidates.
+- [x] Run HyperedgeNN over same interaction candidates.
+- [x] Add paired significance tests.
 
 ### Step 9: RQ3 HyperVul Component Ablation
 
@@ -569,3 +571,7 @@ Use this section as the running implementation log.
 | 2026-06-25 | Generic baseline builders | `hypervul_fair_eval/src/fair_eval/builders/**`, `hypervul_fair_eval/scripts/inspect_generic_views.py`, `hypervul_fair_eval/outputs/generic_view_inspection.json`, `hypervul_fair_eval/outputs/generic_view_inspection.md`, `hypervul_fair_eval/IMPLEMENTATION_PLAN.md` | `python3 hypervul_fair_eval/scripts/inspect_generic_views.py`; `python3 -m py_compile ...` | Passed | Built RQ1 function, function+generic-features, sequence, callgraph, and pairwise graph views without using HyperVul hyperedges |
 | 2026-06-25 | Hyperedge builder | `hypervul_fair_eval/src/fair_eval/builders/hyperedge_view.py`, `hypervul_fair_eval/scripts/inspect_hyperedge_view.py`, `hypervul_fair_eval/scripts/check_import_boundaries.py`, `hypervul_fair_eval/outputs/hyperedge_view_inspection.json`, `hypervul_fair_eval/outputs/hyperedge_view_inspection.md`, `hypervul_fair_eval/IMPLEMENTATION_PLAN.md` | `python3 hypervul_fair_eval/scripts/check_import_boundaries.py`; `python3 hypervul_fair_eval/scripts/inspect_hyperedge_view.py`; `python3 -m py_compile ...` | Passed | Built isolated HyperVul hyperedge view for RQ2/RQ3; verified RQ1 generic files do not import it |
 | 2026-06-25 | Model implementations | `hypervul_fair_eval/src/fair_eval/models/**`, `hypervul_fair_eval/scripts/smoke_test_models.py`, `hypervul_fair_eval/outputs/model_smoke_tests.json`, `hypervul_fair_eval/IMPLEMENTATION_PLAN.md` | `python3 hypervul_fair_eval/scripts/smoke_test_models.py`; `python3 -m py_compile ...` | Passed | Added FunctionMLP, FunctionFeaturesMLP, sequence baseline, GCN/R-GCN/GAT node classifiers, HyperedgeNN, and HyperVul variants with synthetic forward-pass checks |
+| 2026-06-25 | Training/evaluation core | `hypervul_fair_eval/src/fair_eval/training/**`, `hypervul_fair_eval/src/fair_eval/reporting/results.py`, `hypervul_fair_eval/scripts/smoke_test_training_core.py`, `hypervul_fair_eval/outputs/training_core_smoke_tests.json`, `hypervul_fair_eval/outputs/training_core_smoke_result.json`, `hypervul_fair_eval/outputs/training_core_smoke_result.md`, `hypervul_fair_eval/IMPLEMENTATION_PLAN.md` | `python3 hypervul_fair_eval/scripts/smoke_test_training_core.py`; `python3 -m py_compile ...` | Passed | Added seed control, weighted BCE/ASL, threshold policies, binary metrics, reusable train/predict loops, and JSON/Markdown result writers |
+| 2026-06-25 | RQ1 generic baseline runner | `hypervul_fair_eval/src/fair_eval/features/embeddings.py`, `hypervul_fair_eval/src/fair_eval/training/simple_datasets.py`, `hypervul_fair_eval/scripts/rq1_run_generic_baselines.py`, `hypervul_fair_eval/outputs/rq1/**`, `hypervul_fair_eval/IMPLEMENTATION_PLAN.md` | `python3 hypervul_fair_eval/scripts/rq1_run_generic_baselines.py --models function-mlp function-features-mlp sequence callgraph-gcn pairwise-gcn pairwise-gat --seeds 42 --epochs 1 --batch-size 64 --threshold-policy max_f2`; `python3 -m py_compile ...` | Passed smoke run | Added end-to-end RQ1 runner for six generic neural baselines; full 5-seed paper run remains open |
+| 2026-06-25 | RQ1 neural 5-seed run | `hypervul_fair_eval/outputs/rq1/**`, `hypervul_fair_eval/src/fair_eval/models/graph_models.py`, `hypervul_fair_eval/scripts/rq1_run_generic_baselines.py`, `hypervul_fair_eval/IMPLEMENTATION_PLAN.md` | `python3 hypervul_fair_eval/scripts/rq1_run_generic_baselines.py --models function-mlp function-features-mlp sequence callgraph-gcn pairwise-gcn pairwise-gat --seeds 42 43 44 45 46 --epochs 20 --batch-size 64 --threshold-policy max_f2`; reran optimized `pairwise-gat` only after vectorizing GAT aggregation | Passed | Completed 5-seed neural generic baselines; static analyzers deferred; HyperVul-Full comparison remains for later clean HyperVul/RQ3 phase |
+| 2026-06-25 | RQ2 representation ablation | `hypervul_fair_eval/src/fair_eval/models/representation_models.py`, `hypervul_fair_eval/src/fair_eval/training/representation_datasets.py`, `hypervul_fair_eval/src/fair_eval/models/common.py`, `hypervul_fair_eval/scripts/rq2_run_representation_ablation.py`, `hypervul_fair_eval/outputs/rq2/**`, `hypervul_fair_eval/IMPLEMENTATION_PLAN.md` | `python3 hypervul_fair_eval/scripts/rq2_run_representation_ablation.py --models set-pool pairwise-gcn pairwise-gat hyperedge-nn --seeds 42 43 44 45 46 --epochs 20 --batch-size 128 --threshold-policy max_f2`; `python3 hypervul_fair_eval/scripts/rq2_run_representation_ablation.py --summarize-only`; `python3 -m py_compile ...` | Passed | Completed 5-seed controlled representation ablation and seed-paired sign-flip significance tests; vectorized segment softmax for HyperedgeNN runtime |

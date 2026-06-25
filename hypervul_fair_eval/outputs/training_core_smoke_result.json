@@ -1,0 +1,43 @@
+{
+  "title": "Training Core Smoke Test",
+  "model": "TinyClassifier",
+  "seed": 123,
+  "epoch": {
+    "loss": 1.2392197291056315,
+    "examples": 60
+  },
+  "threshold_selection": {
+    "policy": "max_f2",
+    "threshold": 0.41000000000000003,
+    "precision": 0.3,
+    "recall": 1.0,
+    "f1": 0.4615384615384615,
+    "f2": 0.6818181818181818
+  },
+  "metrics": {
+    "threshold": 0.41000000000000003,
+    "tp": 6,
+    "tn": 0,
+    "fp": 14,
+    "fn": 0,
+    "precision": 0.3,
+    "recall": 1.0,
+    "specificity": 0.0,
+    "false_positive_rate": 1.0,
+    "f1": 0.4615384615384615,
+    "f2": 0.6818181818181818,
+    "accuracy": 0.3,
+    "pr_auc": 0.5188453159041394,
+    "roc_auc": 0.44047619047619047,
+    "support": 20,
+    "positive_support": 6,
+    "negative_support": 14
+  },
+  "clean_negative_metrics": {
+    "threshold": 0.41000000000000003,
+    "support": 14,
+    "false_positives": 14,
+    "false_positive_rate": 1.0,
+    "mean_probability": 0.5372138917446136
+  }
+}

@@ -27,17 +27,16 @@ def masked_mean(x: torch.Tensor, mask: torch.Tensor, dim: int = 1) -> torch.Tens
 
 
 def segment_softmax(scores: torch.Tensor, segment_ids: torch.Tensor, num_segments: int) -> torch.Tensor:
-    """Small dependency-free segment softmax for 1D scores."""
+    """Dependency-free segment softmax for 1D scores."""
 
-    out = torch.zeros_like(scores)
-    for idx in range(num_segments):
-        mask = segment_ids == idx
-        if mask.any():
-            out[mask] = torch.softmax(scores[mask], dim=0)
-    return out
+    max_per_segment = torch.full((num_segments,), -torch.inf, device=scores.device, dtype=scores.dtype)
+    max_per_segment.scatter_reduce_(0, segment_ids, scores, reduce="amax", include_self=True)
+    exp_scores = torch.exp(scores - max_per_segment[segment_ids])
+    denom = torch.zeros(num_segments, device=scores.device, dtype=scores.dtype)
+    denom.index_add_(0, segment_ids, exp_scores)
+    return exp_scores / denom[segment_ids].clamp_min(1e-12)
 
 
 def validate_edge_index(edge_index: torch.Tensor) -> None:
     if edge_index.ndim != 2 or edge_index.shape[0] != 2:
         raise ValueError(f"edge_index must have shape (2, E), got {tuple(edge_index.shape)}")
-
