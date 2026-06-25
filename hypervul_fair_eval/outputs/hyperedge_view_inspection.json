@@ -1,0 +1,45 @@
+{
+  "project_root": "/home/pollmix/Coding/HyperVul",
+  "description": "HyperVul hyperedge view for RQ2/RQ3 only; not used by RQ1 generic baselines.",
+  "splits": {
+    "train": {
+      "examples": 10740,
+      "positive": 215,
+      "negative": 10525,
+      "missing_state_members": 0,
+      "missing_callee_members": 0,
+      "avg_state_members": 2.7561,
+      "avg_callee_members": 2.2941,
+      "avg_total_members": 6.0503,
+      "security_feature_dims": {
+        "8": 10740
+      }
+    },
+    "val": {
+      "examples": 844,
+      "positive": 38,
+      "negative": 806,
+      "missing_state_members": 0,
+      "missing_callee_members": 0,
+      "avg_state_members": 2.532,
+      "avg_callee_members": 2.628,
+      "avg_total_members": 6.16,
+      "security_feature_dims": {
+        "8": 844
+      }
+    },
+    "test": {
+      "examples": 773,
+      "positive": 41,
+      "negative": 732,
+      "missing_state_members": 0,
+      "missing_callee_members": 0,
+      "avg_state_members": 2.6727,
+      "avg_callee_members": 2.5731,
+      "avg_total_members": 6.2458,
+      "security_feature_dims": {
+        "8": 773
+      }
+    }
+  }
+}

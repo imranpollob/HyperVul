@@ -460,15 +460,15 @@ The values below are demo placeholders only. They show the intended final report
 
 ### Step 1: Create Clean Project Skeleton
 
-- [ ] Add `README.md` for the new codebase.
-- [ ] Add `configs/`.
-- [ ] Add `src/` module layout.
+- [x] Add `README.md` for the new codebase.
+- [x] Add `configs/`.
+- [x] Add `src/` module layout.
 - [x] Add `scripts/` runners.
 - [x] Add `outputs/` for generated results.
 
 ### Step 2: Data Schemas and Split Validation
 
-- [ ] Define canonical data schemas for function, graph, and hyperedge views.
+- [x] Define canonical data schemas for graph view.
 - [x] Implement loaders for existing split files.
 - [x] Implement split statistics report.
 - [x] Implement label distribution and source distribution report.
@@ -476,27 +476,27 @@ The values below are demo placeholders only. They show the intended final report
 
 ### Step 3: Generic Baseline Builders
 
-- [ ] Build Function view without hyperedge construction.
-- [ ] Build Function+Features view with generic scalar features.
-- [ ] Build Sequence view per contract.
-- [ ] Build CallGraph view from function-call relations.
-- [ ] Build PairwiseGraph view from generic binary relations.
+- [x] Build Function view without hyperedge construction.
+- [x] Build Function+Features view with generic scalar features.
+- [x] Build Sequence view per contract.
+- [x] Build CallGraph view from function-call relations.
+- [x] Build PairwiseGraph view from generic binary relations.
 
 ### Step 4: Hyperedge Builder
 
-- [ ] Build HyperVul hyperedge view.
-- [ ] Keep this builder isolated from RQ1 generic baselines.
-- [ ] Add validation that RQ1 scripts do not import this module.
+- [x] Build HyperVul hyperedge view.
+- [x] Keep this builder isolated from RQ1 generic baselines.
+- [x] Add validation that RQ1 scripts do not import this module.
 
 ### Step 5: Model Implementations
 
-- [ ] Implement Function-MLP.
-- [ ] Implement Function+Features MLP.
-- [ ] Implement Sequence model.
-- [ ] Implement CallGraph-GCN.
-- [ ] Implement PairwiseGraph-GCN/GAT.
-- [ ] Implement HyperedgeNN.
-- [ ] Implement HyperVul-Full and ablation flags.
+- [x] Implement Function-MLP.
+- [x] Implement Function+Features MLP.
+- [x] Implement Sequence model.
+- [x] Implement CallGraph-GCN.
+- [x] Implement PairwiseGraph-GCN/GAT.
+- [x] Implement HyperedgeNN.
+- [x] Implement HyperVul-Full and ablation flags.
 
 ### Step 6: Training and Evaluation Core
 
@@ -565,3 +565,7 @@ Use this section as the running implementation log.
 |---|---|---|---|---|---|
 | 2026-06-25 | Planning | `hypervul_fair_eval/IMPLEMENTATION_PLAN.md` | Created implementation plan | Pending review | No code implemented |
 | 2026-06-25 | Dataset audit | `hypervul_fair_eval/scripts/audit_dataset.py`, `hypervul_fair_eval/outputs/dataset_audit.json`, `hypervul_fair_eval/outputs/dataset_audit.md`, `hypervul_fair_eval/IMPLEMENTATION_PLAN.md` | `python3 hypervul_fair_eval/scripts/audit_dataset.py` | Passed: 0 failures, 0 warnings | Existing `data/contract_graphs` are suitable canonical project-disjoint splits; 1803 canonical clean negatives found across 4 pools |
+| 2026-06-25 | Data layer skeleton | `hypervul_fair_eval/README.md`, `hypervul_fair_eval/configs/data.yaml`, `hypervul_fair_eval/src/fair_eval/**`, `hypervul_fair_eval/IMPLEMENTATION_PLAN.md` | `PYTHONPATH=hypervul_fair_eval/src python3 - <<'PY' ...`; `python3 -m py_compile ...` | Passed | Added typed graph schemas, existing-data loaders, split overlap utilities, validation statistics, and package skeleton |
+| 2026-06-25 | Generic baseline builders | `hypervul_fair_eval/src/fair_eval/builders/**`, `hypervul_fair_eval/scripts/inspect_generic_views.py`, `hypervul_fair_eval/outputs/generic_view_inspection.json`, `hypervul_fair_eval/outputs/generic_view_inspection.md`, `hypervul_fair_eval/IMPLEMENTATION_PLAN.md` | `python3 hypervul_fair_eval/scripts/inspect_generic_views.py`; `python3 -m py_compile ...` | Passed | Built RQ1 function, function+generic-features, sequence, callgraph, and pairwise graph views without using HyperVul hyperedges |
+| 2026-06-25 | Hyperedge builder | `hypervul_fair_eval/src/fair_eval/builders/hyperedge_view.py`, `hypervul_fair_eval/scripts/inspect_hyperedge_view.py`, `hypervul_fair_eval/scripts/check_import_boundaries.py`, `hypervul_fair_eval/outputs/hyperedge_view_inspection.json`, `hypervul_fair_eval/outputs/hyperedge_view_inspection.md`, `hypervul_fair_eval/IMPLEMENTATION_PLAN.md` | `python3 hypervul_fair_eval/scripts/check_import_boundaries.py`; `python3 hypervul_fair_eval/scripts/inspect_hyperedge_view.py`; `python3 -m py_compile ...` | Passed | Built isolated HyperVul hyperedge view for RQ2/RQ3; verified RQ1 generic files do not import it |
+| 2026-06-25 | Model implementations | `hypervul_fair_eval/src/fair_eval/models/**`, `hypervul_fair_eval/scripts/smoke_test_models.py`, `hypervul_fair_eval/outputs/model_smoke_tests.json`, `hypervul_fair_eval/IMPLEMENTATION_PLAN.md` | `python3 hypervul_fair_eval/scripts/smoke_test_models.py`; `python3 -m py_compile ...` | Passed | Added FunctionMLP, FunctionFeaturesMLP, sequence baseline, GCN/R-GCN/GAT node classifiers, HyperedgeNN, and HyperVul variants with synthetic forward-pass checks |

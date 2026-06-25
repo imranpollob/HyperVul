@@ -1,0 +1,85 @@
+{
+  "status": "pass",
+  "checks": [
+    {
+      "name": "FunctionMLP",
+      "shape": [
+        4
+      ],
+      "status": "pass"
+    },
+    {
+      "name": "FunctionFeaturesMLP",
+      "shape": [
+        4
+      ],
+      "status": "pass"
+    },
+    {
+      "name": "FunctionSequenceModel",
+      "shape": [
+        3,
+        7
+      ],
+      "status": "pass"
+    },
+    {
+      "name": "GraphNodeClassifier-gcn",
+      "shape": [
+        9
+      ],
+      "status": "pass"
+    },
+    {
+      "name": "GraphNodeClassifier-rgcn",
+      "shape": [
+        9
+      ],
+      "status": "pass"
+    },
+    {
+      "name": "GraphNodeClassifier-gat",
+      "shape": [
+        9
+      ],
+      "status": "pass"
+    },
+    {
+      "name": "HyperedgeNN",
+      "shape": [
+        3
+      ],
+      "status": "pass"
+    },
+    {
+      "name": "HyperVulEmbOnly",
+      "shape": [
+        2
+      ],
+      "status": "pass"
+    },
+    {
+      "name": "HyperVulFull",
+      "shape": [
+        2
+      ],
+      "status": "pass"
+    },
+    {
+      "name": "HyperVulModel-logits",
+      "shape": [
+        2
+      ],
+      "status": "pass"
+    },
+    {
+      "name": "HyperVulModel-tuple_attention",
+      "shape": [
+        2,
+        2,
+        3
+      ],
+      "status": "pass"
+    }
+  ]
+}
