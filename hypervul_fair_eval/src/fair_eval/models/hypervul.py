@@ -112,7 +112,8 @@ class HyperVulModel(nn.Module):
         state_symbolic: torch.Tensor | None = None,
         callee_symbolic: torch.Tensor | None = None,
         return_localization: bool = False,
-    ) -> torch.Tensor | tuple[torch.Tensor, dict[str, torch.Tensor] | None]:
+        return_representation: bool = False,
+    ) -> torch.Tensor | tuple[torch.Tensor, dict[str, torch.Tensor] | None] | tuple[torch.Tensor, torch.Tensor]:
         x = self._combine_inputs(member_embeddings, symbolic_features)
         if self.sequence is not None:
             x, _ = self.sequence(x)
@@ -138,6 +139,8 @@ class HyperVulModel(nn.Module):
             logits = logits + self.loc_gate * loc_logit
             localization = {"tuple_attention": tuple_attention, "loc_logit": loc_logit}
 
+        if return_representation:
+            return logits, pooled
         if return_localization:
             return logits, localization
         return logits
@@ -151,4 +154,3 @@ class HyperVulEmbOnly(HyperVulModel):
 class HyperVulFull(HyperVulModel):
     def __init__(self, **kwargs):
         super().__init__(use_symbolic=True, use_localization=True, **kwargs)
-

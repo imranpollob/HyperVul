@@ -529,22 +529,22 @@ The values below are demo placeholders only. They show the intended final report
 
 ### Step 9: RQ3 HyperVul Component Ablation
 
-- [ ] Run HyperVul-EmbOnly.
-- [ ] Run HyperVul-Security.
-- [ ] Run HyperVul-Full.
-- [ ] Run HyperVul-NoLocalize.
-- [ ] Run HyperVul-NoContrastive.
-- [ ] Aggregate and test deltas.
+- [x] Run HyperVul-EmbOnly.
+- [x] Run HyperVul-Security.
+- [x] Run HyperVul-Full.
+- [x] Run HyperVul-NoLocalize.
+- [x] Run HyperVul-NoContrastive.
+- [x] Aggregate deltas.
 
 ### Step 10: Final Report Generation
 
-- [ ] Generate dataset table.
-- [ ] Generate RQ1 table.
-- [ ] Generate RQ2 table.
-- [ ] Generate RQ3 table.
+- [x] Generate dataset table.
+- [x] Generate RQ1 table.
+- [x] Generate RQ2 table.
+- [x] Generate RQ3 table.
 - [ ] Generate clean-negative FPR table.
-- [ ] Generate significance table.
-- [ ] Export `outputs/final_report.md` and `outputs/final_report.json`.
+- [x] Generate significance table.
+- [x] Export `outputs/final_report.md` and `outputs/final_report.json`.
 
 ### Step 11: Reviewer Audit Checklist
 
@@ -575,3 +575,5 @@ Use this section as the running implementation log.
 | 2026-06-25 | RQ1 generic baseline runner | `hypervul_fair_eval/src/fair_eval/features/embeddings.py`, `hypervul_fair_eval/src/fair_eval/training/simple_datasets.py`, `hypervul_fair_eval/scripts/rq1_run_generic_baselines.py`, `hypervul_fair_eval/outputs/rq1/**`, `hypervul_fair_eval/IMPLEMENTATION_PLAN.md` | `python3 hypervul_fair_eval/scripts/rq1_run_generic_baselines.py --models function-mlp function-features-mlp sequence callgraph-gcn pairwise-gcn pairwise-gat --seeds 42 --epochs 1 --batch-size 64 --threshold-policy max_f2`; `python3 -m py_compile ...` | Passed smoke run | Added end-to-end RQ1 runner for six generic neural baselines; full 5-seed paper run remains open |
 | 2026-06-25 | RQ1 neural 5-seed run | `hypervul_fair_eval/outputs/rq1/**`, `hypervul_fair_eval/src/fair_eval/models/graph_models.py`, `hypervul_fair_eval/scripts/rq1_run_generic_baselines.py`, `hypervul_fair_eval/IMPLEMENTATION_PLAN.md` | `python3 hypervul_fair_eval/scripts/rq1_run_generic_baselines.py --models function-mlp function-features-mlp sequence callgraph-gcn pairwise-gcn pairwise-gat --seeds 42 43 44 45 46 --epochs 20 --batch-size 64 --threshold-policy max_f2`; reran optimized `pairwise-gat` only after vectorizing GAT aggregation | Passed | Completed 5-seed neural generic baselines; static analyzers deferred; HyperVul-Full comparison remains for later clean HyperVul/RQ3 phase |
 | 2026-06-25 | RQ2 representation ablation | `hypervul_fair_eval/src/fair_eval/models/representation_models.py`, `hypervul_fair_eval/src/fair_eval/training/representation_datasets.py`, `hypervul_fair_eval/src/fair_eval/models/common.py`, `hypervul_fair_eval/scripts/rq2_run_representation_ablation.py`, `hypervul_fair_eval/outputs/rq2/**`, `hypervul_fair_eval/IMPLEMENTATION_PLAN.md` | `python3 hypervul_fair_eval/scripts/rq2_run_representation_ablation.py --models set-pool pairwise-gcn pairwise-gat hyperedge-nn --seeds 42 43 44 45 46 --epochs 20 --batch-size 128 --threshold-policy max_f2`; `python3 hypervul_fair_eval/scripts/rq2_run_representation_ablation.py --summarize-only`; `python3 -m py_compile ...` | Passed | Completed 5-seed controlled representation ablation and seed-paired sign-flip significance tests; vectorized segment softmax for HyperedgeNN runtime |
+| 2026-06-25 | RQ3 HyperVul ablation | `hypervul_fair_eval/src/fair_eval/training/hypervul_datasets.py`, `hypervul_fair_eval/src/fair_eval/models/hypervul.py`, `hypervul_fair_eval/scripts/rq3_run_hypervul_ablation.py`, `hypervul_fair_eval/outputs/rq3/**`, `hypervul_fair_eval/IMPLEMENTATION_PLAN.md` | `python3 hypervul_fair_eval/scripts/rq3_run_hypervul_ablation.py --models emb-only security full no-localize no-contrastive --seeds 42 43 44 45 46 --epochs 20 --batch-size 128 --threshold-policy max_f2`; `python3 -m py_compile ...` | Passed | Completed 5-seed HyperVul component ablation; canonical graph view provides only 8-d security context, so `security` and `full` are equivalent in this run |
+| 2026-06-25 | Final report and README | `hypervul_fair_eval/scripts/make_final_report.py`, `hypervul_fair_eval/outputs/final_report.md`, `hypervul_fair_eval/outputs/final_report.json`, `hypervul_fair_eval/README.md`, `README.md`, `hypervul_fair_eval/IMPLEMENTATION_PLAN.md` | `python3 hypervul_fair_eval/scripts/make_final_report.py`; `python3 -m py_compile ...` | Passed | Generated consolidated RQ1/RQ2/RQ3 report and documented all evaluation commands; clean-negative FPR table remains future work |

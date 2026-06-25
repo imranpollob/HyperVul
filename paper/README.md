@@ -8,21 +8,30 @@
 3. Compile. Overleaf runs the BibTeX/LaTeX passes automatically.
 
 The bibliography is embedded inline via `thebibliography` (no separate `.bib` file
-needed). The two figures are drawn with TikZ — no external image files required.
+needed). All four figures are drawn with TikZ/pgfplots — no external image files
+required. The two algorithms use the `algorithm`/`algorithmic` packages. All required
+packages (`IEEEtran`, `pgfplots`, `algorithm`, `booktabs`, `listings`, `tikz`) ship
+with Overleaf's default TeX Live, so no manual installation is needed.
 
 ## Status of the numbers
-All result tables currently hold the **placeholder values from
-`hypervul_fair_eval/IMPLEMENTATION_PLAN.md`** (Tables in §10 of that plan). Replace
-them with the real 5-seed experimental outputs before submission. The numbers to
-update live in:
-- Table II  (`tab:rq1`)  — RQ1 generic baselines
-- Table III (`tab:rq2`)  — RQ2 representation ablation
-- Table IV  (`tab:rq3`)  — RQ3 component ablation
-- Table V   (`tab:fpr`)  — clean-corpus FPR
-- Table VI  (`tab:sig`)  — significance tests
-- The inline figures in §VI text that quote deltas/$p$-values.
+Result tables and the two case-study examples currently hold **placeholder values**
+derived from `hypervul_fair_eval/IMPLEMENTATION_PLAN.md` (§10) and illustrative
+patterns consistent with them. Replace these with the real 5-seed experimental outputs
+before submission. The items to update:
+- Table II   (`tab:rq1`)      — RQ1 generic baselines
+- Table III  (`tab:rq2`)      — RQ2 representation ablation
+- Table IV   (`tab:rq3`)      — RQ3 component ablation
+- Table V    (`tab:perclass`) — per-class F1 breakdown *(needs new experiment)*
+- Table VI   (`tab:fpr`)      — clean-corpus FPR
+- Table VII  (`tab:eff`)      — params / train time / latency *(needs measurement)*
+- Table VIII (`tab:sig`)      — significance tests
+- Fig. 3 (`fig:pr`)           — PR-curve coordinates *(needs real curves)*
+- Fig. 4 (`fig:loc`)          — localization case-study attributions *(needs real run)*
+- §VII case-study prose       — the two walked-through contracts and their scores.
 
-## Structure
-8-page target. Section layout follows the approved plan:
-Abstract · Introduction · Related Work · Problem Formulation · Architecture ·
-Experimental Setup · Results · Discussion · Conclusion · References.
+## Structure (8-page target)
+Abstract · Introduction · Related Work (+positioning table) · Problem Formulation ·
+Architecture (Alg. 1 construction, Alg. 2 thresholding, formalized localization &
+contrastive loss) · Experimental Setup (+hyperparameter table) · Results (RQ1–RQ3,
+per-class, FPR, sensitivity/PR curve, efficiency, significance) · Qualitative &
+Localization Case Study · Threats to Validity · Discussion · Conclusion · References.

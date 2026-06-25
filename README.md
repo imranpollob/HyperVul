@@ -4,6 +4,61 @@ This repository contains the official implementation of **HyperVul**, a framewor
 
 ---
 
+## Fair Evaluation Rewrite
+
+A clean fair-evaluation codebase is available under:
+
+```text
+hypervul_fair_eval/
+```
+
+Use this path for the current academic evaluation plan, including generic neural baselines, controlled representation ablation, HyperVul component ablation, and final report generation.
+
+Full command list:
+
+```bash
+cat hypervul_fair_eval/README.md
+```
+
+Main commands:
+
+```bash
+python3 hypervul_fair_eval/scripts/audit_dataset.py
+
+python3 hypervul_fair_eval/scripts/rq1_run_generic_baselines.py \
+  --models function-mlp function-features-mlp sequence callgraph-gcn pairwise-gcn pairwise-gat \
+  --seeds 42 43 44 45 46 \
+  --epochs 20 \
+  --batch-size 64 \
+  --threshold-policy max_f2
+
+python3 hypervul_fair_eval/scripts/rq2_run_representation_ablation.py \
+  --models set-pool pairwise-gcn pairwise-gat hyperedge-nn \
+  --seeds 42 43 44 45 46 \
+  --epochs 20 \
+  --batch-size 128 \
+  --threshold-policy max_f2
+
+python3 hypervul_fair_eval/scripts/rq3_run_hypervul_ablation.py \
+  --models emb-only security full no-localize no-contrastive \
+  --seeds 42 43 44 45 46 \
+  --epochs 20 \
+  --batch-size 128 \
+  --threshold-policy max_f2
+
+python3 hypervul_fair_eval/scripts/make_final_report.py
+```
+
+The consolidated output is:
+
+```text
+hypervul_fair_eval/outputs/final_report.md
+```
+
+Slither/Mythril static analyzer baselines are still planned, but deferred to a separate compiler/toolchain pass.
+
+---
+
 ## 🚀 Step-by-Step Evaluation & Training Pipeline
 
 To fully train the baselines, train the HyperVul models across multiple seeds, and reproduce the tables for the paper, execute the steps below in order.

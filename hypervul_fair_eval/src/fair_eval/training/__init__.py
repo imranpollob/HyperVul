@@ -1,6 +1,13 @@
 """Training and evaluation utilities."""
 
 from .losses import AsymmetricLoss, bce_with_logits_for_labels, positive_weight
+from .hypervul_datasets import (
+    HyperVulTensorDataset,
+    ProjectionHead,
+    SupConLoss,
+    collate_hypervul,
+    hypervul_step_fn,
+)
 from .metrics import binary_metrics, clean_negative_metrics
 from .representation_datasets import (
     HyperedgeTensorDataset,
@@ -39,10 +46,14 @@ __all__ = [
     "FunctionTensorDataset",
     "GraphTensorDataset",
     "HyperedgeTensorDataset",
+    "HyperVulTensorDataset",
+    "ProjectionHead",
     "SCALAR_FEATURE_KEYS",
     "SequenceTensorDataset",
+    "SupConLoss",
     "collate_graphs",
     "collate_hyperedge",
+    "collate_hypervul",
     "collate_pairwise",
     "collate_sequences",
     "collate_set_pool",
@@ -54,6 +65,7 @@ __all__ = [
     "function_step_fn",
     "graph_step_fn",
     "hyperedge_step_fn",
+    "hypervul_step_fn",
     "pairwise_step_fn",
     "scalar_standardizer",
     "sequence_step_fn",
