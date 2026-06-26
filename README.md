@@ -23,6 +23,14 @@ cat hypervul_fair_eval/README.md
 Main commands:
 
 ```bash
+python3 hypervul_fair_eval/scripts/run_full_evaluation.py
+```
+
+This single command audits the dataset, trains RQ1/RQ2/RQ3, refreshes summaries, and regenerates `hypervul_fair_eval/outputs/final_report.md`.
+
+Individual commands:
+
+```bash
 python3 hypervul_fair_eval/scripts/audit_dataset.py
 
 python3 hypervul_fair_eval/scripts/rq1_run_generic_baselines.py \

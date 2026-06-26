@@ -51,6 +51,41 @@ Run from the repository root:
 cd /home/pollmix/Coding/HyperVul
 ```
 
+### One-Command Full Pipeline
+
+This command runs verification checks, audits the dataset, trains RQ1/RQ2/RQ3, refreshes summaries, and regenerates the final report dynamically:
+
+```bash
+python3 hypervul_fair_eval/scripts/run_full_evaluation.py
+```
+
+Useful variants:
+
+```bash
+# Print the full command sequence without training.
+python3 hypervul_fair_eval/scripts/run_full_evaluation.py --dry-run
+
+# Fast smoke run for checking that the pipeline works end to end.
+python3 hypervul_fair_eval/scripts/run_full_evaluation.py \
+  --seeds 42 \
+  --epochs 1
+
+# Full run with the current paper settings.
+python3 hypervul_fair_eval/scripts/run_full_evaluation.py \
+  --seeds 42 43 44 45 46 \
+  --epochs 20 \
+  --threshold-policy max_f2
+```
+
+The final consolidated output is regenerated at:
+
+```text
+hypervul_fair_eval/outputs/final_report.md
+hypervul_fair_eval/outputs/final_report.json
+```
+
+The individual commands below are useful for partial reruns or debugging.
+
 ### 1. Dataset Audit
 
 ```bash
@@ -159,4 +194,3 @@ hypervul_fair_eval/outputs/final_report.json
 - [RQ2 representation ablation](outputs/rq2/rq2_representation_ablation_summary.md)
 - [RQ3 HyperVul ablation](outputs/rq3/rq3_hypervul_ablation_summary.md)
 - [Final report](outputs/final_report.md)
-

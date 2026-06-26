@@ -21,18 +21,31 @@ def metric_cell(stats: dict[str, Any], metric: str) -> str:
     return f"{item['mean'] * 100:.2f} +/- {item['std'] * 100:.2f}"
 
 
-def table_from_models(title: str, models: dict[str, Any], model_order: list[str]) -> list[str]:
+def table_from_models(
+    title: str,
+    models: dict[str, Any],
+    model_order: list[str],
+    hyperedge_flags: dict[str, str] | None = None,
+) -> list[str]:
     lines = [f"## {title}", ""]
-    lines.append("| Model | Precision | Recall | F1 | F2 | PR-AUC | ROC-AUC |")
-    lines.append("|---|---:|---:|---:|---:|---:|---:|")
+    if hyperedge_flags is None:
+        lines.append("| Model | Precision | Recall | F1 | F2 | PR-AUC | ROC-AUC |")
+        lines.append("|---|---:|---:|---:|---:|---:|---:|")
+    else:
+        lines.append("| Model | Uses Hyperedge | Precision | Recall | F1 | F2 | PR-AUC | ROC-AUC |")
+        lines.append("|---|---|---:|---:|---:|---:|---:|---:|")
     ordered = [name for name in model_order if name in models] + [name for name in models if name not in model_order]
     for name in ordered:
         stats = models[name]
-        lines.append(
-            f"| {name} | {metric_cell(stats, 'precision')} | {metric_cell(stats, 'recall')} | "
+        metric_cells = (
+            f"{metric_cell(stats, 'precision')} | {metric_cell(stats, 'recall')} | "
             f"{metric_cell(stats, 'f1')} | {metric_cell(stats, 'f2')} | "
-            f"{metric_cell(stats, 'pr_auc')} | {metric_cell(stats, 'roc_auc')} |"
+            f"{metric_cell(stats, 'pr_auc')} | {metric_cell(stats, 'roc_auc')}"
         )
+        if hyperedge_flags is None:
+            lines.append(f"| {name} | {metric_cells} |")
+        else:
+            lines.append(f"| {name} | {hyperedge_flags.get(name, 'No')} | {metric_cells} |")
     lines.append("")
     return lines
 
@@ -77,11 +90,18 @@ def significance_table(rq2: dict[str, Any]) -> list[str]:
 
 
 def build_report(output_dir: Path) -> dict[str, Any]:
+    rq1 = load_json(output_dir / "rq1" / "rq1_generic_baselines_summary.json")
+    rq2 = load_json(output_dir / "rq2" / "rq2_representation_ablation_summary.json")
+    rq3 = load_json(output_dir / "rq3" / "rq3_hypervul_ablation_summary.json")
+    rq1_vs_hypervul = {"models": dict(rq1["models"])}
+    if "full" in rq3["models"]:
+        rq1_vs_hypervul["models"]["HyperVul-Full"] = rq3["models"]["full"]
     return {
         "dataset_audit": load_json(output_dir / "dataset_audit.json"),
-        "rq1": load_json(output_dir / "rq1" / "rq1_generic_baselines_summary.json"),
-        "rq2": load_json(output_dir / "rq2" / "rq2_representation_ablation_summary.json"),
-        "rq3": load_json(output_dir / "rq3" / "rq3_hypervul_ablation_summary.json"),
+        "rq1": rq1,
+        "rq1_vs_hypervul": rq1_vs_hypervul,
+        "rq2": rq2,
+        "rq3": rq3,
         "notes": {
             "static_analyzers": "Slither/Mythril are deferred, not abandoned, because compiler/toolchain handling is separate.",
             "rq3_symbolic_scope": (
@@ -103,8 +123,8 @@ def write_markdown(report: dict[str, Any], path: Path) -> None:
     ]
     lines += dataset_table(report["dataset_audit"])
     lines += table_from_models(
-        "RQ1: Generic Neural Baselines",
-        report["rq1"]["models"],
+        "Table 2: RQ1 Generic Baselines vs HyperVul-Full",
+        report["rq1_vs_hypervul"]["models"],
         [
             "function-mlp",
             "function-features-mlp",
@@ -112,16 +132,26 @@ def write_markdown(report: dict[str, Any], path: Path) -> None:
             "callgraph-gcn",
             "pairwise-gcn",
             "pairwise-gat",
+            "HyperVul-Full",
         ],
+        {
+            "function-mlp": "No",
+            "function-features-mlp": "No",
+            "sequence": "No",
+            "callgraph-gcn": "No",
+            "pairwise-gcn": "No",
+            "pairwise-gat": "No",
+            "HyperVul-Full": "Yes",
+        },
     )
     lines += table_from_models(
-        "RQ2: Controlled Representation Ablation",
+        "Table 3: RQ2 Controlled Representation Ablation",
         report["rq2"]["models"],
         ["set-pool", "pairwise-gcn", "pairwise-gat", "hyperedge-nn"],
     )
     lines += significance_table(report["rq2"])
     lines += table_from_models(
-        "RQ3: HyperVul Component Ablation",
+        "Table 4: RQ3 HyperVul Component Ablation",
         report["rq3"]["models"],
         ["emb-only", "security", "full", "no-localize", "no-contrastive"],
     )
@@ -151,4 +181,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

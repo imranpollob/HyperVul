@@ -14,18 +14,19 @@ Static analyzer baselines are deferred, not abandoned, because they require sepa
 
 Split checks: project-disjoint and project-contract-disjoint checks passed in the dataset audit.
 
-## RQ1: Generic Neural Baselines
+## Table 2: RQ1 Generic Baselines vs HyperVul-Full
 
-| Model | Precision | Recall | F1 | F2 | PR-AUC | ROC-AUC |
-|---|---:|---:|---:|---:|---:|---:|
-| function-mlp | 17.31 +/- 2.35 | 64.39 +/- 9.83 | 26.95 +/- 2.27 | 40.92 +/- 1.47 | 31.38 +/- 1.75 | 83.08 +/- 0.78 |
-| function-features-mlp | 17.31 +/- 1.16 | 67.80 +/- 3.90 | 27.53 +/- 1.33 | 42.70 +/- 1.38 | 33.43 +/- 0.88 | 83.88 +/- 0.51 |
-| sequence | 15.00 +/- 2.65 | 69.76 +/- 13.32 | 24.26 +/- 2.69 | 39.13 +/- 1.48 | 22.73 +/- 2.10 | 83.06 +/- 1.13 |
-| callgraph-gcn | 17.17 +/- 4.09 | 63.41 +/- 13.45 | 26.45 +/- 4.57 | 39.88 +/- 4.58 | 27.83 +/- 2.20 | 83.23 +/- 1.61 |
-| pairwise-gcn | 13.57 +/- 1.35 | 51.71 +/- 18.21 | 21.18 +/- 2.65 | 32.33 +/- 6.34 | 19.50 +/- 1.99 | 80.49 +/- 1.95 |
-| pairwise-gat | 14.46 +/- 2.15 | 72.68 +/- 4.20 | 24.03 +/- 2.90 | 39.99 +/- 3.15 | 29.19 +/- 1.94 | 83.16 +/- 2.31 |
+| Model | Uses Hyperedge | Precision | Recall | F1 | F2 | PR-AUC | ROC-AUC |
+|---|---|---:|---:|---:|---:|---:|---:|
+| function-mlp | No | 17.31 +/- 2.35 | 64.39 +/- 9.83 | 26.95 +/- 2.27 | 40.92 +/- 1.47 | 31.38 +/- 1.75 | 83.08 +/- 0.78 |
+| function-features-mlp | No | 17.31 +/- 1.16 | 67.80 +/- 3.90 | 27.53 +/- 1.33 | 42.70 +/- 1.38 | 33.43 +/- 0.88 | 83.88 +/- 0.51 |
+| sequence | No | 15.00 +/- 2.65 | 69.76 +/- 13.32 | 24.26 +/- 2.69 | 39.13 +/- 1.48 | 22.73 +/- 2.10 | 83.06 +/- 1.13 |
+| callgraph-gcn | No | 17.17 +/- 4.09 | 63.41 +/- 13.45 | 26.45 +/- 4.57 | 39.88 +/- 4.58 | 27.83 +/- 2.20 | 83.23 +/- 1.61 |
+| pairwise-gcn | No | 13.57 +/- 1.35 | 51.71 +/- 18.21 | 21.18 +/- 2.65 | 32.33 +/- 6.34 | 19.50 +/- 1.99 | 80.49 +/- 1.95 |
+| pairwise-gat | No | 14.46 +/- 2.15 | 72.68 +/- 4.20 | 24.03 +/- 2.90 | 39.99 +/- 3.15 | 29.19 +/- 1.94 | 83.16 +/- 2.31 |
+| HyperVul-Full | Yes | 17.35 +/- 1.93 | 70.24 +/- 8.07 | 27.62 +/- 2.17 | 43.12 +/- 1.74 | 20.42 +/- 1.53 | 82.95 +/- 0.82 |
 
-## RQ2: Controlled Representation Ablation
+## Table 3: RQ2 Controlled Representation Ablation
 
 | Model | Precision | Recall | F1 | F2 | PR-AUC | ROC-AUC |
 |---|---:|---:|---:|---:|---:|---:|
@@ -53,7 +54,7 @@ Reference model: `hyperedge-nn`. Test: exact sign-flip permutation over paired s
 | hyperedge-nn vs pairwise-gat | pr_auc | -1.55 | 0.6875 |
 | hyperedge-nn vs pairwise-gat | roc_auc | 0.92 | 0.4375 |
 
-## RQ3: HyperVul Component Ablation
+## Table 4: RQ3 HyperVul Component Ablation
 
 | Model | Precision | Recall | F1 | F2 | PR-AUC | ROC-AUC |
 |---|---:|---:|---:|---:|---:|---:|
