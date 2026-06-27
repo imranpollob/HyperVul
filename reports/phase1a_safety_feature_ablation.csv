@@ -1,0 +1,9 @@
+run,strategy,feature_set,precision_mean,recall_mean,f1_mean,pr_auc_mean,note
+all_scope,baseline,legacy8_only_phase0e_mil_topk,0.24574267560448887,0.6,0.3466100224720915,0.2821867604026436,Phase 0E no-safety reference with the same pooling family used for Phase 1A comparison
+reentrancy_only,baseline,legacy8_only_phase0e_mil_attention,0.36001131221719457,0.3125,0.3264150121908742,0.2612124803316025,Phase 0E no-safety reference with the same pooling family used for Phase 1A comparison
+all_scope,baseline,legacy8_plus_safety15,0.2343084410881021,0.5333333333333333,0.3240428519935258,0.2851062091735228,Phase 1A safety features enabled; hard-negative strategy as listed
+all_scope,hard_negative_upweight,legacy8_plus_safety15,0.23109890109890108,0.7266666666666667,0.3498309008160703,0.26224225258316813,Phase 1A safety features enabled; hard-negative strategy as listed
+all_scope,hard_negative_oversample,legacy8_plus_safety15,0.22811479423225373,0.6733333333333332,0.3347217222262222,0.24339051374065246,Phase 1A safety features enabled; hard-negative strategy as listed
+reentrancy_only,baseline,legacy8_plus_safety15,0.5700000000000001,0.1875,0.24345864661654132,0.32701065729615986,Phase 1A safety features enabled; hard-negative strategy as listed
+reentrancy_only,hard_negative_upweight,legacy8_plus_safety15,0.2,0.0125,0.023529411764705882,0.2201676346275025,Phase 1A safety features enabled; hard-negative strategy as listed
+reentrancy_only,hard_negative_oversample,legacy8_plus_safety15,0.013333333333333332,0.0125,0.012903225806451615,0.16127255795763698,Phase 1A safety features enabled; hard-negative strategy as listed
