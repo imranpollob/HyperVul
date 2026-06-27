@@ -63,6 +63,85 @@ The consolidated output is:
 hypervul_fair_eval/outputs/final_report.md
 ```
 
+### Strong AI-Tool Evaluation Workflow
+
+Use this workflow when iterating toward stronger AI-tool results. Each command writes a markdown summary that can be pasted back for review.
+
+```bash
+cd /home/pollmix/Coding/HyperVul
+
+python3 -m py_compile $(find hypervul_fair_eval/src -name '*.py') $(find hypervul_fair_eval/scripts -name '*.py')
+python3 hypervul_fair_eval/scripts/audit_dataset.py
+python3 hypervul_fair_eval/scripts/check_import_boundaries.py
+python3 hypervul_fair_eval/scripts/smoke_test_models.py
+python3 hypervul_fair_eval/scripts/smoke_test_training_core.py
+```
+
+Strong baseline seed-42 sweep:
+
+```bash
+python3 hypervul_fair_eval/scripts/run_strong_baseline_sweep.py \
+  --seeds 42 \
+  --max-epochs 200 \
+  --early-stop \
+  --patience 20 \
+  --threshold-policy max_f2
+
+cat hypervul_fair_eval/outputs/strong_baselines/summary.md
+```
+
+HyperVul seed-42 quick sweep:
+
+```bash
+python3 hypervul_fair_eval/scripts/run_hypervul_quick_sweep.py \
+  --seed 42 \
+  --max-epochs 200 \
+  --early-stop \
+  --patience 20 \
+  --threshold-policy max_f2
+
+cat hypervul_fair_eval/outputs/quick_sweep/summary.md
+```
+
+Full strong baseline run:
+
+```bash
+python3 hypervul_fair_eval/scripts/run_strong_baseline_sweep.py \
+  --seeds 42 43 44 45 46 \
+  --models function-mlp function-features-mlp sequence-bigru callgraph-gat pairwise-rgcn pairwise-gat \
+  --max-epochs 200 \
+  --early-stop \
+  --patience 20 \
+  --threshold-policy max_f2
+
+cat hypervul_fair_eval/outputs/strong_baselines/summary.md
+```
+
+Full HyperVul tool run:
+
+```bash
+python3 hypervul_fair_eval/scripts/run_hypervul_tool_evaluation.py \
+  --seeds 42 43 44 45 46 \
+  --max-epochs 200 \
+  --early-stop \
+  --patience 20 \
+  --symbolic-mode full \
+  --loss asl \
+  --scl-pretrain-epochs 15 \
+  --scl-lambda 0.5 \
+  --scl-hard-neg-weight 3.0 \
+  --threshold-policy max_f2
+
+cat hypervul_fair_eval/outputs/tool_eval/summary.md
+```
+
+Regenerate final report:
+
+```bash
+python3 hypervul_fair_eval/scripts/make_final_report.py
+cat hypervul_fair_eval/outputs/final_report.md
+```
+
 Slither/Mythril static analyzer baselines are still planned, but deferred to a separate compiler/toolchain pass.
 
 ---

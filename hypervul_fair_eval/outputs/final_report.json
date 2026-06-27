@@ -4781,6 +4781,9 @@
       }
     }
   },
+  "strong_baselines": null,
+  "quick_sweep": null,
+  "tool_eval": null,
   "notes": {
     "static_analyzers": "Slither/Mythril are deferred, not abandoned, because compiler/toolchain handling is separate.",
     "rq3_symbolic_scope": "The canonical contract_graphs view exposes an 8-d security context. Therefore RQ3 security and full variants are equivalent in this run."

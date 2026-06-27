@@ -65,14 +65,17 @@ class HyperVulModel(nn.Module):
         self.use_sequence_pool = use_sequence_pool
 
         if use_sequence_pool:
+            recurrent_dim = (self.input_dim + 1) // 2
             self.sequence = nn.GRU(
                 input_size=self.input_dim,
-                hidden_size=self.input_dim // 2,
+                hidden_size=recurrent_dim,
                 batch_first=True,
                 bidirectional=True,
             )
+            self.sequence_proj = nn.Linear(recurrent_dim * 2, self.input_dim) if recurrent_dim * 2 != self.input_dim else nn.Identity()
         else:
             self.sequence = None
+            self.sequence_proj = nn.Identity()
 
         self.attn = nn.Sequential(
             nn.Linear(self.input_dim, 128),
@@ -117,6 +120,7 @@ class HyperVulModel(nn.Module):
         x = self._combine_inputs(member_embeddings, symbolic_features)
         if self.sequence is not None:
             x, _ = self.sequence(x)
+            x = self.sequence_proj(x)
 
         scores = self.attn(x).squeeze(-1).masked_fill(~member_mask, -1e9)
         weights = torch.softmax(scores, dim=1).masked_fill(~member_mask, 0.0)

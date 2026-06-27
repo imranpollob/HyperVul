@@ -43,6 +43,104 @@ python3 hypervul_fair_eval/scripts/smoke_test_models.py
 python3 hypervul_fair_eval/scripts/smoke_test_training_core.py
 ```
 
+## Strong AI-Tool Evaluation Workflow
+
+This workflow trains strong independent generic baselines and advanced HyperVul tool variants. Baselines are tuned independently, but they do not use HyperVul hyperedges. HyperVul is the only model family that uses advanced typed hyperedges.
+
+### 1. Sanity Check
+
+```bash
+cd /home/pollmix/Coding/HyperVul
+
+python3 -m py_compile $(find hypervul_fair_eval/src -name '*.py') $(find hypervul_fair_eval/scripts -name '*.py')
+
+python3 hypervul_fair_eval/scripts/audit_dataset.py
+python3 hypervul_fair_eval/scripts/check_import_boundaries.py
+python3 hypervul_fair_eval/scripts/smoke_test_models.py
+python3 hypervul_fair_eval/scripts/smoke_test_training_core.py
+```
+
+### 2. Strong Baseline Seed-42 Sweep
+
+```bash
+python3 hypervul_fair_eval/scripts/run_strong_baseline_sweep.py \
+  --seeds 42 \
+  --max-epochs 200 \
+  --early-stop \
+  --patience 20 \
+  --threshold-policy max_f2
+```
+
+Output to paste back for review:
+
+```bash
+cat hypervul_fair_eval/outputs/strong_baselines/summary.md
+```
+
+### 3. HyperVul Seed-42 Quick Sweep
+
+```bash
+python3 hypervul_fair_eval/scripts/run_hypervul_quick_sweep.py \
+  --seed 42 \
+  --max-epochs 200 \
+  --early-stop \
+  --patience 20 \
+  --threshold-policy max_f2
+```
+
+Output to paste back for review:
+
+```bash
+cat hypervul_fair_eval/outputs/quick_sweep/summary.md
+```
+
+### 4. Full Strong Baseline Run
+
+```bash
+python3 hypervul_fair_eval/scripts/run_strong_baseline_sweep.py \
+  --seeds 42 43 44 45 46 \
+  --models function-mlp function-features-mlp sequence-bigru callgraph-gat pairwise-rgcn pairwise-gat \
+  --max-epochs 200 \
+  --early-stop \
+  --patience 20 \
+  --threshold-policy max_f2
+```
+
+Output to paste back for review:
+
+```bash
+cat hypervul_fair_eval/outputs/strong_baselines/summary.md
+```
+
+### 5. Full HyperVul Tool Run
+
+```bash
+python3 hypervul_fair_eval/scripts/run_hypervul_tool_evaluation.py \
+  --seeds 42 43 44 45 46 \
+  --max-epochs 200 \
+  --early-stop \
+  --patience 20 \
+  --symbolic-mode full \
+  --loss asl \
+  --scl-pretrain-epochs 15 \
+  --scl-lambda 0.5 \
+  --scl-hard-neg-weight 3.0 \
+  --threshold-policy max_f2
+```
+
+Output to paste back for review:
+
+```bash
+cat hypervul_fair_eval/outputs/tool_eval/summary.md
+```
+
+### 6. Final Report
+
+```bash
+python3 hypervul_fair_eval/scripts/make_final_report.py
+cat hypervul_fair_eval/outputs/final_report.md
+```
+
 ## Full Evaluation Commands
 
 Run from the repository root:

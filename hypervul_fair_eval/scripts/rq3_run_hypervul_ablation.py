@@ -26,13 +26,16 @@ add_src_to_path()
 from fair_eval.builders.hyperedge_view import build_hyperedge_examples  # noqa: E402
 from fair_eval.data import load_dataset_bundle  # noqa: E402
 from fair_eval.features import EmbeddingStore  # noqa: E402
+from fair_eval.features.symbolic import SYMBOLIC_DIM  # noqa: E402
 from fair_eval.models import HyperVulModel  # noqa: E402
 from fair_eval.reporting import write_json_result, write_markdown_result  # noqa: E402
 from fair_eval.training import (  # noqa: E402
     HyperVulTensorDataset,
     ProjectionHead,
     SupConLoss,
+    AsymmetricLoss,
     bce_with_logits_for_labels,
+    positive_weight,
     binary_metrics,
     collate_hypervul,
     hypervul_step_fn,
@@ -60,11 +63,14 @@ def variant_config(model_name: str) -> dict[str, Any]:
     raise ValueError(model_name)
 
 
-def build_loaders(project_root: Path, batch_size: int):
+def build_loaders(project_root: Path, batch_size: int, symbolic_mode: str = "legacy8"):
     bundle = load_dataset_bundle(project_root)
     embeddings = EmbeddingStore(project_root)
     examples = {split: build_hyperedge_examples(graphs) for split, graphs in bundle.graphs.items()}
-    datasets = {split: HyperVulTensorDataset(split_examples, embeddings) for split, split_examples in examples.items()}
+    datasets = {
+        split: HyperVulTensorDataset(split_examples, embeddings, symbolic_mode=symbolic_mode)
+        for split, split_examples in examples.items()
+    }
     return {
         "train": DataLoader(datasets["train"], batch_size=batch_size, shuffle=True, collate_fn=collate_hypervul),
         "val": DataLoader(datasets["val"], batch_size=batch_size, shuffle=False, collate_fn=collate_hypervul),
@@ -90,6 +96,7 @@ def train_one_epoch_contrastive(
     loss_fn,
     device,
     scl_lambda: float,
+    hard_neg_weight: float,
 ):
     model.train()
     projector.train()
@@ -132,7 +139,9 @@ def train_one_epoch_contrastive(
             return_representation=True,
         )
         ce_loss = loss_fn(logits, labels)
-        scl_loss = supcon(projector(pooled), labels)
+        has_external = callee_mask.any(dim=1).to(device)
+        weights = torch.where((labels == 0) & has_external, torch.full_like(labels, hard_neg_weight), torch.ones_like(labels))
+        scl_loss = supcon(projector(pooled), labels, weights=weights)
         loss = ce_loss + scl_lambda * scl_loss
         loss.backward()
         torch.nn.utils.clip_grad_norm_(list(model.parameters()) + list(projector.parameters()), 5.0)
@@ -156,13 +165,28 @@ def run_one(
     target_recall: float,
     target_precision: float,
     scl_lambda: float,
+    symbolic_mode: str = "legacy8",
+    loss_name: str = "bce",
+    early_stop: bool = False,
+    patience: int = 20,
+    scl_pretrain_epochs: int = 0,
+    scl_hard_neg_weight: float = 1.0,
 ) -> dict[str, Any]:
     set_global_seed(seed)
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     cfg = variant_config(model_name)
-    loaders = build_loaders(project_root, batch_size)
+    effective_symbolic_mode = symbolic_mode
+    if symbolic_mode != "legacy8":
+        if model_name == "emb-only":
+            effective_symbolic_mode = "none"
+        elif model_name == "security":
+            effective_symbolic_mode = "security"
+        else:
+            effective_symbolic_mode = symbolic_mode
+    loaders = build_loaders(project_root, batch_size, symbolic_mode=effective_symbolic_mode)
+    symbolic_dim = 8 if effective_symbolic_mode == "legacy8" else SYMBOLIC_DIM
     model = HyperVulModel(
-        symbolic_dim=8,
+        symbolic_dim=symbolic_dim,
         dropout=dropout,
         use_symbolic=cfg["use_symbolic"],
         use_localization=cfg["use_localization"],
@@ -172,9 +196,31 @@ def run_one(
     supcon = SupConLoss().to(device) if cfg["use_contrastive"] else None
     params = list(model.parameters()) + (list(projector.parameters()) if projector is not None else [])
     optimizer = torch.optim.Adam(params, lr=lr, weight_decay=1e-5)
-    loss_fn = bce_with_logits_for_labels(loaders["train_labels"], device=device)
+    if loss_name == "bce":
+        loss_fn = bce_with_logits_for_labels(loaders["train_labels"], device=device)
+    elif loss_name == "asl":
+        loss_fn = AsymmetricLoss(pos_weight=positive_weight(loaders["train_labels"]).to(device))
+    else:
+        raise ValueError(f"Unknown loss: {loss_name}")
 
     history = []
+    best_state = None
+    best_val_loss = float("inf")
+    epochs_without_improvement = 0
+    if cfg["use_contrastive"] and scl_pretrain_epochs > 0:
+        for _epoch in range(1, scl_pretrain_epochs + 1):
+            train_one_epoch_contrastive(
+                model,
+                projector,
+                supcon,
+                loaders["train"],
+                optimizer,
+                loss_fn,
+                device,
+                scl_lambda=1.0,
+                hard_neg_weight=scl_hard_neg_weight,
+            )
+
     for epoch in range(1, epochs + 1):
         if cfg["use_contrastive"]:
             train_result = train_one_epoch_contrastive(
@@ -186,6 +232,7 @@ def run_one(
                 loss_fn,
                 device,
                 scl_lambda=scl_lambda,
+                hard_neg_weight=scl_hard_neg_weight,
             )
             train_loss = train_result["loss"]
         else:
@@ -193,6 +240,9 @@ def run_one(
             train_loss = train_result.loss
 
         val_pred = predict(model, loaders["val"], hypervul_step_fn, device)
+        val_logits = torch.tensor(val_pred.logits, dtype=torch.float32, device=device)
+        val_labels = torch.tensor(val_pred.labels, dtype=torch.float32, device=device)
+        val_loss = float(loss_fn(val_logits, val_labels).item()) if len(val_pred.labels) else 0.0
         selection = select_threshold(
             val_pred.probs,
             val_pred.labels,
@@ -205,11 +255,24 @@ def run_one(
             {
                 "epoch": epoch,
                 "train_loss": train_loss,
+                "val_loss": val_loss,
                 "val_f1": val_metrics["f1"],
                 "val_f2": val_metrics["f2"],
                 "threshold": selection.threshold,
             }
         )
+        if early_stop:
+            if val_loss < best_val_loss:
+                best_val_loss = val_loss
+                epochs_without_improvement = 0
+                best_state = {key: value.detach().cpu() for key, value in model.state_dict().items()}
+            else:
+                epochs_without_improvement += 1
+                if epochs_without_improvement >= patience:
+                    break
+
+    if best_state is not None:
+        model.load_state_dict({key: value.to(device) for key, value in best_state.items()})
 
     val_pred = predict(model, loaders["val"], hypervul_step_fn, device)
     selection = select_threshold(
@@ -238,6 +301,13 @@ def run_one(
             "target_recall": target_recall,
             "target_precision": target_precision,
             "scl_lambda": scl_lambda,
+            "scl_pretrain_epochs": scl_pretrain_epochs,
+            "scl_hard_neg_weight": scl_hard_neg_weight,
+            "symbolic_mode": effective_symbolic_mode,
+            "symbolic_dim": symbolic_dim,
+            "loss": loss_name,
+            "early_stop": early_stop,
+            "patience": patience,
             **cfg,
         },
         "data_note": (
@@ -326,6 +396,12 @@ def main() -> None:
     parser.add_argument("--target-recall", type=float, default=0.90)
     parser.add_argument("--target-precision", type=float, default=0.70)
     parser.add_argument("--scl-lambda", type=float, default=0.2)
+    parser.add_argument("--scl-pretrain-epochs", type=int, default=0)
+    parser.add_argument("--scl-hard-neg-weight", type=float, default=1.0)
+    parser.add_argument("--symbolic-mode", choices=["legacy8", "none", "security", "full"], default="legacy8")
+    parser.add_argument("--loss", choices=["bce", "asl"], default="bce")
+    parser.add_argument("--early-stop", action="store_true")
+    parser.add_argument("--patience", type=int, default=20)
     parser.add_argument("--summarize-only", action="store_true")
     args = parser.parse_args()
 
@@ -352,6 +428,12 @@ def main() -> None:
                 target_recall=args.target_recall,
                 target_precision=args.target_precision,
                 scl_lambda=args.scl_lambda,
+                symbolic_mode=args.symbolic_mode,
+                loss_name=args.loss,
+                early_stop=args.early_stop,
+                patience=args.patience,
+                scl_pretrain_epochs=args.scl_pretrain_epochs,
+                scl_hard_neg_weight=args.scl_hard_neg_weight,
             )
             metrics = result["metrics"]
             print(

@@ -9,13 +9,19 @@ import torch.nn as nn
 from torch.utils.data import Dataset
 
 from fair_eval.builders.hyperedge_view import HyperedgeExample
-from fair_eval.features import EmbeddingStore
+from fair_eval.features import EmbeddingStore, example_symbolic_matrix
 
 
 class HyperVulTensorDataset(Dataset):
-    def __init__(self, examples: Sequence[HyperedgeExample], embeddings: EmbeddingStore):
+    def __init__(
+        self,
+        examples: Sequence[HyperedgeExample],
+        embeddings: EmbeddingStore,
+        symbolic_mode: str = "legacy8",
+    ):
         self.examples = tuple(examples)
         self.embeddings = embeddings
+        self.symbolic_mode = symbolic_mode
 
     def __len__(self) -> int:
         return len(self.examples)
@@ -26,10 +32,16 @@ class HyperVulTensorDataset(Dataset):
         rows.extend(self.embeddings.state_embedding(member.text) for member in example.state_members)
         rows.extend(self.embeddings.callee_embedding(member.text) for member in example.callee_members)
         member_embeddings = torch.stack(rows).float()
-        security = torch.tensor(example.security_features, dtype=torch.float32)
+        if self.symbolic_mode == "legacy8":
+            symbolic = torch.tensor(
+                [example.security_features for _ in example.members],
+                dtype=torch.float32,
+            )
+        else:
+            symbolic = torch.tensor(example_symbolic_matrix(example, self.symbolic_mode), dtype=torch.float32)
         return (
             member_embeddings,
-            security,
+            symbolic,
             torch.tensor(len(example.state_members), dtype=torch.long),
             torch.tensor(len(example.callee_members), dtype=torch.long),
             torch.tensor(float(example.label), dtype=torch.float32),
@@ -41,7 +53,7 @@ def collate_hypervul(batch):
     max_states = max(int(item[2]) for item in batch)
     max_callees = max(int(item[3]) for item in batch)
     dim = batch[0][0].shape[1]
-    sec_dim = batch[0][1].shape[0]
+    sec_dim = batch[0][1].shape[1] if batch[0][1].ndim == 2 else batch[0][1].shape[0]
     bsz = len(batch)
 
     members = torch.zeros(bsz, max_members, dim)
@@ -55,20 +67,23 @@ def collate_hypervul(batch):
     callee_mask = torch.zeros(bsz, max_callees, dtype=torch.bool)
     labels = torch.zeros(bsz, dtype=torch.float32)
 
-    for idx, (member_embeddings, security, state_count, callee_count, label) in enumerate(batch):
+    for idx, (member_embeddings, symbolic_features, state_count, callee_count, label) in enumerate(batch):
         n = member_embeddings.shape[0]
         members[idx, :n] = member_embeddings
         member_mask[idx, :n] = True
-        symbolic[idx, :n] = security.unsqueeze(0).expand(n, -1)
+        if symbolic_features.ndim == 1:
+            symbolic[idx, :n] = symbolic_features.unsqueeze(0).expand(n, -1)
+        else:
+            symbolic[idx, :n] = symbolic_features
         if int(state_count):
             state_mask[idx, : int(state_count)] = True
             state_embeddings[idx, : int(state_count)] = member_embeddings[1 : 1 + int(state_count)]
-            state_symbolic[idx, : int(state_count)] = security.unsqueeze(0).expand(int(state_count), -1)
+            state_symbolic[idx, : int(state_count)] = symbolic[idx, 1 : 1 + int(state_count)]
         if int(callee_count):
             callee_mask[idx, : int(callee_count)] = True
             callee_start = 1 + int(state_count)
             callee_embeddings[idx, : int(callee_count)] = member_embeddings[callee_start : callee_start + int(callee_count)]
-            callee_symbolic[idx, : int(callee_count)] = security.unsqueeze(0).expand(int(callee_count), -1)
+            callee_symbolic[idx, : int(callee_count)] = symbolic[idx, callee_start : callee_start + int(callee_count)]
         labels[idx] = label
 
     return (
@@ -132,7 +147,7 @@ class SupConLoss(nn.Module):
         super().__init__()
         self.temperature = temperature
 
-    def forward(self, z: torch.Tensor, labels: torch.Tensor) -> torch.Tensor:
+    def forward(self, z: torch.Tensor, labels: torch.Tensor, weights: torch.Tensor | None = None) -> torch.Tensor:
         labels = labels.reshape(-1, 1)
         mask = torch.eq(labels, labels.T).float().to(z.device)
         logits = torch.matmul(z, z.T) / self.temperature
@@ -146,4 +161,8 @@ class SupConLoss(nn.Module):
         if not valid.any():
             return z.new_tensor(0.0)
         mean_log_prob_pos = (mask * log_prob).sum(dim=1)[valid] / positive_count[valid]
-        return -mean_log_prob_pos.mean()
+        loss_per_anchor = -mean_log_prob_pos
+        if weights is not None:
+            weights = weights.to(z.device)[valid]
+            return (loss_per_anchor * weights).sum() / weights.sum().clamp_min(1e-12)
+        return loss_per_anchor.mean()

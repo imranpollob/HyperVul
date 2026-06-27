@@ -8,15 +8,15 @@ This document is both the implementation plan and the coding step log for the ne
 
 ## 1. Project Goal
 
-The goal of this project is to build a fair, reviewer-defensible experimental codebase for evaluating **HyperVul**, a hyperedge-based smart contract vulnerability detector.
+The goal of this project is to build **HyperVul** as a high-performance AI tool for smart-contract security and evaluate it against strong independently tuned generic baselines.
 
 The central academic claim is:
 
-> Vulnerabilities in Solidity smart contracts often arise from higher-order interactions among a function, accessed state variables, external calls, guards, and cross-contract context. A hyperedge representation preserves these n-ary interactions more faithfully than generic function-only, sequence, call-graph, or pairwise graph representations, leading to better vulnerability detection.
+> Vulnerabilities in Solidity smart contracts often arise from higher-order interactions among a function, accessed state variables, external calls, guards, and cross-contract context. HyperVul uses an advanced typed hyperedge representation to preserve these n-ary interactions and build a practical AI security tool with detection, localization, and calibrated vulnerability triage.
 
 This new codebase will separate:
 
-1. Generic literature-style baselines that do not use HyperVul hyperedges.
+1. Strong independently tuned generic literature-style baselines that do not use HyperVul hyperedges.
 2. Controlled representation ablations that isolate the effect of hyperedge representation.
 3. HyperVul component ablations that test the contribution of security/symbolic features.
 
@@ -85,7 +85,7 @@ The clean evaluation codebase will implement:
 
 ## 4. Novelty
 
-The novelty to be evaluated is not merely "using a neural model." The novelty is the **representation**:
+The novelty to be evaluated is not merely "using a neural model." The novelty is the **AI tool design around the representation**:
 
 1. **Interaction-level prediction**
    - Predict vulnerability at the interaction/function-risk unit rather than only contract-level labels.
@@ -101,6 +101,9 @@ The novelty to be evaluated is not merely "using a neural model." The novelty is
 
 5. **Localizable vulnerability evidence**
    - Support reporting which function-state-callee tuple contributes most to the prediction.
+
+6. **Tool-grade calibration**
+   - Use imbalance-aware training, contrastive calibration, and hard-negative learning only in HyperVul tool variants while reporting those settings transparently.
 
 The experiments must prove these claims separately. In particular, generic baselines must not use the proposed hyperedge representation.
 
@@ -310,6 +313,8 @@ Recommended minimum baselines:
 
 Important: the pairwise graph baseline should be built from generic binary program relations, not from first constructing HyperVul hyperedges and then flattening them.
 
+Each neural baseline should be implemented and tuned as a strong version of its own generic theory. Strong baseline tuning may include ASL/BCE loss choice, early stopping, longer training, model-specific architecture choices, and validation-threshold tuning. It must not include HyperVul hyperedge construction.
+
 ### 8.2 RQ2: Controlled Representation Ablation
 
 RQ2 question:
@@ -452,6 +457,88 @@ The numeric values below are **demo placeholders** used to show the intended pap
 
 ## 11. Step-by-Step Implementation Plan
 
+## Strong AI-Tool Evaluation Workflow
+
+Run these commands when iterating toward stronger AI-tool results.
+
+### Sanity Check
+
+```bash
+cd /home/pollmix/Coding/HyperVul
+
+python3 -m py_compile $(find hypervul_fair_eval/src -name '*.py') $(find hypervul_fair_eval/scripts -name '*.py')
+
+python3 hypervul_fair_eval/scripts/audit_dataset.py
+python3 hypervul_fair_eval/scripts/check_import_boundaries.py
+python3 hypervul_fair_eval/scripts/smoke_test_models.py
+python3 hypervul_fair_eval/scripts/smoke_test_training_core.py
+```
+
+### Strong Baseline Seed-42 Sweep
+
+```bash
+python3 hypervul_fair_eval/scripts/run_strong_baseline_sweep.py \
+  --seeds 42 \
+  --max-epochs 200 \
+  --early-stop \
+  --patience 20 \
+  --threshold-policy max_f2
+
+cat hypervul_fair_eval/outputs/strong_baselines/summary.md
+```
+
+### HyperVul Seed-42 Quick Sweep
+
+```bash
+python3 hypervul_fair_eval/scripts/run_hypervul_quick_sweep.py \
+  --seed 42 \
+  --max-epochs 200 \
+  --early-stop \
+  --patience 20 \
+  --threshold-policy max_f2
+
+cat hypervul_fair_eval/outputs/quick_sweep/summary.md
+```
+
+### Full Strong Baseline Run
+
+```bash
+python3 hypervul_fair_eval/scripts/run_strong_baseline_sweep.py \
+  --seeds 42 43 44 45 46 \
+  --models function-mlp function-features-mlp sequence-bigru callgraph-gat pairwise-rgcn pairwise-gat \
+  --max-epochs 200 \
+  --early-stop \
+  --patience 20 \
+  --threshold-policy max_f2
+
+cat hypervul_fair_eval/outputs/strong_baselines/summary.md
+```
+
+### Full HyperVul Tool Run
+
+```bash
+python3 hypervul_fair_eval/scripts/run_hypervul_tool_evaluation.py \
+  --seeds 42 43 44 45 46 \
+  --max-epochs 200 \
+  --early-stop \
+  --patience 20 \
+  --symbolic-mode full \
+  --loss asl \
+  --scl-pretrain-epochs 15 \
+  --scl-lambda 0.5 \
+  --scl-hard-neg-weight 3.0 \
+  --threshold-policy max_f2
+
+cat hypervul_fair_eval/outputs/tool_eval/summary.md
+```
+
+### Final Report
+
+```bash
+python3 hypervul_fair_eval/scripts/make_final_report.py
+cat hypervul_fair_eval/outputs/final_report.md
+```
+
 ### Step 0: Planning Approval
 
 - [x] Create this implementation plan.
@@ -578,3 +665,4 @@ Use this section as the running implementation log.
 | 2026-06-25 | RQ3 HyperVul ablation | `hypervul_fair_eval/src/fair_eval/training/hypervul_datasets.py`, `hypervul_fair_eval/src/fair_eval/models/hypervul.py`, `hypervul_fair_eval/scripts/rq3_run_hypervul_ablation.py`, `hypervul_fair_eval/outputs/rq3/**`, `hypervul_fair_eval/IMPLEMENTATION_PLAN.md` | `python3 hypervul_fair_eval/scripts/rq3_run_hypervul_ablation.py --models emb-only security full no-localize no-contrastive --seeds 42 43 44 45 46 --epochs 20 --batch-size 128 --threshold-policy max_f2`; `python3 -m py_compile ...` | Passed | Completed 5-seed HyperVul component ablation; canonical graph view provides only 8-d security context, so `security` and `full` are equivalent in this run |
 | 2026-06-25 | Final report and README | `hypervul_fair_eval/scripts/make_final_report.py`, `hypervul_fair_eval/outputs/final_report.md`, `hypervul_fair_eval/outputs/final_report.json`, `hypervul_fair_eval/README.md`, `README.md`, `hypervul_fair_eval/IMPLEMENTATION_PLAN.md` | `python3 hypervul_fair_eval/scripts/make_final_report.py`; `python3 -m py_compile ...` | Passed | Generated consolidated RQ1/RQ2/RQ3 report and documented all evaluation commands; clean-negative FPR table remains future work |
 | 2026-06-25 | Full evaluation orchestrator and Table 2 fix | `hypervul_fair_eval/scripts/run_full_evaluation.py`, `hypervul_fair_eval/scripts/make_final_report.py`, `hypervul_fair_eval/outputs/final_report.md`, `hypervul_fair_eval/README.md`, `README.md`, `hypervul_fair_eval/IMPLEMENTATION_PLAN.md` | `python3 hypervul_fair_eval/scripts/run_full_evaluation.py --dry-run`; `python3 hypervul_fair_eval/scripts/make_final_report.py`; `python3 -m py_compile ...` | Passed | Added one-command full pipeline; final Table 2 now compares generic baselines against `HyperVul-Full`; clarified that implementation-plan numeric tables are demo placeholders |
+| 2026-06-26 | Strong AI-tool experiment workflow | `README.md`, `hypervul_fair_eval/README.md`, `hypervul_fair_eval/IMPLEMENTATION_PLAN.md`, `hypervul_fair_eval/scripts/run_strong_baseline_sweep.py`, `hypervul_fair_eval/scripts/run_hypervul_quick_sweep.py`, `hypervul_fair_eval/scripts/run_hypervul_tool_evaluation.py`, `hypervul_fair_eval/scripts/rq1_run_generic_baselines.py`, `hypervul_fair_eval/scripts/rq3_run_hypervul_ablation.py`, `hypervul_fair_eval/scripts/make_final_report.py`, `hypervul_fair_eval/src/fair_eval/features/symbolic.py`, `hypervul_fair_eval/src/fair_eval/training/hypervul_datasets.py` | `python3 -m py_compile ...`; smoke tests; 1-epoch temporary runs for strong baseline, quick sweep, and tool eval; `python3 hypervul_fair_eval/scripts/make_final_report.py` | Passed | Baselines remain generic; HyperVul gains per-member symbolic modes, ASL, early stopping, SCL pretraining, and hard-negative SCL weighting |

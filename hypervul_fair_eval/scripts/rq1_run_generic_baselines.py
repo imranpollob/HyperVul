@@ -68,8 +68,11 @@ MODEL_NAMES = (
     "function-mlp",
     "function-features-mlp",
     "sequence",
+    "sequence-bigru",
     "callgraph-gcn",
+    "callgraph-gat",
     "pairwise-gcn",
+    "pairwise-rgcn",
     "pairwise-gat",
 )
 
@@ -101,19 +104,19 @@ def build_loaders(project_root: Path, batch_size: int, model_name: str):
             scalar_std=scalar_std if use_scalars else None,
         )
         collate_fn = None
-    elif model_name == "sequence":
+    elif model_name in {"sequence", "sequence-bigru"}:
         sequences = {split: build_sequence_examples(graphs) for split, graphs in bundle.graphs.items()}
         train_data = SequenceTensorDataset(sequences["train"], embeddings, scalar_mean=scalar_mean, scalar_std=scalar_std)
         val_data = SequenceTensorDataset(sequences["val"], embeddings, scalar_mean=scalar_mean, scalar_std=scalar_std)
         test_data = SequenceTensorDataset(sequences["test"], embeddings, scalar_mean=scalar_mean, scalar_std=scalar_std)
         collate_fn = collate_sequences
-    elif model_name == "callgraph-gcn":
+    elif model_name in {"callgraph-gcn", "callgraph-gat"}:
         views = {split: build_callgraph_views(graphs) for split, graphs in bundle.graphs.items()}
         train_data = GraphTensorDataset(views["train"], embeddings, scalar_mean=scalar_mean, scalar_std=scalar_std)
         val_data = GraphTensorDataset(views["val"], embeddings, scalar_mean=scalar_mean, scalar_std=scalar_std)
         test_data = GraphTensorDataset(views["test"], embeddings, scalar_mean=scalar_mean, scalar_std=scalar_std)
         collate_fn = collate_graphs
-    elif model_name in {"pairwise-gcn", "pairwise-gat"}:
+    elif model_name in {"pairwise-gcn", "pairwise-rgcn", "pairwise-gat"}:
         views = {split: build_pairwise_graph_views(graphs) for split, graphs in bundle.graphs.items()}
         train_data = GraphTensorDataset(views["train"], embeddings, scalar_mean=scalar_mean, scalar_std=scalar_std)
         val_data = GraphTensorDataset(views["val"], embeddings, scalar_mean=scalar_mean, scalar_std=scalar_std)
@@ -143,11 +146,20 @@ def make_model(model_name: str, dropout: float):
         return FunctionMLP(dropout=dropout), function_step_fn
     if model_name == "function-features-mlp":
         return FunctionFeaturesMLP(dropout=dropout), function_features_step_fn
-    if model_name == "sequence":
+    if model_name in {"sequence", "sequence-bigru"}:
         return FunctionSequenceModel(scalar_dim=len(SCALAR_FEATURE_KEYS), dropout=dropout), sequence_step_fn
     if model_name == "callgraph-gcn":
         return GraphNodeClassifier(scalar_dim=len(SCALAR_FEATURE_KEYS), conv="gcn", dropout=dropout), graph_step_fn
+    if model_name == "callgraph-gat":
+        return GraphNodeClassifier(scalar_dim=len(SCALAR_FEATURE_KEYS), conv="gat", dropout=dropout), graph_step_fn
     if model_name == "pairwise-gcn":
+        return GraphNodeClassifier(
+            scalar_dim=len(SCALAR_FEATURE_KEYS),
+            conv="rgcn",
+            edge_types=3,
+            dropout=dropout,
+        ), graph_step_fn
+    if model_name == "pairwise-rgcn":
         return GraphNodeClassifier(
             scalar_dim=len(SCALAR_FEATURE_KEYS),
             conv="rgcn",
