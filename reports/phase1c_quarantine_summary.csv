@@ -1,0 +1,3 @@
+quarantine_reason,count,high_confidence,medium_confidence,low_confidence
+ambiguous_quarantine,118,0,70,48
+insufficient_evidence,4,0,0,4
