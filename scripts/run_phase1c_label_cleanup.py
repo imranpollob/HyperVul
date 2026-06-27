@@ -21,6 +21,7 @@ ROOT = Path(__file__).resolve().parents[1]
 REPORTS = ROOT / "reports"
 GRAPH_DIR = ROOT / "data" / "contract_graphs_clean"
 LABEL_DIR = ROOT / "data" / "labels_clean_v1"
+REENTRANCY_GRAPH_DIR = ROOT / "data" / "contract_graphs_reentrancy_clean_v1"
 FAIR_SRC = ROOT / "hypervul_fair_eval" / "src"
 if str(FAIR_SRC) not in sys.path:
     sys.path.insert(0, str(FAIR_SRC))
@@ -227,22 +228,29 @@ def control_rows(packet_rows: list[dict[str, str]], safety: Any, graph_splits: d
     return rows
 
 
-def build_reviews(bundle, safety: Any) -> list[dict[str, Any]]:
+def build_reviews(bundle, safety: Any, include_controls: bool = False) -> list[dict[str, Any]]:
     graph_splits = split_map(bundle)
     packet_rows = read_csv(REPORTS / "phase1b_protected_reentrancy_review_packet.csv")
     selected = [row for row in packet_rows if graph_splits.get(row["contract_id"]) in {"train", "val"}]
-    selected.extend(control_rows(packet_rows, safety, graph_splits, n=50))
+    if include_controls:
+        selected.extend(control_rows(packet_rows, safety, graph_splits, n=50))
     reviewed = []
     for row in selected:
         reviewed.append(review_row(row, graph_splits.get(row["contract_id"], "")))
     return reviewed
 
 
-def action_for_label(label: str, run: str) -> tuple[str, int | None]:
-    if label == "confirmed_positive_reentrancy":
+def action_for_review(row: dict[str, Any], run: str) -> tuple[str, int | None]:
+    label = row["proposed_cleaned_label"]
+    confidence = row.get("confidence", "")
+    if label == "confirmed_positive_reentrancy" and confidence == "high":
         return "set_positive", 1
-    if label == "confirmed_protected_negative":
+    if label == "confirmed_positive_reentrancy":
+        return "ignore", None
+    if label == "confirmed_protected_negative" and confidence == "high":
         return "set_negative", 0
+    if label == "confirmed_protected_negative":
+        return "ignore", None
     if label == "wrong_scope_or_other_vulnerability":
         return ("ignore" if run == "reentrancy_only" else "set_negative"), (None if run == "reentrancy_only" else 0)
     if label in {"ambiguous_quarantine", "insufficient_evidence"}:
@@ -266,7 +274,7 @@ def reviewed_bags(original_bags: dict[str, tuple[Any, ...]], reviews: list[dict[
                 proposed = ""
                 if row:
                     proposed = row["proposed_cleaned_label"]
-                    action, maybe_label = action_for_label(proposed, run)
+                    action, maybe_label = action_for_review(row, run)
                     if action == "ignore":
                         view_rows.append({"run": run, "split": split, "graph_id": bag.graph_id, "interaction_id": example.interaction_node_id, "old_label": old_label, "new_label": "", "action": action, "proposed_cleaned_label": proposed})
                         continue
@@ -288,6 +296,43 @@ def reviewed_bags(original_bags: dict[str, tuple[Any, ...]], reviews: list[dict[
                     )
                 )
     return {split: tuple(rows) for split, rows in out.items()}, view_rows
+
+
+def make_reentrancy_graph_view(reviews: list[dict[str, Any]]) -> None:
+    REENTRANCY_GRAPH_DIR.mkdir(parents=True, exist_ok=True)
+    scope = json.loads((GRAPH_DIR / "scope_views" / "reentrancy_only.json").read_text(encoding="utf-8"))
+    review_map = {(row["contract_id"], row["interaction_id"]): row for row in reviews}
+    for split in ("train", "val", "test"):
+        original = json.loads((GRAPH_DIR / f"{split}.json").read_text(encoding="utf-8"))
+        scope_rows = {row["graph_id"]: row for row in scope[split]}
+        out = []
+        for graph in original:
+            if graph["graph_id"] not in scope_rows:
+                continue
+            graph = json.loads(json.dumps(graph))
+            scope_pos_ids = set(scope_rows[graph["graph_id"]].get("positive_interaction_ids", []))
+            new_pos_ids = set()
+            for node in graph.get("nodes", []):
+                if node.get("kind") != "interaction":
+                    continue
+                node["label"] = 1 if node.get("id") in scope_pos_ids else 0
+                if split in {"train", "val"}:
+                    row = review_map.get((graph["graph_id"], node.get("id")))
+                    if row:
+                        action, maybe_label = action_for_review(row, "reentrancy_only")
+                        if action == "ignore":
+                            node["label"] = None
+                            node["tier"] = "REVIEW_IGNORE"
+                        elif maybe_label is not None:
+                            node["label"] = maybe_label
+                            node["tier"] = "REVIEW_ACCEPTED_POS" if maybe_label == 1 else "REVIEW_ACCEPTED_NEG"
+                if node.get("label") == 1:
+                    new_pos_ids.add(node.get("id"))
+            graph["positive_interaction_ids"] = sorted(new_pos_ids if split in {"train", "val"} else scope_pos_ids)
+            graph["contract_label"] = int(bool(graph["positive_interaction_ids"])) if split in {"train", "val"} else int(scope_rows[graph["graph_id"]].get("scope_label", 0))
+            graph["vulnerability_types"] = ["reentrancy"] if graph["contract_label"] else []
+            out.append(graph)
+        (REENTRANCY_GRAPH_DIR / f"{split}.json").write_text(json.dumps(out, indent=2), encoding="utf-8")
 
 
 def metrics_for_policy(val_probs, val_labels, test_probs, test_labels, policy_name: str) -> dict[str, Any]:
@@ -374,12 +419,16 @@ def fmt(stats: dict[str, tuple[float, float]], key: str) -> str:
 def label_summary_rows(reviews: list[dict[str, Any]], view_rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
     label_counts = Counter(row["proposed_cleaned_label"] for row in reviews)
     action_counts = Counter(row["action"] for row in view_rows)
+    high_positive = sum(row["proposed_cleaned_label"] == "confirmed_positive_reentrancy" and row.get("confidence") == "high" for row in reviews)
+    high_negative = sum(row["proposed_cleaned_label"] == "confirmed_protected_negative" and row.get("confidence") == "high" for row in reviews)
     rows = []
     for label in REVIEW_LABELS:
         rows.append({"item": label, "count": label_counts.get(label, 0), "type": "proposed_label"})
     for action, count in sorted(action_counts.items()):
         rows.append({"item": action, "count": count, "type": "reviewed_view_action"})
-    rows.append({"item": "labels_changed_to_positive", "count": label_counts.get("confirmed_positive_reentrancy", 0), "type": "summary"})
+    rows.append({"item": "positive_relabel_candidates", "count": label_counts.get("confirmed_positive_reentrancy", 0), "type": "summary"})
+    rows.append({"item": "high_confidence_positive_accepted", "count": high_positive, "type": "summary"})
+    rows.append({"item": "high_confidence_protected_negative_accepted", "count": high_negative, "type": "summary"})
     rows.append({"item": "quarantined_or_insufficient", "count": label_counts.get("ambiguous_quarantine", 0) + label_counts.get("insufficient_evidence", 0), "type": "summary"})
     return rows
 
@@ -419,6 +468,21 @@ def write_report(reviews, label_summary, contract_rows, loc_rows, fp_rows):
         stats = summarize(subset, ["precision", "recall", "f1", "f2", "pr_auc", "roc_auc"])
         lines.append(f"| {run} | {variant} | {fmt(stats,'precision')} | {fmt(stats,'recall')} | {fmt(stats,'f1')} | {fmt(stats,'f2')} | {fmt(stats,'pr_auc')} | {fmt(stats,'roc_auc')} |")
     lines.append("")
+    phase1b_path = REPORTS / "phase1b_contract_metrics.csv"
+    if phase1b_path.exists():
+        phase1b_rows = read_csv(phase1b_path)
+        lines.append("## Phase 1B vs Phase 1C")
+        lines.append("| Run | Variant | Phase 1B Precision | Phase 1C Precision | Phase 1B Recall | Phase 1C Recall | Phase 1B F1 | Phase 1C F1 |")
+        lines.append("|---|---|---:|---:|---:|---:|---:|---:|")
+        for run, variant in sorted({(r["run"], r["variant"]) for r in contract_rows}):
+            old_subset = [r for r in phase1b_rows if r["run"] == run and r["variant"] == variant and r["threshold_policy"] == "max_f1"]
+            new_subset = [r for r in contract_rows if r["run"] == run and r["variant"] == variant and r["threshold_policy"] == "max_f1"]
+            if not old_subset or not new_subset:
+                continue
+            old_stats = summarize(old_subset, ["precision", "recall", "f1"])
+            new_stats = summarize(new_subset, ["precision", "recall", "f1"])
+            lines.append(f"| {run} | {variant} | {fmt(old_stats,'precision')} | {fmt(new_stats,'precision')} | {fmt(old_stats,'recall')} | {fmt(new_stats,'recall')} | {fmt(old_stats,'f1')} | {fmt(new_stats,'f1')} |")
+        lines.append("")
     lines.append("## Localization Metrics")
     lines.append("| Run | Variant | Top-1 | Top-3 | Top-5 | MRR | Recall@1 | Recall@3 | Recall@5 |")
     lines.append("|---|---|---:|---:|---:|---:|---:|---:|---:|")
@@ -432,8 +496,50 @@ def write_report(reviews, label_summary, contract_rows, loc_rows, fp_rows):
     lines.append(f"- Confirmed positive relabel candidates: {label_counts.get('confirmed_positive_reentrancy', 0)}.")
     lines.append(f"- Confirmed protected negatives: {label_counts.get('confirmed_protected_negative', 0)}.")
     lines.append(f"- Quarantined/insufficient examples: {label_counts.get('ambiguous_quarantine', 0) + label_counts.get('insufficient_evidence', 0)}.")
-    lines.append("- Phase 1D should be contrastive protected-vs-vulnerable reentrancy training only after the relabel candidates and quarantine set are manually accepted. Targeted augmentation is not safe to start until then.")
+    lines.append("- The reviewed-label rerun does not clearly beat Phase 1B, so Phase 1D should be contrastive protected-vs-vulnerable reentrancy training only after the relabel candidates and quarantine set are manually accepted. Targeted augmentation is not safe to start until then.")
     (REPORTS / "phase1c_label_cleanup_report.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
+
+
+def write_remaining_errors(results: list[dict[str, Any]], safety: Any) -> None:
+    rows = []
+    for result in results:
+        val = result["predictions"]["val"]
+        sel = select_threshold(val["contract_probs"], val["contract_labels"], policy="max_f1")
+        test = result["predictions"]["test"]
+        for prob, label, meta in zip(test["contract_probs"], test["contract_labels"], test["contract_meta"]):
+            pred = int(float(prob) >= sel.threshold)
+            if pred == int(label):
+                continue
+            graph_id = str(meta["graph_id"])
+            nodes = safety.by_graph.get(graph_id, [])
+            rows.append(
+                {
+                    "run": result["run"],
+                    "variant": result["variant"],
+                    "seed": result["seed"],
+                    "graph_id": graph_id,
+                    "error_type": "false_positive" if pred == 1 else "false_negative",
+                    "score": float(prob),
+                    "threshold": sel.threshold,
+                    "true_label": int(label),
+                    "protected_reentrancy_like": int(any(node.category == "protected reentrancy-like pattern" for node in nodes)),
+                    "top_functions": "|".join(sorted({node.function for node in nodes if node.category == "protected reentrancy-like pattern"})[:5]),
+                }
+            )
+    write_csv(REPORTS / "phase1c_remaining_errors.csv", rows, ["run", "variant", "seed", "graph_id", "error_type", "score", "threshold", "true_label", "protected_reentrancy_like", "top_functions"])
+
+
+def write_requested_metric_views(contract_rows: list[dict[str, Any]]) -> None:
+    metric_fields = [
+        "run", "variant", "pooling", "seed", "level", "threshold_policy", "selection_policy", "threshold",
+        "validation_precision_at_threshold", "validation_recall_at_threshold", "precision", "recall", "f1", "f2",
+        "pr_auc", "roc_auc", "tp", "tn", "fp", "fn", "support", "positive_support", "negative_support",
+        "test_precision_at_val_recall_70", "test_precision_at_val_recall_80", "test_precision_at_val_recall_90",
+        "val_threshold_for_recall_70", "val_threshold_for_recall_80", "val_threshold_for_recall_90",
+        "val_recall_at_threshold_70", "val_recall_at_threshold_80", "val_recall_at_threshold_90",
+    ]
+    write_csv(REPORTS / "phase1c_reentrancy_metrics.csv", [row for row in contract_rows if row["run"] == "reentrancy_only"], metric_fields)
+    write_csv(REPORTS / "phase1c_all_scope_secondary_metrics.csv", [row for row in contract_rows if row["run"] == "all_scope"], metric_fields)
 
 
 def main() -> int:
@@ -446,6 +552,7 @@ def main() -> int:
     parser.add_argument("--aux-weight", type=float, default=0.5)
     parser.add_argument("--safety-aux-weight", type=float, default=0.2)
     parser.add_argument("--variants", nargs="+", choices=("gated", "rule_suppression", "concat"), default=["gated", "rule_suppression", "concat"])
+    parser.add_argument("--include-controls", action="store_true", help="Also review 50 random protected-negative control rows.")
     args = parser.parse_args()
 
     os.environ["HYPERVUL_GRAPH_DIR"] = str(GRAPH_DIR)
@@ -454,10 +561,11 @@ def main() -> int:
     bundle = load_dataset_bundle(ROOT)
     embeddings = EmbeddingStore(ROOT)
     safety = phase1a.SafetyFeatureStore(bundle)
-    reviews = build_reviews(bundle, safety)
+    reviews = build_reviews(bundle, safety, include_controls=args.include_controls)
     label_summary = label_summary_rows(reviews, [])
     quarantined = [row for row in reviews if row["proposed_cleaned_label"] in {"ambiguous_quarantine", "insufficient_evidence"}]
-    relabel_candidates = [row for row in reviews if row["proposed_cleaned_label"] in {"confirmed_positive_reentrancy", "wrong_scope_or_other_vulnerability"}]
+    relabel_candidates = [row for row in reviews if row["proposed_cleaned_label"] == "confirmed_positive_reentrancy"]
+    wrong_scope = [row for row in reviews if row["proposed_cleaned_label"] == "wrong_scope_or_other_vulnerability"]
 
     review_fields = [
         "split",
@@ -483,8 +591,11 @@ def main() -> int:
         "review_source",
     ]
     write_csv(LABEL_DIR / "reentrancy_reviewed_train_val.csv", reviews, review_fields)
+    write_csv(LABEL_DIR / "reentrancy_quarantine.csv", quarantined, review_fields)
+    write_csv(LABEL_DIR / "reentrancy_relabel_candidates.csv", relabel_candidates, review_fields)
+    write_csv(LABEL_DIR / "reentrancy_wrong_scope.csv", wrong_scope, review_fields)
     write_csv(LABEL_DIR / "quarantined_ambiguous.csv", quarantined, review_fields)
-    write_csv(LABEL_DIR / "relabel_candidates.csv", relabel_candidates, review_fields)
+    write_csv(LABEL_DIR / "relabel_candidates.csv", relabel_candidates + wrong_scope, review_fields)
     write_csv(REPORTS / "phase1c_reviewed_examples.csv", reviews, review_fields)
 
     all_original = phase0e.build_contract_bags(bundle)
@@ -493,6 +604,7 @@ def main() -> int:
     re_reviewed, re_view_rows = reviewed_bags(re_original, reviews, "reentrancy_only")
     view_rows = all_view_rows + re_view_rows
     write_csv(LABEL_DIR / "reviewed_train_val_view.csv", view_rows, ["run", "split", "graph_id", "interaction_id", "old_label", "new_label", "action", "proposed_cleaned_label"])
+    make_reentrancy_graph_view(reviews)
     label_summary = label_summary_rows(reviews, view_rows)
     quarantine_summary = quarantine_summary_rows(reviews)
     write_csv(REPORTS / "phase1c_label_change_summary.csv", label_summary, ["item", "count", "type"])
@@ -541,8 +653,10 @@ def main() -> int:
         "val_recall_at_threshold_70", "val_recall_at_threshold_80", "val_recall_at_threshold_90",
     ]
     write_csv(REPORTS / "phase1c_retrained_metrics.csv", contract_rows, metric_fields)
+    write_requested_metric_views(contract_rows)
     write_csv(REPORTS / "phase1c_localization_metrics.csv", loc_rows, ["run", "variant", "pooling", "seed", "top1_hit", "top3_hit", "top5_hit", "mrr", "recall_at_1", "recall_at_3", "recall_at_5", "positive_contracts"])
     write_csv(REPORTS / "phase1c_false_positive_reduction.csv", fp_rows, ["run", "variant", "seed", "split", "threshold_from_val", "protected_reentrancy_false_positives", "concat_reviewed_baseline_protected_fp", "protected_fp_reduction_vs_reviewed_concat"])
+    write_remaining_errors(results, safety)
     write_report(reviews, label_summary, contract_rows, loc_rows, fp_rows)
     summary = {
         "generated_at": "2026-06-27",

@@ -1745,8 +1745,7 @@
       "i:modify"
     ],
     "vulnerability_types": [
-      "CWE:CWE-670,CWE-691",
-      "Reentrancy (SWC-107)"
+      "reentrancy"
     ],
     "localization": {
       "vulnerable_interaction_ids": [
@@ -2488,8 +2487,7 @@
       "i:relayTokens"
     ],
     "vulnerability_types": [
-      "CWE:CWE-362,CWE-691",
-      "Reentrancy (SWC-107)"
+      "reentrancy"
     ],
     "localization": {
       "vulnerable_interaction_ids": [
@@ -5358,8 +5356,7 @@
       "i:_setOftMessenger"
     ],
     "vulnerability_types": [
-      "CWE:CWE-670,CWE-691",
-      "Reentrancy (SWC-107)"
+      "reentrancy"
     ],
     "localization": {
       "vulnerable_interaction_ids": [
@@ -5489,10 +5486,7 @@
       "i:swapTokens"
     ],
     "vulnerability_types": [
-      "Front-running / Tx Order (SWC-114)",
-      "Front-running / Tx Order (heuristic)",
-      "Reentrancy (SWC-107)",
-      "Reentrancy (heuristic)"
+      "reentrancy"
     ],
     "localization": {
       "vulnerable_interaction_ids": [
@@ -20965,8 +20959,7 @@
       "i:claimReward"
     ],
     "vulnerability_types": [
-      "Reentrancy (SWC-107)",
-      "SWC-107-Reentrancy"
+      "reentrancy"
     ],
     "localization": {
       "vulnerable_interaction_ids": [
@@ -34601,8 +34594,7 @@
       "i:withdraw"
     ],
     "vulnerability_types": [
-      "Reentrancy (SWC-107)",
-      "SWC-107-Reentrancy"
+      "reentrancy"
     ],
     "localization": {
       "vulnerable_interaction_ids": [
@@ -36677,8 +36669,7 @@
       "i:emergencyWithdraw"
     ],
     "vulnerability_types": [
-      "Reentrancy (SWC-107)",
-      "SWC-107-Reentrancy"
+      "reentrancy"
     ],
     "localization": {
       "vulnerable_interaction_ids": [
@@ -37418,8 +37409,7 @@
       "i:finalize"
     ],
     "vulnerability_types": [
-      "Reentrancy (SWC-107)",
-      "SWC-107-Reentrancy"
+      "reentrancy"
     ],
     "localization": {
       "vulnerable_interaction_ids": [
@@ -37658,8 +37648,7 @@
       "i:withdraw"
     ],
     "vulnerability_types": [
-      "Reentrancy (SWC-107)",
-      "SWC-107-Reentrancy"
+      "reentrancy"
     ],
     "localization": {
       "vulnerable_interaction_ids": [
@@ -43001,8 +42990,7 @@
       "i:deposit"
     ],
     "vulnerability_types": [
-      "Reentrancy (SWC-107)",
-      "SWC-107-Reentrancy"
+      "reentrancy"
     ],
     "localization": {
       "vulnerable_interaction_ids": [
@@ -59791,8 +59779,7 @@
       "i:convertFundsFromInput"
     ],
     "vulnerability_types": [
-      "Reentrancy (SWC-107)",
-      "SWC-107-Reentrancy"
+      "reentrancy"
     ],
     "localization": {
       "vulnerable_interaction_ids": [
@@ -65629,8 +65616,7 @@
       "i:withdraw"
     ],
     "vulnerability_types": [
-      "Reentrancy (SWC-107)",
-      "SWC-107-Reentrancy"
+      "reentrancy"
     ],
     "localization": {
       "vulnerable_interaction_ids": [
@@ -72190,8 +72176,7 @@
       "i:lock"
     ],
     "vulnerability_types": [
-      "Reentrancy (SWC-107)",
-      "SWC-107-Reentrancy"
+      "reentrancy"
     ],
     "localization": {
       "vulnerable_interaction_ids": [
@@ -79106,8 +79091,7 @@
       "i:mintBatchEdition"
     ],
     "vulnerability_types": [
-      "Reentrancy (SWC-107)",
-      "SWC-107-Reentrancy"
+      "reentrancy"
     ],
     "localization": {
       "vulnerable_interaction_ids": [
@@ -96837,8 +96821,7 @@
       "i:withdrawLockedTokens"
     ],
     "vulnerability_types": [
-      "Reentrancy (SWC-107)",
-      "SWC-107-Reentrancy"
+      "reentrancy"
     ],
     "localization": {
       "vulnerable_interaction_ids": [
@@ -115188,8 +115171,7 @@
       "i:_moveTokensAndETHfromAdjustment"
     ],
     "vulnerability_types": [
-      "Reentrancy (SWC-107)",
-      "SWC-107-Reentrancy"
+      "reentrancy"
     ],
     "localization": {
       "vulnerable_interaction_ids": [

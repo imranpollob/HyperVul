@@ -764,8 +764,7 @@
       "i:proRataRedeem"
     ],
     "vulnerability_types": [
-      "Reentrancy (SWC-107)",
-      "Reentrancy (heuristic)"
+      "reentrancy"
     ],
     "localization": {
       "vulnerable_interaction_ids": [
@@ -13827,10 +13826,7 @@
       "i:rebase"
     ],
     "vulnerability_types": [
-      "Reentrancy (SWC-107)",
-      "SWC-104-Unchecked Call Return Value",
-      "SWC-107-Reentrancy",
-      "Unchecked Call Return (SWC-104)"
+      "reentrancy"
     ],
     "localization": {
       "vulnerable_interaction_ids": [
@@ -14701,8 +14697,8 @@
         "id": "i:withdraw",
         "kind": "interaction",
         "function": "withdraw",
-        "label": null,
-        "tier": "REVIEW_IGNORE",
+        "label": 0,
+        "tier": "B",
         "is_cross_contract": false,
         "state_vars_accessed": [
           "accMintPerShare",
@@ -15301,8 +15297,8 @@
         "id": "i:_bidFrom",
         "kind": "interaction",
         "function": "_bidFrom",
-        "label": null,
-        "tier": "REVIEW_IGNORE",
+        "label": 0,
+        "tier": "B",
         "is_cross_contract": true,
         "state_vars_accessed": [
           "c_duration",
@@ -19944,8 +19940,8 @@
         "id": "i:_takeBid",
         "kind": "interaction",
         "function": "_takeBid",
-        "label": null,
-        "tier": "REVIEW_IGNORE",
+        "label": 0,
+        "tier": "B",
         "is_cross_contract": true,
         "state_vars_accessed": [
           "alianaContract",
@@ -58031,8 +58027,7 @@
       "i:deposit"
     ],
     "vulnerability_types": [
-      "Reentrancy (SWC-107)",
-      "SWC-107-Reentrancy"
+      "reentrancy"
     ],
     "localization": {
       "vulnerable_interaction_ids": [
@@ -62741,7 +62736,7 @@
         "kind": "interaction",
         "function": "bid",
         "label": 0,
-        "tier": "REVIEW_ACCEPTED_NEG",
+        "tier": "B",
         "is_cross_contract": true,
         "state_vars_accessed": [
           "coreInstance"
@@ -74737,8 +74732,8 @@
         "id": "i:updateRegistry",
         "kind": "interaction",
         "function": "updateRegistry",
-        "label": null,
-        "tier": "REVIEW_IGNORE",
+        "label": 0,
+        "tier": "B",
         "is_cross_contract": true,
         "state_vars_accessed": [
           "CONTRACT_REGISTRY",
@@ -92742,8 +92737,8 @@
         "id": "i:convert",
         "kind": "interaction",
         "function": "convert",
-        "label": null,
-        "tier": "REVIEW_IGNORE",
+        "label": 0,
+        "tier": "B",
         "is_cross_contract": true,
         "state_vars_accessed": [
           "BANCOR_NETWORK",
@@ -113949,8 +113944,7 @@
       "i:executeOperation"
     ],
     "vulnerability_types": [
-      "Reentrancy (SWC-107)",
-      "SWC-107-Reentrancy"
+      "reentrancy"
     ],
     "localization": {
       "vulnerable_interaction_ids": [
@@ -119679,8 +119673,7 @@
       "i:withdrawETH"
     ],
     "vulnerability_types": [
-      "Reentrancy (SWC-107)",
-      "SWC-107-Reentrancy"
+      "reentrancy"
     ],
     "localization": {
       "vulnerable_interaction_ids": [
@@ -121707,8 +121700,8 @@
         "id": "i:sweep",
         "kind": "interaction",
         "function": "sweep",
-        "label": null,
-        "tier": "REVIEW_IGNORE",
+        "label": 0,
+        "tier": "B",
         "is_cross_contract": false,
         "state_vars_accessed": [
           "vault",
@@ -127703,8 +127696,7 @@
       "i:reserveDeposit"
     ],
     "vulnerability_types": [
-      "Reentrancy (SWC-107)",
-      "SWC-107-Reentrancy"
+      "reentrancy"
     ],
     "localization": {
       "vulnerable_interaction_ids": [
@@ -141741,8 +141733,7 @@
       "i:lendCreditAccount"
     ],
     "vulnerability_types": [
-      "Reentrancy (SWC-107)",
-      "SWC-107-Reentrancy"
+      "reentrancy"
     ],
     "localization": {
       "vulnerable_interaction_ids": [
@@ -142375,8 +142366,8 @@
         "id": "i:updateUnderlyingTokenLiquidationThreshold",
         "kind": "interaction",
         "function": "updateUnderlyingTokenLiquidationThreshold",
-        "label": null,
-        "tier": "REVIEW_IGNORE",
+        "label": 0,
+        "tier": "B",
         "is_cross_contract": true,
         "state_vars_accessed": [
           "allowedTokens",
@@ -147264,8 +147255,7 @@
       "i:repayCreditAccountETH"
     ],
     "vulnerability_types": [
-      "Reentrancy (SWC-107)",
-      "SWC-107-Reentrancy"
+      "reentrancy"
     ],
     "localization": {
       "vulnerable_interaction_ids": [
@@ -148176,8 +148166,7 @@
       "i:exchange"
     ],
     "vulnerability_types": [
-      "Reentrancy (SWC-107)",
-      "SWC-107-Reentrancy"
+      "reentrancy"
     ],
     "localization": {
       "vulnerable_interaction_ids": [
@@ -148761,8 +148750,7 @@
       "i:exactOutputSingle"
     ],
     "vulnerability_types": [
-      "Reentrancy (SWC-107)",
-      "SWC-107-Reentrancy"
+      "reentrancy"
     ],
     "localization": {
       "vulnerable_interaction_ids": [
@@ -149743,8 +149731,7 @@
       "i:withdraw"
     ],
     "vulnerability_types": [
-      "Reentrancy (SWC-107)",
-      "SWC-107-Reentrancy"
+      "reentrancy"
     ],
     "localization": {
       "vulnerable_interaction_ids": [
@@ -150675,8 +150662,7 @@
       "i:swapTokensForExactTokens"
     ],
     "vulnerability_types": [
-      "Reentrancy (SWC-107)",
-      "SWC-107-Reentrancy"
+      "reentrancy"
     ],
     "localization": {
       "vulnerable_interaction_ids": [
@@ -153351,11 +153337,7 @@
       "i:requestRefund"
     ],
     "vulnerability_types": [
-      "CWE:CWE-435",
-      "CWE:CWE-670,CWE-691",
-      "Front-running / Tx Order (SWC-114)",
-      "Front-running / Tx Order (heuristic)",
-      "Reentrancy (SWC-107)"
+      "reentrancy"
     ],
     "localization": {
       "vulnerable_interaction_ids": [
@@ -153894,8 +153876,8 @@
         "id": "i:_createUniswapPool",
         "kind": "interaction",
         "function": "_createUniswapPool",
-        "label": null,
-        "tier": "REVIEW_IGNORE",
+        "label": 0,
+        "tier": "B",
         "is_cross_contract": false,
         "state_vars_accessed": [
           "UNISWAP_POOL_CREATION_VALUE",
@@ -157546,8 +157528,8 @@
         "id": "i:placeBid",
         "kind": "interaction",
         "function": "placeBid",
-        "label": null,
-        "tier": "REVIEW_IGNORE",
+        "label": 0,
+        "tier": "B",
         "is_cross_contract": false,
         "state_vars_accessed": [
           "PD_LEVEL_COUNT",
@@ -165310,8 +165292,7 @@
       "i:deposit"
     ],
     "vulnerability_types": [
-      "Reentrancy (SWC-107)",
-      "SWC-107-Reentrancy"
+      "reentrancy"
     ],
     "localization": {
       "vulnerable_interaction_ids": [

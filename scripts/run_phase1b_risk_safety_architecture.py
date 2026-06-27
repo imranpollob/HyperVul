@@ -137,6 +137,49 @@ def code_snippet(source: str, max_lines: int = 14) -> str:
     return "\\n".join(f"{i + 1}: {lines[i].rstrip()}" for i in range(start, end))
 
 
+def risk_evidence(item: Any, taxonomy_evidence: str) -> str:
+    bits = []
+    if taxonomy_evidence:
+        bits.append(taxonomy_evidence)
+    if item.features.get("external_call"):
+        bits.append("external_call")
+    if item.features.get("state_access") or item.features.get("state_update"):
+        bits.append("state_access_or_update")
+    if item.features.get("low_level_call"):
+        bits.append("low_level_call")
+    if item.features.get("cross_contract"):
+        bits.append("cross_contract_signal")
+    if item.features.get("call_type"):
+        bits.append(f"call_type={item.features.get('call_type')}")
+    return "|".join(dict.fromkeys(str(bit) for bit in bits if bit))
+
+
+def safety_protection_evidence(item: Any, safety_bits: list[str]) -> str:
+    evidence = list(safety_bits)
+    if item.features.get("state_update_before_external_call"):
+        evidence.append("state_update_before_external_call")
+    if item.features.get("state_update_after_external_call"):
+        evidence.append("state_update_after_external_call")
+    if item.features.get("only_owner_or_access_control"):
+        evidence.append("access_control_signal")
+    return "|".join(dict.fromkeys(str(bit) for bit in evidence if bit))
+
+
+def suggested_review_category(item: Any, safety_bits: list[str]) -> str:
+    strong = {"nonreentrant_modifier", "safe_erc20_wrapper", "try_catch_presence"}
+    moderate = {"require_assert_guard_before_call", "state_update_before_external_call", "only_owner_or_access_control"}
+    safety = set(safety_bits)
+    if safety & strong:
+        return "protected_negative"
+    if item.features.get("state_update_after_external_call") and not safety:
+        return "possible_positive"
+    if safety & moderate:
+        return "ambiguous"
+    if item.features.get("delegatecall_target_fixed") or item.features.get("delegatecall_target_user_controlled"):
+        return "wrong_scope"
+    return "ambiguous"
+
+
 def create_review_packet(safety: Any) -> list[dict[str, Any]]:
     taxonomy = [row for row in read_csv(REPORTS / "phase1a_false_positive_taxonomy.csv") if row["category"] == "protected reentrancy-like pattern"]
     rows = []
@@ -146,6 +189,8 @@ def create_review_packet(safety: Any) -> list[dict[str, Any]]:
         if not item:
             continue
         safety_bits = [name for name in phase1a.SAFETY_FEATURES if float(row.get(name, 0.0) or 0.0) > 0]
+        risk = risk_evidence(item, row["evidence"])
+        protection = safety_protection_evidence(item, safety_bits)
         rows.append(
             {
                 "review_priority": "",
@@ -156,12 +201,15 @@ def create_review_packet(safety: Any) -> list[dict[str, Any]]:
                 "predicted_score": float(row["score"]),
                 "current_label": item.label,
                 "vulnerability_type": "",
+                "risk_evidence": risk,
+                "safety_protection_evidence": protection,
                 "detected_safety_features": "|".join(safety_bits),
                 "external_call_line": first_call_line(item.function_source, item),
                 "state_update_line": first_state_update_line(item.function_source),
                 "modifier_guard_evidence": guard_evidence(item.function_source, item.features),
                 "code_snippet": code_snippet(item.function_source),
                 "interaction_id": row["interaction_id"],
+                "suggested_category": suggested_review_category(item, safety_bits),
                 "category": row["category"],
                 "evidence": row["evidence"],
                 "safety_feature_count": len(safety_bits),
@@ -537,12 +585,15 @@ def main() -> int:
             "predicted_score",
             "current_label",
             "vulnerability_type",
+            "risk_evidence",
+            "safety_protection_evidence",
             "detected_safety_features",
             "external_call_line",
             "state_update_line",
             "modifier_guard_evidence",
             "code_snippet",
             "interaction_id",
+            "suggested_category",
             "category",
             "evidence",
             "safety_feature_count",
