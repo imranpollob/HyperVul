@@ -1,0 +1,4 @@
+split,contracts,positive_contracts,negative_contracts,labeled_interactions,positive_interactions,negative_interactions,ignored_interactions,interaction_pos_rate,interaction_neg_pos_ratio
+train,1274,83,1191,8575,108,8467,85,0.012594752186588922,78.39814814814815
+val,264,23,241,1424,35,1389,92,0.02457865168539326,39.68571428571428
+test,198,16,182,1071,20,1051,0,0.018674136321195144,52.55
