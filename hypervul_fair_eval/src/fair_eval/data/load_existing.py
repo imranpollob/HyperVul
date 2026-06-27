@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import os
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
@@ -45,7 +46,8 @@ def load_contract_graph_split(path: Path) -> tuple[ContractGraph, ...]:
 
 
 def load_contract_graph_splits(project_root: Path) -> dict[str, tuple[ContractGraph, ...]]:
-    base = project_root / "data" / "contract_graphs"
+    override = os.environ.get("HYPERVUL_GRAPH_DIR")
+    base = Path(override).resolve() if override else project_root / "data" / "contract_graphs"
     graphs: dict[str, tuple[ContractGraph, ...]] = {}
     for split in SPLITS:
         path = base / f"{split}.json"
@@ -85,4 +87,3 @@ def load_dataset_bundle(project_root: Path | str) -> DatasetBundle:
         graphs=load_contract_graph_splits(root),
         clean_negatives=load_clean_negatives(root),
     )
-
