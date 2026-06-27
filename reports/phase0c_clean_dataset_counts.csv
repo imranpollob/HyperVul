@@ -1,0 +1,4 @@
+split,contracts,positive_contracts,negative_contracts,interactions,positive_interactions,negative_interactions,reentrancy_positive_contracts,unchecked_positive_contracts
+train,1339,140,1199,9173,191,8982,75,31
+val,280,30,250,1674,51,1623,14,11
+test,212,30,182,1220,40,1180,16,6

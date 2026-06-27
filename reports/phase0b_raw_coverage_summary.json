@@ -1,0 +1,132 @@
+{
+  "generated_at": "2026-06-27",
+  "raw_coverage": {
+    "DAppSCAN": {
+      "raw_finding_locations": 1646,
+      "raw_target_scope_locations": 352,
+      "source_files_available": 1646,
+      "recoverable_vulnerability_type": 1646,
+      "source_location_or_evidence": 1224,
+      "converted_to_constructable_hyperedge": 227,
+      "included_in_current_graph_dataset": 222,
+      "dropped_by_reason": {
+        "outside_priority_interaction_scope": 1294,
+        "not_constructable_as_state_plus_external_call_hyperedge": 112,
+        "missing_or_NA_function_location": 10,
+        "function_not_resolved_to_contract": 3,
+        "converted_but_not_in_current_graph_dataset": 5
+      },
+      "target_scope_by_type": {
+        "front-running": 86,
+        "reentrancy": 138,
+        "delegatecall": 12,
+        "unchecked low-level call": 116
+      },
+      "constructable_by_type": {
+        "reentrancy": 99,
+        "front-running": 40,
+        "unchecked low-level call": 82,
+        "delegatecall": 6
+      },
+      "graph_included_by_type": {
+        "reentrancy": 98,
+        "front-running": 40,
+        "unchecked low-level call": 78,
+        "delegatecall": 6
+      }
+    },
+    "FORGE": {
+      "raw_finding_locations": 1492,
+      "raw_target_scope_locations": 257,
+      "source_files_available": 1161,
+      "recoverable_vulnerability_type": 1492,
+      "source_location_or_evidence": 1492,
+      "converted_to_constructable_hyperedge": 141,
+      "included_in_current_graph_dataset": 87,
+      "dropped_by_reason": {
+        "outside_priority_interaction_scope": 892,
+        "not_constructable_as_state_plus_external_call_hyperedge": 61,
+        "converted_but_not_in_current_graph_dataset": 54,
+        "missing_or_NA_function_location": 67,
+        "missing_source_file": 316,
+        "function_not_resolved_to_contract": 15
+      },
+      "target_scope_by_type": {
+        "front-running": 123,
+        "reentrancy": 79,
+        "delegatecall": 13,
+        "unchecked low-level call": 42
+      },
+      "constructable_by_type": {
+        "other": 71,
+        "front-running": 41,
+        "unchecked low-level call": 4,
+        "reentrancy": 25
+      },
+      "graph_included_by_type": {
+        "other": 37,
+        "front-running": 32,
+        "unchecked low-level call": 1,
+        "reentrancy": 17
+      }
+    },
+    "combined": {
+      "raw_finding_locations": 3138,
+      "converted_to_constructable_hyperedge": 368,
+      "included_in_current_graph_dataset": 309
+    }
+  },
+  "current_graph_interactions": {
+    "total": 12357,
+    "positive": 294,
+    "negative": 12063
+  },
+  "current_graph_contracts": {
+    "total": 1919,
+    "positive": 206,
+    "negative": 1713
+  },
+  "duplicates_and_conflicts": {
+    "duplicate_groups": 608,
+    "label_conflicts": 10,
+    "quarantined_contracts_estimate": 88
+  },
+  "after_quarantine_estimate": {
+    "contracts_total": 1831,
+    "contracts_positive": 200,
+    "contracts_negative": 1631,
+    "scope_positive_contracts": {
+      "reentrancy": {
+        "positive_contracts_after_quarantine": 86,
+        "train_current": 63,
+        "val_current": 12,
+        "test_current": 11
+      },
+      "unchecked low-level call": {
+        "positive_contracts_after_quarantine": 47,
+        "train_current": 35,
+        "val_current": 8,
+        "test_current": 4
+      },
+      "delegatecall": {
+        "positive_contracts_after_quarantine": 2,
+        "train_current": 2,
+        "val_current": 0,
+        "test_current": 0
+      },
+      "front-running": {
+        "positive_contracts_after_quarantine": 49,
+        "train_current": 38,
+        "val_current": 4,
+        "test_current": 7
+      }
+    }
+  },
+  "cleanup_rules": [
+    "Group all contracts connected by project/family, source file, normalized contract hash, exact interaction-set hash, or exact function hash before splitting.",
+    "Merge exact duplicates within a group when labels agree and provenance points to the same finding.",
+    "If exact normalized function source has conflicting labels, verified positive raw finding wins only when provenance is explicit; otherwise quarantine the full connected group.",
+    "Do not allow the same normalized contract hash, source file, project/family, or function source hash across train/val/test.",
+    "Prioritize reentrancy for the first clean split; run unchecked-call only after manual review of positives without explicit low-level-call evidence."
+  ]
+}

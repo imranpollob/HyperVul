@@ -1,0 +1,1113 @@
+{
+  "dataset_files": {
+    "primary_graph_splits": [
+      "/home/pollmix/Coding/HyperVul/data/contract_graphs/train.json",
+      "/home/pollmix/Coding/HyperVul/data/contract_graphs/val.json",
+      "/home/pollmix/Coding/HyperVul/data/contract_graphs/test.json"
+    ],
+    "provenance_interaction_splits": [
+      "/home/pollmix/Coding/HyperVul/data/splits_clean/train.json",
+      "/home/pollmix/Coding/HyperVul/data/splits_clean/val.json",
+      "/home/pollmix/Coding/HyperVul/data/splits_clean/test.json"
+    ],
+    "positive_sources": [
+      "/home/pollmix/Coding/HyperVul/experiments/results/forge_ast_constructable_hyperedges.json",
+      "/home/pollmix/Coding/HyperVul/experiments/results/dappscan_ast_constructable_hyperedges.json"
+    ]
+  },
+  "schema": {
+    "row_unit": "contract graph; interaction/hyperedge nodes inside graph.nodes where kind == interaction",
+    "graph_fields": [
+      "contract",
+      "edges",
+      "graph_id",
+      "n_edges",
+      "n_helper",
+      "n_neg",
+      "n_pos",
+      "nodes",
+      "project",
+      "source",
+      "split"
+    ],
+    "interaction_fields": [
+      "callee_texts",
+      "external_calls",
+      "function",
+      "function_source",
+      "id",
+      "is_cross_contract",
+      "kind",
+      "label",
+      "sec",
+      "state_texts",
+      "state_vars_accessed",
+      "tier"
+    ],
+    "can_group_by_contract": true,
+    "graph_has_source_path_or_span": false,
+    "positive_source_location_recoverable_count": 294,
+    "positive_source_location_missing_count": 0,
+    "positive_vtype_recoverable_count": 294,
+    "positive_vtype_missing_count": 0
+  },
+  "class_distribution": {
+    "train": {
+      "contracts_total": 1614,
+      "contracts_positive": 153,
+      "contracts_negative": 1461,
+      "interactions_total": 10740,
+      "interactions_positive": 215,
+      "interactions_negative": 10525,
+      "interaction_pos_rate": 0.020018621973929236,
+      "contract_pos_rate": 0.09479553903345725,
+      "interaction_neg_pos_ratio": 48.95348837209303,
+      "contract_neg_pos_ratio": 9.549019607843137,
+      "interactions_per_contract": {
+        "min": 1,
+        "max": 31,
+        "mean": 6.654275092936803,
+        "median": 5.0,
+        "p90": 17
+      },
+      "positive_interactions_per_positive_contract": {
+        "min": 1,
+        "max": 7,
+        "mean": 1.4052287581699345,
+        "median": 1,
+        "p90": 2
+      },
+      "contracts_with_multiple_positive_interactions": 34,
+      "negative_contracts_with_many_risky_interactions": 136
+    },
+    "val": {
+      "contracts_total": 167,
+      "contracts_positive": 28,
+      "contracts_negative": 139,
+      "interactions_total": 844,
+      "interactions_positive": 38,
+      "interactions_negative": 806,
+      "interaction_pos_rate": 0.045023696682464455,
+      "contract_pos_rate": 0.16766467065868262,
+      "interaction_neg_pos_ratio": 21.210526315789473,
+      "contract_neg_pos_ratio": 4.964285714285714,
+      "interactions_per_contract": {
+        "min": 1,
+        "max": 27,
+        "mean": 5.053892215568863,
+        "median": 3,
+        "p90": 13
+      },
+      "positive_interactions_per_positive_contract": {
+        "min": 1,
+        "max": 5,
+        "mean": 1.3571428571428572,
+        "median": 1.0,
+        "p90": 2
+      },
+      "contracts_with_multiple_positive_interactions": 7,
+      "negative_contracts_with_many_risky_interactions": 8
+    },
+    "test": {
+      "contracts_total": 138,
+      "contracts_positive": 25,
+      "contracts_negative": 113,
+      "interactions_total": 773,
+      "interactions_positive": 41,
+      "interactions_negative": 732,
+      "interaction_pos_rate": 0.05304010349288486,
+      "contract_pos_rate": 0.18115942028985507,
+      "interaction_neg_pos_ratio": 17.853658536585368,
+      "contract_neg_pos_ratio": 4.52,
+      "interactions_per_contract": {
+        "min": 1,
+        "max": 31,
+        "mean": 5.601449275362318,
+        "median": 3.0,
+        "p90": 15
+      },
+      "positive_interactions_per_positive_contract": {
+        "min": 1,
+        "max": 4,
+        "mean": 1.64,
+        "median": 1,
+        "p90": 3
+      },
+      "contracts_with_multiple_positive_interactions": 11,
+      "negative_contracts_with_many_risky_interactions": 3
+    }
+  },
+  "vulnerability_type_distribution": {
+    "train": {
+      "Reentrancy (SWC-107)": 102,
+      "Front-running / Tx Order (SWC-114)": 47,
+      "Unchecked Call Return (SWC-104)": 60,
+      "Delegatecall (SWC-112)": 6
+    },
+    "val": {
+      "Reentrancy (SWC-107)": 21,
+      "Front-running / Tx Order (SWC-114)": 5,
+      "Unchecked Call Return (SWC-104)": 12
+    },
+    "test": {
+      "Reentrancy (SWC-107)": 23,
+      "Front-running / Tx Order (SWC-114)": 12,
+      "Unchecked Call Return (SWC-104)": 6
+    }
+  },
+  "positive_count_by_vulnerability_type_all_splits": {
+    "Reentrancy (SWC-107)": 146,
+    "Front-running / Tx Order (SWC-114)": 64,
+    "Unchecked Call Return (SWC-104)": 78,
+    "Delegatecall (SWC-112)": 6
+  },
+  "split_integrity": {
+    "findings": [
+      {
+        "kind": "same_contract_graph_id",
+        "severity": "NONE",
+        "description": "No graph_id values appear in multiple splits.",
+        "examples": []
+      },
+      {
+        "kind": "same_project_id",
+        "severity": "NONE",
+        "description": "No project values appear in multiple splits.",
+        "examples": []
+      },
+      {
+        "kind": "exact_duplicate_function_source_across_splits",
+        "severity": "MEDIUM",
+        "description": "149 exact normalized interaction/function source hashes appear in multiple splits; 0 include at least one positive label.",
+        "examples": [
+          {
+            "source_hash": "4dae08a32cb7",
+            "splits": "test|train",
+            "labels": "0",
+            "examples": "train:DAPP::DAppSCAN-source/contracts/PeckShield-AirSwap/airswap-protocols-b87d292aaf6e28ede564b7ea28ece39219994607::Migrations::upgrade[y=0] ; train:DAPP::DAppSCAN-source/contracts/consensys-Skyweaver/Skyweaver-contracts-bde0c184db6168bf86656a48b12d5747950b54d9::Migrations::upgrade[y=0] ; train:DAPP::DAppSCAN-source/contracts/PepperSec-Aira-Robonomic/robonomics_contracts-cc35a91de187072214d215262d8371f0159c2498::Migrations::upgrade[y=0] ; train:DAPP::DAppSCAN-source/contracts/SlowMist-CFFv2 Smart Contract Security Audit Report/cff-contract-v2-c86bef3f13c7585f547f9cd0ca900f94664e96b7::Migrations::upgrade[y=0] ; train:DAPP::DAppSCAN-source/contracts/consensys-MCDEX_Mai_Protocol_V2/mai-protocol-v2-4b198083ec4ae2d6851e101fc44ea333eaa3cd92::Migrations::upgrade[y=0] ; train:DAPP::DAppSCAN-source/contracts/PeckShield-Buffer/code::Migrations::upgrade[y=0]"
+          },
+          {
+            "source_hash": "25e5dc8ca7a8",
+            "splits": "train|val",
+            "labels": "0",
+            "examples": "train:DAPP::DAppSCAN-source/contracts/Trail_of_Bits-FraxQ42021/frax-solidity-bd40775e283923aa9e32a107abd426430a99835e::GovernorAlpha::_queueOrRevert[y=0] ; train:DAPP::DAppSCAN-source/contracts/PeckShield-Rikkei/rifi-protocol-b33243fb3a218cc195f0727fe1499cb57f5ea0b2::GovernorAlpha::_queueOrRevert[y=0] ; train:DAPP::DAppSCAN-source/contracts/PeckShield-Rikkei/rifi-protocol-b33243fb3a218cc195f0727fe1499cb57f5ea0b2::GovernorAlphaCertora::_queueOrRevert[y=0] ; train:DAPP::DAppSCAN-source/contracts/PeckShield-Atlantis/atlantis-protocol-bsc-766acebba9316eced1c15abf6158b31f470a947f::GovernorAlpha::_queueOrRevert[y=0] ; train:DAPP::DAppSCAN-source/contracts/PeckShield-Atlantis/atlantis-protocol-bsc-766acebba9316eced1c15abf6158b31f470a947f::GovernorAlphaCertora::_queueOrRevert[y=0] ; train:DAPP::DAppSCAN-source/contracts/Chainsecurity-Compound  cToken unredacted/compound-protocol-4a54ec5c55b66ea67d44b76f3056f0ed7229db8c::GovernorAlpha::_queueOrRevert[y=0]"
+          },
+          {
+            "source_hash": "f36a4485c188",
+            "splits": "train|val",
+            "labels": "0",
+            "examples": "train:DAPP::DAppSCAN-source/contracts/Trail_of_Bits-FraxQ42021/frax-solidity-bd40775e283923aa9e32a107abd426430a99835e::GovernorAlpha::state[y=0] ; train:DAPP::DAppSCAN-source/contracts/PeckShield-Rikkei/rifi-protocol-b33243fb3a218cc195f0727fe1499cb57f5ea0b2::GovernorAlpha::state[y=0] ; train:DAPP::DAppSCAN-source/contracts/PeckShield-Rikkei/rifi-protocol-b33243fb3a218cc195f0727fe1499cb57f5ea0b2::GovernorAlphaCertora::state[y=0] ; train:DAPP::DAppSCAN-source/contracts/PeckShield-Atlantis/atlantis-protocol-bsc-766acebba9316eced1c15abf6158b31f470a947f::GovernorAlpha::state[y=0] ; train:DAPP::DAppSCAN-source/contracts/PeckShield-Atlantis/atlantis-protocol-bsc-766acebba9316eced1c15abf6158b31f470a947f::GovernorAlphaCertora::state[y=0] ; train:DAPP::DAppSCAN-source/contracts/Chainsecurity-Compound  cToken unredacted/compound-protocol-4a54ec5c55b66ea67d44b76f3056f0ed7229db8c::GovernorAlpha::state[y=0]"
+          },
+          {
+            "source_hash": "2ab9e2588309",
+            "splits": "train|val",
+            "labels": "0",
+            "examples": "train:DAPP::DAppSCAN-source/contracts/Trail_of_Bits-FraxQ42021/frax-solidity-bd40775e283923aa9e32a107abd426430a99835e::GovernorAlpha::__acceptAdmin[y=0] ; train:DAPP::DAppSCAN-source/contracts/PeckShield-Rikkei/rifi-protocol-b33243fb3a218cc195f0727fe1499cb57f5ea0b2::GovernorAlpha::__acceptAdmin[y=0] ; train:DAPP::DAppSCAN-source/contracts/PeckShield-Rikkei/rifi-protocol-b33243fb3a218cc195f0727fe1499cb57f5ea0b2::GovernorAlphaCertora::__acceptAdmin[y=0] ; train:DAPP::DAppSCAN-source/contracts/PeckShield-Atlantis/atlantis-protocol-bsc-766acebba9316eced1c15abf6158b31f470a947f::GovernorAlpha::__acceptAdmin[y=0] ; train:DAPP::DAppSCAN-source/contracts/PeckShield-Atlantis/atlantis-protocol-bsc-766acebba9316eced1c15abf6158b31f470a947f::GovernorAlphaCertora::__acceptAdmin[y=0] ; train:DAPP::DAppSCAN-source/contracts/QuillAudits-Bond Appetit-Bond Appetit/bondappetit-protocol-355180f0aca0b29d60d808f761052956b7a3a159::GovernorAlpha::__acceptAdmin[y=0]"
+          },
+          {
+            "source_hash": "f6590a8bded6",
+            "splits": "train|val",
+            "labels": "0",
+            "examples": "train:DAPP::DAppSCAN-source/contracts/Trail_of_Bits-FraxQ42021/frax-solidity-bd40775e283923aa9e32a107abd426430a99835e::GovernorAlpha::__queueSetTimelockPendingAdmin[y=0] ; train:DAPP::DAppSCAN-source/contracts/PeckShield-Rikkei/rifi-protocol-b33243fb3a218cc195f0727fe1499cb57f5ea0b2::GovernorAlpha::__queueSetTimelockPendingAdmin[y=0] ; train:DAPP::DAppSCAN-source/contracts/PeckShield-Rikkei/rifi-protocol-b33243fb3a218cc195f0727fe1499cb57f5ea0b2::GovernorAlphaCertora::__queueSetTimelockPendingAdmin[y=0] ; train:DAPP::DAppSCAN-source/contracts/PeckShield-Atlantis/atlantis-protocol-bsc-766acebba9316eced1c15abf6158b31f470a947f::GovernorAlpha::__queueSetTimelockPendingAdmin[y=0] ; train:DAPP::DAppSCAN-source/contracts/PeckShield-Atlantis/atlantis-protocol-bsc-766acebba9316eced1c15abf6158b31f470a947f::GovernorAlphaCertora::__queueSetTimelockPendingAdmin[y=0] ; train:DAPP::DAppSCAN-source/contracts/Chainsecurity-Compound  cToken unredacted/compound-protocol-4a54ec5c55b66ea67d44b76f3056f0ed7229db8c::GovernorAlpha::__queueSetTimelockPendingAdmin[y=0]"
+          },
+          {
+            "source_hash": "03f5a9f4fae1",
+            "splits": "train|val",
+            "labels": "0",
+            "examples": "train:DAPP::DAppSCAN-source/contracts/Trail_of_Bits-FraxQ42021/frax-solidity-bd40775e283923aa9e32a107abd426430a99835e::GovernorAlpha::__executeSetTimelockPendingAdmin[y=0] ; train:DAPP::DAppSCAN-source/contracts/PeckShield-Rikkei/rifi-protocol-b33243fb3a218cc195f0727fe1499cb57f5ea0b2::GovernorAlpha::__executeSetTimelockPendingAdmin[y=0] ; train:DAPP::DAppSCAN-source/contracts/PeckShield-Rikkei/rifi-protocol-b33243fb3a218cc195f0727fe1499cb57f5ea0b2::GovernorAlphaCertora::__executeSetTimelockPendingAdmin[y=0] ; train:DAPP::DAppSCAN-source/contracts/PeckShield-Atlantis/atlantis-protocol-bsc-766acebba9316eced1c15abf6158b31f470a947f::GovernorAlpha::__executeSetTimelockPendingAdmin[y=0] ; train:DAPP::DAppSCAN-source/contracts/PeckShield-Atlantis/atlantis-protocol-bsc-766acebba9316eced1c15abf6158b31f470a947f::GovernorAlphaCertora::__executeSetTimelockPendingAdmin[y=0] ; train:DAPP::DAppSCAN-source/contracts/Chainsecurity-Compound  cToken unredacted/compound-protocol-4a54ec5c55b66ea67d44b76f3056f0ed7229db8c::GovernorAlpha::__executeSetTimelockPendingAdmin[y=0]"
+          },
+          {
+            "source_hash": "c4a9b8a32556",
+            "splits": "test|train",
+            "labels": "0",
+            "examples": "train:DAPP::DAppSCAN-source/contracts/Trail_of_Bits-FraxQ42021/frax-solidity-bd40775e283923aa9e32a107abd426430a99835e::FRAX3CRV_Curve_FXS_Distributor::getReward[y=0] ; test:DAPP::DAppSCAN-source/contracts/PeckShield-btdotfinance/bt-finance-6300bc1271b73a1755fae02594d25fdf6fa39a9c::StakingRewards::getReward[y=0]"
+          },
+          {
+            "source_hash": "11ac38063790",
+            "splits": "test|train",
+            "labels": "0",
+            "examples": "train:DAPP::DAppSCAN-source/contracts/Trail_of_Bits-FraxQ42021/frax-solidity-bd40775e283923aa9e32a107abd426430a99835e::FRAX3CRV_Curve_FXS_Distributor::withdraw[y=0] ; test:DAPP::DAppSCAN-source/contracts/PeckShield-btdotfinance/bt-finance-6300bc1271b73a1755fae02594d25fdf6fa39a9c::StakingRewards::withdraw[y=0]"
+          },
+          {
+            "source_hash": "fbd9875db397",
+            "splits": "train|val",
+            "labels": "0",
+            "examples": "train:DAPP::DAppSCAN-source/contracts/PeckShield-Rikkei/rifi-protocol-b33243fb3a218cc195f0727fe1499cb57f5ea0b2::GovernorAlpha::queue[y=0] ; train:DAPP::DAppSCAN-source/contracts/PeckShield-Rikkei/rifi-protocol-b33243fb3a218cc195f0727fe1499cb57f5ea0b2::GovernorAlphaCertora::queue[y=0] ; train:DAPP::DAppSCAN-source/contracts/PeckShield-Atlantis/atlantis-protocol-bsc-766acebba9316eced1c15abf6158b31f470a947f::GovernorAlpha::queue[y=0] ; train:DAPP::DAppSCAN-source/contracts/PeckShield-Atlantis/atlantis-protocol-bsc-766acebba9316eced1c15abf6158b31f470a947f::GovernorAlphaCertora::queue[y=0] ; train:DAPP::DAppSCAN-source/contracts/Chainsecurity-Compound  cToken unredacted/compound-protocol-4a54ec5c55b66ea67d44b76f3056f0ed7229db8c::GovernorAlpha::queue[y=0] ; train:DAPP::DAppSCAN-source/contracts/Chainsecurity-Compound  cToken unredacted/compound-protocol-4a54ec5c55b66ea67d44b76f3056f0ed7229db8c::GovernorAlphaCertora::queue[y=0]"
+          },
+          {
+            "source_hash": "ac180f672737",
+            "splits": "train|val",
+            "labels": "0",
+            "examples": "train:DAPP::DAppSCAN-source/contracts/PeckShield-Rikkei/rifi-protocol-b33243fb3a218cc195f0727fe1499cb57f5ea0b2::GovernorAlpha::execute[y=0] ; train:DAPP::DAppSCAN-source/contracts/PeckShield-Rikkei/rifi-protocol-b33243fb3a218cc195f0727fe1499cb57f5ea0b2::GovernorAlphaCertora::execute[y=0] ; train:DAPP::DAppSCAN-source/contracts/PeckShield-Atlantis/atlantis-protocol-bsc-766acebba9316eced1c15abf6158b31f470a947f::GovernorAlpha::execute[y=0] ; train:DAPP::DAppSCAN-source/contracts/PeckShield-Atlantis/atlantis-protocol-bsc-766acebba9316eced1c15abf6158b31f470a947f::GovernorAlphaCertora::execute[y=0] ; val:DAPP::DAppSCAN-source/contracts/PeckShield-SushiSwap/sushiswap-180bc9b642bba79c1ee4a63f71a3a0d36e64aa63::GovernorAlpha::execute[y=0]"
+          },
+          {
+            "source_hash": "9095de4a849c",
+            "splits": "test|train",
+            "labels": "0",
+            "examples": "train:DAPP::DAppSCAN-source/contracts/PeckShield-DarkCrypto/darkcrypto-contracts-fee5be8d36459aebed2b84e6493875b3dc0366fd::Timelock::executeTransaction[y=0] ; train:DAPP::DAppSCAN-source/contracts/QuillAudits-Bond Appetit-Bond Appetit/bondappetit-protocol-355180f0aca0b29d60d808f761052956b7a3a159::Timelock::executeTransaction[y=0] ; train:DAPP::DAppSCAN-source/contracts/PeckShield-DSG/core-6f607f77698936e132e4e9b5cb4d75580636d919::Timelock::executeTransaction[y=0] ; test:DAPP::DAppSCAN-source/contracts/PeckShield-TranchessV1.1/contract-core-68a86350313c1cb9e5467e791d3e9efaf228a0df::Timelock::executeTransaction[y=0]"
+          },
+          {
+            "source_hash": "ec12093efc38",
+            "splits": "train|val",
+            "labels": "0",
+            "examples": "train:DAPP::DAppSCAN-source/contracts/PeckShield-MilkySwap/milkyswap-59f163e9959cf8bae4a521a9648219b553312e07::UniswapV2Factory::createPair[y=0] ; val:DAPP::DAppSCAN-source/contracts/PeckShield-SushiSwap/sushiswap-180bc9b642bba79c1ee4a63f71a3a0d36e64aa63::UniswapV2Factory::createPair[y=0]"
+          },
+          {
+            "source_hash": "2f43ddd27471",
+            "splits": "train|val",
+            "labels": "0",
+            "examples": "train:DAPP::DAppSCAN-source/contracts/PeckShield-MilkySwap/milkyswap-59f163e9959cf8bae4a521a9648219b553312e07::UniswapV2Pair::_safeTransfer[y=0] ; train:DAPP::DAppSCAN-source/contracts/Trail_of_Bits-FraxFinance/frax-solidity-3f0993a70e3496fd27887db7754d68709c84015e::UniswapV2Pair::_safeTransfer[y=0] ; val:DAPP::DAppSCAN-source/contracts/PeckShield-KaoyaSwap/contracts-8273073f1d6914f372790399378f177573c52e37::UniswapV2Pair::_safeTransfer[y=0] ; val:DAPP::DAppSCAN-source/contracts/PeckShield-SushiSwap/sushiswap-180bc9b642bba79c1ee4a63f71a3a0d36e64aa63::UniswapV2Pair::_safeTransfer[y=0]"
+          },
+          {
+            "source_hash": "b9d74fcea6ed",
+            "splits": "train|val",
+            "labels": "0",
+            "examples": "train:DAPP::DAppSCAN-source/contracts/PeckShield-MilkySwap/milkyswap-59f163e9959cf8bae4a521a9648219b553312e07::UniswapV2Pair::_update[y=0] ; train:DAPP::DAppSCAN-source/contracts/Trail_of_Bits-FraxFinance/frax-solidity-3f0993a70e3496fd27887db7754d68709c84015e::UniswapV2Pair::_update[y=0] ; val:DAPP::DAppSCAN-source/contracts/PeckShield-KaoyaSwap/contracts-8273073f1d6914f372790399378f177573c52e37::UniswapV2Pair::_update[y=0] ; val:DAPP::DAppSCAN-source/contracts/PeckShield-SushiSwap/sushiswap-180bc9b642bba79c1ee4a63f71a3a0d36e64aa63::UniswapV2Pair::_update[y=0]"
+          },
+          {
+            "source_hash": "ca9fd25b180d",
+            "splits": "train|val",
+            "labels": "0",
+            "examples": "train:DAPP::DAppSCAN-source/contracts/PeckShield-MilkySwap/milkyswap-59f163e9959cf8bae4a521a9648219b553312e07::UniswapV2Pair::_mintFee[y=0] ; train:DAPP::DAppSCAN-source/contracts/Trail_of_Bits-FraxFinance/frax-solidity-3f0993a70e3496fd27887db7754d68709c84015e::UniswapV2Pair::_mintFee[y=0] ; val:DAPP::DAppSCAN-source/contracts/PeckShield-KaoyaSwap/contracts-8273073f1d6914f372790399378f177573c52e37::UniswapV2Pair::_mintFee[y=0] ; val:DAPP::DAppSCAN-source/contracts/PeckShield-SushiSwap/sushiswap-180bc9b642bba79c1ee4a63f71a3a0d36e64aa63::UniswapV2Pair::_mintFee[y=0]"
+          },
+          {
+            "source_hash": "5f28a7bf097f",
+            "splits": "train|val",
+            "labels": "0",
+            "examples": "train:DAPP::DAppSCAN-source/contracts/PeckShield-MilkySwap/milkyswap-59f163e9959cf8bae4a521a9648219b553312e07::UniswapV2Pair::burn[y=0] ; val:DAPP::DAppSCAN-source/contracts/PeckShield-SushiSwap/sushiswap-180bc9b642bba79c1ee4a63f71a3a0d36e64aa63::UniswapV2Pair::burn[y=0]"
+          },
+          {
+            "source_hash": "05381977f153",
+            "splits": "train|val",
+            "labels": "0",
+            "examples": "train:DAPP::DAppSCAN-source/contracts/PeckShield-MilkySwap/milkyswap-59f163e9959cf8bae4a521a9648219b553312e07::UniswapV2Pair::swap[y=0] ; val:DAPP::DAppSCAN-source/contracts/PeckShield-SushiSwap/sushiswap-180bc9b642bba79c1ee4a63f71a3a0d36e64aa63::UniswapV2Pair::swap[y=0]"
+          },
+          {
+            "source_hash": "a04cd133c1a6",
+            "splits": "train|val",
+            "labels": "0",
+            "examples": "train:DAPP::DAppSCAN-source/contracts/PeckShield-MilkySwap/milkyswap-59f163e9959cf8bae4a521a9648219b553312e07::UniswapV2Pair::skim[y=0] ; val:DAPP::DAppSCAN-source/contracts/PeckShield-SushiSwap/sushiswap-180bc9b642bba79c1ee4a63f71a3a0d36e64aa63::UniswapV2Pair::skim[y=0]"
+          },
+          {
+            "source_hash": "ff56cd04ae68",
+            "splits": "train|val",
+            "labels": "0",
+            "examples": "train:DAPP::DAppSCAN-source/contracts/PeckShield-MilkySwap/milkyswap-59f163e9959cf8bae4a521a9648219b553312e07::UniswapV2Pair::sync[y=0] ; val:DAPP::DAppSCAN-source/contracts/PeckShield-SushiSwap/sushiswap-180bc9b642bba79c1ee4a63f71a3a0d36e64aa63::UniswapV2Pair::sync[y=0]"
+          },
+          {
+            "source_hash": "af88eb6e8c95",
+            "splits": "train|val",
+            "labels": "0",
+            "examples": "train:DAPP::DAppSCAN-source/contracts/PeckShield-MilkySwap/milkyswap-59f163e9959cf8bae4a521a9648219b553312e07::UniswapV2Router02::removeLiquidityWithPermit[y=0] ; train:DAPP::DAppSCAN-source/contracts/Trail_of_Bits-FraxFinance/frax-solidity-3f0993a70e3496fd27887db7754d68709c84015e::UniswapV2Router02_Modified::removeLiquidityWithPermit[y=0] ; train:DAPP::DAppSCAN-source/contracts/Trail_of_Bits-FraxFinance/frax-solidity-3f0993a70e3496fd27887db7754d68709c84015e::UniswapV2Router02::removeLiquidityWithPermit[y=0] ; train:DAPP::DAppSCAN-source/contracts/Inspex-StakingPool, Vault, Strategy & VotingEscrow/scientix-contract-main::UniswapV2Router02::removeLiquidityWithPermit[y=0] ; val:DAPP::DAppSCAN-source/contracts/PeckShield-KaoyaSwap/contracts-8273073f1d6914f372790399378f177573c52e37::UniswapV2Router02::removeLiquidityWithPermit[y=0]"
+          },
+          {
+            "source_hash": "055459cdb96c",
+            "splits": "train|val",
+            "labels": "0",
+            "examples": "train:DAPP::DAppSCAN-source/contracts/PeckShield-MilkySwap/milkyswap-59f163e9959cf8bae4a521a9648219b553312e07::UniswapV2Router02::removeLiquidityETHWithPermit[y=0] ; train:DAPP::DAppSCAN-source/contracts/Trail_of_Bits-FraxFinance/frax-solidity-3f0993a70e3496fd27887db7754d68709c84015e::UniswapV2Router02_Modified::removeLiquidityETHWithPermit[y=0] ; train:DAPP::DAppSCAN-source/contracts/Trail_of_Bits-FraxFinance/frax-solidity-3f0993a70e3496fd27887db7754d68709c84015e::UniswapV2Router02::removeLiquidityETHWithPermit[y=0] ; train:DAPP::DAppSCAN-source/contracts/Inspex-StakingPool, Vault, Strategy & VotingEscrow/scientix-contract-main::UniswapV2Router02::removeLiquidityETHWithPermit[y=0] ; val:DAPP::DAppSCAN-source/contracts/PeckShield-KaoyaSwap/contracts-8273073f1d6914f372790399378f177573c52e37::UniswapV2Router02::removeLiquidityETHWithPermit[y=0]"
+          },
+          {
+            "source_hash": "5fd4eac1b7a8",
+            "splits": "train|val",
+            "labels": "0",
+            "examples": "train:DAPP::DAppSCAN-source/contracts/PeckShield-MilkySwap/milkyswap-59f163e9959cf8bae4a521a9648219b553312e07::UniswapV2Router02::getAmountsOut[y=0] ; train:DAPP::DAppSCAN-source/contracts/Trail_of_Bits-FraxFinance/frax-solidity-3f0993a70e3496fd27887db7754d68709c84015e::UniswapV2Router02_Modified::getAmountsOut[y=0] ; train:DAPP::DAppSCAN-source/contracts/Trail_of_Bits-FraxFinance/frax-solidity-3f0993a70e3496fd27887db7754d68709c84015e::UniswapV2Router02::getAmountsOut[y=0] ; train:DAPP::DAppSCAN-source/contracts/Inspex-StakingPool, Vault, Strategy & VotingEscrow/scientix-contract-main::UniswapV2Router02::getAmountsOut[y=0] ; val:DAPP::DAppSCAN-source/contracts/PeckShield-KaoyaSwap/contracts-8273073f1d6914f372790399378f177573c52e37::UniswapV2Router02::getAmountsOut[y=0]"
+          },
+          {
+            "source_hash": "9acd8fef871b",
+            "splits": "train|val",
+            "labels": "0",
+            "examples": "train:DAPP::DAppSCAN-source/contracts/PeckShield-MilkySwap/milkyswap-59f163e9959cf8bae4a521a9648219b553312e07::UniswapV2Router02::getAmountsIn[y=0] ; train:DAPP::DAppSCAN-source/contracts/Trail_of_Bits-FraxFinance/frax-solidity-3f0993a70e3496fd27887db7754d68709c84015e::UniswapV2Router02_Modified::getAmountsIn[y=0] ; train:DAPP::DAppSCAN-source/contracts/Trail_of_Bits-FraxFinance/frax-solidity-3f0993a70e3496fd27887db7754d68709c84015e::UniswapV2Router02::getAmountsIn[y=0] ; train:DAPP::DAppSCAN-source/contracts/Inspex-StakingPool, Vault, Strategy & VotingEscrow/scientix-contract-main::UniswapV2Router02::getAmountsIn[y=0] ; val:DAPP::DAppSCAN-source/contracts/PeckShield-KaoyaSwap/contracts-8273073f1d6914f372790399378f177573c52e37::UniswapV2Router02::getAmountsIn[y=0]"
+          },
+          {
+            "source_hash": "df3cbd793794",
+            "splits": "train|val",
+            "labels": "0",
+            "examples": "train:DAPP::DAppSCAN-source/contracts/PeckShield-MilkySwap/milkyswap-59f163e9959cf8bae4a521a9648219b553312e07::UniswapV2Router02::removeLiquidityETHWithPermitSupportingFeeOnTransferTokens[y=0] ; train:DAPP::DAppSCAN-source/contracts/Trail_of_Bits-FraxFinance/frax-solidity-3f0993a70e3496fd27887db7754d68709c84015e::UniswapV2Router02_Modified::removeLiquidityETHWithPermitSupportingFeeOnTransferTokens[y=0] ; train:DAPP::DAppSCAN-source/contracts/Trail_of_Bits-FraxFinance/frax-solidity-3f0993a70e3496fd27887db7754d68709c84015e::UniswapV2Router02::removeLiquidityETHWithPermitSupportingFeeOnTransferTokens[y=0] ; train:DAPP::DAppSCAN-source/contracts/Inspex-StakingPool, Vault, Strategy & VotingEscrow/scientix-contract-main::UniswapV2Router02::removeLiquidityETHWithPermitSupportingFeeOnTransferTokens[y=0] ; val:DAPP::DAppSCAN-source/contracts/PeckShield-KaoyaSwap/contracts-8273073f1d6914f372790399378f177573c52e37::UniswapV2Router02::removeLiquidityETHWithPermitSupportingFeeOnTransferTokens[y=0]"
+          },
+          {
+            "source_hash": "4d169f21dfd7",
+            "splits": "train|val",
+            "labels": "0",
+            "examples": "train:DAPP::DAppSCAN-source/contracts/PeckShield-MilkySwap/milkyswap-59f163e9959cf8bae4a521a9648219b553312e07::UniswapV2Router02::_addLiquidity[y=0] ; train:DAPP::DAppSCAN-source/contracts/Trail_of_Bits-FraxFinance/frax-solidity-3f0993a70e3496fd27887db7754d68709c84015e::UniswapV2Router02_Modified::_addLiquidity[y=0] ; train:DAPP::DAppSCAN-source/contracts/Trail_of_Bits-FraxFinance/frax-solidity-3f0993a70e3496fd27887db7754d68709c84015e::UniswapV2Router02::_addLiquidity[y=0] ; train:DAPP::DAppSCAN-source/contracts/Inspex-StakingPool, Vault, Strategy & VotingEscrow/scientix-contract-main::UniswapV2Router02::_addLiquidity[y=0] ; val:DAPP::DAppSCAN-source/contracts/PeckShield-KaoyaSwap/contracts-8273073f1d6914f372790399378f177573c52e37::UniswapV2Router02::_addLiquidity[y=0]"
+          },
+          {
+            "source_hash": "94ec08c83377",
+            "splits": "test|train",
+            "labels": "0",
+            "examples": "train:DAPP::DAppSCAN-source/contracts/PeckShield-Tranchessv1.0/contract-core-5ac3d997da3ef37b0135565a11c5ebcc519862aa::BscAprOracle::getVenusBorrowIndex[y=0] ; test:DAPP::DAppSCAN-source/contracts/PeckShield-TranchessV1.1/contract-core-68a86350313c1cb9e5467e791d3e9efaf228a0df::BscAprOracle::getVenusBorrowIndex[y=0]"
+          },
+          {
+            "source_hash": "52f688426a68",
+            "splits": "test|train",
+            "labels": "0",
+            "examples": "train:DAPP::DAppSCAN-source/contracts/PeckShield-Tranchessv1.0/contract-core-5ac3d997da3ef37b0135565a11c5ebcc519862aa::AprOracle::getCompoundBorrowIndex[y=0] ; test:DAPP::DAppSCAN-source/contracts/PeckShield-TranchessV1.1/contract-core-68a86350313c1cb9e5467e791d3e9efaf228a0df::AprOracle::getCompoundBorrowIndex[y=0]"
+          },
+          {
+            "source_hash": "5f1eff337bdd",
+            "splits": "test|train",
+            "labels": "0",
+            "examples": "train:DAPP::DAppSCAN-source/contracts/PeckShield-Tranchessv1.0/contract-core-5ac3d997da3ef37b0135565a11c5ebcc519862aa::Exchange::applyForMaker[y=0] ; train:DAPP::DAppSCAN-source/contracts/PeckShield-Tranchessv1.0/contract-core-5ac3d997da3ef37b0135565a11c5ebcc519862aa::ExchangeRoles::applyForMaker[y=0] ; test:DAPP::DAppSCAN-source/contracts/PeckShield-TranchessV1.1/contract-core-68a86350313c1cb9e5467e791d3e9efaf228a0df::ExchangeV2::applyForMaker[y=0] ; test:DAPP::DAppSCAN-source/contracts/PeckShield-TranchessV1.1/contract-core-68a86350313c1cb9e5467e791d3e9efaf228a0df::Exchange::applyForMaker[y=0] ; test:DAPP::DAppSCAN-source/contracts/PeckShield-TranchessV1.1/contract-core-68a86350313c1cb9e5467e791d3e9efaf228a0df::ExchangeRoles::applyForMaker[y=0]"
+          },
+          {
+            "source_hash": "cfeda667e1d5",
+            "splits": "test|train",
+            "labels": "0",
+            "examples": "train:DAPP::DAppSCAN-source/contracts/PeckShield-Tranchessv1.0/contract-core-5ac3d997da3ef37b0135565a11c5ebcc519862aa::Exchange::totalSupply[y=0] ; train:DAPP::DAppSCAN-source/contracts/PeckShield-Tranchessv1.0/contract-core-5ac3d997da3ef37b0135565a11c5ebcc519862aa::Staking::totalSupply[y=0] ; train:DAPP::DAppSCAN-source/contracts/PeckShield-Tranchessv1.0/contract-core-5ac3d997da3ef37b0135565a11c5ebcc519862aa::StakingTestWrapper::totalSupply[y=0] ; test:DAPP::DAppSCAN-source/contracts/PeckShield-TranchessV1.1/contract-core-68a86350313c1cb9e5467e791d3e9efaf228a0df::Exchange::totalSupply[y=0] ; test:DAPP::DAppSCAN-source/contracts/PeckShield-TranchessV1.1/contract-core-68a86350313c1cb9e5467e791d3e9efaf228a0df::Staking::totalSupply[y=0] ; test:DAPP::DAppSCAN-source/contracts/PeckShield-TranchessV1.1/contract-core-68a86350313c1cb9e5467e791d3e9efaf228a0df::StakingTestWrapper::totalSupply[y=0]"
+          },
+          {
+            "source_hash": "27ff3cdc3337",
+            "splits": "test|train",
+            "labels": "0",
+            "examples": "train:DAPP::DAppSCAN-source/contracts/PeckShield-Tranchessv1.0/contract-core-5ac3d997da3ef37b0135565a11c5ebcc519862aa::Exchange::availableBalanceOf[y=0] ; train:DAPP::DAppSCAN-source/contracts/PeckShield-Tranchessv1.0/contract-core-5ac3d997da3ef37b0135565a11c5ebcc519862aa::Staking::availableBalanceOf[y=0] ; train:DAPP::DAppSCAN-source/contracts/PeckShield-Tranchessv1.0/contract-core-5ac3d997da3ef37b0135565a11c5ebcc519862aa::StakingTestWrapper::availableBalanceOf[y=0] ; test:DAPP::DAppSCAN-source/contracts/PeckShield-TranchessV1.1/contract-core-68a86350313c1cb9e5467e791d3e9efaf228a0df::Exchange::availableBalanceOf[y=0] ; test:DAPP::DAppSCAN-source/contracts/PeckShield-TranchessV1.1/contract-core-68a86350313c1cb9e5467e791d3e9efaf228a0df::Staking::availableBalanceOf[y=0] ; test:DAPP::DAppSCAN-source/contracts/PeckShield-TranchessV1.1/contract-core-68a86350313c1cb9e5467e791d3e9efaf228a0df::StakingTestWrapper::availableBalanceOf[y=0]"
+          },
+          {
+            "source_hash": "f7cc3879305f",
+            "splits": "test|train",
+            "labels": "0",
+            "examples": "train:DAPP::DAppSCAN-source/contracts/PeckShield-Tranchessv1.0/contract-core-5ac3d997da3ef37b0135565a11c5ebcc519862aa::Exchange::lockedBalanceOf[y=0] ; train:DAPP::DAppSCAN-source/contracts/PeckShield-Tranchessv1.0/contract-core-5ac3d997da3ef37b0135565a11c5ebcc519862aa::Staking::lockedBalanceOf[y=0] ; train:DAPP::DAppSCAN-source/contracts/PeckShield-Tranchessv1.0/contract-core-5ac3d997da3ef37b0135565a11c5ebcc519862aa::StakingTestWrapper::lockedBalanceOf[y=0] ; test:DAPP::DAppSCAN-source/contracts/PeckShield-TranchessV1.1/contract-core-68a86350313c1cb9e5467e791d3e9efaf228a0df::Exchange::lockedBalanceOf[y=0] ; test:DAPP::DAppSCAN-source/contracts/PeckShield-TranchessV1.1/contract-core-68a86350313c1cb9e5467e791d3e9efaf228a0df::Staking::lockedBalanceOf[y=0] ; test:DAPP::DAppSCAN-source/contracts/PeckShield-TranchessV1.1/contract-core-68a86350313c1cb9e5467e791d3e9efaf228a0df::StakingTestWrapper::lockedBalanceOf[y=0]"
+          },
+          {
+            "source_hash": "83112b54efe7",
+            "splits": "test|train",
+            "labels": "0",
+            "examples": "train:DAPP::DAppSCAN-source/contracts/PeckShield-Tranchessv1.0/contract-core-5ac3d997da3ef37b0135565a11c5ebcc519862aa::Exchange::claimAndDeposit[y=0] ; train:DAPP::DAppSCAN-source/contracts/PeckShield-Tranchessv1.0/contract-core-5ac3d997da3ef37b0135565a11c5ebcc519862aa::Staking::claimAndDeposit[y=0] ; train:DAPP::DAppSCAN-source/contracts/PeckShield-Tranchessv1.0/contract-core-5ac3d997da3ef37b0135565a11c5ebcc519862aa::StakingTestWrapper::claimAndDeposit[y=0] ; test:DAPP::DAppSCAN-source/contracts/PeckShield-TranchessV1.1/contract-core-68a86350313c1cb9e5467e791d3e9efaf228a0df::ExchangeV2::claimAndDeposit[y=0] ; test:DAPP::DAppSCAN-source/contracts/PeckShield-TranchessV1.1/contract-core-68a86350313c1cb9e5467e791d3e9efaf228a0df::Exchange::claimAndDeposit[y=0] ; test:DAPP::DAppSCAN-source/contracts/PeckShield-TranchessV1.1/contract-core-68a86350313c1cb9e5467e791d3e9efaf228a0df::StakingV2::claimAndDeposit[y=0]"
+          },
+          {
+            "source_hash": "507929fc238c",
+            "splits": "test|train",
+            "labels": "0",
+            "examples": "train:DAPP::DAppSCAN-source/contracts/PeckShield-Tranchessv1.0/contract-core-5ac3d997da3ef37b0135565a11c5ebcc519862aa::Exchange::refreshBalance[y=0] ; train:DAPP::DAppSCAN-source/contracts/PeckShield-Tranchessv1.0/contract-core-5ac3d997da3ef37b0135565a11c5ebcc519862aa::Staking::refreshBalance[y=0] ; train:DAPP::DAppSCAN-source/contracts/PeckShield-Tranchessv1.0/contract-core-5ac3d997da3ef37b0135565a11c5ebcc519862aa::StakingTestWrapper::refreshBalance[y=0] ; test:DAPP::DAppSCAN-source/contracts/PeckShield-TranchessV1.1/contract-core-68a86350313c1cb9e5467e791d3e9efaf228a0df::Exchange::refreshBalance[y=0] ; test:DAPP::DAppSCAN-source/contracts/PeckShield-TranchessV1.1/contract-core-68a86350313c1cb9e5467e791d3e9efaf228a0df::Staking::refreshBalance[y=0] ; test:DAPP::DAppSCAN-source/contracts/PeckShield-TranchessV1.1/contract-core-68a86350313c1cb9e5467e791d3e9efaf228a0df::StakingTestWrapper::refreshBalance[y=0]"
+          },
+          {
+            "source_hash": "046fcc6866a5",
+            "splits": "test|train",
+            "labels": "0",
+            "examples": "train:DAPP::DAppSCAN-source/contracts/PeckShield-Tranchessv1.0/contract-core-5ac3d997da3ef37b0135565a11c5ebcc519862aa::Exchange::claimableRewards[y=0] ; train:DAPP::DAppSCAN-source/contracts/PeckShield-Tranchessv1.0/contract-core-5ac3d997da3ef37b0135565a11c5ebcc519862aa::Staking::claimableRewards[y=0] ; train:DAPP::DAppSCAN-source/contracts/PeckShield-Tranchessv1.0/contract-core-5ac3d997da3ef37b0135565a11c5ebcc519862aa::StakingTestWrapper::claimableRewards[y=0] ; test:DAPP::DAppSCAN-source/contracts/PeckShield-TranchessV1.1/contract-core-68a86350313c1cb9e5467e791d3e9efaf228a0df::Exchange::claimableRewards[y=0] ; test:DAPP::DAppSCAN-source/contracts/PeckShield-TranchessV1.1/contract-core-68a86350313c1cb9e5467e791d3e9efaf228a0df::Staking::claimableRewards[y=0] ; test:DAPP::DAppSCAN-source/contracts/PeckShield-TranchessV1.1/contract-core-68a86350313c1cb9e5467e791d3e9efaf228a0df::StakingTestWrapper::claimableRewards[y=0]"
+          },
+          {
+            "source_hash": "13ebc7577d64",
+            "splits": "test|train",
+            "labels": "0",
+            "examples": "train:DAPP::DAppSCAN-source/contracts/PeckShield-Tranchessv1.0/contract-core-5ac3d997da3ef37b0135565a11c5ebcc519862aa::Exchange::_tradeAvailable[y=0] ; train:DAPP::DAppSCAN-source/contracts/PeckShield-Tranchessv1.0/contract-core-5ac3d997da3ef37b0135565a11c5ebcc519862aa::Staking::_tradeAvailable[y=0] ; train:DAPP::DAppSCAN-source/contracts/PeckShield-Tranchessv1.0/contract-core-5ac3d997da3ef37b0135565a11c5ebcc519862aa::StakingTestWrapper::_tradeAvailable[y=0] ; test:DAPP::DAppSCAN-source/contracts/PeckShield-TranchessV1.1/contract-core-68a86350313c1cb9e5467e791d3e9efaf228a0df::Exchange::_tradeAvailable[y=0] ; test:DAPP::DAppSCAN-source/contracts/PeckShield-TranchessV1.1/contract-core-68a86350313c1cb9e5467e791d3e9efaf228a0df::Staking::_tradeAvailable[y=0] ; test:DAPP::DAppSCAN-source/contracts/PeckShield-TranchessV1.1/contract-core-68a86350313c1cb9e5467e791d3e9efaf228a0df::StakingTestWrapper::_tradeAvailable[y=0]"
+          },
+          {
+            "source_hash": "ddf5c2d066a9",
+            "splits": "test|train",
+            "labels": "0",
+            "examples": "train:DAPP::DAppSCAN-source/contracts/PeckShield-Tranchessv1.0/contract-core-5ac3d997da3ef37b0135565a11c5ebcc519862aa::Exchange::_rebalanceAndClearTrade[y=0] ; train:DAPP::DAppSCAN-source/contracts/PeckShield-Tranchessv1.0/contract-core-5ac3d997da3ef37b0135565a11c5ebcc519862aa::Staking::_rebalanceAndClearTrade[y=0] ; train:DAPP::DAppSCAN-source/contracts/PeckShield-Tranchessv1.0/contract-core-5ac3d997da3ef37b0135565a11c5ebcc519862aa::StakingTestWrapper::_rebalanceAndClearTrade[y=0] ; test:DAPP::DAppSCAN-source/contracts/PeckShield-TranchessV1.1/contract-core-68a86350313c1cb9e5467e791d3e9efaf228a0df::Exchange::_rebalanceAndClearTrade[y=0] ; test:DAPP::DAppSCAN-source/contracts/PeckShield-TranchessV1.1/contract-core-68a86350313c1cb9e5467e791d3e9efaf228a0df::Staking::_rebalanceAndClearTrade[y=0] ; test:DAPP::DAppSCAN-source/contracts/PeckShield-TranchessV1.1/contract-core-68a86350313c1cb9e5467e791d3e9efaf228a0df::StakingTestWrapper::_rebalanceAndClearTrade[y=0]"
+          },
+          {
+            "source_hash": "1a9cba372af2",
+            "splits": "test|train",
+            "labels": "0",
+            "examples": "train:DAPP::DAppSCAN-source/contracts/PeckShield-Tranchessv1.0/contract-core-5ac3d997da3ef37b0135565a11c5ebcc519862aa::Exchange::_lock[y=0] ; train:DAPP::DAppSCAN-source/contracts/PeckShield-Tranchessv1.0/contract-core-5ac3d997da3ef37b0135565a11c5ebcc519862aa::Staking::_lock[y=0] ; train:DAPP::DAppSCAN-source/contracts/PeckShield-Tranchessv1.0/contract-core-5ac3d997da3ef37b0135565a11c5ebcc519862aa::StakingTestWrapper::_lock[y=0] ; test:DAPP::DAppSCAN-source/contracts/PeckShield-TranchessV1.1/contract-core-68a86350313c1cb9e5467e791d3e9efaf228a0df::Exchange::_lock[y=0] ; test:DAPP::DAppSCAN-source/contracts/PeckShield-TranchessV1.1/contract-core-68a86350313c1cb9e5467e791d3e9efaf228a0df::Staking::_lock[y=0] ; test:DAPP::DAppSCAN-source/contracts/PeckShield-TranchessV1.1/contract-core-68a86350313c1cb9e5467e791d3e9efaf228a0df::StakingTestWrapper::_lock[y=0]"
+          },
+          {
+            "source_hash": "ee547df0a0a6",
+            "splits": "test|train",
+            "labels": "0",
+            "examples": "train:DAPP::DAppSCAN-source/contracts/PeckShield-Tranchessv1.0/contract-core-5ac3d997da3ef37b0135565a11c5ebcc519862aa::Exchange::_rebalanceAndUnlock[y=0] ; train:DAPP::DAppSCAN-source/contracts/PeckShield-Tranchessv1.0/contract-core-5ac3d997da3ef37b0135565a11c5ebcc519862aa::Staking::_rebalanceAndUnlock[y=0] ; train:DAPP::DAppSCAN-source/contracts/PeckShield-Tranchessv1.0/contract-core-5ac3d997da3ef37b0135565a11c5ebcc519862aa::StakingTestWrapper::_rebalanceAndUnlock[y=0] ; test:DAPP::DAppSCAN-source/contracts/PeckShield-TranchessV1.1/contract-core-68a86350313c1cb9e5467e791d3e9efaf228a0df::Exchange::_rebalanceAndUnlock[y=0] ; test:DAPP::DAppSCAN-source/contracts/PeckShield-TranchessV1.1/contract-core-68a86350313c1cb9e5467e791d3e9efaf228a0df::Staking::_rebalanceAndUnlock[y=0] ; test:DAPP::DAppSCAN-source/contracts/PeckShield-TranchessV1.1/contract-core-68a86350313c1cb9e5467e791d3e9efaf228a0df::StakingTestWrapper::_rebalanceAndUnlock[y=0]"
+          },
+          {
+            "source_hash": "57b1cd9cf6ec",
+            "splits": "test|train",
+            "labels": "0",
+            "examples": "train:DAPP::DAppSCAN-source/contracts/PeckShield-Tranchessv1.0/contract-core-5ac3d997da3ef37b0135565a11c5ebcc519862aa::Exchange::_tradeLocked[y=0] ; train:DAPP::DAppSCAN-source/contracts/PeckShield-Tranchessv1.0/contract-core-5ac3d997da3ef37b0135565a11c5ebcc519862aa::Staking::_tradeLocked[y=0] ; train:DAPP::DAppSCAN-source/contracts/PeckShield-Tranchessv1.0/contract-core-5ac3d997da3ef37b0135565a11c5ebcc519862aa::StakingTestWrapper::_tradeLocked[y=0] ; test:DAPP::DAppSCAN-source/contracts/PeckShield-TranchessV1.1/contract-core-68a86350313c1cb9e5467e791d3e9efaf228a0df::Exchange::_tradeLocked[y=0] ; test:DAPP::DAppSCAN-source/contracts/PeckShield-TranchessV1.1/contract-core-68a86350313c1cb9e5467e791d3e9efaf228a0df::Staking::_tradeLocked[y=0] ; test:DAPP::DAppSCAN-source/contracts/PeckShield-TranchessV1.1/contract-core-68a86350313c1cb9e5467e791d3e9efaf228a0df::StakingTestWrapper::_tradeLocked[y=0]"
+          },
+          {
+            "source_hash": "3068b20d42d3",
+            "splits": "test|train",
+            "labels": "0",
+            "examples": "train:DAPP::DAppSCAN-source/contracts/PeckShield-Tranchessv1.0/contract-core-5ac3d997da3ef37b0135565a11c5ebcc519862aa::Exchange::_claim[y=0] ; train:DAPP::DAppSCAN-source/contracts/PeckShield-Tranchessv1.0/contract-core-5ac3d997da3ef37b0135565a11c5ebcc519862aa::Staking::_claim[y=0] ; train:DAPP::DAppSCAN-source/contracts/PeckShield-Tranchessv1.0/contract-core-5ac3d997da3ef37b0135565a11c5ebcc519862aa::StakingTestWrapper::_claim[y=0] ; test:DAPP::DAppSCAN-source/contracts/PeckShield-TranchessV1.1/contract-core-68a86350313c1cb9e5467e791d3e9efaf228a0df::ExchangeV2::_claim[y=0] ; test:DAPP::DAppSCAN-source/contracts/PeckShield-TranchessV1.1/contract-core-68a86350313c1cb9e5467e791d3e9efaf228a0df::Exchange::_claim[y=0] ; test:DAPP::DAppSCAN-source/contracts/PeckShield-TranchessV1.1/contract-core-68a86350313c1cb9e5467e791d3e9efaf228a0df::StakingV2::_claim[y=0]"
+          },
+          {
+            "source_hash": "4995cfb9ae9a",
+            "splits": "test|train",
+            "labels": "0",
+            "examples": "train:DAPP::DAppSCAN-source/contracts/PeckShield-Tranchessv1.0/contract-core-5ac3d997da3ef37b0135565a11c5ebcc519862aa::Exchange::_checkpoint[y=0] ; train:DAPP::DAppSCAN-source/contracts/PeckShield-Tranchessv1.0/contract-core-5ac3d997da3ef37b0135565a11c5ebcc519862aa::Staking::_checkpoint[y=0] ; train:DAPP::DAppSCAN-source/contracts/PeckShield-Tranchessv1.0/contract-core-5ac3d997da3ef37b0135565a11c5ebcc519862aa::StakingTestWrapper::_checkpoint[y=0] ; test:DAPP::DAppSCAN-source/contracts/PeckShield-TranchessV1.1/contract-core-68a86350313c1cb9e5467e791d3e9efaf228a0df::Exchange::_checkpoint[y=0] ; test:DAPP::DAppSCAN-source/contracts/PeckShield-TranchessV1.1/contract-core-68a86350313c1cb9e5467e791d3e9efaf228a0df::Staking::_checkpoint[y=0] ; test:DAPP::DAppSCAN-source/contracts/PeckShield-TranchessV1.1/contract-core-68a86350313c1cb9e5467e791d3e9efaf228a0df::StakingTestWrapper::_checkpoint[y=0]"
+          },
+          {
+            "source_hash": "a1793b887a6a",
+            "splits": "test|train",
+            "labels": "0",
+            "examples": "train:DAPP::DAppSCAN-source/contracts/PeckShield-Tranchessv1.0/contract-core-5ac3d997da3ef37b0135565a11c5ebcc519862aa::Exchange::_userCheckpoint[y=0] ; train:DAPP::DAppSCAN-source/contracts/PeckShield-Tranchessv1.0/contract-core-5ac3d997da3ef37b0135565a11c5ebcc519862aa::Staking::_userCheckpoint[y=0] ; train:DAPP::DAppSCAN-source/contracts/PeckShield-Tranchessv1.0/contract-core-5ac3d997da3ef37b0135565a11c5ebcc519862aa::StakingTestWrapper::_userCheckpoint[y=0] ; test:DAPP::DAppSCAN-source/contracts/PeckShield-TranchessV1.1/contract-core-68a86350313c1cb9e5467e791d3e9efaf228a0df::Exchange::_userCheckpoint[y=0] ; test:DAPP::DAppSCAN-source/contracts/PeckShield-TranchessV1.1/contract-core-68a86350313c1cb9e5467e791d3e9efaf228a0df::Staking::_userCheckpoint[y=0] ; test:DAPP::DAppSCAN-source/contracts/PeckShield-TranchessV1.1/contract-core-68a86350313c1cb9e5467e791d3e9efaf228a0df::StakingTestWrapper::_userCheckpoint[y=0]"
+          },
+          {
+            "source_hash": "f346aa1c28ae",
+            "splits": "test|train",
+            "labels": "0",
+            "examples": "train:DAPP::DAppSCAN-source/contracts/PeckShield-Tranchessv1.0/contract-core-5ac3d997da3ef37b0135565a11c5ebcc519862aa::Exchange::estimateNavs[y=0] ; test:DAPP::DAppSCAN-source/contracts/PeckShield-TranchessV1.1/contract-core-68a86350313c1cb9e5467e791d3e9efaf228a0df::ExchangeV2::estimateNavs[y=0] ; test:DAPP::DAppSCAN-source/contracts/PeckShield-TranchessV1.1/contract-core-68a86350313c1cb9e5467e791d3e9efaf228a0df::Exchange::estimateNavs[y=0]"
+          },
+          {
+            "source_hash": "ec1b2def0d7c",
+            "splits": "test|train",
+            "labels": "0",
+            "examples": "train:DAPP::DAppSCAN-source/contracts/PeckShield-Tranchessv1.0/contract-core-5ac3d997da3ef37b0135565a11c5ebcc519862aa::Exchange::placeBid[y=0] ; test:DAPP::DAppSCAN-source/contracts/PeckShield-TranchessV1.1/contract-core-68a86350313c1cb9e5467e791d3e9efaf228a0df::Exchange::placeBid[y=0]"
+          },
+          {
+            "source_hash": "96ce9ce1ee3f",
+            "splits": "test|train",
+            "labels": "0",
+            "examples": "train:DAPP::DAppSCAN-source/contracts/PeckShield-Tranchessv1.0/contract-core-5ac3d997da3ef37b0135565a11c5ebcc519862aa::Exchange::placeAsk[y=0] ; test:DAPP::DAppSCAN-source/contracts/PeckShield-TranchessV1.1/contract-core-68a86350313c1cb9e5467e791d3e9efaf228a0df::Exchange::placeAsk[y=0]"
+          },
+          {
+            "source_hash": "051f62a13afe",
+            "splits": "test|train",
+            "labels": "0",
+            "examples": "train:DAPP::DAppSCAN-source/contracts/PeckShield-Tranchessv1.0/contract-core-5ac3d997da3ef37b0135565a11c5ebcc519862aa::Exchange::cancelBid[y=0] ; test:DAPP::DAppSCAN-source/contracts/PeckShield-TranchessV1.1/contract-core-68a86350313c1cb9e5467e791d3e9efaf228a0df::Exchange::cancelBid[y=0]"
+          },
+          {
+            "source_hash": "497645444728",
+            "splits": "test|train",
+            "labels": "0",
+            "examples": "train:DAPP::DAppSCAN-source/contracts/PeckShield-Tranchessv1.0/contract-core-5ac3d997da3ef37b0135565a11c5ebcc519862aa::Exchange::cancelAsk[y=0] ; test:DAPP::DAppSCAN-source/contracts/PeckShield-TranchessV1.1/contract-core-68a86350313c1cb9e5467e791d3e9efaf228a0df::Exchange::cancelAsk[y=0]"
+          },
+          {
+            "source_hash": "f9b00ae4eced",
+            "splits": "test|train",
+            "labels": "0",
+            "examples": "train:DAPP::DAppSCAN-source/contracts/PeckShield-Tranchessv1.0/contract-core-5ac3d997da3ef37b0135565a11c5ebcc519862aa::Exchange::_buy[y=0] ; test:DAPP::DAppSCAN-source/contracts/PeckShield-TranchessV1.1/contract-core-68a86350313c1cb9e5467e791d3e9efaf228a0df::Exchange::_buy[y=0]"
+          },
+          {
+            "source_hash": "d0590906169d",
+            "splits": "test|train",
+            "labels": "0",
+            "examples": "train:DAPP::DAppSCAN-source/contracts/PeckShield-Tranchessv1.0/contract-core-5ac3d997da3ef37b0135565a11c5ebcc519862aa::Exchange::_sell[y=0] ; test:DAPP::DAppSCAN-source/contracts/PeckShield-TranchessV1.1/contract-core-68a86350313c1cb9e5467e791d3e9efaf228a0df::Exchange::_sell[y=0]"
+          },
+          {
+            "source_hash": "cfb10839a544",
+            "splits": "test|train",
+            "labels": "0",
+            "examples": "train:DAPP::DAppSCAN-source/contracts/PeckShield-Tranchessv1.0/contract-core-5ac3d997da3ef37b0135565a11c5ebcc519862aa::Exchange::_settleTaker[y=0] ; test:DAPP::DAppSCAN-source/contracts/PeckShield-TranchessV1.1/contract-core-68a86350313c1cb9e5467e791d3e9efaf228a0df::ExchangeV2::_settleTaker[y=0] ; test:DAPP::DAppSCAN-source/contracts/PeckShield-TranchessV1.1/contract-core-68a86350313c1cb9e5467e791d3e9efaf228a0df::Exchange::_settleTaker[y=0]"
+          }
+        ]
+      },
+      {
+        "kind": "duplicate_interactions_conflicting_labels",
+        "severity": "HIGH",
+        "description": "10 exact normalized function sources have both positive and negative labels.",
+        "examples": [
+          {
+            "source_hash": "19c4099dff5f",
+            "splits": "train",
+            "examples": "train:FORGE::vfp_00032::AbstractStakingStrategy::mintShares[y=0] ; train:FORGE::vfp_00032::RewardManagerMixin::mintShares[y=0] ; train:FORGE::vfp_00032::AbstractYieldStrategy::mintShares[y=1] ; train:FORGE::vfp_00032::AbstractSingleSidedLP::mintShares[y=0] ; train:FORGE::vfp_00032::CurveConvex2Token::mintShares[y=0]"
+          },
+          {
+            "source_hash": "cb1b285f5f52",
+            "splits": "train",
+            "examples": "train:FORGE::vfp_00032::GenericERC4626WithdrawRequestManager::stakeTokens[y=1] ; train:FORGE::vfp_00032::AbstractWithdrawRequestManager::stakeTokens[y=0]"
+          },
+          {
+            "source_hash": "370b1da585e9",
+            "splits": "val",
+            "examples": "val:FORGE::vfp_00156::HyperCoreFlowExecutor::_initiateSwapFlow[y=1] ; val:FORGE::vfp_00156::DstOFTHandler::_initiateSwapFlow[y=0] ; val:FORGE::vfp_00156::SponsoredCCTPDstPeriphery::_initiateSwapFlow[y=0]"
+          },
+          {
+            "source_hash": "c9411e9a9362",
+            "splits": "val",
+            "examples": "val:FORGE::vfp_00156::HyperCoreFlowExecutor::finalizeSwapFlows[y=1] ; val:FORGE::vfp_00156::DstOFTHandler::finalizeSwapFlows[y=0] ; val:FORGE::vfp_00156::SponsoredCCTPDstPeriphery::finalizeSwapFlows[y=0]"
+          },
+          {
+            "source_hash": "72a29dab7a7d",
+            "splits": "val",
+            "examples": "val:FORGE::vfp_00156::HyperCoreFlowExecutor::_finalizeSingleSwap[y=1] ; val:FORGE::vfp_00156::DstOFTHandler::_finalizeSingleSwap[y=0] ; val:FORGE::vfp_00156::SponsoredCCTPDstPeriphery::_finalizeSingleSwap[y=0]"
+          },
+          {
+            "source_hash": "3f36214bdc0e",
+            "splits": "val",
+            "examples": "val:FORGE::vfp_00156::HyperCoreFlowExecutor::_fallbackHyperEVMFlow[y=1] ; val:FORGE::vfp_00156::DstOFTHandler::_fallbackHyperEVMFlow[y=0] ; val:FORGE::vfp_00156::SponsoredCCTPDstPeriphery::_fallbackHyperEVMFlow[y=0]"
+          },
+          {
+            "source_hash": "2c51fb944419",
+            "splits": "val",
+            "examples": "val:FORGE::vfp_00156::HyperCoreFlowExecutor::activateUserAccount[y=1] ; val:FORGE::vfp_00156::DstOFTHandler::activateUserAccount[y=0] ; val:FORGE::vfp_00156::SponsoredCCTPDstPeriphery::activateUserAccount[y=0]"
+          },
+          {
+            "source_hash": "3d3bc858b39d",
+            "splits": "val",
+            "examples": "val:FORGE::vfp_00156::DstOFTHandler::_executeFlow[y=0] ; val:FORGE::vfp_00156::ArbitraryEVMFlowExecutor::_executeFlow[y=1] ; val:FORGE::vfp_00156::SponsoredCCTPDstPeriphery::_executeFlow[y=0]"
+          },
+          {
+            "source_hash": "815f4a5891f8",
+            "splits": "test",
+            "examples": "test:FORGE::vfp_00102::OracleLess::_cancelOrder[y=1] ; test:FORGE::vfp_00102::Bracket::_cancelOrder[y=0]"
+          },
+          {
+            "source_hash": "036795e20175",
+            "splits": "test",
+            "examples": "test:FORGE::vfp_00102::OracleLess::procureTokens[y=1] ; test:FORGE::vfp_00102::Bracket::procureTokens[y=0]"
+          }
+        ]
+      },
+      {
+        "kind": "same_train_positive_source_pattern_in_val_or_test",
+        "severity": "NONE",
+        "description": "0 train-positive function hashes also appear in val/test.",
+        "examples": []
+      },
+      {
+        "kind": "exact_duplicate_contract_interaction_set_across_splits",
+        "severity": "HIGH",
+        "description": "27 exact duplicate contract interaction-source sets appear across splits.",
+        "examples": [
+          {
+            "signature": "ce98735ec8b8",
+            "examples": "train:DAPP::DAppSCAN-source/contracts/PeckShield-AirSwap/airswap-protocols-b87d292aaf6e28ede564b7ea28ece39219994607::Migrations ; train:DAPP::DAppSCAN-source/contracts/consensys-Skyweaver/Skyweaver-contracts-bde0c184db6168bf86656a48b12d5747950b54d9::Migrations ; train:DAPP::DAppSCAN-source/contracts/PepperSec-Aira-Robonomic/robonomics_contracts-cc35a91de187072214d215262d8371f0159c2498::Migrations ; train:DAPP::DAppSCAN-source/contracts/SlowMist-CFFv2 Smart Contract Security Audit Report/cff-contract-v2-c86bef3f13c7585f547f9cd0ca900f94664e96b7::Migrations ; train:DAPP::DAppSCAN-source/contracts/consensys-MCDEX_Mai_Protocol_V2/mai-protocol-v2-4b198083ec4ae2d6851e101fc44ea333eaa3cd92::Migrations ; train:DAPP::DAppSCAN-source/contracts/PeckShield-Buffer/code::Migrations ; train:DAPP::DAppSCAN-source/contracts/QuillAudits-LTO Network-Token Sale/lto-erc20-token-02fa2620aef4c854675230b6544461961d47f968::Migrations ; train:DAPP::DAppSCAN-source/contracts/consensys-ENS_Permanent_Registrar/ethregistrar-e52abfc2799ac361364aca6135fc20f9175a29fd::Migrations"
+          },
+          {
+            "signature": "e17100050ef6",
+            "examples": "train:DAPP::DAppSCAN-source/contracts/PeckShield-DarkCrypto/darkcrypto-contracts-fee5be8d36459aebed2b84e6493875b3dc0366fd::Timelock ; train:DAPP::DAppSCAN-source/contracts/QuillAudits-Bond Appetit-Bond Appetit/bondappetit-protocol-355180f0aca0b29d60d808f761052956b7a3a159::Timelock ; train:DAPP::DAppSCAN-source/contracts/PeckShield-DSG/core-6f607f77698936e132e4e9b5cb4d75580636d919::Timelock ; test:DAPP::DAppSCAN-source/contracts/PeckShield-TranchessV1.1/contract-core-68a86350313c1cb9e5467e791d3e9efaf228a0df::Timelock"
+          },
+          {
+            "signature": "a4170a1e4bf5",
+            "examples": "train:DAPP::DAppSCAN-source/contracts/PeckShield-MilkySwap/milkyswap-59f163e9959cf8bae4a521a9648219b553312e07::UniswapV2Factory ; val:DAPP::DAppSCAN-source/contracts/PeckShield-SushiSwap/sushiswap-180bc9b642bba79c1ee4a63f71a3a0d36e64aa63::UniswapV2Factory"
+          },
+          {
+            "signature": "64597197c856",
+            "examples": "train:DAPP::DAppSCAN-source/contracts/PeckShield-Tranchessv1.0/contract-core-5ac3d997da3ef37b0135565a11c5ebcc519862aa::BscAprOracle ; test:DAPP::DAppSCAN-source/contracts/PeckShield-TranchessV1.1/contract-core-68a86350313c1cb9e5467e791d3e9efaf228a0df::BscAprOracle"
+          },
+          {
+            "signature": "55a16e7b939c",
+            "examples": "train:DAPP::DAppSCAN-source/contracts/PeckShield-Tranchessv1.0/contract-core-5ac3d997da3ef37b0135565a11c5ebcc519862aa::AprOracle ; test:DAPP::DAppSCAN-source/contracts/PeckShield-TranchessV1.1/contract-core-68a86350313c1cb9e5467e791d3e9efaf228a0df::AprOracle"
+          },
+          {
+            "signature": "fe7594876cd8",
+            "examples": "train:DAPP::DAppSCAN-source/contracts/PeckShield-Tranchessv1.0/contract-core-5ac3d997da3ef37b0135565a11c5ebcc519862aa::ExchangeRoles ; test:DAPP::DAppSCAN-source/contracts/PeckShield-TranchessV1.1/contract-core-68a86350313c1cb9e5467e791d3e9efaf228a0df::ExchangeRoles"
+          },
+          {
+            "signature": "e67fb3a3f4e0",
+            "examples": "train:DAPP::DAppSCAN-source/contracts/PeckShield-Tranchessv1.0/contract-core-5ac3d997da3ef37b0135565a11c5ebcc519862aa::Share ; test:DAPP::DAppSCAN-source/contracts/PeckShield-TranchessV1.1/contract-core-68a86350313c1cb9e5467e791d3e9efaf228a0df::Share"
+          },
+          {
+            "signature": "da03ee533e2d",
+            "examples": "train:DAPP::DAppSCAN-source/contracts/PeckShield-Tranchessv1.0/contract-core-5ac3d997da3ef37b0135565a11c5ebcc519862aa::FundRoles ; test:DAPP::DAppSCAN-source/contracts/PeckShield-TranchessV1.1/contract-core-68a86350313c1cb9e5467e791d3e9efaf228a0df::FundRoles"
+          },
+          {
+            "signature": "fa31b8fdb711",
+            "examples": "train:DAPP::DAppSCAN-source/contracts/PeckShield-Tranchessv1.0/contract-core-5ac3d997da3ef37b0135565a11c5ebcc519862aa::OrderQueueTestWrapper ; test:DAPP::DAppSCAN-source/contracts/PeckShield-TranchessV1.1/contract-core-68a86350313c1cb9e5467e791d3e9efaf228a0df::OrderQueueTestWrapper"
+          },
+          {
+            "signature": "b8246d8cefb7",
+            "examples": "train:DAPP::DAppSCAN-source/contracts/PeckShield-Tranchessv1.0/contract-core-5ac3d997da3ef37b0135565a11c5ebcc519862aa::ChessRoles ; test:DAPP::DAppSCAN-source/contracts/PeckShield-TranchessV1.1/contract-core-68a86350313c1cb9e5467e791d3e9efaf228a0df::ChessRoles"
+          },
+          {
+            "signature": "3973b7f30196",
+            "examples": "train:DAPP::DAppSCAN-source/contracts/Solidified-Aztec Element Bridge/aztec-connect-bridges-ac2e7194b5887ea11a607b4cf8de0547b3d7fdd0::HeapTestContract ; val:DAPP::DAppSCAN-source/contracts/Solidified-Aztec Lido Bridge/aztec-connect-bridges-d5aca13d4d0a17b21eeddf77f49f4c6613461fb0::HeapTestContract"
+          },
+          {
+            "signature": "dc0bb1678153",
+            "examples": "train:DAPP::DAppSCAN-source/contracts/Solidified-Aztec Element Bridge/aztec-connect-bridges-ac2e7194b5887ea11a607b4cf8de0547b3d7fdd0::StakingBridgeTestInternal ; val:DAPP::DAppSCAN-source/contracts/Solidified-Aztec Lido Bridge/aztec-connect-bridges-d5aca13d4d0a17b21eeddf77f49f4c6613461fb0::StakingBridgeTestInternal"
+          },
+          {
+            "signature": "b53628f05f93",
+            "examples": "train:DAPP::DAppSCAN-source/contracts/Solidified-Aztec Element Bridge/aztec-connect-bridges-ac2e7194b5887ea11a607b4cf8de0547b3d7fdd0::StabilityPoolBridgeTestInternal ; val:DAPP::DAppSCAN-source/contracts/Solidified-Aztec Lido Bridge/aztec-connect-bridges-d5aca13d4d0a17b21eeddf77f49f4c6613461fb0::StabilityPoolBridgeTestInternal"
+          },
+          {
+            "signature": "2100ed649ae7",
+            "examples": "train:DAPP::DAppSCAN-source/contracts/Solidified-Aztec Element Bridge/aztec-connect-bridges-ac2e7194b5887ea11a607b4cf8de0547b3d7fdd0::TestUtil ; val:DAPP::DAppSCAN-source/contracts/Solidified-Aztec Lido Bridge/aztec-connect-bridges-d5aca13d4d0a17b21eeddf77f49f4c6613461fb0::TestUtil"
+          },
+          {
+            "signature": "85d71b1c9407",
+            "examples": "train:DAPP::DAppSCAN-source/contracts/Solidified-Aztec Element Bridge/aztec-connect-bridges-ac2e7194b5887ea11a607b4cf8de0547b3d7fdd0::MinHeap ; val:DAPP::DAppSCAN-source/contracts/Solidified-Aztec Lido Bridge/aztec-connect-bridges-d5aca13d4d0a17b21eeddf77f49f4c6613461fb0::MinHeap"
+          },
+          {
+            "signature": "458ccb401f00",
+            "examples": "train:DAPP::DAppSCAN-source/contracts/Solidified-Aztec Element Bridge/aztec-connect-bridges-ac2e7194b5887ea11a607b4cf8de0547b3d7fdd0::ExampleBridgeContract ; val:DAPP::DAppSCAN-source/contracts/Solidified-Aztec Lido Bridge/aztec-connect-bridges-d5aca13d4d0a17b21eeddf77f49f4c6613461fb0::ExampleBridgeContract"
+          },
+          {
+            "signature": "3e6174dad8fa",
+            "examples": "train:DAPP::DAppSCAN-source/contracts/Solidified-Aztec Element Bridge/aztec-connect-bridges-ac2e7194b5887ea11a607b4cf8de0547b3d7fdd0::TroveBridge ; val:DAPP::DAppSCAN-source/contracts/Solidified-Aztec Lido Bridge/aztec-connect-bridges-d5aca13d4d0a17b21eeddf77f49f4c6613461fb0::TroveBridge"
+          },
+          {
+            "signature": "663014548f84",
+            "examples": "train:DAPP::DAppSCAN-source/contracts/Solidified-Aztec Element Bridge/aztec-connect-bridges-ac2e7194b5887ea11a607b4cf8de0547b3d7fdd0::StabilityPoolBridge ; val:DAPP::DAppSCAN-source/contracts/Solidified-Aztec Lido Bridge/aztec-connect-bridges-d5aca13d4d0a17b21eeddf77f49f4c6613461fb0::StabilityPoolBridge"
+          },
+          {
+            "signature": "8ae17ee0c0eb",
+            "examples": "train:DAPP::DAppSCAN-source/contracts/Solidified-Aztec Element Bridge/aztec-connect-bridges-ac2e7194b5887ea11a607b4cf8de0547b3d7fdd0::StakingBridge ; val:DAPP::DAppSCAN-source/contracts/Solidified-Aztec Lido Bridge/aztec-connect-bridges-d5aca13d4d0a17b21eeddf77f49f4c6613461fb0::StakingBridge"
+          },
+          {
+            "signature": "f87024a6138f",
+            "examples": "train:DAPP::DAppSCAN-source/contracts/Solidified-Aztec Element Bridge/aztec-connect-bridges-ac2e7194b5887ea11a607b4cf8de0547b3d7fdd0::IssuanceBridge ; val:DAPP::DAppSCAN-source/contracts/Solidified-Aztec Lido Bridge/aztec-connect-bridges-d5aca13d4d0a17b21eeddf77f49f4c6613461fb0::IssuanceBridge"
+          },
+          {
+            "signature": "baff7af9c5ad",
+            "examples": "train:DAPP::DAppSCAN-source/contracts/Solidified-Aztec Element Bridge/aztec-connect-bridges-ac2e7194b5887ea11a607b4cf8de0547b3d7fdd0::AaveLendingBridge ; val:DAPP::DAppSCAN-source/contracts/Solidified-Aztec Lido Bridge/aztec-connect-bridges-d5aca13d4d0a17b21eeddf77f49f4c6613461fb0::AaveLendingBridge"
+          },
+          {
+            "signature": "dc1e571d2b5c",
+            "examples": "train:DAPP::DAppSCAN-source/contracts/Solidified-Aztec Element Bridge/aztec-connect-bridges-ac2e7194b5887ea11a607b4cf8de0547b3d7fdd0::MStableBridge ; val:DAPP::DAppSCAN-source/contracts/Solidified-Aztec Lido Bridge/aztec-connect-bridges-d5aca13d4d0a17b21eeddf77f49f4c6613461fb0::MStableBridge"
+          },
+          {
+            "signature": "656f1f37ca5a",
+            "examples": "train:DAPP::DAppSCAN-source/contracts/Solidified-Aztec Element Bridge/aztec-connect-bridges-ac2e7194b5887ea11a607b4cf8de0547b3d7fdd0::RaiBridge ; val:DAPP::DAppSCAN-source/contracts/Solidified-Aztec Lido Bridge/aztec-connect-bridges-d5aca13d4d0a17b21eeddf77f49f4c6613461fb0::RaiBridge"
+          },
+          {
+            "signature": "40dccfcfccc2",
+            "examples": "train:DAPP::DAppSCAN-source/contracts/Coinspect-Incognito Audit/bridge-eth-4879219669a38d601265582f815596b6775855b6::UpgradeabilityProxy ; train:DAPP::DAppSCAN-source/contracts/Coinspect-Incognito Audit/bridge-eth-4879219669a38d601265582f815596b6775855b6::AdminUpgradeabilityProxy ; train:DAPP::DAppSCAN-source/contracts/Coinspect-Incognito Audit/bridge-eth-4879219669a38d601265582f815596b6775855b6::FiatTokenProxy ; val:DAPP::DAppSCAN-source/contracts/PeckShield-KaoyaSwap/contracts-8273073f1d6914f372790399378f177573c52e37::UpgradeabilityProxy ; val:DAPP::DAppSCAN-source/contracts/PeckShield-KaoyaSwap/contracts-8273073f1d6914f372790399378f177573c52e37::AdminUpgradeabilityProxy ; val:DAPP::DAppSCAN-source/contracts/PeckShield-KaoyaSwap/contracts-8273073f1d6914f372790399378f177573c52e37::KaoyaProxy"
+          },
+          {
+            "signature": "0c61fd8c76ee",
+            "examples": "val:DAPP::DAppSCAN-source/contracts/QuillAudits-AAVE-ParaSwap Adapter/aave-protocol-v2-14e2ab47d95f42ec5ee486f367067e78a7588878::BaseAdminUpgradeabilityProxy ; val:DAPP::DAppSCAN-source/contracts/QuillAudits-AAVE-ParaSwap Adapter/aave-protocol-v2-14e2ab47d95f42ec5ee486f367067e78a7588878::UpgradeabilityProxy ; val:DAPP::DAppSCAN-source/contracts/QuillAudits-AAVE-ParaSwap Adapter/aave-protocol-v2-14e2ab47d95f42ec5ee486f367067e78a7588878::AdminUpgradeabilityProxy ; val:DAPP::DAppSCAN-source/contracts/QuillAudits-AAVE-ParaSwap Adapter/aave-protocol-v2-14e2ab47d95f42ec5ee486f367067e78a7588878::BaseUpgradeabilityProxy ; val:DAPP::DAppSCAN-source/contracts/QuillAudits-AAVE-ParaSwap Adapter/aave-protocol-v2-14e2ab47d95f42ec5ee486f367067e78a7588878::BaseImmutableAdminUpgradeabilityProxy ; test:DAPP::DAppSCAN-source/contracts/consensys-Aave_Protocol_V2/aave-protocol-v2-f756f44a8d6a328cd545335e46e7128939db88c4::BaseAdminUpgradeabilityProxy ; test:DAPP::DAppSCAN-source/contracts/consensys-Aave_Protocol_V2/aave-protocol-v2-f756f44a8d6a328cd545335e46e7128939db88c4::UpgradeabilityProxy ; test:DAPP::DAppSCAN-source/contracts/consensys-Aave_Protocol_V2/aave-protocol-v2-f756f44a8d6a328cd545335e46e7128939db88c4::AdminUpgradeabilityProxy"
+          },
+          {
+            "signature": "27c19e71fa17",
+            "examples": "val:DAPP::DAppSCAN-source/contracts/QuillAudits-AAVE-ParaSwap Adapter/aave-protocol-v2-14e2ab47d95f42ec5ee486f367067e78a7588878::InitializableAdminUpgradeabilityProxy ; test:DAPP::DAppSCAN-source/contracts/consensys-Aave_Protocol_V2/aave-protocol-v2-f756f44a8d6a328cd545335e46e7128939db88c4::InitializableAdminUpgradeabilityProxy"
+          },
+          {
+            "signature": "044dfaecd3f2",
+            "examples": "val:DAPP::DAppSCAN-source/contracts/QuillAudits-AAVE-ParaSwap Adapter/aave-protocol-v2-14e2ab47d95f42ec5ee486f367067e78a7588878::InitializableUpgradeabilityProxy ; val:DAPP::DAppSCAN-source/contracts/QuillAudits-AAVE-ParaSwap Adapter/aave-protocol-v2-14e2ab47d95f42ec5ee486f367067e78a7588878::InitializableImmutableAdminUpgradeabilityProxy ; test:DAPP::DAppSCAN-source/contracts/consensys-Aave_Protocol_V2/aave-protocol-v2-f756f44a8d6a328cd545335e46e7128939db88c4::InitializableUpgradeabilityProxy"
+          }
+        ]
+      },
+      {
+        "kind": "same_contract_name_near_duplicate_interaction_code",
+        "severity": "HIGH",
+        "description": "42 same contract-name graph pairs across splits share >=80% exact interaction function hashes.",
+        "examples": [
+          {
+            "jaccard": 1.0,
+            "a": "train:DAPP::DAppSCAN-source/contracts/PeckShield-AirSwap/airswap-protocols-b87d292aaf6e28ede564b7ea28ece39219994607::Migrations",
+            "b": "test:DAPP::DAppSCAN-source/contracts/Trail_of_Bits-Liquity/dev-f0df3efa5a5f05b205752184cfce107c5bd6e06c::Migrations",
+            "overlap": 1,
+            "sizes": "1/1"
+          },
+          {
+            "jaccard": 1.0,
+            "a": "train:DAPP::DAppSCAN-source/contracts/consensys-Skyweaver/Skyweaver-contracts-bde0c184db6168bf86656a48b12d5747950b54d9::Migrations",
+            "b": "test:DAPP::DAppSCAN-source/contracts/Trail_of_Bits-Liquity/dev-f0df3efa5a5f05b205752184cfce107c5bd6e06c::Migrations",
+            "overlap": 1,
+            "sizes": "1/1"
+          },
+          {
+            "jaccard": 1.0,
+            "a": "train:DAPP::DAppSCAN-source/contracts/PepperSec-Aira-Robonomic/robonomics_contracts-cc35a91de187072214d215262d8371f0159c2498::Migrations",
+            "b": "test:DAPP::DAppSCAN-source/contracts/Trail_of_Bits-Liquity/dev-f0df3efa5a5f05b205752184cfce107c5bd6e06c::Migrations",
+            "overlap": 1,
+            "sizes": "1/1"
+          },
+          {
+            "jaccard": 1.0,
+            "a": "train:DAPP::DAppSCAN-source/contracts/SlowMist-CFFv2 Smart Contract Security Audit Report/cff-contract-v2-c86bef3f13c7585f547f9cd0ca900f94664e96b7::Migrations",
+            "b": "test:DAPP::DAppSCAN-source/contracts/Trail_of_Bits-Liquity/dev-f0df3efa5a5f05b205752184cfce107c5bd6e06c::Migrations",
+            "overlap": 1,
+            "sizes": "1/1"
+          },
+          {
+            "jaccard": 1.0,
+            "a": "train:DAPP::DAppSCAN-source/contracts/consensys-MCDEX_Mai_Protocol_V2/mai-protocol-v2-4b198083ec4ae2d6851e101fc44ea333eaa3cd92::Migrations",
+            "b": "test:DAPP::DAppSCAN-source/contracts/Trail_of_Bits-Liquity/dev-f0df3efa5a5f05b205752184cfce107c5bd6e06c::Migrations",
+            "overlap": 1,
+            "sizes": "1/1"
+          },
+          {
+            "jaccard": 1.0,
+            "a": "train:DAPP::DAppSCAN-source/contracts/PeckShield-Buffer/code::Migrations",
+            "b": "test:DAPP::DAppSCAN-source/contracts/Trail_of_Bits-Liquity/dev-f0df3efa5a5f05b205752184cfce107c5bd6e06c::Migrations",
+            "overlap": 1,
+            "sizes": "1/1"
+          },
+          {
+            "jaccard": 1.0,
+            "a": "train:DAPP::DAppSCAN-source/contracts/QuillAudits-LTO Network-Token Sale/lto-erc20-token-02fa2620aef4c854675230b6544461961d47f968::Migrations",
+            "b": "test:DAPP::DAppSCAN-source/contracts/Trail_of_Bits-Liquity/dev-f0df3efa5a5f05b205752184cfce107c5bd6e06c::Migrations",
+            "overlap": 1,
+            "sizes": "1/1"
+          },
+          {
+            "jaccard": 1.0,
+            "a": "train:DAPP::DAppSCAN-source/contracts/consensys-ENS_Permanent_Registrar/ethregistrar-e52abfc2799ac361364aca6135fc20f9175a29fd::Migrations",
+            "b": "test:DAPP::DAppSCAN-source/contracts/Trail_of_Bits-Liquity/dev-f0df3efa5a5f05b205752184cfce107c5bd6e06c::Migrations",
+            "overlap": 1,
+            "sizes": "1/1"
+          },
+          {
+            "jaccard": 1.0,
+            "a": "train:DAPP::DAppSCAN-source/contracts/PeckShield-DarkCrypto/darkcrypto-contracts-fee5be8d36459aebed2b84e6493875b3dc0366fd::Timelock",
+            "b": "test:DAPP::DAppSCAN-source/contracts/PeckShield-TranchessV1.1/contract-core-68a86350313c1cb9e5467e791d3e9efaf228a0df::Timelock",
+            "overlap": 1,
+            "sizes": "1/1"
+          },
+          {
+            "jaccard": 1.0,
+            "a": "train:DAPP::DAppSCAN-source/contracts/QuillAudits-Bond Appetit-Bond Appetit/bondappetit-protocol-355180f0aca0b29d60d808f761052956b7a3a159::Timelock",
+            "b": "test:DAPP::DAppSCAN-source/contracts/PeckShield-TranchessV1.1/contract-core-68a86350313c1cb9e5467e791d3e9efaf228a0df::Timelock",
+            "overlap": 1,
+            "sizes": "1/1"
+          },
+          {
+            "jaccard": 1.0,
+            "a": "train:DAPP::DAppSCAN-source/contracts/PeckShield-DSG/core-6f607f77698936e132e4e9b5cb4d75580636d919::Timelock",
+            "b": "test:DAPP::DAppSCAN-source/contracts/PeckShield-TranchessV1.1/contract-core-68a86350313c1cb9e5467e791d3e9efaf228a0df::Timelock",
+            "overlap": 1,
+            "sizes": "1/1"
+          },
+          {
+            "jaccard": 1.0,
+            "a": "train:DAPP::DAppSCAN-source/contracts/Coinspect-Incognito Audit/bridge-eth-4879219669a38d601265582f815596b6775855b6::UpgradeabilityProxy",
+            "b": "val:DAPP::DAppSCAN-source/contracts/PeckShield-KaoyaSwap/contracts-8273073f1d6914f372790399378f177573c52e37::UpgradeabilityProxy",
+            "overlap": 1,
+            "sizes": "1/1"
+          },
+          {
+            "jaccard": 1.0,
+            "a": "val:DAPP::DAppSCAN-source/contracts/QuillAudits-AAVE-ParaSwap Adapter/aave-protocol-v2-14e2ab47d95f42ec5ee486f367067e78a7588878::UpgradeabilityProxy",
+            "b": "test:DAPP::DAppSCAN-source/contracts/consensys-Aave_Protocol_V2/aave-protocol-v2-f756f44a8d6a328cd545335e46e7128939db88c4::UpgradeabilityProxy",
+            "overlap": 1,
+            "sizes": "1/1"
+          },
+          {
+            "jaccard": 1.0,
+            "a": "train:DAPP::DAppSCAN-source/contracts/Coinspect-Incognito Audit/bridge-eth-4879219669a38d601265582f815596b6775855b6::AdminUpgradeabilityProxy",
+            "b": "val:DAPP::DAppSCAN-source/contracts/PeckShield-KaoyaSwap/contracts-8273073f1d6914f372790399378f177573c52e37::AdminUpgradeabilityProxy",
+            "overlap": 1,
+            "sizes": "1/1"
+          },
+          {
+            "jaccard": 1.0,
+            "a": "val:DAPP::DAppSCAN-source/contracts/QuillAudits-AAVE-ParaSwap Adapter/aave-protocol-v2-14e2ab47d95f42ec5ee486f367067e78a7588878::AdminUpgradeabilityProxy",
+            "b": "test:DAPP::DAppSCAN-source/contracts/consensys-Aave_Protocol_V2/aave-protocol-v2-f756f44a8d6a328cd545335e46e7128939db88c4::AdminUpgradeabilityProxy",
+            "overlap": 1,
+            "sizes": "1/1"
+          },
+          {
+            "jaccard": 1.0,
+            "a": "train:DAPP::DAppSCAN-source/contracts/PeckShield-MilkySwap/milkyswap-59f163e9959cf8bae4a521a9648219b553312e07::UniswapV2Factory",
+            "b": "val:DAPP::DAppSCAN-source/contracts/PeckShield-SushiSwap/sushiswap-180bc9b642bba79c1ee4a63f71a3a0d36e64aa63::UniswapV2Factory",
+            "overlap": 1,
+            "sizes": "1/1"
+          },
+          {
+            "jaccard": 1.0,
+            "a": "train:DAPP::DAppSCAN-source/contracts/PeckShield-Tranchessv1.0/contract-core-5ac3d997da3ef37b0135565a11c5ebcc519862aa::BscAprOracle",
+            "b": "test:DAPP::DAppSCAN-source/contracts/PeckShield-TranchessV1.1/contract-core-68a86350313c1cb9e5467e791d3e9efaf228a0df::BscAprOracle",
+            "overlap": 1,
+            "sizes": "1/1"
+          },
+          {
+            "jaccard": 1.0,
+            "a": "train:DAPP::DAppSCAN-source/contracts/PeckShield-Tranchessv1.0/contract-core-5ac3d997da3ef37b0135565a11c5ebcc519862aa::AprOracle",
+            "b": "test:DAPP::DAppSCAN-source/contracts/PeckShield-TranchessV1.1/contract-core-68a86350313c1cb9e5467e791d3e9efaf228a0df::AprOracle",
+            "overlap": 1,
+            "sizes": "1/1"
+          },
+          {
+            "jaccard": 1.0,
+            "a": "train:DAPP::DAppSCAN-source/contracts/PeckShield-Tranchessv1.0/contract-core-5ac3d997da3ef37b0135565a11c5ebcc519862aa::ExchangeRoles",
+            "b": "test:DAPP::DAppSCAN-source/contracts/PeckShield-TranchessV1.1/contract-core-68a86350313c1cb9e5467e791d3e9efaf228a0df::ExchangeRoles",
+            "overlap": 1,
+            "sizes": "1/1"
+          },
+          {
+            "jaccard": 1.0,
+            "a": "train:DAPP::DAppSCAN-source/contracts/PeckShield-Tranchessv1.0/contract-core-5ac3d997da3ef37b0135565a11c5ebcc519862aa::Share",
+            "b": "test:DAPP::DAppSCAN-source/contracts/PeckShield-TranchessV1.1/contract-core-68a86350313c1cb9e5467e791d3e9efaf228a0df::Share",
+            "overlap": 8,
+            "sizes": "8/8"
+          },
+          {
+            "jaccard": 1.0,
+            "a": "train:DAPP::DAppSCAN-source/contracts/PeckShield-Tranchessv1.0/contract-core-5ac3d997da3ef37b0135565a11c5ebcc519862aa::FundRoles",
+            "b": "test:DAPP::DAppSCAN-source/contracts/PeckShield-TranchessV1.1/contract-core-68a86350313c1cb9e5467e791d3e9efaf228a0df::FundRoles",
+            "overlap": 5,
+            "sizes": "5/5"
+          },
+          {
+            "jaccard": 1.0,
+            "a": "train:DAPP::DAppSCAN-source/contracts/PeckShield-Tranchessv1.0/contract-core-5ac3d997da3ef37b0135565a11c5ebcc519862aa::OrderQueueTestWrapper",
+            "b": "test:DAPP::DAppSCAN-source/contracts/PeckShield-TranchessV1.1/contract-core-68a86350313c1cb9e5467e791d3e9efaf228a0df::OrderQueueTestWrapper",
+            "overlap": 5,
+            "sizes": "5/5"
+          },
+          {
+            "jaccard": 1.0,
+            "a": "train:DAPP::DAppSCAN-source/contracts/PeckShield-Tranchessv1.0/contract-core-5ac3d997da3ef37b0135565a11c5ebcc519862aa::ChessRoles",
+            "b": "test:DAPP::DAppSCAN-source/contracts/PeckShield-TranchessV1.1/contract-core-68a86350313c1cb9e5467e791d3e9efaf228a0df::ChessRoles",
+            "overlap": 5,
+            "sizes": "5/5"
+          },
+          {
+            "jaccard": 1.0,
+            "a": "train:DAPP::DAppSCAN-source/contracts/Solidified-Aztec Element Bridge/aztec-connect-bridges-ac2e7194b5887ea11a607b4cf8de0547b3d7fdd0::HeapTestContract",
+            "b": "val:DAPP::DAppSCAN-source/contracts/Solidified-Aztec Lido Bridge/aztec-connect-bridges-d5aca13d4d0a17b21eeddf77f49f4c6613461fb0::HeapTestContract",
+            "overlap": 5,
+            "sizes": "5/5"
+          },
+          {
+            "jaccard": 1.0,
+            "a": "train:DAPP::DAppSCAN-source/contracts/Solidified-Aztec Element Bridge/aztec-connect-bridges-ac2e7194b5887ea11a607b4cf8de0547b3d7fdd0::StakingBridgeTestInternal",
+            "b": "val:DAPP::DAppSCAN-source/contracts/Solidified-Aztec Lido Bridge/aztec-connect-bridges-d5aca13d4d0a17b21eeddf77f49f4c6613461fb0::StakingBridgeTestInternal",
+            "overlap": 8,
+            "sizes": "8/8"
+          },
+          {
+            "jaccard": 1.0,
+            "a": "train:DAPP::DAppSCAN-source/contracts/Solidified-Aztec Element Bridge/aztec-connect-bridges-ac2e7194b5887ea11a607b4cf8de0547b3d7fdd0::StabilityPoolBridgeTestInternal",
+            "b": "val:DAPP::DAppSCAN-source/contracts/Solidified-Aztec Lido Bridge/aztec-connect-bridges-d5aca13d4d0a17b21eeddf77f49f4c6613461fb0::StabilityPoolBridgeTestInternal",
+            "overlap": 8,
+            "sizes": "8/8"
+          },
+          {
+            "jaccard": 1.0,
+            "a": "train:DAPP::DAppSCAN-source/contracts/Solidified-Aztec Element Bridge/aztec-connect-bridges-ac2e7194b5887ea11a607b4cf8de0547b3d7fdd0::TestUtil",
+            "b": "val:DAPP::DAppSCAN-source/contracts/Solidified-Aztec Lido Bridge/aztec-connect-bridges-d5aca13d4d0a17b21eeddf77f49f4c6613461fb0::TestUtil",
+            "overlap": 3,
+            "sizes": "3/3"
+          },
+          {
+            "jaccard": 1.0,
+            "a": "train:DAPP::DAppSCAN-source/contracts/Solidified-Aztec Element Bridge/aztec-connect-bridges-ac2e7194b5887ea11a607b4cf8de0547b3d7fdd0::MinHeap",
+            "b": "val:DAPP::DAppSCAN-source/contracts/Solidified-Aztec Lido Bridge/aztec-connect-bridges-d5aca13d4d0a17b21eeddf77f49f4c6613461fb0::MinHeap",
+            "overlap": 1,
+            "sizes": "1/1"
+          },
+          {
+            "jaccard": 1.0,
+            "a": "train:DAPP::DAppSCAN-source/contracts/Solidified-Aztec Element Bridge/aztec-connect-bridges-ac2e7194b5887ea11a607b4cf8de0547b3d7fdd0::ExampleBridgeContract",
+            "b": "val:DAPP::DAppSCAN-source/contracts/Solidified-Aztec Lido Bridge/aztec-connect-bridges-d5aca13d4d0a17b21eeddf77f49f4c6613461fb0::ExampleBridgeContract",
+            "overlap": 1,
+            "sizes": "1/1"
+          },
+          {
+            "jaccard": 1.0,
+            "a": "train:DAPP::DAppSCAN-source/contracts/Solidified-Aztec Element Bridge/aztec-connect-bridges-ac2e7194b5887ea11a607b4cf8de0547b3d7fdd0::TroveBridge",
+            "b": "val:DAPP::DAppSCAN-source/contracts/Solidified-Aztec Lido Bridge/aztec-connect-bridges-d5aca13d4d0a17b21eeddf77f49f4c6613461fb0::TroveBridge",
+            "overlap": 4,
+            "sizes": "4/4"
+          },
+          {
+            "jaccard": 1.0,
+            "a": "train:DAPP::DAppSCAN-source/contracts/Solidified-Aztec Element Bridge/aztec-connect-bridges-ac2e7194b5887ea11a607b4cf8de0547b3d7fdd0::StabilityPoolBridge",
+            "b": "val:DAPP::DAppSCAN-source/contracts/Solidified-Aztec Lido Bridge/aztec-connect-bridges-d5aca13d4d0a17b21eeddf77f49f4c6613461fb0::StabilityPoolBridge",
+            "overlap": 3,
+            "sizes": "3/3"
+          },
+          {
+            "jaccard": 1.0,
+            "a": "train:DAPP::DAppSCAN-source/contracts/Solidified-Aztec Element Bridge/aztec-connect-bridges-ac2e7194b5887ea11a607b4cf8de0547b3d7fdd0::StakingBridge",
+            "b": "val:DAPP::DAppSCAN-source/contracts/Solidified-Aztec Lido Bridge/aztec-connect-bridges-d5aca13d4d0a17b21eeddf77f49f4c6613461fb0::StakingBridge",
+            "overlap": 3,
+            "sizes": "3/3"
+          },
+          {
+            "jaccard": 1.0,
+            "a": "train:DAPP::DAppSCAN-source/contracts/Solidified-Aztec Element Bridge/aztec-connect-bridges-ac2e7194b5887ea11a607b4cf8de0547b3d7fdd0::IssuanceBridge",
+            "b": "val:DAPP::DAppSCAN-source/contracts/Solidified-Aztec Lido Bridge/aztec-connect-bridges-d5aca13d4d0a17b21eeddf77f49f4c6613461fb0::IssuanceBridge",
+            "overlap": 1,
+            "sizes": "1/1"
+          },
+          {
+            "jaccard": 1.0,
+            "a": "train:DAPP::DAppSCAN-source/contracts/Solidified-Aztec Element Bridge/aztec-connect-bridges-ac2e7194b5887ea11a607b4cf8de0547b3d7fdd0::AaveLendingBridge",
+            "b": "val:DAPP::DAppSCAN-source/contracts/Solidified-Aztec Lido Bridge/aztec-connect-bridges-d5aca13d4d0a17b21eeddf77f49f4c6613461fb0::AaveLendingBridge",
+            "overlap": 3,
+            "sizes": "3/3"
+          },
+          {
+            "jaccard": 1.0,
+            "a": "train:DAPP::DAppSCAN-source/contracts/Solidified-Aztec Element Bridge/aztec-connect-bridges-ac2e7194b5887ea11a607b4cf8de0547b3d7fdd0::MStableBridge",
+            "b": "val:DAPP::DAppSCAN-source/contracts/Solidified-Aztec Lido Bridge/aztec-connect-bridges-d5aca13d4d0a17b21eeddf77f49f4c6613461fb0::MStableBridge",
+            "overlap": 1,
+            "sizes": "1/1"
+          },
+          {
+            "jaccard": 1.0,
+            "a": "train:DAPP::DAppSCAN-source/contracts/Solidified-Aztec Element Bridge/aztec-connect-bridges-ac2e7194b5887ea11a607b4cf8de0547b3d7fdd0::RaiBridge",
+            "b": "val:DAPP::DAppSCAN-source/contracts/Solidified-Aztec Lido Bridge/aztec-connect-bridges-d5aca13d4d0a17b21eeddf77f49f4c6613461fb0::RaiBridge",
+            "overlap": 4,
+            "sizes": "4/4"
+          },
+          {
+            "jaccard": 1.0,
+            "a": "val:DAPP::DAppSCAN-source/contracts/QuillAudits-AAVE-ParaSwap Adapter/aave-protocol-v2-14e2ab47d95f42ec5ee486f367067e78a7588878::BaseAdminUpgradeabilityProxy",
+            "b": "test:DAPP::DAppSCAN-source/contracts/consensys-Aave_Protocol_V2/aave-protocol-v2-f756f44a8d6a328cd545335e46e7128939db88c4::BaseAdminUpgradeabilityProxy",
+            "overlap": 1,
+            "sizes": "1/1"
+          },
+          {
+            "jaccard": 1.0,
+            "a": "val:DAPP::DAppSCAN-source/contracts/QuillAudits-AAVE-ParaSwap Adapter/aave-protocol-v2-14e2ab47d95f42ec5ee486f367067e78a7588878::InitializableAdminUpgradeabilityProxy",
+            "b": "test:DAPP::DAppSCAN-source/contracts/consensys-Aave_Protocol_V2/aave-protocol-v2-f756f44a8d6a328cd545335e46e7128939db88c4::InitializableAdminUpgradeabilityProxy",
+            "overlap": 2,
+            "sizes": "2/2"
+          },
+          {
+            "jaccard": 1.0,
+            "a": "val:DAPP::DAppSCAN-source/contracts/QuillAudits-AAVE-ParaSwap Adapter/aave-protocol-v2-14e2ab47d95f42ec5ee486f367067e78a7588878::InitializableUpgradeabilityProxy",
+            "b": "test:DAPP::DAppSCAN-source/contracts/consensys-Aave_Protocol_V2/aave-protocol-v2-f756f44a8d6a328cd545335e46e7128939db88c4::InitializableUpgradeabilityProxy",
+            "overlap": 2,
+            "sizes": "2/2"
+          },
+          {
+            "jaccard": 1.0,
+            "a": "val:DAPP::DAppSCAN-source/contracts/QuillAudits-AAVE-ParaSwap Adapter/aave-protocol-v2-14e2ab47d95f42ec5ee486f367067e78a7588878::BaseUpgradeabilityProxy",
+            "b": "test:DAPP::DAppSCAN-source/contracts/consensys-Aave_Protocol_V2/aave-protocol-v2-f756f44a8d6a328cd545335e46e7128939db88c4::BaseUpgradeabilityProxy",
+            "overlap": 1,
+            "sizes": "1/1"
+          },
+          {
+            "jaccard": 0.875,
+            "a": "train:DAPP::DAppSCAN-source/contracts/Solidified-Aztec Element Bridge/aztec-connect-bridges-ac2e7194b5887ea11a607b4cf8de0547b3d7fdd0::ElementBridge",
+            "b": "val:DAPP::DAppSCAN-source/contracts/Solidified-Aztec Lido Bridge/aztec-connect-bridges-d5aca13d4d0a17b21eeddf77f49f4c6613461fb0::ElementBridge",
+            "overlap": 7,
+            "sizes": "8/7"
+          },
+          {
+            "jaccard": 0.846,
+            "a": "train:DAPP::DAppSCAN-source/contracts/Inspex-SpookySwap Integration & Fantom Expansion/bsc-alpaca-contract-4553a34a6dcfcfbf7aebc693bb5c5c6074c73129::MdexWorker02",
+            "b": "val:DAPP::DAppSCAN-source/contracts/Inspex-MDEX Integration/bsc-alpaca-contract-a3a14d27a4803afebdcf783c9ce8764b65f5587d::MdexWorker02",
+            "overlap": 11,
+            "sizes": "11/13"
+          }
+        ]
+      }
+    ]
+  },
+  "vulnerability_scope_assessment": [
+    {
+      "vulnerability_type": "reentrancy",
+      "train_positive_interactions": 102,
+      "train_positive_contracts": 77,
+      "val_positive_interactions": 21,
+      "val_positive_contracts": 16,
+      "test_positive_interactions": 23,
+      "test_positive_contracts": 16,
+      "total_positive_interactions": 146,
+      "total_positive_contracts": 109,
+      "positives_with_state_and_external_evidence": 146,
+      "positives_with_source_location": 146,
+      "low_level_or_delegatecall_signal_count": 7,
+      "hypervul_fit": "High: state plus external-call ordering is the intended interaction pattern.",
+      "experiment_suitability": "Viable, but train/test duplication and missing graph-native spans must be fixed first."
+    },
+    {
+      "vulnerability_type": "unchecked low-level call",
+      "train_positive_interactions": 60,
+      "train_positive_contracts": 36,
+      "val_positive_interactions": 12,
+      "val_positive_contracts": 8,
+      "test_positive_interactions": 6,
+      "test_positive_contracts": 4,
+      "total_positive_interactions": 78,
+      "total_positive_contracts": 48,
+      "positives_with_state_and_external_evidence": 78,
+      "positives_with_source_location": 78,
+      "low_level_or_delegatecall_signal_count": 1,
+      "hypervul_fit": "Medium: external-call evidence fits, but current labels often lack explicit low-level-call signals in graph text.",
+      "experiment_suitability": "Potentially viable after auditing positives without low-level-call signal and rebuilding splits."
+    },
+    {
+      "vulnerability_type": "delegatecall",
+      "train_positive_interactions": 6,
+      "train_positive_contracts": 3,
+      "val_positive_interactions": 0,
+      "val_positive_contracts": 0,
+      "test_positive_interactions": 0,
+      "test_positive_contracts": 0,
+      "total_positive_interactions": 6,
+      "total_positive_contracts": 3,
+      "positives_with_state_and_external_evidence": 6,
+      "positives_with_source_location": 6,
+      "low_level_or_delegatecall_signal_count": 5,
+      "hypervul_fit": "Medium: delegatecall is interaction-like, but label volume/split coverage is too small.",
+      "experiment_suitability": "Not viable as standalone with current split: no val/test positives."
+    },
+    {
+      "vulnerability_type": "front-running",
+      "train_positive_interactions": 47,
+      "train_positive_contracts": 41,
+      "val_positive_interactions": 5,
+      "val_positive_contracts": 4,
+      "test_positive_interactions": 12,
+      "test_positive_contracts": 8,
+      "total_positive_interactions": 64,
+      "total_positive_contracts": 53,
+      "positives_with_state_and_external_evidence": 64,
+      "positives_with_source_location": 64,
+      "low_level_or_delegatecall_signal_count": 0,
+      "hypervul_fit": "Low: often requires transaction-order/economic context outside the hyperedge representation.",
+      "experiment_suitability": "Weak standalone target; use only as exploratory or remove from narrowed-scope core."
+    }
+  ],
+  "contract_level_support": {
+    "every_interaction_grouped_by_contract": true,
+    "contract_label_derivable_from_interaction_labels": true,
+    "contract_level_class_imbalance_better_than_interaction_level": {
+      "train": true,
+      "val": true,
+      "test": true
+    },
+    "interaction_neg_pos_ratio_all": 41.03061224489796,
+    "contract_neg_pos_ratio_all": 8.315533980582524,
+    "would_reduce_false_positive_pressure": true
+  },
+  "topk_localization_support": {
+    "positive_contract_count": 206,
+    "positive_contracts_with_multiple_positive_interactions": 52,
+    "positive_contracts_single_positive_interaction": 154,
+    "positive_interactions_with_vulnerable_node_label": 294,
+    "positive_interactions_with_source_file_or_location": 294,
+    "positive_interactions_with_precise_line_or_raw_location": 294,
+    "graph_native_source_spans_available": false,
+    "recommended_metrics": [
+      "Top-k hit / Recall@k at contract level",
+      "MRR for first vulnerable interaction",
+      "MAP only if multi-positive contracts are common enough after cleanup"
+    ]
+  },
+  "label_quality": {
+    "suspicious_label_rows_total": 527,
+    "by_issue": {
+      "front_running_positive_weak_fit_for_interaction_localization": 64,
+      "negative_contains_strong_low_level_call_pattern": 210,
+      "unchecked_call_positive_without_low_level_call_signal": 77,
+      "exact_duplicate_source_conflicting_label": 29,
+      "negative_contract_many_risky_interactions": 147
+    },
+    "by_severity": {
+      "MEDIUM": 396,
+      "HIGH": 131
+    },
+    "unmatched_positive_provenance_count": 0,
+    "risky_negative_contract_count": 147
+  },
+  "leakage_counts": {
+    "same_contract_graph_id": {
+      "severity": "NONE",
+      "description": "No graph_id values appear in multiple splits.",
+      "example_count": 0
+    },
+    "same_project_id": {
+      "severity": "NONE",
+      "description": "No project values appear in multiple splits.",
+      "example_count": 0
+    },
+    "exact_duplicate_function_source_across_splits": {
+      "severity": "MEDIUM",
+      "description": "149 exact normalized interaction/function source hashes appear in multiple splits; 0 include at least one positive label.",
+      "example_count": 50
+    },
+    "duplicate_interactions_conflicting_labels": {
+      "severity": "HIGH",
+      "description": "10 exact normalized function sources have both positive and negative labels.",
+      "example_count": 10
+    },
+    "same_train_positive_source_pattern_in_val_or_test": {
+      "severity": "NONE",
+      "description": "0 train-positive function hashes also appear in val/test.",
+      "example_count": 0
+    },
+    "exact_duplicate_contract_interaction_set_across_splits": {
+      "severity": "HIGH",
+      "description": "27 exact duplicate contract interaction-source sets appear across splits.",
+      "example_count": 27
+    },
+    "same_contract_name_near_duplicate_interaction_code": {
+      "severity": "HIGH",
+      "description": "42 same contract-name graph pairs across splits share >=80% exact interaction function hashes.",
+      "example_count": 42
+    }
+  },
+  "final_decision": "FAIL",
+  "audit_generated_at": "2026-06-27"
+}
