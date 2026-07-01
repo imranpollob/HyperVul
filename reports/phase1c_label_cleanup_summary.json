@@ -1,0 +1,24 @@
+{
+  "generated_at": "2026-06-27",
+  "labels": {
+    "ambiguous_quarantine": 102,
+    "confirmed_positive_reentrancy": 17,
+    "confirmed_protected_negative": 158,
+    "wrong_scope_or_other_vulnerability": 71,
+    "insufficient_evidence": 4
+  },
+  "view_actions": {
+    "keep": 20319,
+    "set_negative": 269,
+    "ignore": 435
+  },
+  "epochs": 5,
+  "seeds": [
+    42,
+    43,
+    44,
+    45,
+    46
+  ],
+  "accepted_policy": "high_confidence_only"
+}

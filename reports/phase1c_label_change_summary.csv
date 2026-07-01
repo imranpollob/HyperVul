@@ -1,0 +1,13 @@
+item,count,type
+confirmed_positive_reentrancy,17,proposed_label
+confirmed_protected_negative,158,proposed_label
+ambiguous_quarantine,102,proposed_label
+wrong_scope_or_other_vulnerability,71,proposed_label
+insufficient_evidence,4,proposed_label
+ignore,435,reviewed_view_action
+keep,20319,reviewed_view_action
+set_negative,269,reviewed_view_action
+positive_relabel_candidates,17,summary
+high_confidence_positive_accepted,0,summary
+high_confidence_protected_negative_accepted,99,summary
+quarantined_or_insufficient,106,summary

@@ -1,0 +1,25 @@
+# Canonical data configuration for the fair-evaluation rewrite.
+
+project_root: .
+
+canonical_graph_splits:
+  train: data/contract_graphs/train.json
+  val: data/contract_graphs/val.json
+  test: data/contract_graphs/test.json
+
+embedding_files:
+  node_embeddings: data/contract_graphs/node_embeddings.pt
+  member_embeddings: data/contract_graphs/member_embeddings.pt
+
+clean_negative_pools:
+  openzeppelin: experiments/latest1/eval_clean_negatives_oz_features.json
+  aave: experiments/latest1/eval_clean_negatives_aave_split.json
+  external_maker_bancor: experiments/latest1/eval_clean_negatives_external.json
+  liquity: experiments/latest1/eval_clean_negatives_liquity.json
+
+split_policy:
+  canonical_unit: project
+  require_project_disjoint: true
+  require_project_contract_disjoint: true
+  allow_repeated_raw_contract_names: true
+

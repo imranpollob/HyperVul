@@ -1,0 +1,36 @@
+{
+  "generated_at": "2026-06-27",
+  "input_contracts": 1919,
+  "included_contracts": 1831,
+  "quarantined_contracts": 88,
+  "components": 136,
+  "split_counts": {
+    "train": {
+      "contracts": 1339,
+      "positive_contracts": 140,
+      "negative_contracts": 1199,
+      "reentrancy_positive_contracts": 60,
+      "unchecked_positive_contracts": 30
+    },
+    "val": {
+      "contracts": 280,
+      "positive_contracts": 30,
+      "negative_contracts": 250,
+      "reentrancy_positive_contracts": 13,
+      "unchecked_positive_contracts": 11
+    },
+    "test": {
+      "contracts": 212,
+      "positive_contracts": 30,
+      "negative_contracts": 182,
+      "reentrancy_positive_contracts": 13,
+      "unchecked_positive_contracts": 6
+    }
+  },
+  "rules": [
+    "No component is split across train/val/test.",
+    "Components connect graph rows by project/family, source file, normalized contract hash, exact interaction-set hash, and exact function hashes.",
+    "Cross-split exact duplicates and exact function-label conflicts are quarantined.",
+    "This is a proposal only; no data/ files are modified."
+  ]
+}

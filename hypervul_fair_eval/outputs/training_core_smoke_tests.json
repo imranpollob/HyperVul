@@ -1,0 +1,28 @@
+{
+  "status": "pass",
+  "epoch_examples": 60,
+  "threshold": 0.41000000000000003,
+  "metrics_keys": [
+    "accuracy",
+    "f1",
+    "f2",
+    "false_positive_rate",
+    "fn",
+    "fp",
+    "negative_support",
+    "positive_support",
+    "pr_auc",
+    "precision",
+    "recall",
+    "roc_auc",
+    "specificity",
+    "support",
+    "threshold",
+    "tn",
+    "tp"
+  ],
+  "result_files": [
+    "training_core_smoke_result.json",
+    "training_core_smoke_result.md"
+  ]
+}

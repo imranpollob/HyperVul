@@ -1,0 +1,53 @@
+{
+  "accepted_actions": {
+    "quarantine": 118,
+    "accept_positive": 21,
+    "accept_negative": 169,
+    "wrong_scope": 90
+  },
+  "pair_stats": [
+    {
+      "split": "train",
+      "pairs": 228,
+      "positive_examples": 38,
+      "protected_negative_examples": 76,
+      "mean_similarity": 3.7017543859649122
+    }
+  ],
+  "accepted_view_actions": {
+    "reentrancy_only": {
+      "keep": 9776,
+      "set_negative": 103,
+      "ignore": 297
+    },
+    "all_scope": {
+      "keep": 10445,
+      "set_negative": 194,
+      "ignore": 208
+    }
+  },
+  "phase1d_conclusions": {
+    "accepted_labels_improve_reentrancy_stability": "mixed: lower precision variance than Phase 1B but lower mean precision/F1/recall",
+    "contrastive_improves_reentrancy_precision": false,
+    "phase1b_reentrancy_precision": 0.3981546231546232,
+    "accepted_label_reentrancy_precision": 0.3572510822510823,
+    "contrastive_reentrancy_precision": 0.2537240537240537,
+    "contrastive_reentrancy_recall_collapse": false,
+    "phase1b_reentrancy_recall": 0.2375,
+    "contrastive_reentrancy_recall": 0.225,
+    "contrastive_improves_all_scope_secondary": true,
+    "phase1b_all_scope_f1": 0.36749475656942,
+    "contrastive_all_scope_f1": 0.3795692362741339,
+    "phase1b_all_scope_pr_auc": 0.3431896542641909,
+    "contrastive_all_scope_pr_auc": 0.3806089953353281,
+    "contrastive_pairs": {
+      "split": "train",
+      "pairs": 228,
+      "positive_examples": 38,
+      "protected_negative_examples": 76,
+      "mean_similarity": 3.7017543859649122
+    },
+    "targeted_augmentation_safe": false,
+    "recommended_focus": "manual adjudication of the 21 medium-confidence positive candidates, then retry contrastive reentrancy; all-scope contrastive is promising but should not replace the reentrancy cleanup objective yet"
+  }
+}

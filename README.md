@@ -4,6 +4,148 @@ This repository contains the official implementation of **HyperVul**, a framewor
 
 ---
 
+## Fair Evaluation Rewrite
+
+A clean fair-evaluation codebase is available under:
+
+```text
+hypervul_fair_eval/
+```
+
+Use this path for the current academic evaluation plan, including generic neural baselines, controlled representation ablation, HyperVul component ablation, and final report generation.
+
+Full command list:
+
+```bash
+cat hypervul_fair_eval/README.md
+```
+
+Main commands:
+
+```bash
+python3 hypervul_fair_eval/scripts/run_full_evaluation.py
+```
+
+This single command audits the dataset, trains RQ1/RQ2/RQ3, refreshes summaries, and regenerates `hypervul_fair_eval/outputs/final_report.md`.
+
+Individual commands:
+
+```bash
+python3 hypervul_fair_eval/scripts/audit_dataset.py
+
+python3 hypervul_fair_eval/scripts/rq1_run_generic_baselines.py \
+  --models function-mlp function-features-mlp sequence callgraph-gcn pairwise-gcn pairwise-gat \
+  --seeds 42 43 44 45 46 \
+  --epochs 20 \
+  --batch-size 64 \
+  --threshold-policy max_f2
+
+python3 hypervul_fair_eval/scripts/rq2_run_representation_ablation.py \
+  --models set-pool pairwise-gcn pairwise-gat hyperedge-nn \
+  --seeds 42 43 44 45 46 \
+  --epochs 20 \
+  --batch-size 128 \
+  --threshold-policy max_f2
+
+python3 hypervul_fair_eval/scripts/rq3_run_hypervul_ablation.py \
+  --models emb-only security full no-localize no-contrastive \
+  --seeds 42 43 44 45 46 \
+  --epochs 20 \
+  --batch-size 128 \
+  --threshold-policy max_f2
+
+python3 hypervul_fair_eval/scripts/make_final_report.py
+```
+
+The consolidated output is:
+
+```text
+hypervul_fair_eval/outputs/final_report.md
+```
+
+### Strong AI-Tool Evaluation Workflow
+
+Use this workflow when iterating toward stronger AI-tool results. Each command writes a markdown summary that can be pasted back for review.
+
+```bash
+cd /home/pollmix/Coding/HyperVul
+
+python3 -m py_compile $(find hypervul_fair_eval/src -name '*.py') $(find hypervul_fair_eval/scripts -name '*.py')
+python3 hypervul_fair_eval/scripts/audit_dataset.py
+python3 hypervul_fair_eval/scripts/check_import_boundaries.py
+python3 hypervul_fair_eval/scripts/smoke_test_models.py
+python3 hypervul_fair_eval/scripts/smoke_test_training_core.py
+```
+
+Strong baseline seed-42 sweep:
+
+```bash
+python3 hypervul_fair_eval/scripts/run_strong_baseline_sweep.py \
+  --seeds 42 \
+  --max-epochs 200 \
+  --early-stop \
+  --patience 20 \
+  --threshold-policy max_f2
+
+cat hypervul_fair_eval/outputs/strong_baselines/summary.md
+```
+
+HyperVul seed-42 quick sweep:
+
+```bash
+python3 hypervul_fair_eval/scripts/run_hypervul_quick_sweep.py \
+  --seed 42 \
+  --max-epochs 200 \
+  --early-stop \
+  --patience 20 \
+  --threshold-policy max_f2
+
+cat hypervul_fair_eval/outputs/quick_sweep/summary.md
+```
+
+Full strong baseline run:
+
+```bash
+python3 hypervul_fair_eval/scripts/run_strong_baseline_sweep.py \
+  --seeds 42 43 44 45 46 \
+  --models function-mlp function-features-mlp sequence-bigru callgraph-gat pairwise-rgcn pairwise-gat \
+  --max-epochs 200 \
+  --early-stop \
+  --patience 20 \
+  --threshold-policy max_f2
+
+cat hypervul_fair_eval/outputs/strong_baselines/summary.md
+```
+
+Full HyperVul tool run:
+
+```bash
+python3 hypervul_fair_eval/scripts/run_hypervul_tool_evaluation.py \
+  --seeds 42 43 44 45 46 \
+  --max-epochs 200 \
+  --early-stop \
+  --patience 20 \
+  --symbolic-mode full \
+  --loss asl \
+  --scl-pretrain-epochs 15 \
+  --scl-lambda 0.5 \
+  --scl-hard-neg-weight 3.0 \
+  --threshold-policy max_f2
+
+cat hypervul_fair_eval/outputs/tool_eval/summary.md
+```
+
+Regenerate final report:
+
+```bash
+python3 hypervul_fair_eval/scripts/make_final_report.py
+cat hypervul_fair_eval/outputs/final_report.md
+```
+
+Slither/Mythril static analyzer baselines are still planned, but deferred to a separate compiler/toolchain pass.
+
+---
+
 ## 🚀 Step-by-Step Evaluation & Training Pipeline
 
 To fully train the baselines, train the HyperVul models across multiple seeds, and reproduce the tables for the paper, execute the steps below in order.

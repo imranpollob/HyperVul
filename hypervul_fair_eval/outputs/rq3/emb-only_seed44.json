@@ -1,0 +1,226 @@
+{
+  "title": "RQ3 HyperVul Ablation: emb-only",
+  "rq": "RQ3",
+  "model": "emb-only",
+  "seed": 44,
+  "device": "cuda",
+  "config": {
+    "epochs": 20,
+    "batch_size": 128,
+    "lr": 0.001,
+    "dropout": 0.3,
+    "threshold_policy": "max_f2",
+    "target_recall": 0.9,
+    "target_precision": 0.7,
+    "scl_lambda": 0.2,
+    "use_symbolic": false,
+    "use_localization": true,
+    "use_contrastive": true
+  },
+  "data_note": "Canonical contract_graphs provide an 8-d per-interaction security context. The security and full variants both consume this available context; wider old-style symbolic sidecars are outside this canonical graph view.",
+  "counts": {
+    "train": {
+      "examples": 10740,
+      "positive": 215,
+      "negative": 10525
+    },
+    "val": {
+      "examples": 844,
+      "positive": 38,
+      "negative": 806
+    },
+    "test": {
+      "examples": 773,
+      "positive": 41,
+      "negative": 732
+    }
+  },
+  "threshold_selection": {
+    "policy": "max_f2",
+    "threshold": 0.077,
+    "precision": 0.22826086956521738,
+    "recall": 0.5526315789473685,
+    "f1": 0.32307692307692304,
+    "f2": 0.43032786885245905
+  },
+  "validation_metrics": {
+    "threshold": 0.077,
+    "tp": 21,
+    "tn": 735,
+    "fp": 71,
+    "fn": 17,
+    "precision": 0.22826086956521738,
+    "recall": 0.5526315789473685,
+    "specificity": 0.9119106699751861,
+    "false_positive_rate": 0.0880893300248139,
+    "f1": 0.32307692307692304,
+    "f2": 0.43032786885245905,
+    "accuracy": 0.8957345971563981,
+    "pr_auc": 0.3040816684542545,
+    "roc_auc": 0.8289473684210528,
+    "support": 844,
+    "positive_support": 38,
+    "negative_support": 806
+  },
+  "metrics": {
+    "threshold": 0.077,
+    "tp": 21,
+    "tn": 638,
+    "fp": 94,
+    "fn": 20,
+    "precision": 0.1826086956521739,
+    "recall": 0.5121951219512195,
+    "specificity": 0.8715846994535519,
+    "false_positive_rate": 0.1284153005464481,
+    "f1": 0.2692307692307692,
+    "f2": 0.3763440860215054,
+    "accuracy": 0.8525226390685641,
+    "pr_auc": 0.23239085017441952,
+    "roc_auc": 0.8330334532853525,
+    "support": 773,
+    "positive_support": 41,
+    "negative_support": 732
+  },
+  "history": [
+    {
+      "epoch": 1,
+      "train_loss": 2.1501647805368433,
+      "val_f1": 0.25233644859813087,
+      "val_f2": 0.4115853658536586,
+      "threshold": 0.747
+    },
+    {
+      "epoch": 2,
+      "train_loss": 1.91388019778431,
+      "val_f1": 0.2459016393442623,
+      "val_f2": 0.4189944134078212,
+      "threshold": 0.587
+    },
+    {
+      "epoch": 3,
+      "train_loss": 1.801425752959438,
+      "val_f1": 0.2824858757062147,
+      "val_f2": 0.429553264604811,
+      "threshold": 0.79
+    },
+    {
+      "epoch": 4,
+      "train_loss": 1.7675238659483983,
+      "val_f1": 0.2887700534759358,
+      "val_f2": 0.44850498338870426,
+      "threshold": 0.906
+    },
+    {
+      "epoch": 5,
+      "train_loss": 1.6598940771163286,
+      "val_f1": 0.3116883116883117,
+      "val_f2": 0.4477611940298507,
+      "threshold": 0.525
+    },
+    {
+      "epoch": 6,
+      "train_loss": 1.6188102522375862,
+      "val_f1": 0.3005181347150259,
+      "val_f2": 0.47231270358306193,
+      "threshold": 0.388
+    },
+    {
+      "epoch": 7,
+      "train_loss": 1.6185384418711315,
+      "val_f1": 0.29946524064171126,
+      "val_f2": 0.4651162790697675,
+      "threshold": 0.448
+    },
+    {
+      "epoch": 8,
+      "train_loss": 1.44886911390436,
+      "val_f1": 0.24472573839662445,
+      "val_f2": 0.4131054131054131,
+      "threshold": 0.525
+    },
+    {
+      "epoch": 9,
+      "train_loss": 1.484259519585906,
+      "val_f1": 0.33333333333333337,
+      "val_f2": 0.43750000000000006,
+      "threshold": 0.847
+    },
+    {
+      "epoch": 10,
+      "train_loss": 1.4317762422384053,
+      "val_f1": 0.2857142857142857,
+      "val_f2": 0.43252595155709345,
+      "threshold": 0.335
+    },
+    {
+      "epoch": 11,
+      "train_loss": 1.3155481524085644,
+      "val_f1": 0.2885572139303483,
+      "val_f2": 0.4603174603174603,
+      "threshold": 0.48
+    },
+    {
+      "epoch": 12,
+      "train_loss": 1.256398545563554,
+      "val_f1": 0.35789473684210527,
+      "val_f2": 0.4066985645933014,
+      "threshold": 0.904
+    },
+    {
+      "epoch": 13,
+      "train_loss": 1.2345508584763085,
+      "val_f1": 0.2911392405063291,
+      "val_f2": 0.4227941176470589,
+      "threshold": 0.514
+    },
+    {
+      "epoch": 14,
+      "train_loss": 1.2612639274899076,
+      "val_f1": 0.29239766081871343,
+      "val_f2": 0.43859649122807015,
+      "threshold": 0.08
+    },
+    {
+      "epoch": 15,
+      "train_loss": 1.1968761575732596,
+      "val_f1": 0.2658959537572254,
+      "val_f2": 0.40069686411149824,
+      "threshold": 0.334
+    },
+    {
+      "epoch": 16,
+      "train_loss": 1.2548473510884262,
+      "val_f1": 0.288659793814433,
+      "val_f2": 0.4545454545454546,
+      "threshold": 0.639
+    },
+    {
+      "epoch": 17,
+      "train_loss": 1.1496188296064096,
+      "val_f1": 0.2857142857142857,
+      "val_f2": 0.4022988505747127,
+      "threshold": 0.715
+    },
+    {
+      "epoch": 18,
+      "train_loss": 1.127079440805943,
+      "val_f1": 0.33333333333333337,
+      "val_f2": 0.4563492063492064,
+      "threshold": 0.14
+    },
+    {
+      "epoch": 19,
+      "train_loss": 1.1796185482369677,
+      "val_f1": 0.224,
+      "val_f2": 0.3846153846153846,
+      "threshold": 0.021
+    },
+    {
+      "epoch": 20,
+      "train_loss": 1.0929047929064077,
+      "val_f1": 0.32307692307692304,
+      "val_f2": 0.43032786885245905,
+      "threshold": 0.077
+    }
+  ]
+}

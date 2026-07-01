@@ -1,0 +1,2 @@
+split,pairs,positive_examples,protected_negative_examples,mean_similarity
+train,228,38,76,3.7017543859649122

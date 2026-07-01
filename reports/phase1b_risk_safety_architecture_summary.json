@@ -1,0 +1,163 @@
+{
+  "generated_at": "2026-06-27",
+  "epochs": 5,
+  "seeds": [
+    42,
+    43,
+    44,
+    45,
+    46
+  ],
+  "counts": {
+    "all_scope": {
+      "train": {
+        "contracts": 1339,
+        "positive_contracts": 140,
+        "negative_contracts": 1199,
+        "positive_interactions": 191
+      },
+      "val": {
+        "contracts": 280,
+        "positive_contracts": 30,
+        "negative_contracts": 250,
+        "positive_interactions": 51
+      },
+      "test": {
+        "contracts": 212,
+        "positive_contracts": 30,
+        "negative_contracts": 182,
+        "positive_interactions": 40
+      }
+    },
+    "reentrancy_only": {
+      "train": {
+        "contracts": 1274,
+        "positive_contracts": 75,
+        "negative_contracts": 1199,
+        "positive_interactions": 100
+      },
+      "val": {
+        "contracts": 264,
+        "positive_contracts": 14,
+        "negative_contracts": 250,
+        "positive_interactions": 26
+      },
+      "test": {
+        "contracts": 198,
+        "positive_contracts": 16,
+        "negative_contracts": 182,
+        "positive_interactions": 20
+      }
+    }
+  },
+  "review_packet_rows": 352,
+  "safety_ablation": [
+    {
+      "run": "all_scope",
+      "variant": "concat",
+      "safety_mechanism": "concat",
+      "safety_auxiliary_loss": "on",
+      "precision_mean": 0.2925728991141449,
+      "recall_mean": 0.45999999999999996,
+      "f1_mean": 0.3556335532392562,
+      "pr_auc_mean": 0.3795666838161417,
+      "mean_val_protected_fp_reduction_vs_concat": 0.0
+    },
+    {
+      "run": "all_scope",
+      "variant": "gated",
+      "safety_mechanism": "gated",
+      "safety_auxiliary_loss": "on",
+      "precision_mean": 0.29197234950050344,
+      "recall_mean": 0.5,
+      "f1_mean": 0.36749475656942,
+      "pr_auc_mean": 0.3431896542641909,
+      "mean_val_protected_fp_reduction_vs_concat": -2.2
+    },
+    {
+      "run": "all_scope",
+      "variant": "rule_suppression",
+      "safety_mechanism": "rule_suppression",
+      "safety_auxiliary_loss": "on",
+      "precision_mean": 0.29366662235805024,
+      "recall_mean": 0.5533333333333332,
+      "f1_mean": 0.365398523439213,
+      "pr_auc_mean": 0.2894622234100595,
+      "mean_val_protected_fp_reduction_vs_concat": -3.0
+    },
+    {
+      "run": "all_scope",
+      "variant": "subtractive",
+      "safety_mechanism": "subtractive",
+      "safety_auxiliary_loss": "on",
+      "precision_mean": 0.2661467978026209,
+      "recall_mean": 0.5733333333333333,
+      "f1_mean": 0.3625808181212872,
+      "pr_auc_mean": 0.32117768650126494,
+      "mean_val_protected_fp_reduction_vs_concat": -6.6
+    },
+    {
+      "run": "reentrancy_only",
+      "variant": "concat",
+      "safety_mechanism": "concat",
+      "safety_auxiliary_loss": "on",
+      "precision_mean": 0.33404174049860436,
+      "recall_mean": 0.4375,
+      "f1_mean": 0.2869081862036712,
+      "pr_auc_mean": 0.31905842080936064,
+      "mean_val_protected_fp_reduction_vs_concat": 0.0
+    },
+    {
+      "run": "reentrancy_only",
+      "variant": "gated",
+      "safety_mechanism": "gated",
+      "safety_auxiliary_loss": "on",
+      "precision_mean": 0.3981546231546232,
+      "recall_mean": 0.2375,
+      "f1_mean": 0.2950983397190293,
+      "pr_auc_mean": 0.24618082122278534,
+      "mean_val_protected_fp_reduction_vs_concat": 39.0
+    },
+    {
+      "run": "reentrancy_only",
+      "variant": "rule_suppression",
+      "safety_mechanism": "rule_suppression",
+      "safety_auxiliary_loss": "on",
+      "precision_mean": 0.30287767846622565,
+      "recall_mean": 0.3125,
+      "f1_mean": 0.2652762153162242,
+      "pr_auc_mean": 0.21937473903124496,
+      "mean_val_protected_fp_reduction_vs_concat": 28.4
+    },
+    {
+      "run": "reentrancy_only",
+      "variant": "subtractive",
+      "safety_mechanism": "subtractive",
+      "safety_auxiliary_loss": "on",
+      "precision_mean": 0.2969187675070028,
+      "recall_mean": 0.2875,
+      "f1_mean": 0.2917888563049853,
+      "pr_auc_mean": 0.290849469052223,
+      "mean_val_protected_fp_reduction_vs_concat": 38.0
+    }
+  ],
+  "phase1b_conclusions": {
+    "review_packet_rows": 352,
+    "prioritized_review_rows": 125,
+    "all_scope_best_f1_variant": "gated",
+    "all_scope_best_precision_variant": "rule_suppression",
+    "all_scope_best_pr_auc_variant": "concat",
+    "reentrancy_best_f1_variant": "gated",
+    "risk_safety_improves_precision_vs_phase1a_baseline": true,
+    "all_scope_precision_phase1a_baseline": 0.2343084410881021,
+    "all_scope_precision_best_phase1b": 0.29366662235805024,
+    "all_scope_f1_phase1a_baseline": 0.3240428519935258,
+    "all_scope_f1_best_phase1b": 0.36749475656942,
+    "all_scope_protected_fp_decreased_vs_concat": false,
+    "reentrancy_protected_fp_decreased_vs_concat": true,
+    "recall_collapse": false,
+    "reentrancy_recall_drop_for_gated_vs_concat": 0.2,
+    "manual_relabeling_needed": true,
+    "phase1c_recommendation": "label cleanup of protected reentrancy false positives first, then contrastive protected-vs-vulnerable reentrancy training; targeted augmentation only after review"
+  }
+}

@@ -1,0 +1,13 @@
+scope_view,split,contracts,positive_contracts,negative_contracts,manual_review_required,weak_fit_optional
+all_target_scope,train,1339,140,1199,False,False
+all_target_scope,val,280,30,250,False,False
+all_target_scope,test,212,30,182,False,False
+reentrancy_only,train,1274,75,1199,False,False
+reentrancy_only,val,264,14,250,False,False
+reentrancy_only,test,198,16,182,False,False
+unchecked_low_level_call_manual_review,train,1230,31,1199,True,False
+unchecked_low_level_call_manual_review,val,261,11,250,True,False
+unchecked_low_level_call_manual_review,test,188,6,182,True,False
+front_running_optional_weak_fit,train,1238,39,1199,False,True
+front_running_optional_weak_fit,val,255,5,250,False,True
+front_running_optional_weak_fit,test,191,9,182,False,True

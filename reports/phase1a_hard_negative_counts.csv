@@ -1,0 +1,11 @@
+run,seed,hard_negative_contracts
+all_scope,42,120
+all_scope,43,120
+all_scope,44,120
+all_scope,45,120
+all_scope,46,120
+reentrancy_only,42,120
+reentrancy_only,43,120
+reentrancy_only,44,120
+reentrancy_only,45,121
+reentrancy_only,46,120

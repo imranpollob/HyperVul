@@ -1,0 +1,198 @@
+{
+  "generated_at": "2026-06-27",
+  "output_dir": "/home/pollmix/Coding/HyperVul/data/contract_graphs_clean",
+  "counts": [
+    {
+      "split": "train",
+      "contracts": 1339,
+      "positive_contracts": 140,
+      "negative_contracts": 1199,
+      "interactions": 9173,
+      "positive_interactions": 191,
+      "negative_interactions": 8982,
+      "reentrancy_positive_contracts": 75,
+      "unchecked_positive_contracts": 31
+    },
+    {
+      "split": "val",
+      "contracts": 280,
+      "positive_contracts": 30,
+      "negative_contracts": 250,
+      "interactions": 1674,
+      "positive_interactions": 51,
+      "negative_interactions": 1623,
+      "reentrancy_positive_contracts": 14,
+      "unchecked_positive_contracts": 11
+    },
+    {
+      "split": "test",
+      "contracts": 212,
+      "positive_contracts": 30,
+      "negative_contracts": 182,
+      "interactions": 1220,
+      "positive_interactions": 40,
+      "negative_interactions": 1180,
+      "reentrancy_positive_contracts": 16,
+      "unchecked_positive_contracts": 6
+    }
+  ],
+  "scope_counts": [
+    {
+      "scope_view": "all_target_scope",
+      "split": "train",
+      "contracts": 1339,
+      "positive_contracts": 140,
+      "negative_contracts": 1199,
+      "manual_review_required": false,
+      "weak_fit_optional": false
+    },
+    {
+      "scope_view": "all_target_scope",
+      "split": "val",
+      "contracts": 280,
+      "positive_contracts": 30,
+      "negative_contracts": 250,
+      "manual_review_required": false,
+      "weak_fit_optional": false
+    },
+    {
+      "scope_view": "all_target_scope",
+      "split": "test",
+      "contracts": 212,
+      "positive_contracts": 30,
+      "negative_contracts": 182,
+      "manual_review_required": false,
+      "weak_fit_optional": false
+    },
+    {
+      "scope_view": "reentrancy_only",
+      "split": "train",
+      "contracts": 1274,
+      "positive_contracts": 75,
+      "negative_contracts": 1199,
+      "manual_review_required": false,
+      "weak_fit_optional": false
+    },
+    {
+      "scope_view": "reentrancy_only",
+      "split": "val",
+      "contracts": 264,
+      "positive_contracts": 14,
+      "negative_contracts": 250,
+      "manual_review_required": false,
+      "weak_fit_optional": false
+    },
+    {
+      "scope_view": "reentrancy_only",
+      "split": "test",
+      "contracts": 198,
+      "positive_contracts": 16,
+      "negative_contracts": 182,
+      "manual_review_required": false,
+      "weak_fit_optional": false
+    },
+    {
+      "scope_view": "unchecked_low_level_call_manual_review",
+      "split": "train",
+      "contracts": 1230,
+      "positive_contracts": 31,
+      "negative_contracts": 1199,
+      "manual_review_required": true,
+      "weak_fit_optional": false
+    },
+    {
+      "scope_view": "unchecked_low_level_call_manual_review",
+      "split": "val",
+      "contracts": 261,
+      "positive_contracts": 11,
+      "negative_contracts": 250,
+      "manual_review_required": true,
+      "weak_fit_optional": false
+    },
+    {
+      "scope_view": "unchecked_low_level_call_manual_review",
+      "split": "test",
+      "contracts": 188,
+      "positive_contracts": 6,
+      "negative_contracts": 182,
+      "manual_review_required": true,
+      "weak_fit_optional": false
+    },
+    {
+      "scope_view": "front_running_optional_weak_fit",
+      "split": "train",
+      "contracts": 1238,
+      "positive_contracts": 39,
+      "negative_contracts": 1199,
+      "manual_review_required": false,
+      "weak_fit_optional": true
+    },
+    {
+      "scope_view": "front_running_optional_weak_fit",
+      "split": "val",
+      "contracts": 255,
+      "positive_contracts": 5,
+      "negative_contracts": 250,
+      "manual_review_required": false,
+      "weak_fit_optional": true
+    },
+    {
+      "scope_view": "front_running_optional_weak_fit",
+      "split": "test",
+      "contracts": 191,
+      "positive_contracts": 9,
+      "negative_contracts": 182,
+      "manual_review_required": false,
+      "weak_fit_optional": true
+    }
+  ],
+  "quarantined_contracts": 88,
+  "validations": {
+    "no_cross_split_contract_hash_leakage": {
+      "pass": true,
+      "violations": 0
+    },
+    "no_cross_split_interaction_set_hash_leakage": {
+      "pass": true,
+      "violations": 0
+    },
+    "no_cross_split_source_file_leakage": {
+      "pass": true,
+      "violations": 0
+    },
+    "no_cross_split_function_hash_leakage": {
+      "pass": true,
+      "violations": 0
+    },
+    "no_known_duplicate_conflict_leakage": {
+      "pass": true,
+      "violations": 0
+    },
+    "all_interactions_map_to_contract": {
+      "pass": true,
+      "violations": 0
+    },
+    "all_positive_contracts_have_localization_metadata": {
+      "pass": true,
+      "violations": 0
+    },
+    "positive_nodes_missing_source_path": {
+      "pass": true,
+      "violations": 0
+    },
+    "positive_nodes_missing_line_span": {
+      "pass": true,
+      "violations": 0
+    },
+    "class_counts_match_phase0b_expected": {
+      "pass": true,
+      "violations": 0
+    }
+  },
+  "ready_for_baseline_reruns": true,
+  "ready_for_phase1_augmentation": false,
+  "reentrancy_only_ready": true,
+  "unchecked_call_needs_manual_review": true,
+  "front_running_status": "weak_fit_optional",
+  "delegatecall_status": "not_standalone"
+}

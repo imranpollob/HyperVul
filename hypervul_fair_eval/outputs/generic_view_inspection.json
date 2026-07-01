@@ -1,0 +1,143 @@
+{
+  "project_root": "/home/pollmix/Coding/HyperVul",
+  "splits": {
+    "train": {
+      "function_view": {
+        "examples": 10740,
+        "positive": 215,
+        "negative": 10525,
+        "positive_rate_pct": 2.0019,
+        "sources": {
+          "DAPP": 10502,
+          "FORGE": 238
+        }
+      },
+      "sequence_view": {
+        "sequences": 1614,
+        "tokens": 10740,
+        "avg_length": 6.6543,
+        "positive": 215,
+        "negative": 10525,
+        "positive_rate_pct": 2.0019
+      },
+      "callgraph_view": {
+        "graphs": 1614,
+        "graphs_with_edges": 930,
+        "nodes": 12221,
+        "edges": 12552,
+        "positive": 215,
+        "negative": 10525,
+        "positive_rate_pct": 2.0019,
+        "edge_types": {
+          "call": 12552
+        }
+      },
+      "pairwise_graph_view": {
+        "graphs": 1614,
+        "graphs_with_edges": 1341,
+        "nodes": 12221,
+        "edges": 51277,
+        "positive": 215,
+        "negative": 10525,
+        "positive_rate_pct": 2.0019,
+        "edge_types": {
+          "shared_state": 30255,
+          "call": 12552,
+          "shared_callee": 8470
+        }
+      }
+    },
+    "val": {
+      "function_view": {
+        "examples": 844,
+        "positive": 38,
+        "negative": 806,
+        "positive_rate_pct": 4.5024,
+        "sources": {
+          "DAPP": 743,
+          "FORGE": 101
+        }
+      },
+      "sequence_view": {
+        "sequences": 167,
+        "tokens": 844,
+        "avg_length": 5.0539,
+        "positive": 38,
+        "negative": 806,
+        "positive_rate_pct": 4.5024
+      },
+      "callgraph_view": {
+        "graphs": 167,
+        "graphs_with_edges": 84,
+        "nodes": 987,
+        "edges": 1078,
+        "positive": 38,
+        "negative": 806,
+        "positive_rate_pct": 4.5024,
+        "edge_types": {
+          "call": 1078
+        }
+      },
+      "pairwise_graph_view": {
+        "graphs": 167,
+        "graphs_with_edges": 112,
+        "nodes": 987,
+        "edges": 4343,
+        "positive": 38,
+        "negative": 806,
+        "positive_rate_pct": 4.5024,
+        "edge_types": {
+          "shared_state": 2512,
+          "call": 1078,
+          "shared_callee": 753
+        }
+      }
+    },
+    "test": {
+      "function_view": {
+        "examples": 773,
+        "positive": 41,
+        "negative": 732,
+        "positive_rate_pct": 5.304,
+        "sources": {
+          "DAPP": 694,
+          "FORGE": 79
+        }
+      },
+      "sequence_view": {
+        "sequences": 138,
+        "tokens": 773,
+        "avg_length": 5.6014,
+        "positive": 41,
+        "negative": 732,
+        "positive_rate_pct": 5.304
+      },
+      "callgraph_view": {
+        "graphs": 138,
+        "graphs_with_edges": 82,
+        "nodes": 945,
+        "edges": 1294,
+        "positive": 41,
+        "negative": 732,
+        "positive_rate_pct": 5.304,
+        "edge_types": {
+          "call": 1294
+        }
+      },
+      "pairwise_graph_view": {
+        "graphs": 138,
+        "graphs_with_edges": 105,
+        "nodes": 945,
+        "edges": 4639,
+        "positive": 41,
+        "negative": 732,
+        "positive_rate_pct": 5.304,
+        "edge_types": {
+          "shared_state": 2269,
+          "call": 1294,
+          "shared_callee": 1076
+        }
+      }
+    }
+  }
+}

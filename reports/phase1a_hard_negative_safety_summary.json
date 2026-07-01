@@ -1,0 +1,264 @@
+{
+  "generated_at": "2026-06-27",
+  "epochs": 5,
+  "seeds": [
+    42,
+    43,
+    44,
+    45,
+    46
+  ],
+  "counts": {
+    "all_scope": {
+      "train": {
+        "contracts": 1339,
+        "positive_contracts": 140,
+        "negative_contracts": 1199,
+        "positive_interactions": 191
+      },
+      "val": {
+        "contracts": 280,
+        "positive_contracts": 30,
+        "negative_contracts": 250,
+        "positive_interactions": 51
+      },
+      "test": {
+        "contracts": 212,
+        "positive_contracts": 30,
+        "negative_contracts": 182,
+        "positive_interactions": 40
+      }
+    },
+    "reentrancy_only": {
+      "train": {
+        "contracts": 1274,
+        "positive_contracts": 75,
+        "negative_contracts": 1199,
+        "positive_interactions": 100
+      },
+      "val": {
+        "contracts": 264,
+        "positive_contracts": 14,
+        "negative_contracts": 250,
+        "positive_interactions": 26
+      },
+      "test": {
+        "contracts": 198,
+        "positive_contracts": 16,
+        "negative_contracts": 182,
+        "positive_interactions": 20
+      }
+    }
+  },
+  "hard_negative_counts": [
+    {
+      "run": "all_scope",
+      "seed": 42,
+      "hard_negative_contracts": 120
+    },
+    {
+      "run": "all_scope",
+      "seed": 43,
+      "hard_negative_contracts": 120
+    },
+    {
+      "run": "all_scope",
+      "seed": 44,
+      "hard_negative_contracts": 120
+    },
+    {
+      "run": "all_scope",
+      "seed": 45,
+      "hard_negative_contracts": 120
+    },
+    {
+      "run": "all_scope",
+      "seed": 46,
+      "hard_negative_contracts": 120
+    },
+    {
+      "run": "reentrancy_only",
+      "seed": 42,
+      "hard_negative_contracts": 120
+    },
+    {
+      "run": "reentrancy_only",
+      "seed": 43,
+      "hard_negative_contracts": 120
+    },
+    {
+      "run": "reentrancy_only",
+      "seed": 44,
+      "hard_negative_contracts": 120
+    },
+    {
+      "run": "reentrancy_only",
+      "seed": 45,
+      "hard_negative_contracts": 121
+    },
+    {
+      "run": "reentrancy_only",
+      "seed": 46,
+      "hard_negative_contracts": 120
+    }
+  ],
+  "dominant_false_positive_categories": [
+    [
+      "protected reentrancy-like pattern",
+      352
+    ],
+    [
+      "other recurring pattern",
+      54
+    ],
+    [
+      "trusted/fixed callee",
+      28
+    ],
+    [
+      "external call after state update",
+      22
+    ],
+    [
+      "possible mislabeled negative",
+      19
+    ],
+    [
+      "owner-only/admin-only risky function",
+      10
+    ],
+    [
+      "safe ERC20 wrapper",
+      9
+    ],
+    [
+      "checked low-level call",
+      4
+    ],
+    [
+      "many risky interactions but no confirmed finding",
+      2
+    ]
+  ],
+  "hard_negative_ablation": [
+    {
+      "run": "all_scope",
+      "strategy": "baseline",
+      "precision_mean": 0.2343084410881021,
+      "recall_mean": 0.5333333333333333,
+      "f1_mean": 0.3240428519935258,
+      "f2_mean": 0.42256829261620926,
+      "pr_auc_mean": 0.2851062091735228,
+      "roc_auc_mean": 0.7032600732600732,
+      "fp_mean": 53.0,
+      "fn_mean": 14.0,
+      "precision_gain_vs_baseline": 0.0,
+      "recall_change_vs_baseline": 0.0,
+      "f1_change_vs_baseline": 0.0
+    },
+    {
+      "run": "all_scope",
+      "strategy": "hard_negative_upweight",
+      "precision_mean": 0.23109890109890108,
+      "recall_mean": 0.7266666666666667,
+      "f1_mean": 0.3498309008160703,
+      "f2_mean": 0.5069479908470733,
+      "pr_auc_mean": 0.26224225258316813,
+      "roc_auc_mean": 0.7024175824175825,
+      "fp_mean": 73.0,
+      "fn_mean": 8.2,
+      "precision_gain_vs_baseline": -0.00320953998920101,
+      "recall_change_vs_baseline": 0.19333333333333336,
+      "f1_change_vs_baseline": 0.02578804882254454
+    },
+    {
+      "run": "all_scope",
+      "strategy": "hard_negative_oversample",
+      "precision_mean": 0.22811479423225373,
+      "recall_mean": 0.6733333333333332,
+      "f1_mean": 0.3347217222262222,
+      "f2_mean": 0.47323036244399563,
+      "pr_auc_mean": 0.24339051374065246,
+      "roc_auc_mean": 0.6883516483516484,
+      "fp_mean": 73.0,
+      "fn_mean": 9.8,
+      "precision_gain_vs_baseline": -0.0061936468558483615,
+      "recall_change_vs_baseline": 0.1399999999999999,
+      "f1_change_vs_baseline": 0.010678870232696425
+    },
+    {
+      "run": "reentrancy_only",
+      "strategy": "baseline",
+      "precision_mean": 0.5700000000000001,
+      "recall_mean": 0.1875,
+      "f1_mean": 0.24345864661654132,
+      "f2_mean": 0.20121231785735355,
+      "pr_auc_mean": 0.32701065729615986,
+      "roc_auc_mean": 0.6998626373626373,
+      "fp_mean": 4.0,
+      "fn_mean": 13.0,
+      "precision_gain_vs_baseline": 0.0,
+      "recall_change_vs_baseline": 0.0,
+      "f1_change_vs_baseline": 0.0
+    },
+    {
+      "run": "reentrancy_only",
+      "strategy": "hard_negative_upweight",
+      "precision_mean": 0.2,
+      "recall_mean": 0.0125,
+      "f1_mean": 0.023529411764705882,
+      "f2_mean": 0.015384615384615385,
+      "pr_auc_mean": 0.2201676346275025,
+      "roc_auc_mean": 0.6914148351648353,
+      "fp_mean": 0.2,
+      "fn_mean": 15.8,
+      "precision_gain_vs_baseline": -0.37000000000000005,
+      "recall_change_vs_baseline": -0.175,
+      "f1_change_vs_baseline": -0.21992923485183544
+    },
+    {
+      "run": "reentrancy_only",
+      "strategy": "hard_negative_oversample",
+      "precision_mean": 0.013333333333333332,
+      "recall_mean": 0.0125,
+      "f1_mean": 0.012903225806451615,
+      "f2_mean": 0.012658227848101264,
+      "pr_auc_mean": 0.16127255795763698,
+      "roc_auc_mean": 0.6449175824175823,
+      "fp_mean": 4.2,
+      "fn_mean": 15.8,
+      "precision_gain_vs_baseline": -0.5566666666666668,
+      "recall_change_vs_baseline": -0.175,
+      "f1_change_vs_baseline": -0.2305554208100897
+    }
+  ],
+  "phase1a_conclusions": {
+    "dominant_false_positive_category": "protected reentrancy-like pattern",
+    "protected_reentrancy_like_examples": 352,
+    "hard_negative_precision_improved": false,
+    "all_scope_hard_negative_upweight_precision_change": -0.00320953998920101,
+    "all_scope_hard_negative_upweight_recall_change": 0.19333333333333336,
+    "all_scope_hard_negative_upweight_f1_change": 0.02578804882254454,
+    "reentrancy_hard_negative_recall_collapsed": true,
+    "safety_feature_concat_improved_f1": false,
+    "reliable_features": [
+      "nonreentrant_modifier",
+      "return_value_checked",
+      "safe_erc20_wrapper",
+      "try_catch_presence"
+    ],
+    "moderate_features": [
+      "require_assert_guard_before_call",
+      "state_update_before_external_call",
+      "state_update_after_external_call",
+      "only_owner_or_access_control"
+    ],
+    "weak_features": [
+      "callee_user_controlled",
+      "trusted_or_fixed_callee",
+      "contract_many_risky_interactions",
+      "contract_inheritance_modifier_summary"
+    ],
+    "phase1b_recommendation": "risk-vs-safety architecture plus manual review of possible mislabeled negatives; do not start broad augmentation yet"
+  }
+}

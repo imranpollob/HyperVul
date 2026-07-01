@@ -1,0 +1,2284 @@
+{
+  "pairs": [
+    {
+      "positive_graph_id": "DAPP::DAppSCAN-source/contracts/Iosiro-SNX FlashBurn Smart Contract Audit/flashburn-3aa02a3d63d9e0110a5b6669a4a4011ceee3cf2b::SNXFlashLoanTool",
+      "positive_interaction_id": "i:swap",
+      "negative_graph_id": "FORGE::vfp_00116::L2Mailbox",
+      "negative_interaction_id": "i:relayMsg",
+      "similarity": 4.0,
+      "positive_function": "swap",
+      "negative_function": "relayMsg",
+      "negative_protection": "return_value_checked|require_assert_guard_before_call|nonreentrant_modifier|callee_user_controlled|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "DAPP::DAppSCAN-source/contracts/Runtime_V\u0435rification-Element_Finance_Governance_Security_Audit_Report/council-3d751c959b42573c78ccd0bccbc80424bf6d9a90::CoreVoting",
+      "positive_interaction_id": "i:execute",
+      "negative_graph_id": "FORGE::vfp_00116::L2Mailbox",
+      "negative_interaction_id": "i:relayMsg",
+      "similarity": 3.0,
+      "positive_function": "execute",
+      "negative_function": "relayMsg",
+      "negative_protection": "return_value_checked|require_assert_guard_before_call|nonreentrant_modifier|callee_user_controlled|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "DAPP::DAppSCAN-source/contracts/PeckShield-COIN98/code::C98MSiG",
+      "positive_interaction_id": "i:vote",
+      "negative_graph_id": "FORGE::vfp_00116::L2Mailbox",
+      "negative_interaction_id": "i:relayMsg",
+      "similarity": 3.0,
+      "positive_function": "vote",
+      "negative_function": "relayMsg",
+      "negative_protection": "return_value_checked|require_assert_guard_before_call|nonreentrant_modifier|callee_user_controlled|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "DAPP::DAppSCAN-source/contracts/Iosiro-SNX FlashBurn Smart Contract Audit/flashburn-3aa02a3d63d9e0110a5b6669a4a4011ceee3cf2b::SNXFlashLoanTool",
+      "positive_interaction_id": "i:swap",
+      "negative_graph_id": "FORGE::vfp_00116::L1ETHBridge",
+      "negative_interaction_id": "i:finalizeWithdraw",
+      "similarity": 4.0,
+      "positive_function": "swap",
+      "negative_function": "finalizeWithdraw",
+      "negative_protection": "state_update_before_external_call|return_value_checked|require_assert_guard_before_call|nonreentrant_modifier|callee_user_controlled|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "DAPP::DAppSCAN-source/contracts/Runtime_V\u0435rification-Element_Finance_Governance_Security_Audit_Report/council-3d751c959b42573c78ccd0bccbc80424bf6d9a90::CoreVoting",
+      "positive_interaction_id": "i:execute",
+      "negative_graph_id": "FORGE::vfp_00116::L1ETHBridge",
+      "negative_interaction_id": "i:finalizeWithdraw",
+      "similarity": 3.0,
+      "positive_function": "execute",
+      "negative_function": "finalizeWithdraw",
+      "negative_protection": "state_update_before_external_call|return_value_checked|require_assert_guard_before_call|nonreentrant_modifier|callee_user_controlled|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "DAPP::DAppSCAN-source/contracts/PeckShield-COIN98/code::C98MSiG",
+      "positive_interaction_id": "i:vote",
+      "negative_graph_id": "FORGE::vfp_00116::L1ETHBridge",
+      "negative_interaction_id": "i:finalizeWithdraw",
+      "similarity": 3.0,
+      "positive_function": "vote",
+      "negative_function": "finalizeWithdraw",
+      "negative_protection": "state_update_before_external_call|return_value_checked|require_assert_guard_before_call|nonreentrant_modifier|callee_user_controlled|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "DAPP::DAppSCAN-source/contracts/SlowMist-CFFv2 Smart Contract Security Audit Report/cff-contract-v2-c86bef3f13c7585f547f9cd0ca900f94664e96b7::CFVaultV2",
+      "positive_interaction_id": "i:withdraw",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Trail_of_Bits-FraxQ42021/frax-solidity-bd40775e283923aa9e32a107abd426430a99835e::LeveragePool",
+      "negative_interaction_id": "i:withdrawAdminFees",
+      "similarity": 4.0,
+      "positive_function": "withdraw",
+      "negative_function": "withdrawAdminFees",
+      "negative_protection": "state_update_before_external_call|require_assert_guard_before_call|only_owner_or_access_control|callee_user_controlled|contract_modifier_access_summary"
+    },
+    {
+      "positive_graph_id": "DAPP::DAppSCAN-source/contracts/QuillAudits-Yearn Finance-Yearn Protocol V1/yearn-protocol-9ff0dc0ea73642c529383d0675930a41bf033295::yWETH",
+      "positive_interaction_id": "i:withdrawETH",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Trail_of_Bits-FraxQ42021/frax-solidity-bd40775e283923aa9e32a107abd426430a99835e::LeveragePool",
+      "negative_interaction_id": "i:withdrawAdminFees",
+      "similarity": 4.0,
+      "positive_function": "withdrawETH",
+      "negative_function": "withdrawAdminFees",
+      "negative_protection": "state_update_before_external_call|require_assert_guard_before_call|only_owner_or_access_control|callee_user_controlled|contract_modifier_access_summary"
+    },
+    {
+      "positive_graph_id": "DAPP::DAppSCAN-source/contracts/openzeppelin-Endaoment/endaoment-contracts-f60aa253d3d869ad6460877f23e6092acb313add::Fund",
+      "positive_interaction_id": "i:finalizeGrant",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Trail_of_Bits-FraxQ42021/frax-solidity-bd40775e283923aa9e32a107abd426430a99835e::LeveragePool",
+      "negative_interaction_id": "i:withdrawAdminFees",
+      "similarity": 3.0,
+      "positive_function": "finalizeGrant",
+      "negative_function": "withdrawAdminFees",
+      "negative_protection": "state_update_before_external_call|require_assert_guard_before_call|only_owner_or_access_control|callee_user_controlled|contract_modifier_access_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00209::StakingManager",
+      "positive_interaction_id": "i:stake",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Trail_of_Bits-FraxQ42021/frax-solidity-bd40775e283923aa9e32a107abd426430a99835e::FRAX3CRV_Curve_FXS_Distributor",
+      "negative_interaction_id": "i:stake",
+      "similarity": 5.0,
+      "positive_function": "stake",
+      "negative_function": "stake",
+      "negative_protection": "state_update_before_external_call|require_assert_guard_before_call|nonreentrant_modifier|callee_user_controlled|safe_erc20_wrapper|contract_modifier_access_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00189::Box",
+      "positive_interaction_id": "i:flash",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Trail_of_Bits-FraxQ42021/frax-solidity-bd40775e283923aa9e32a107abd426430a99835e::FRAX3CRV_Curve_FXS_Distributor",
+      "negative_interaction_id": "i:stake",
+      "similarity": 4.0,
+      "positive_function": "flash",
+      "negative_function": "stake",
+      "negative_protection": "state_update_before_external_call|require_assert_guard_before_call|nonreentrant_modifier|callee_user_controlled|safe_erc20_wrapper|contract_modifier_access_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00102::StopLimit",
+      "positive_interaction_id": "i:modifyOrder",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Trail_of_Bits-FraxQ42021/frax-solidity-bd40775e283923aa9e32a107abd426430a99835e::FRAX3CRV_Curve_FXS_Distributor",
+      "negative_interaction_id": "i:stake",
+      "similarity": 4.0,
+      "positive_function": "modifyOrder",
+      "negative_function": "stake",
+      "negative_protection": "state_update_before_external_call|require_assert_guard_before_call|nonreentrant_modifier|callee_user_controlled|safe_erc20_wrapper|contract_modifier_access_summary"
+    },
+    {
+      "positive_graph_id": "DAPP::DAppSCAN-source/contracts/openzeppelin-Endaoment/endaoment-contracts-f60aa253d3d869ad6460877f23e6092acb313add::Fund",
+      "positive_interaction_id": "i:finalizeGrant",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Trail_of_Bits-FraxQ42021/frax-solidity-bd40775e283923aa9e32a107abd426430a99835e::FraxPoolvAMM",
+      "negative_interaction_id": "i:collectRedemption",
+      "similarity": 3.0,
+      "positive_function": "finalizeGrant",
+      "negative_function": "collectRedemption",
+      "negative_protection": "state_update_before_external_call|require_assert_guard_before_call|callee_user_controlled|trusted_or_fixed_callee|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "DAPP::DAppSCAN-source/contracts/SlowMist-CFFv2 Smart Contract Security Audit Report/cff-contract-v2-c86bef3f13c7585f547f9cd0ca900f94664e96b7::CFVaultV2",
+      "positive_interaction_id": "i:withdraw",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Trail_of_Bits-FraxQ42021/frax-solidity-bd40775e283923aa9e32a107abd426430a99835e::FraxPoolvAMM",
+      "negative_interaction_id": "i:collectRedemption",
+      "similarity": 3.0,
+      "positive_function": "withdraw",
+      "negative_function": "collectRedemption",
+      "negative_protection": "state_update_before_external_call|require_assert_guard_before_call|callee_user_controlled|trusted_or_fixed_callee|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "DAPP::DAppSCAN-source/contracts/QuillAudits-Yearn Finance-Yearn Protocol V1/yearn-protocol-9ff0dc0ea73642c529383d0675930a41bf033295::yWETH",
+      "positive_interaction_id": "i:withdrawETH",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Trail_of_Bits-FraxQ42021/frax-solidity-bd40775e283923aa9e32a107abd426430a99835e::FraxPoolvAMM",
+      "negative_interaction_id": "i:collectRedemption",
+      "similarity": 3.0,
+      "positive_function": "withdrawETH",
+      "negative_function": "collectRedemption",
+      "negative_protection": "state_update_before_external_call|require_assert_guard_before_call|callee_user_controlled|trusted_or_fixed_callee|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00209::StakingManager",
+      "positive_interaction_id": "i:stake",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Trail_of_Bits-FraxQ42021/frax-solidity-bd40775e283923aa9e32a107abd426430a99835e::Pool_USDC",
+      "negative_interaction_id": "i:recollateralizeFRAX",
+      "similarity": 4.0,
+      "positive_function": "stake",
+      "negative_function": "recollateralizeFRAX",
+      "negative_protection": "state_update_before_external_call|require_assert_guard_before_call|callee_user_controlled|trusted_or_fixed_callee|safe_erc20_wrapper|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00189::Box",
+      "positive_interaction_id": "i:flash",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Trail_of_Bits-FraxQ42021/frax-solidity-bd40775e283923aa9e32a107abd426430a99835e::Pool_USDC",
+      "negative_interaction_id": "i:recollateralizeFRAX",
+      "similarity": 4.0,
+      "positive_function": "flash",
+      "negative_function": "recollateralizeFRAX",
+      "negative_protection": "state_update_before_external_call|require_assert_guard_before_call|callee_user_controlled|trusted_or_fixed_callee|safe_erc20_wrapper|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00102::StopLimit",
+      "positive_interaction_id": "i:modifyOrder",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Trail_of_Bits-FraxQ42021/frax-solidity-bd40775e283923aa9e32a107abd426430a99835e::Pool_USDC",
+      "negative_interaction_id": "i:recollateralizeFRAX",
+      "similarity": 4.0,
+      "positive_function": "modifyOrder",
+      "negative_function": "recollateralizeFRAX",
+      "negative_protection": "state_update_before_external_call|require_assert_guard_before_call|callee_user_controlled|trusted_or_fixed_callee|safe_erc20_wrapper|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "DAPP::DAppSCAN-source/contracts/openzeppelin-Endaoment/endaoment-contracts-f60aa253d3d869ad6460877f23e6092acb313add::Fund",
+      "positive_interaction_id": "i:finalizeGrant",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Trail_of_Bits-FraxQ42021/frax-solidity-bd40775e283923aa9e32a107abd426430a99835e::PoolvAMM_USDC",
+      "negative_interaction_id": "i:collectRedemption",
+      "similarity": 3.0,
+      "positive_function": "finalizeGrant",
+      "negative_function": "collectRedemption",
+      "negative_protection": "state_update_before_external_call|require_assert_guard_before_call|callee_user_controlled|trusted_or_fixed_callee|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "DAPP::DAppSCAN-source/contracts/SlowMist-CFFv2 Smart Contract Security Audit Report/cff-contract-v2-c86bef3f13c7585f547f9cd0ca900f94664e96b7::CFVaultV2",
+      "positive_interaction_id": "i:withdraw",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Trail_of_Bits-FraxQ42021/frax-solidity-bd40775e283923aa9e32a107abd426430a99835e::PoolvAMM_USDC",
+      "negative_interaction_id": "i:collectRedemption",
+      "similarity": 3.0,
+      "positive_function": "withdraw",
+      "negative_function": "collectRedemption",
+      "negative_protection": "state_update_before_external_call|require_assert_guard_before_call|callee_user_controlled|trusted_or_fixed_callee|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "DAPP::DAppSCAN-source/contracts/QuillAudits-Yearn Finance-Yearn Protocol V1/yearn-protocol-9ff0dc0ea73642c529383d0675930a41bf033295::yWETH",
+      "positive_interaction_id": "i:withdrawETH",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Trail_of_Bits-FraxQ42021/frax-solidity-bd40775e283923aa9e32a107abd426430a99835e::PoolvAMM_USDC",
+      "negative_interaction_id": "i:collectRedemption",
+      "similarity": 3.0,
+      "positive_function": "withdrawETH",
+      "negative_function": "collectRedemption",
+      "negative_protection": "state_update_before_external_call|require_assert_guard_before_call|callee_user_controlled|trusted_or_fixed_callee|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00209::StakingManager",
+      "positive_interaction_id": "i:stake",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Trail_of_Bits-FraxQ42021/frax-solidity-bd40775e283923aa9e32a107abd426430a99835e::FraxPool",
+      "negative_interaction_id": "i:recollateralizeFRAX",
+      "similarity": 4.0,
+      "positive_function": "stake",
+      "negative_function": "recollateralizeFRAX",
+      "negative_protection": "state_update_before_external_call|require_assert_guard_before_call|callee_user_controlled|trusted_or_fixed_callee|safe_erc20_wrapper|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00189::Box",
+      "positive_interaction_id": "i:flash",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Trail_of_Bits-FraxQ42021/frax-solidity-bd40775e283923aa9e32a107abd426430a99835e::FraxPool",
+      "negative_interaction_id": "i:recollateralizeFRAX",
+      "similarity": 4.0,
+      "positive_function": "flash",
+      "negative_function": "recollateralizeFRAX",
+      "negative_protection": "state_update_before_external_call|require_assert_guard_before_call|callee_user_controlled|trusted_or_fixed_callee|safe_erc20_wrapper|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00102::StopLimit",
+      "positive_interaction_id": "i:modifyOrder",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Trail_of_Bits-FraxQ42021/frax-solidity-bd40775e283923aa9e32a107abd426430a99835e::FraxPool",
+      "negative_interaction_id": "i:recollateralizeFRAX",
+      "similarity": 4.0,
+      "positive_function": "modifyOrder",
+      "negative_function": "recollateralizeFRAX",
+      "negative_protection": "state_update_before_external_call|require_assert_guard_before_call|callee_user_controlled|trusted_or_fixed_callee|safe_erc20_wrapper|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00209::StakingManager",
+      "positive_interaction_id": "i:stake",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Trail_of_Bits-FraxQ42021/frax-solidity-bd40775e283923aa9e32a107abd426430a99835e::StakingRewardsDualV4",
+      "negative_interaction_id": "i:_stakeLocked",
+      "similarity": 4.0,
+      "positive_function": "stake",
+      "negative_function": "_stakeLocked",
+      "negative_protection": "state_update_before_external_call|state_update_after_external_call|require_assert_guard_before_call|nonreentrant_modifier|safe_erc20_wrapper|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00007::Folio",
+      "positive_interaction_id": "i:mint",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Trail_of_Bits-FraxQ42021/frax-solidity-bd40775e283923aa9e32a107abd426430a99835e::StakingRewardsDualV4",
+      "negative_interaction_id": "i:_stakeLocked",
+      "similarity": 4.0,
+      "positive_function": "mint",
+      "negative_function": "_stakeLocked",
+      "negative_protection": "state_update_before_external_call|state_update_after_external_call|require_assert_guard_before_call|nonreentrant_modifier|safe_erc20_wrapper|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "DAPP::DAppSCAN-source/contracts/PeckShield-StackerVC/StackerVC_VentureFund001-3cfb98b21f4731dfd62993feb7c7d1540837f59b::LPGauge",
+      "positive_interaction_id": "i:deposit",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Trail_of_Bits-FraxQ42021/frax-solidity-bd40775e283923aa9e32a107abd426430a99835e::StakingRewardsDualV4",
+      "negative_interaction_id": "i:_stakeLocked",
+      "similarity": 4.0,
+      "positive_function": "deposit",
+      "negative_function": "_stakeLocked",
+      "negative_protection": "state_update_before_external_call|state_update_after_external_call|require_assert_guard_before_call|nonreentrant_modifier|safe_erc20_wrapper|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00209::StakingManager",
+      "positive_interaction_id": "i:stake",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Trail_of_Bits-FraxQ42021/frax-solidity-bd40775e283923aa9e32a107abd426430a99835e::StakingRewardsDualV3",
+      "negative_interaction_id": "i:_stakeLocked",
+      "similarity": 4.0,
+      "positive_function": "stake",
+      "negative_function": "_stakeLocked",
+      "negative_protection": "state_update_before_external_call|state_update_after_external_call|require_assert_guard_before_call|nonreentrant_modifier|safe_erc20_wrapper|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00007::Folio",
+      "positive_interaction_id": "i:mint",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Trail_of_Bits-FraxQ42021/frax-solidity-bd40775e283923aa9e32a107abd426430a99835e::StakingRewardsDualV3",
+      "negative_interaction_id": "i:_stakeLocked",
+      "similarity": 4.0,
+      "positive_function": "mint",
+      "negative_function": "_stakeLocked",
+      "negative_protection": "state_update_before_external_call|state_update_after_external_call|require_assert_guard_before_call|nonreentrant_modifier|safe_erc20_wrapper|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "DAPP::DAppSCAN-source/contracts/PeckShield-StackerVC/StackerVC_VentureFund001-3cfb98b21f4731dfd62993feb7c7d1540837f59b::LPGauge",
+      "positive_interaction_id": "i:deposit",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Trail_of_Bits-FraxQ42021/frax-solidity-bd40775e283923aa9e32a107abd426430a99835e::StakingRewardsDualV3",
+      "negative_interaction_id": "i:_stakeLocked",
+      "similarity": 4.0,
+      "positive_function": "deposit",
+      "negative_function": "_stakeLocked",
+      "negative_protection": "state_update_before_external_call|state_update_after_external_call|require_assert_guard_before_call|nonreentrant_modifier|safe_erc20_wrapper|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00209::StakingManager",
+      "positive_interaction_id": "i:stake",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Trail_of_Bits-FraxQ42021/frax-solidity-bd40775e283923aa9e32a107abd426430a99835e::StakingRewardsDualV3_FRAX_IQ",
+      "negative_interaction_id": "i:_stakeLocked",
+      "similarity": 4.0,
+      "positive_function": "stake",
+      "negative_function": "_stakeLocked",
+      "negative_protection": "state_update_before_external_call|state_update_after_external_call|require_assert_guard_before_call|nonreentrant_modifier|safe_erc20_wrapper|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00007::Folio",
+      "positive_interaction_id": "i:mint",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Trail_of_Bits-FraxQ42021/frax-solidity-bd40775e283923aa9e32a107abd426430a99835e::StakingRewardsDualV3_FRAX_IQ",
+      "negative_interaction_id": "i:_stakeLocked",
+      "similarity": 4.0,
+      "positive_function": "mint",
+      "negative_function": "_stakeLocked",
+      "negative_protection": "state_update_before_external_call|state_update_after_external_call|require_assert_guard_before_call|nonreentrant_modifier|safe_erc20_wrapper|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "DAPP::DAppSCAN-source/contracts/PeckShield-StackerVC/StackerVC_VentureFund001-3cfb98b21f4731dfd62993feb7c7d1540837f59b::LPGauge",
+      "positive_interaction_id": "i:deposit",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Trail_of_Bits-FraxQ42021/frax-solidity-bd40775e283923aa9e32a107abd426430a99835e::StakingRewardsDualV3_FRAX_IQ",
+      "negative_interaction_id": "i:_stakeLocked",
+      "similarity": 4.0,
+      "positive_function": "deposit",
+      "negative_function": "_stakeLocked",
+      "negative_protection": "state_update_before_external_call|state_update_after_external_call|require_assert_guard_before_call|nonreentrant_modifier|safe_erc20_wrapper|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00209::StakingManager",
+      "positive_interaction_id": "i:stake",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Trail_of_Bits-FraxQ42021/frax-solidity-bd40775e283923aa9e32a107abd426430a99835e::StakingRewardsDualV4_FRAX_OHM",
+      "negative_interaction_id": "i:_stakeLocked",
+      "similarity": 4.0,
+      "positive_function": "stake",
+      "negative_function": "_stakeLocked",
+      "negative_protection": "state_update_before_external_call|state_update_after_external_call|require_assert_guard_before_call|nonreentrant_modifier|safe_erc20_wrapper|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00007::Folio",
+      "positive_interaction_id": "i:mint",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Trail_of_Bits-FraxQ42021/frax-solidity-bd40775e283923aa9e32a107abd426430a99835e::StakingRewardsDualV4_FRAX_OHM",
+      "negative_interaction_id": "i:_stakeLocked",
+      "similarity": 4.0,
+      "positive_function": "mint",
+      "negative_function": "_stakeLocked",
+      "negative_protection": "state_update_before_external_call|state_update_after_external_call|require_assert_guard_before_call|nonreentrant_modifier|safe_erc20_wrapper|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "DAPP::DAppSCAN-source/contracts/PeckShield-StackerVC/StackerVC_VentureFund001-3cfb98b21f4731dfd62993feb7c7d1540837f59b::LPGauge",
+      "positive_interaction_id": "i:deposit",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Trail_of_Bits-FraxQ42021/frax-solidity-bd40775e283923aa9e32a107abd426430a99835e::StakingRewardsDualV4_FRAX_OHM",
+      "negative_interaction_id": "i:_stakeLocked",
+      "similarity": 4.0,
+      "positive_function": "deposit",
+      "negative_function": "_stakeLocked",
+      "negative_protection": "state_update_before_external_call|state_update_after_external_call|require_assert_guard_before_call|nonreentrant_modifier|safe_erc20_wrapper|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00221::LimitOrderHook",
+      "positive_interaction_id": "i:_handleCancelCallback",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Trail_of_Bits-88mph/88mph-contracts-76cd9d1fc45e65f5d0f686621fe6af85c40aa140::DInterest",
+      "negative_interaction_id": "i:setInterestOracle",
+      "similarity": 1.0,
+      "positive_function": "_handleCancelCallback",
+      "negative_function": "setInterestOracle",
+      "negative_protection": "state_update_before_external_call|require_assert_guard_before_call|only_owner_or_access_control|callee_user_controlled|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00221::LimitOrderHook",
+      "positive_interaction_id": "i:_afterSwap",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Trail_of_Bits-88mph/88mph-contracts-76cd9d1fc45e65f5d0f686621fe6af85c40aa140::DInterest",
+      "negative_interaction_id": "i:setInterestOracle",
+      "similarity": 1.0,
+      "positive_function": "_afterSwap",
+      "negative_function": "setInterestOracle",
+      "negative_protection": "state_update_before_external_call|require_assert_guard_before_call|only_owner_or_access_control|callee_user_controlled|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00209::StakingManager",
+      "positive_interaction_id": "i:withdraw",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Trail_of_Bits-88mph/88mph-contracts-76cd9d1fc45e65f5d0f686621fe6af85c40aa140::DInterest",
+      "negative_interaction_id": "i:setInterestOracle",
+      "similarity": 1.0,
+      "positive_function": "withdraw",
+      "negative_function": "setInterestOracle",
+      "negative_protection": "state_update_before_external_call|require_assert_guard_before_call|only_owner_or_access_control|callee_user_controlled|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00221::LimitOrderHook",
+      "positive_interaction_id": "i:_handleCancelCallback",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Trail_of_Bits-88mph/88mph-contracts-76cd9d1fc45e65f5d0f686621fe6af85c40aa140::DInterestWithDepositFee",
+      "negative_interaction_id": "i:setInterestOracle",
+      "similarity": 1.0,
+      "positive_function": "_handleCancelCallback",
+      "negative_function": "setInterestOracle",
+      "negative_protection": "state_update_before_external_call|require_assert_guard_before_call|only_owner_or_access_control|callee_user_controlled|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00221::LimitOrderHook",
+      "positive_interaction_id": "i:_afterSwap",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Trail_of_Bits-88mph/88mph-contracts-76cd9d1fc45e65f5d0f686621fe6af85c40aa140::DInterestWithDepositFee",
+      "negative_interaction_id": "i:setInterestOracle",
+      "similarity": 1.0,
+      "positive_function": "_afterSwap",
+      "negative_function": "setInterestOracle",
+      "negative_protection": "state_update_before_external_call|require_assert_guard_before_call|only_owner_or_access_control|callee_user_controlled|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00209::StakingManager",
+      "positive_interaction_id": "i:withdraw",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Trail_of_Bits-88mph/88mph-contracts-76cd9d1fc45e65f5d0f686621fe6af85c40aa140::DInterestWithDepositFee",
+      "negative_interaction_id": "i:setInterestOracle",
+      "similarity": 1.0,
+      "positive_function": "withdraw",
+      "negative_function": "setInterestOracle",
+      "negative_protection": "state_update_before_external_call|require_assert_guard_before_call|only_owner_or_access_control|callee_user_controlled|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00209::StakingManager",
+      "positive_interaction_id": "i:stake",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Trail_of_Bits-88mph/88mph-contracts-76cd9d1fc45e65f5d0f686621fe6af85c40aa140::ZeroCouponBond",
+      "negative_interaction_id": "i:initialize",
+      "similarity": 4.0,
+      "positive_function": "stake",
+      "negative_function": "initialize",
+      "negative_protection": "state_update_before_external_call|nonreentrant_modifier|callee_user_controlled|safe_erc20_wrapper|contract_modifier_access_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00189::Box",
+      "positive_interaction_id": "i:flash",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Trail_of_Bits-88mph/88mph-contracts-76cd9d1fc45e65f5d0f686621fe6af85c40aa140::ZeroCouponBond",
+      "negative_interaction_id": "i:initialize",
+      "similarity": 4.0,
+      "positive_function": "flash",
+      "negative_function": "initialize",
+      "negative_protection": "state_update_before_external_call|nonreentrant_modifier|callee_user_controlled|safe_erc20_wrapper|contract_modifier_access_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00102::StopLimit",
+      "positive_interaction_id": "i:modifyOrder",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Trail_of_Bits-88mph/88mph-contracts-76cd9d1fc45e65f5d0f686621fe6af85c40aa140::ZeroCouponBond",
+      "negative_interaction_id": "i:initialize",
+      "similarity": 4.0,
+      "positive_function": "modifyOrder",
+      "negative_function": "initialize",
+      "negative_protection": "state_update_before_external_call|nonreentrant_modifier|callee_user_controlled|safe_erc20_wrapper|contract_modifier_access_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00189::Box",
+      "positive_interaction_id": "i:allocate",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/openzeppelin-Solo_Margin_Protocol/solo-17df84db351d5438e1b7437572722b4f52c8b2b4::PayableProxyForSoloMargin",
+      "negative_interaction_id": "i:operate",
+      "similarity": 3.0,
+      "positive_function": "allocate",
+      "negative_function": "operate",
+      "negative_protection": "nonreentrant_modifier|callee_user_controlled|trusted_or_fixed_callee|contract_modifier_access_summary"
+    },
+    {
+      "positive_graph_id": "DAPP::DAppSCAN-source/contracts/openzeppelin-Solo_Margin_Protocol/solo-17df84db351d5438e1b7437572722b4f52c8b2b4::AdminImpl",
+      "positive_interaction_id": "i:_setPriceOracle",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/openzeppelin-Solo_Margin_Protocol/solo-17df84db351d5438e1b7437572722b4f52c8b2b4::PayableProxyForSoloMargin",
+      "negative_interaction_id": "i:operate",
+      "similarity": 3.0,
+      "positive_function": "_setPriceOracle",
+      "negative_function": "operate",
+      "negative_protection": "nonreentrant_modifier|callee_user_controlled|trusted_or_fixed_callee|contract_modifier_access_summary"
+    },
+    {
+      "positive_graph_id": "DAPP::DAppSCAN-source/contracts/openzeppelin-Endaoment/endaoment-contracts-f60aa253d3d869ad6460877f23e6092acb313add::Fund",
+      "positive_interaction_id": "i:finalizeGrant",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/openzeppelin-Solo_Margin_Protocol/solo-17df84db351d5438e1b7437572722b4f52c8b2b4::PayableProxyForSoloMargin",
+      "negative_interaction_id": "i:operate",
+      "similarity": 3.0,
+      "positive_function": "finalizeGrant",
+      "negative_function": "operate",
+      "negative_protection": "nonreentrant_modifier|callee_user_controlled|trusted_or_fixed_callee|contract_modifier_access_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00209::StakingManager",
+      "positive_interaction_id": "i:stake",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/PeckShield-StackerVC/StackerVC_VentureFund001-3cfb98b21f4731dfd62993feb7c7d1540837f59b::VCTreasuryV1",
+      "negative_interaction_id": "i:investExecute",
+      "similarity": 3.0,
+      "positive_function": "stake",
+      "negative_function": "investExecute",
+      "negative_protection": "state_update_before_external_call|require_assert_guard_before_call|nonreentrant_modifier|trusted_or_fixed_callee|safe_erc20_wrapper|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00189::Box",
+      "positive_interaction_id": "i:flash",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/PeckShield-StackerVC/StackerVC_VentureFund001-3cfb98b21f4731dfd62993feb7c7d1540837f59b::VCTreasuryV1",
+      "negative_interaction_id": "i:investExecute",
+      "similarity": 3.0,
+      "positive_function": "flash",
+      "negative_function": "investExecute",
+      "negative_protection": "state_update_before_external_call|require_assert_guard_before_call|nonreentrant_modifier|trusted_or_fixed_callee|safe_erc20_wrapper|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00175::P2pYieldProxy",
+      "positive_interaction_id": "i:_withdraw",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/PeckShield-StackerVC/StackerVC_VentureFund001-3cfb98b21f4731dfd62993feb7c7d1540837f59b::VCTreasuryV1",
+      "negative_interaction_id": "i:investExecute",
+      "similarity": 3.0,
+      "positive_function": "_withdraw",
+      "negative_function": "investExecute",
+      "negative_protection": "state_update_before_external_call|require_assert_guard_before_call|nonreentrant_modifier|trusted_or_fixed_callee|safe_erc20_wrapper|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "DAPP::DAppSCAN-source/contracts/consensys-Idle_Finance/idle-tranches-d94ee7194e8cb17db13b16c338f3e780b62f5435::IdleCDO",
+      "positive_interaction_id": "i:_deposit",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/PeckShield-StackerVC/StackerVC_VentureFund001-3cfb98b21f4731dfd62993feb7c7d1540837f59b::GaugeD1",
+      "negative_interaction_id": "i:deposit",
+      "similarity": 4.0,
+      "positive_function": "_deposit",
+      "negative_function": "deposit",
+      "negative_protection": "require_assert_guard_before_call|nonreentrant_modifier|trusted_or_fixed_callee|safe_erc20_wrapper|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "DAPP::DAppSCAN-source/contracts/consensys-Aave_Protocol_V2/aave-protocol-v2-f756f44a8d6a328cd545335e46e7128939db88c4::LendingPool",
+      "positive_interaction_id": "i:deposit",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/PeckShield-StackerVC/StackerVC_VentureFund001-3cfb98b21f4731dfd62993feb7c7d1540837f59b::GaugeD1",
+      "negative_interaction_id": "i:deposit",
+      "similarity": 4.0,
+      "positive_function": "deposit",
+      "negative_function": "deposit",
+      "negative_protection": "require_assert_guard_before_call|nonreentrant_modifier|trusted_or_fixed_callee|safe_erc20_wrapper|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "DAPP::DAppSCAN-source/contracts/QuillAudits-1inch-Fixed Rate Swap/fixed-rate-swap-0b5a75e9f56e7d21c290dd28c59dc140dcbcc1d5::FixedRateSwap",
+      "positive_interaction_id": "i:depositFor",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/PeckShield-StackerVC/StackerVC_VentureFund001-3cfb98b21f4731dfd62993feb7c7d1540837f59b::GaugeD1",
+      "negative_interaction_id": "i:deposit",
+      "similarity": 4.0,
+      "positive_function": "depositFor",
+      "negative_function": "deposit",
+      "negative_protection": "require_assert_guard_before_call|nonreentrant_modifier|trusted_or_fixed_callee|safe_erc20_wrapper|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00209::StakingManager",
+      "positive_interaction_id": "i:stake",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/PeckShield-BabySwap/code::IDO",
+      "negative_interaction_id": "i:createIDO",
+      "similarity": 4.0,
+      "positive_function": "stake",
+      "negative_function": "createIDO",
+      "negative_protection": "state_update_before_external_call|require_assert_guard_before_call|only_owner_or_access_control|callee_user_controlled|safe_erc20_wrapper|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00189::Box",
+      "positive_interaction_id": "i:flash",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/PeckShield-BabySwap/code::IDO",
+      "negative_interaction_id": "i:createIDO",
+      "similarity": 4.0,
+      "positive_function": "flash",
+      "negative_function": "createIDO",
+      "negative_protection": "state_update_before_external_call|require_assert_guard_before_call|only_owner_or_access_control|callee_user_controlled|safe_erc20_wrapper|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00102::StopLimit",
+      "positive_interaction_id": "i:modifyOrder",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/PeckShield-BabySwap/code::IDO",
+      "negative_interaction_id": "i:createIDO",
+      "similarity": 4.0,
+      "positive_function": "modifyOrder",
+      "negative_function": "createIDO",
+      "negative_protection": "state_update_before_external_call|require_assert_guard_before_call|only_owner_or_access_control|callee_user_controlled|safe_erc20_wrapper|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "DAPP::DAppSCAN-source/contracts/consensys-Aave_Protocol_V2/aave-protocol-v2-f756f44a8d6a328cd545335e46e7128939db88c4::LendingPool",
+      "positive_interaction_id": "i:deposit",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/PeckShield-BabySwap/code::AutoBabyPool",
+      "negative_interaction_id": "i:deposit",
+      "similarity": 5.0,
+      "positive_function": "deposit",
+      "negative_function": "deposit",
+      "negative_protection": "require_assert_guard_before_call|nonreentrant_modifier|callee_user_controlled|safe_erc20_wrapper|contract_many_risky_interactions|contract_modifier_access_summary"
+    },
+    {
+      "positive_graph_id": "DAPP::DAppSCAN-source/contracts/QuillAudits-1inch-Fixed Rate Swap/fixed-rate-swap-0b5a75e9f56e7d21c290dd28c59dc140dcbcc1d5::FixedRateSwap",
+      "positive_interaction_id": "i:depositFor",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/PeckShield-BabySwap/code::AutoBabyPool",
+      "negative_interaction_id": "i:deposit",
+      "similarity": 5.0,
+      "positive_function": "depositFor",
+      "negative_function": "deposit",
+      "negative_protection": "require_assert_guard_before_call|nonreentrant_modifier|callee_user_controlled|safe_erc20_wrapper|contract_many_risky_interactions|contract_modifier_access_summary"
+    },
+    {
+      "positive_graph_id": "DAPP::DAppSCAN-source/contracts/PeckShield-KaoyaSwap/contracts-8273073f1d6914f372790399378f177573c52e37::MasterChef",
+      "positive_interaction_id": "i:deposit",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/PeckShield-BabySwap/code::AutoBabyPool",
+      "negative_interaction_id": "i:deposit",
+      "similarity": 5.0,
+      "positive_function": "deposit",
+      "negative_function": "deposit",
+      "negative_protection": "require_assert_guard_before_call|nonreentrant_modifier|callee_user_controlled|safe_erc20_wrapper|contract_many_risky_interactions|contract_modifier_access_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00189::Box",
+      "positive_interaction_id": "i:allocate",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/SlowMist-CFFv2 Smart Contract Security Audit Report/cff-contract-v2-c86bef3f13c7585f547f9cd0ca900f94664e96b7::CFControllerV2",
+      "negative_interaction_id": "i:earnReward",
+      "similarity": 3.0,
+      "positive_function": "allocate",
+      "negative_function": "earnReward",
+      "negative_protection": "state_update_before_external_call|require_assert_guard_before_call|only_owner_or_access_control|callee_user_controlled|trusted_or_fixed_callee|contract_modifier_access_summary"
+    },
+    {
+      "positive_graph_id": "DAPP::DAppSCAN-source/contracts/consensys-Gamma/hypervisor-41fd4abf79864478523e87924d4e80d80df04879::Hypervisor",
+      "positive_interaction_id": "i:withdraw",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/SlowMist-CFFv2 Smart Contract Security Audit Report/cff-contract-v2-c86bef3f13c7585f547f9cd0ca900f94664e96b7::CFControllerV2",
+      "negative_interaction_id": "i:earnReward",
+      "similarity": 3.0,
+      "positive_function": "withdraw",
+      "negative_function": "earnReward",
+      "negative_protection": "state_update_before_external_call|require_assert_guard_before_call|only_owner_or_access_control|callee_user_controlled|trusted_or_fixed_callee|contract_modifier_access_summary"
+    },
+    {
+      "positive_graph_id": "DAPP::DAppSCAN-source/contracts/consensys-Aave_Protocol_V2/aave-protocol-v2-f756f44a8d6a328cd545335e46e7128939db88c4::LendingPool",
+      "positive_interaction_id": "i:deposit",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/SlowMist-CFFv2 Smart Contract Security Audit Report/cff-contract-v2-c86bef3f13c7585f547f9cd0ca900f94664e96b7::CFControllerV2",
+      "negative_interaction_id": "i:earnReward",
+      "similarity": 3.0,
+      "positive_function": "deposit",
+      "negative_function": "earnReward",
+      "negative_protection": "state_update_before_external_call|require_assert_guard_before_call|only_owner_or_access_control|callee_user_controlled|trusted_or_fixed_callee|contract_modifier_access_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00209::StakingManager",
+      "positive_interaction_id": "i:withdraw",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/consensys-Fei_Protocol_v2_Phase_1/fei-protocol-core-5e3e2ab889f06831f4fe2e8460066ded40ccf0a8::TribalChief",
+      "negative_interaction_id": "i:emergencyWithdraw",
+      "similarity": 5.0,
+      "positive_function": "withdraw",
+      "negative_function": "emergencyWithdraw",
+      "negative_protection": "state_update_before_external_call|require_assert_guard_before_call|nonreentrant_modifier|callee_user_controlled|safe_erc20_wrapper|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "DAPP::DAppSCAN-source/contracts/consensys-Gamma/hypervisor-41fd4abf79864478523e87924d4e80d80df04879::Hypervisor",
+      "positive_interaction_id": "i:withdraw",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/consensys-Fei_Protocol_v2_Phase_1/fei-protocol-core-5e3e2ab889f06831f4fe2e8460066ded40ccf0a8::TribalChief",
+      "negative_interaction_id": "i:emergencyWithdraw",
+      "similarity": 5.0,
+      "positive_function": "withdraw",
+      "negative_function": "emergencyWithdraw",
+      "negative_protection": "state_update_before_external_call|require_assert_guard_before_call|nonreentrant_modifier|callee_user_controlled|safe_erc20_wrapper|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "DAPP::DAppSCAN-source/contracts/PeckShield-SushiSwap/sushiswap-180bc9b642bba79c1ee4a63f71a3a0d36e64aa63::MasterChef",
+      "positive_interaction_id": "i:withdraw",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/consensys-Fei_Protocol_v2_Phase_1/fei-protocol-core-5e3e2ab889f06831f4fe2e8460066ded40ccf0a8::TribalChief",
+      "negative_interaction_id": "i:emergencyWithdraw",
+      "similarity": 5.0,
+      "positive_function": "withdraw",
+      "negative_function": "emergencyWithdraw",
+      "negative_protection": "state_update_before_external_call|require_assert_guard_before_call|nonreentrant_modifier|callee_user_controlled|safe_erc20_wrapper|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00209::StakingManager",
+      "positive_interaction_id": "i:withdraw",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/QuillAudits-BCUBE Smart Contract/b-cube-ico-13f9f8a991a65f3e0ca60a2078121fdd5a921fb0::NewSaleTreasury",
+      "negative_interaction_id": "i:shareWithdraw",
+      "similarity": 5.0,
+      "positive_function": "withdraw",
+      "negative_function": "shareWithdraw",
+      "negative_protection": "require_assert_guard_before_call|nonreentrant_modifier|callee_user_controlled|safe_erc20_wrapper|contract_modifier_access_summary"
+    },
+    {
+      "positive_graph_id": "DAPP::DAppSCAN-source/contracts/consensys-Gamma/hypervisor-41fd4abf79864478523e87924d4e80d80df04879::Hypervisor",
+      "positive_interaction_id": "i:withdraw",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/QuillAudits-BCUBE Smart Contract/b-cube-ico-13f9f8a991a65f3e0ca60a2078121fdd5a921fb0::NewSaleTreasury",
+      "negative_interaction_id": "i:shareWithdraw",
+      "similarity": 5.0,
+      "positive_function": "withdraw",
+      "negative_function": "shareWithdraw",
+      "negative_protection": "require_assert_guard_before_call|nonreentrant_modifier|callee_user_controlled|safe_erc20_wrapper|contract_modifier_access_summary"
+    },
+    {
+      "positive_graph_id": "DAPP::DAppSCAN-source/contracts/PeckShield-SushiSwap/sushiswap-180bc9b642bba79c1ee4a63f71a3a0d36e64aa63::MasterChef",
+      "positive_interaction_id": "i:withdraw",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/QuillAudits-BCUBE Smart Contract/b-cube-ico-13f9f8a991a65f3e0ca60a2078121fdd5a921fb0::NewSaleTreasury",
+      "negative_interaction_id": "i:shareWithdraw",
+      "similarity": 5.0,
+      "positive_function": "withdraw",
+      "negative_function": "shareWithdraw",
+      "negative_protection": "require_assert_guard_before_call|nonreentrant_modifier|callee_user_controlled|safe_erc20_wrapper|contract_modifier_access_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00209::StakingManager",
+      "positive_interaction_id": "i:withdraw",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/QuillAudits-BCUBE Smart Contract/b-cube-ico-13f9f8a991a65f3e0ca60a2078121fdd5a921fb0::Treasury",
+      "negative_interaction_id": "i:devFundShareWithdraw",
+      "similarity": 5.0,
+      "positive_function": "withdraw",
+      "negative_function": "devFundShareWithdraw",
+      "negative_protection": "state_update_before_external_call|require_assert_guard_before_call|callee_user_controlled|safe_erc20_wrapper|contract_many_risky_interactions"
+    },
+    {
+      "positive_graph_id": "DAPP::DAppSCAN-source/contracts/consensys-Gamma/hypervisor-41fd4abf79864478523e87924d4e80d80df04879::Hypervisor",
+      "positive_interaction_id": "i:withdraw",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/QuillAudits-BCUBE Smart Contract/b-cube-ico-13f9f8a991a65f3e0ca60a2078121fdd5a921fb0::Treasury",
+      "negative_interaction_id": "i:devFundShareWithdraw",
+      "similarity": 5.0,
+      "positive_function": "withdraw",
+      "negative_function": "devFundShareWithdraw",
+      "negative_protection": "state_update_before_external_call|require_assert_guard_before_call|callee_user_controlled|safe_erc20_wrapper|contract_many_risky_interactions"
+    },
+    {
+      "positive_graph_id": "DAPP::DAppSCAN-source/contracts/PeckShield-SushiSwap/sushiswap-180bc9b642bba79c1ee4a63f71a3a0d36e64aa63::MasterChef",
+      "positive_interaction_id": "i:withdraw",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/QuillAudits-BCUBE Smart Contract/b-cube-ico-13f9f8a991a65f3e0ca60a2078121fdd5a921fb0::Treasury",
+      "negative_interaction_id": "i:devFundShareWithdraw",
+      "similarity": 5.0,
+      "positive_function": "withdraw",
+      "negative_function": "devFundShareWithdraw",
+      "negative_protection": "state_update_before_external_call|require_assert_guard_before_call|callee_user_controlled|safe_erc20_wrapper|contract_many_risky_interactions"
+    },
+    {
+      "positive_graph_id": "DAPP::DAppSCAN-source/contracts/openzeppelin-Endaoment/endaoment-contracts-f60aa253d3d869ad6460877f23e6092acb313add::Fund",
+      "positive_interaction_id": "i:finalizeGrant",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/QuillAudits-BCUBE Smart Contract/b-cube-ico-13f9f8a991a65f3e0ca60a2078121fdd5a921fb0::B3NewSale",
+      "negative_interaction_id": "i:buyBcubeUsingETH",
+      "similarity": 2.0,
+      "positive_function": "finalizeGrant",
+      "negative_function": "buyBcubeUsingETH",
+      "negative_protection": "nonreentrant_modifier|contract_modifier_access_summary"
+    },
+    {
+      "positive_graph_id": "DAPP::DAppSCAN-source/contracts/consensys-PoolTogether_Pods/pods-v3-contracts-879dc8b911fc506dd6bead1f36eade919ccfea57::TokenDrop",
+      "positive_interaction_id": "i:claim",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/QuillAudits-BCUBE Smart Contract/b-cube-ico-13f9f8a991a65f3e0ca60a2078121fdd5a921fb0::B3NewSale",
+      "negative_interaction_id": "i:buyBcubeUsingETH",
+      "similarity": 2.0,
+      "positive_function": "claim",
+      "negative_function": "buyBcubeUsingETH",
+      "negative_protection": "nonreentrant_modifier|contract_modifier_access_summary"
+    },
+    {
+      "positive_graph_id": "DAPP::DAppSCAN-source/contracts/consensys-Gamma/hypervisor-41fd4abf79864478523e87924d4e80d80df04879::UniProxy",
+      "positive_interaction_id": "i:deposit",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/QuillAudits-BCUBE Smart Contract/b-cube-ico-13f9f8a991a65f3e0ca60a2078121fdd5a921fb0::B3NewSale",
+      "negative_interaction_id": "i:buyBcubeUsingETH",
+      "similarity": 2.0,
+      "positive_function": "deposit",
+      "negative_function": "buyBcubeUsingETH",
+      "negative_protection": "nonreentrant_modifier|contract_modifier_access_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00209::StakingManager",
+      "positive_interaction_id": "i:withdraw",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/QuillAudits-BCUBE Smart Contract/b-cube-ico-13f9f8a991a65f3e0ca60a2078121fdd5a921fb0::PublicSaleTreasury",
+      "negative_interaction_id": "i:shareWithdraw",
+      "similarity": 5.0,
+      "positive_function": "withdraw",
+      "negative_function": "shareWithdraw",
+      "negative_protection": "require_assert_guard_before_call|nonreentrant_modifier|callee_user_controlled|safe_erc20_wrapper|contract_modifier_access_summary"
+    },
+    {
+      "positive_graph_id": "DAPP::DAppSCAN-source/contracts/consensys-Gamma/hypervisor-41fd4abf79864478523e87924d4e80d80df04879::Hypervisor",
+      "positive_interaction_id": "i:withdraw",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/QuillAudits-BCUBE Smart Contract/b-cube-ico-13f9f8a991a65f3e0ca60a2078121fdd5a921fb0::PublicSaleTreasury",
+      "negative_interaction_id": "i:shareWithdraw",
+      "similarity": 5.0,
+      "positive_function": "withdraw",
+      "negative_function": "shareWithdraw",
+      "negative_protection": "require_assert_guard_before_call|nonreentrant_modifier|callee_user_controlled|safe_erc20_wrapper|contract_modifier_access_summary"
+    },
+    {
+      "positive_graph_id": "DAPP::DAppSCAN-source/contracts/PeckShield-SushiSwap/sushiswap-180bc9b642bba79c1ee4a63f71a3a0d36e64aa63::MasterChef",
+      "positive_interaction_id": "i:withdraw",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/QuillAudits-BCUBE Smart Contract/b-cube-ico-13f9f8a991a65f3e0ca60a2078121fdd5a921fb0::PublicSaleTreasury",
+      "negative_interaction_id": "i:shareWithdraw",
+      "similarity": 5.0,
+      "positive_function": "withdraw",
+      "negative_function": "shareWithdraw",
+      "negative_protection": "require_assert_guard_before_call|nonreentrant_modifier|callee_user_controlled|safe_erc20_wrapper|contract_modifier_access_summary"
+    },
+    {
+      "positive_graph_id": "DAPP::DAppSCAN-source/contracts/Coinbae-Barnbridge_Vault/CommunityVault0xA3C299eEE1998F45c20010276684921EBE6423D9::CommunityVault",
+      "positive_interaction_id": "i:setAllowance",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/PeckShield-Convex_Frax/frax-cvx-platform-2f8573ee796daa022c1050b4a749bf08049c439b::StakingProxyERC20",
+      "negative_interaction_id": "i:initialize",
+      "similarity": 2.0,
+      "positive_function": "setAllowance",
+      "negative_function": "initialize",
+      "negative_protection": "state_update_before_external_call|require_assert_guard_before_call|trusted_or_fixed_callee|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00234::mErc20Host",
+      "positive_interaction_id": "i:_verifyProof",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/PeckShield-Convex_Frax/frax-cvx-platform-2f8573ee796daa022c1050b4a749bf08049c439b::StakingProxyERC20",
+      "negative_interaction_id": "i:initialize",
+      "similarity": 0.0,
+      "positive_function": "_verifyProof",
+      "negative_function": "initialize",
+      "negative_protection": "state_update_before_external_call|require_assert_guard_before_call|trusted_or_fixed_callee|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00224::OidcRecoveryValidator",
+      "positive_interaction_id": "i:startRecovery",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/PeckShield-Convex_Frax/frax-cvx-platform-2f8573ee796daa022c1050b4a749bf08049c439b::StakingProxyERC20",
+      "negative_interaction_id": "i:initialize",
+      "similarity": 0.0,
+      "positive_function": "startRecovery",
+      "negative_function": "initialize",
+      "negative_protection": "state_update_before_external_call|require_assert_guard_before_call|trusted_or_fixed_callee|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "DAPP::DAppSCAN-source/contracts/consensys-Aave_Protocol_V2/aave-protocol-v2-f756f44a8d6a328cd545335e46e7128939db88c4::LendingPool",
+      "positive_interaction_id": "i:deposit",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Inspex-FairLaunch, Token, Vault & Workers/Meow-Finance-4a4f13efaf5e5fbed74c0ed23b665751e655d715::FeeDistribute",
+      "negative_interaction_id": "i:deposit",
+      "similarity": 5.0,
+      "positive_function": "deposit",
+      "negative_function": "deposit",
+      "negative_protection": "require_assert_guard_before_call|nonreentrant_modifier|callee_user_controlled|trusted_or_fixed_callee|safe_erc20_wrapper|contract_many_risky_interactions|contract_modifier_access_summary"
+    },
+    {
+      "positive_graph_id": "DAPP::DAppSCAN-source/contracts/QuillAudits-1inch-Fixed Rate Swap/fixed-rate-swap-0b5a75e9f56e7d21c290dd28c59dc140dcbcc1d5::FixedRateSwap",
+      "positive_interaction_id": "i:depositFor",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Inspex-FairLaunch, Token, Vault & Workers/Meow-Finance-4a4f13efaf5e5fbed74c0ed23b665751e655d715::FeeDistribute",
+      "negative_interaction_id": "i:deposit",
+      "similarity": 5.0,
+      "positive_function": "depositFor",
+      "negative_function": "deposit",
+      "negative_protection": "require_assert_guard_before_call|nonreentrant_modifier|callee_user_controlled|trusted_or_fixed_callee|safe_erc20_wrapper|contract_many_risky_interactions|contract_modifier_access_summary"
+    },
+    {
+      "positive_graph_id": "DAPP::DAppSCAN-source/contracts/PeckShield-KaoyaSwap/contracts-8273073f1d6914f372790399378f177573c52e37::MasterChef",
+      "positive_interaction_id": "i:deposit",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Inspex-FairLaunch, Token, Vault & Workers/Meow-Finance-4a4f13efaf5e5fbed74c0ed23b665751e655d715::FeeDistribute",
+      "negative_interaction_id": "i:deposit",
+      "similarity": 5.0,
+      "positive_function": "deposit",
+      "negative_function": "deposit",
+      "negative_protection": "require_assert_guard_before_call|nonreentrant_modifier|callee_user_controlled|trusted_or_fixed_callee|safe_erc20_wrapper|contract_many_risky_interactions|contract_modifier_access_summary"
+    },
+    {
+      "positive_graph_id": "DAPP::DAppSCAN-source/contracts/consensys-Aave_Protocol_V2/aave-protocol-v2-f756f44a8d6a328cd545335e46e7128939db88c4::LendingPool",
+      "positive_interaction_id": "i:deposit",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Inspex-FairLaunch, Token, Vault & Workers/Meow-Finance-4a4f13efaf5e5fbed74c0ed23b665751e655d715::MeowMining",
+      "negative_interaction_id": "i:deposit",
+      "similarity": 5.0,
+      "positive_function": "deposit",
+      "negative_function": "deposit",
+      "negative_protection": "require_assert_guard_before_call|nonreentrant_modifier|callee_user_controlled|trusted_or_fixed_callee|safe_erc20_wrapper|contract_many_risky_interactions|contract_modifier_access_summary"
+    },
+    {
+      "positive_graph_id": "DAPP::DAppSCAN-source/contracts/QuillAudits-1inch-Fixed Rate Swap/fixed-rate-swap-0b5a75e9f56e7d21c290dd28c59dc140dcbcc1d5::FixedRateSwap",
+      "positive_interaction_id": "i:depositFor",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Inspex-FairLaunch, Token, Vault & Workers/Meow-Finance-4a4f13efaf5e5fbed74c0ed23b665751e655d715::MeowMining",
+      "negative_interaction_id": "i:deposit",
+      "similarity": 5.0,
+      "positive_function": "depositFor",
+      "negative_function": "deposit",
+      "negative_protection": "require_assert_guard_before_call|nonreentrant_modifier|callee_user_controlled|trusted_or_fixed_callee|safe_erc20_wrapper|contract_many_risky_interactions|contract_modifier_access_summary"
+    },
+    {
+      "positive_graph_id": "DAPP::DAppSCAN-source/contracts/PeckShield-KaoyaSwap/contracts-8273073f1d6914f372790399378f177573c52e37::MasterChef",
+      "positive_interaction_id": "i:deposit",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Inspex-FairLaunch, Token, Vault & Workers/Meow-Finance-4a4f13efaf5e5fbed74c0ed23b665751e655d715::MeowMining",
+      "negative_interaction_id": "i:deposit",
+      "similarity": 5.0,
+      "positive_function": "deposit",
+      "negative_function": "deposit",
+      "negative_protection": "require_assert_guard_before_call|nonreentrant_modifier|callee_user_controlled|trusted_or_fixed_callee|safe_erc20_wrapper|contract_many_risky_interactions|contract_modifier_access_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00209::StakingManager",
+      "positive_interaction_id": "i:withdraw",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Inspex-FairLaunch, Token, Vault & Workers/Meow-Finance-4a4f13efaf5e5fbed74c0ed23b665751e655d715::Vault",
+      "negative_interaction_id": "i:work",
+      "similarity": 4.0,
+      "positive_function": "withdraw",
+      "negative_function": "work",
+      "negative_protection": "state_update_before_external_call|require_assert_guard_before_call|nonreentrant_modifier|only_owner_or_access_control|callee_user_controlled|safe_erc20_wrapper|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00189::Box",
+      "positive_interaction_id": "i:flash",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Inspex-FairLaunch, Token, Vault & Workers/Meow-Finance-4a4f13efaf5e5fbed74c0ed23b665751e655d715::Vault",
+      "negative_interaction_id": "i:work",
+      "similarity": 4.0,
+      "positive_function": "flash",
+      "negative_function": "work",
+      "negative_protection": "state_update_before_external_call|require_assert_guard_before_call|nonreentrant_modifier|only_owner_or_access_control|callee_user_controlled|safe_erc20_wrapper|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00102::StopLimit",
+      "positive_interaction_id": "i:modifyOrder",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Inspex-FairLaunch, Token, Vault & Workers/Meow-Finance-4a4f13efaf5e5fbed74c0ed23b665751e655d715::Vault",
+      "negative_interaction_id": "i:work",
+      "similarity": 4.0,
+      "positive_function": "modifyOrder",
+      "negative_function": "work",
+      "negative_protection": "state_update_before_external_call|require_assert_guard_before_call|nonreentrant_modifier|only_owner_or_access_control|callee_user_controlled|safe_erc20_wrapper|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00209::StakingManager",
+      "positive_interaction_id": "i:withdraw",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Inspex-FairLaunch, Token, Vault & Workers/Meow-Finance-4a4f13efaf5e5fbed74c0ed23b665751e655d715::QuickswapWorker",
+      "negative_interaction_id": "i:work",
+      "similarity": 4.0,
+      "positive_function": "withdraw",
+      "negative_function": "work",
+      "negative_protection": "require_assert_guard_before_call|nonreentrant_modifier|only_owner_or_access_control|callee_user_controlled|safe_erc20_wrapper|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00189::Box",
+      "positive_interaction_id": "i:flash",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Inspex-FairLaunch, Token, Vault & Workers/Meow-Finance-4a4f13efaf5e5fbed74c0ed23b665751e655d715::QuickswapWorker",
+      "negative_interaction_id": "i:work",
+      "similarity": 4.0,
+      "positive_function": "flash",
+      "negative_function": "work",
+      "negative_protection": "require_assert_guard_before_call|nonreentrant_modifier|only_owner_or_access_control|callee_user_controlled|safe_erc20_wrapper|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00102::StopLimit",
+      "positive_interaction_id": "i:modifyOrder",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Inspex-FairLaunch, Token, Vault & Workers/Meow-Finance-4a4f13efaf5e5fbed74c0ed23b665751e655d715::QuickswapWorker",
+      "negative_interaction_id": "i:work",
+      "similarity": 4.0,
+      "positive_function": "modifyOrder",
+      "negative_function": "work",
+      "negative_protection": "require_assert_guard_before_call|nonreentrant_modifier|only_owner_or_access_control|callee_user_controlled|safe_erc20_wrapper|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00209::StakingManager",
+      "positive_interaction_id": "i:withdraw",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Inspex-FairLaunch, Token, Vault & Workers/Meow-Finance-4a4f13efaf5e5fbed74c0ed23b665751e655d715::SushiswapWorker",
+      "negative_interaction_id": "i:work",
+      "similarity": 4.0,
+      "positive_function": "withdraw",
+      "negative_function": "work",
+      "negative_protection": "require_assert_guard_before_call|nonreentrant_modifier|only_owner_or_access_control|callee_user_controlled|safe_erc20_wrapper|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00189::Box",
+      "positive_interaction_id": "i:flash",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Inspex-FairLaunch, Token, Vault & Workers/Meow-Finance-4a4f13efaf5e5fbed74c0ed23b665751e655d715::SushiswapWorker",
+      "negative_interaction_id": "i:work",
+      "similarity": 4.0,
+      "positive_function": "flash",
+      "negative_function": "work",
+      "negative_protection": "require_assert_guard_before_call|nonreentrant_modifier|only_owner_or_access_control|callee_user_controlled|safe_erc20_wrapper|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00102::StopLimit",
+      "positive_interaction_id": "i:modifyOrder",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Inspex-FairLaunch, Token, Vault & Workers/Meow-Finance-4a4f13efaf5e5fbed74c0ed23b665751e655d715::SushiswapWorker",
+      "negative_interaction_id": "i:work",
+      "similarity": 4.0,
+      "positive_function": "modifyOrder",
+      "negative_function": "work",
+      "negative_protection": "require_assert_guard_before_call|nonreentrant_modifier|only_owner_or_access_control|callee_user_controlled|safe_erc20_wrapper|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00007::Folio",
+      "positive_interaction_id": "i:startRebalance",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Inspex-FairLaunch, Token, Vault & Workers/Meow-Finance-4a4f13efaf5e5fbed74c0ed23b665751e655d715::QuickswapStrategyAddTwoSidesOptimal",
+      "negative_interaction_id": "i:initialize",
+      "similarity": 2.0,
+      "positive_function": "startRebalance",
+      "negative_function": "initialize",
+      "negative_protection": "state_update_before_external_call|state_update_after_external_call|nonreentrant_modifier|callee_user_controlled|trusted_or_fixed_callee|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "DAPP::DAppSCAN-source/contracts/Runtime_V\u0435rification-Element_Finance_Governance_Security_Audit_Report/council-3d751c959b42573c78ccd0bccbc80424bf6d9a90::CoreVoting",
+      "positive_interaction_id": "i:execute",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Inspex-FairLaunch, Token, Vault & Workers/Meow-Finance-4a4f13efaf5e5fbed74c0ed23b665751e655d715::QuickswapStrategyAddTwoSidesOptimal",
+      "negative_interaction_id": "i:initialize",
+      "similarity": 2.0,
+      "positive_function": "execute",
+      "negative_function": "initialize",
+      "negative_protection": "state_update_before_external_call|state_update_after_external_call|nonreentrant_modifier|callee_user_controlled|trusted_or_fixed_callee|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "DAPP::DAppSCAN-source/contracts/QuillAudits-Algovest/AlgoVestStaking0x090e69e7F48AFC059e480F297042DEA396B971e7::AlgoVestStaking",
+      "positive_interaction_id": "i:AVSTokenDonation",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Inspex-FairLaunch, Token, Vault & Workers/Meow-Finance-4a4f13efaf5e5fbed74c0ed23b665751e655d715::QuickswapStrategyAddTwoSidesOptimal",
+      "negative_interaction_id": "i:initialize",
+      "similarity": 2.0,
+      "positive_function": "AVSTokenDonation",
+      "negative_function": "initialize",
+      "negative_protection": "state_update_before_external_call|state_update_after_external_call|nonreentrant_modifier|callee_user_controlled|trusted_or_fixed_callee|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00209::StakingManager",
+      "positive_interaction_id": "i:withdraw",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Inspex-Optimized Worker/bsc-alpaca-contract-1aee2ceec77e3fd3162b74858c846cdc5692928d::GrazingRange",
+      "negative_interaction_id": "i:emergencyRewardWithdraw",
+      "similarity": 5.0,
+      "positive_function": "withdraw",
+      "negative_function": "emergencyRewardWithdraw",
+      "negative_protection": "require_assert_guard_before_call|nonreentrant_modifier|only_owner_or_access_control|callee_user_controlled|safe_erc20_wrapper|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "DAPP::DAppSCAN-source/contracts/consensys-Gamma/hypervisor-41fd4abf79864478523e87924d4e80d80df04879::Hypervisor",
+      "positive_interaction_id": "i:withdraw",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Inspex-Optimized Worker/bsc-alpaca-contract-1aee2ceec77e3fd3162b74858c846cdc5692928d::GrazingRange",
+      "negative_interaction_id": "i:emergencyRewardWithdraw",
+      "similarity": 5.0,
+      "positive_function": "withdraw",
+      "negative_function": "emergencyRewardWithdraw",
+      "negative_protection": "require_assert_guard_before_call|nonreentrant_modifier|only_owner_or_access_control|callee_user_controlled|safe_erc20_wrapper|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "DAPP::DAppSCAN-source/contracts/PeckShield-SushiSwap/sushiswap-180bc9b642bba79c1ee4a63f71a3a0d36e64aa63::MasterChef",
+      "positive_interaction_id": "i:withdraw",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Inspex-Optimized Worker/bsc-alpaca-contract-1aee2ceec77e3fd3162b74858c846cdc5692928d::GrazingRange",
+      "negative_interaction_id": "i:emergencyRewardWithdraw",
+      "similarity": 5.0,
+      "positive_function": "withdraw",
+      "negative_function": "emergencyRewardWithdraw",
+      "negative_protection": "require_assert_guard_before_call|nonreentrant_modifier|only_owner_or_access_control|callee_user_controlled|safe_erc20_wrapper|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "DAPP::DAppSCAN-source/contracts/consensys-Aave_Protocol_V2/aave-protocol-v2-f756f44a8d6a328cd545335e46e7128939db88c4::LendingPool",
+      "positive_interaction_id": "i:deposit",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Inspex-Optimized Worker/bsc-alpaca-contract-1aee2ceec77e3fd3162b74858c846cdc5692928d::FairLaunch",
+      "negative_interaction_id": "i:deposit",
+      "similarity": 5.0,
+      "positive_function": "deposit",
+      "negative_function": "deposit",
+      "negative_protection": "require_assert_guard_before_call|nonreentrant_modifier|callee_user_controlled|trusted_or_fixed_callee|safe_erc20_wrapper|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "DAPP::DAppSCAN-source/contracts/QuillAudits-1inch-Fixed Rate Swap/fixed-rate-swap-0b5a75e9f56e7d21c290dd28c59dc140dcbcc1d5::FixedRateSwap",
+      "positive_interaction_id": "i:depositFor",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Inspex-Optimized Worker/bsc-alpaca-contract-1aee2ceec77e3fd3162b74858c846cdc5692928d::FairLaunch",
+      "negative_interaction_id": "i:deposit",
+      "similarity": 5.0,
+      "positive_function": "depositFor",
+      "negative_function": "deposit",
+      "negative_protection": "require_assert_guard_before_call|nonreentrant_modifier|callee_user_controlled|trusted_or_fixed_callee|safe_erc20_wrapper|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "DAPP::DAppSCAN-source/contracts/PeckShield-KaoyaSwap/contracts-8273073f1d6914f372790399378f177573c52e37::MasterChef",
+      "positive_interaction_id": "i:deposit",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Inspex-Optimized Worker/bsc-alpaca-contract-1aee2ceec77e3fd3162b74858c846cdc5692928d::FairLaunch",
+      "negative_interaction_id": "i:deposit",
+      "similarity": 5.0,
+      "positive_function": "deposit",
+      "negative_function": "deposit",
+      "negative_protection": "require_assert_guard_before_call|nonreentrant_modifier|callee_user_controlled|trusted_or_fixed_callee|safe_erc20_wrapper|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00209::StakingManager",
+      "positive_interaction_id": "i:withdraw",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Inspex-Optimized Worker/bsc-alpaca-contract-1aee2ceec77e3fd3162b74858c846cdc5692928d::Vault",
+      "negative_interaction_id": "i:work",
+      "similarity": 4.0,
+      "positive_function": "withdraw",
+      "negative_function": "work",
+      "negative_protection": "state_update_before_external_call|require_assert_guard_before_call|nonreentrant_modifier|only_owner_or_access_control|callee_user_controlled|safe_erc20_wrapper|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00189::Box",
+      "positive_interaction_id": "i:flash",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Inspex-Optimized Worker/bsc-alpaca-contract-1aee2ceec77e3fd3162b74858c846cdc5692928d::Vault",
+      "negative_interaction_id": "i:work",
+      "similarity": 4.0,
+      "positive_function": "flash",
+      "negative_function": "work",
+      "negative_protection": "state_update_before_external_call|require_assert_guard_before_call|nonreentrant_modifier|only_owner_or_access_control|callee_user_controlled|safe_erc20_wrapper|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00102::StopLimit",
+      "positive_interaction_id": "i:modifyOrder",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Inspex-Optimized Worker/bsc-alpaca-contract-1aee2ceec77e3fd3162b74858c846cdc5692928d::Vault",
+      "negative_interaction_id": "i:work",
+      "similarity": 4.0,
+      "positive_function": "modifyOrder",
+      "negative_function": "work",
+      "negative_protection": "state_update_before_external_call|require_assert_guard_before_call|nonreentrant_modifier|only_owner_or_access_control|callee_user_controlled|safe_erc20_wrapper|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00209::StakingManager",
+      "positive_interaction_id": "i:withdraw",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Inspex-Optimized Worker/bsc-alpaca-contract-1aee2ceec77e3fd3162b74858c846cdc5692928d::WaultSwapWorker02",
+      "negative_interaction_id": "i:work",
+      "similarity": 4.0,
+      "positive_function": "withdraw",
+      "negative_function": "work",
+      "negative_protection": "state_update_before_external_call|require_assert_guard_before_call|nonreentrant_modifier|only_owner_or_access_control|callee_user_controlled|safe_erc20_wrapper|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00189::Box",
+      "positive_interaction_id": "i:flash",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Inspex-Optimized Worker/bsc-alpaca-contract-1aee2ceec77e3fd3162b74858c846cdc5692928d::WaultSwapWorker02",
+      "negative_interaction_id": "i:work",
+      "similarity": 4.0,
+      "positive_function": "flash",
+      "negative_function": "work",
+      "negative_protection": "state_update_before_external_call|require_assert_guard_before_call|nonreentrant_modifier|only_owner_or_access_control|callee_user_controlled|safe_erc20_wrapper|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00102::StopLimit",
+      "positive_interaction_id": "i:modifyOrder",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Inspex-Optimized Worker/bsc-alpaca-contract-1aee2ceec77e3fd3162b74858c846cdc5692928d::WaultSwapWorker02",
+      "negative_interaction_id": "i:work",
+      "similarity": 4.0,
+      "positive_function": "modifyOrder",
+      "negative_function": "work",
+      "negative_protection": "state_update_before_external_call|require_assert_guard_before_call|nonreentrant_modifier|only_owner_or_access_control|callee_user_controlled|safe_erc20_wrapper|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00209::StakingManager",
+      "positive_interaction_id": "i:withdraw",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Inspex-Optimized Worker/bsc-alpaca-contract-1aee2ceec77e3fd3162b74858c846cdc5692928d::WaultSwapWorker",
+      "negative_interaction_id": "i:work",
+      "similarity": 4.0,
+      "positive_function": "withdraw",
+      "negative_function": "work",
+      "negative_protection": "require_assert_guard_before_call|nonreentrant_modifier|only_owner_or_access_control|callee_user_controlled|safe_erc20_wrapper|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00189::Box",
+      "positive_interaction_id": "i:flash",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Inspex-Optimized Worker/bsc-alpaca-contract-1aee2ceec77e3fd3162b74858c846cdc5692928d::WaultSwapWorker",
+      "negative_interaction_id": "i:work",
+      "similarity": 4.0,
+      "positive_function": "flash",
+      "negative_function": "work",
+      "negative_protection": "require_assert_guard_before_call|nonreentrant_modifier|only_owner_or_access_control|callee_user_controlled|safe_erc20_wrapper|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00102::StopLimit",
+      "positive_interaction_id": "i:modifyOrder",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Inspex-Optimized Worker/bsc-alpaca-contract-1aee2ceec77e3fd3162b74858c846cdc5692928d::WaultSwapWorker",
+      "negative_interaction_id": "i:work",
+      "similarity": 4.0,
+      "positive_function": "modifyOrder",
+      "negative_function": "work",
+      "negative_protection": "require_assert_guard_before_call|nonreentrant_modifier|only_owner_or_access_control|callee_user_controlled|safe_erc20_wrapper|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00209::StakingManager",
+      "positive_interaction_id": "i:withdraw",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Inspex-Optimized Worker/bsc-alpaca-contract-1aee2ceec77e3fd3162b74858c846cdc5692928d::PancakeswapV2Worker",
+      "negative_interaction_id": "i:work",
+      "similarity": 4.0,
+      "positive_function": "withdraw",
+      "negative_function": "work",
+      "negative_protection": "require_assert_guard_before_call|nonreentrant_modifier|only_owner_or_access_control|callee_user_controlled|safe_erc20_wrapper|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00189::Box",
+      "positive_interaction_id": "i:flash",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Inspex-Optimized Worker/bsc-alpaca-contract-1aee2ceec77e3fd3162b74858c846cdc5692928d::PancakeswapV2Worker",
+      "negative_interaction_id": "i:work",
+      "similarity": 4.0,
+      "positive_function": "flash",
+      "negative_function": "work",
+      "negative_protection": "require_assert_guard_before_call|nonreentrant_modifier|only_owner_or_access_control|callee_user_controlled|safe_erc20_wrapper|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00102::StopLimit",
+      "positive_interaction_id": "i:modifyOrder",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Inspex-Optimized Worker/bsc-alpaca-contract-1aee2ceec77e3fd3162b74858c846cdc5692928d::PancakeswapV2Worker",
+      "negative_interaction_id": "i:work",
+      "similarity": 4.0,
+      "positive_function": "modifyOrder",
+      "negative_function": "work",
+      "negative_protection": "require_assert_guard_before_call|nonreentrant_modifier|only_owner_or_access_control|callee_user_controlled|safe_erc20_wrapper|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00209::StakingManager",
+      "positive_interaction_id": "i:withdraw",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Inspex-Optimized Worker/bsc-alpaca-contract-1aee2ceec77e3fd3162b74858c846cdc5692928d::PancakeswapWorker",
+      "negative_interaction_id": "i:work",
+      "similarity": 4.0,
+      "positive_function": "withdraw",
+      "negative_function": "work",
+      "negative_protection": "require_assert_guard_before_call|nonreentrant_modifier|only_owner_or_access_control|callee_user_controlled|safe_erc20_wrapper|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00189::Box",
+      "positive_interaction_id": "i:flash",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Inspex-Optimized Worker/bsc-alpaca-contract-1aee2ceec77e3fd3162b74858c846cdc5692928d::PancakeswapWorker",
+      "negative_interaction_id": "i:work",
+      "similarity": 4.0,
+      "positive_function": "flash",
+      "negative_function": "work",
+      "negative_protection": "require_assert_guard_before_call|nonreentrant_modifier|only_owner_or_access_control|callee_user_controlled|safe_erc20_wrapper|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00102::StopLimit",
+      "positive_interaction_id": "i:modifyOrder",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Inspex-Optimized Worker/bsc-alpaca-contract-1aee2ceec77e3fd3162b74858c846cdc5692928d::PancakeswapWorker",
+      "negative_interaction_id": "i:work",
+      "similarity": 4.0,
+      "positive_function": "modifyOrder",
+      "negative_function": "work",
+      "negative_protection": "require_assert_guard_before_call|nonreentrant_modifier|only_owner_or_access_control|callee_user_controlled|safe_erc20_wrapper|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00209::StakingManager",
+      "positive_interaction_id": "i:withdraw",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Inspex-Optimized Worker/bsc-alpaca-contract-1aee2ceec77e3fd3162b74858c846cdc5692928d::PancakeswapV2WorkerMigrate",
+      "negative_interaction_id": "i:work",
+      "similarity": 4.0,
+      "positive_function": "withdraw",
+      "negative_function": "work",
+      "negative_protection": "require_assert_guard_before_call|nonreentrant_modifier|only_owner_or_access_control|callee_user_controlled|safe_erc20_wrapper|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00189::Box",
+      "positive_interaction_id": "i:flash",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Inspex-Optimized Worker/bsc-alpaca-contract-1aee2ceec77e3fd3162b74858c846cdc5692928d::PancakeswapV2WorkerMigrate",
+      "negative_interaction_id": "i:work",
+      "similarity": 4.0,
+      "positive_function": "flash",
+      "negative_function": "work",
+      "negative_protection": "require_assert_guard_before_call|nonreentrant_modifier|only_owner_or_access_control|callee_user_controlled|safe_erc20_wrapper|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00102::StopLimit",
+      "positive_interaction_id": "i:modifyOrder",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Inspex-Optimized Worker/bsc-alpaca-contract-1aee2ceec77e3fd3162b74858c846cdc5692928d::PancakeswapV2WorkerMigrate",
+      "negative_interaction_id": "i:work",
+      "similarity": 4.0,
+      "positive_function": "modifyOrder",
+      "negative_function": "work",
+      "negative_protection": "require_assert_guard_before_call|nonreentrant_modifier|only_owner_or_access_control|callee_user_controlled|safe_erc20_wrapper|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00221::LimitOrderHook",
+      "positive_interaction_id": "i:_handleCancelCallback",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Chainsecurity-Compound  cToken unredacted/compound-protocol-4a54ec5c55b66ea67d44b76f3056f0ed7229db8c::CTokenCollateral",
+      "negative_interaction_id": "i:liquidateBorrowInternal",
+      "similarity": 1.0,
+      "positive_function": "_handleCancelCallback",
+      "negative_function": "liquidateBorrowInternal",
+      "negative_protection": "require_assert_guard_before_call|nonreentrant_modifier|callee_user_controlled|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00221::LimitOrderHook",
+      "positive_interaction_id": "i:_afterSwap",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Chainsecurity-Compound  cToken unredacted/compound-protocol-4a54ec5c55b66ea67d44b76f3056f0ed7229db8c::CTokenCollateral",
+      "negative_interaction_id": "i:liquidateBorrowInternal",
+      "similarity": 1.0,
+      "positive_function": "_afterSwap",
+      "negative_function": "liquidateBorrowInternal",
+      "negative_protection": "require_assert_guard_before_call|nonreentrant_modifier|callee_user_controlled|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00209::StakingManager",
+      "positive_interaction_id": "i:withdraw",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Chainsecurity-Compound  cToken unredacted/compound-protocol-4a54ec5c55b66ea67d44b76f3056f0ed7229db8c::CTokenCollateral",
+      "negative_interaction_id": "i:liquidateBorrowInternal",
+      "similarity": 1.0,
+      "positive_function": "withdraw",
+      "negative_function": "liquidateBorrowInternal",
+      "negative_protection": "require_assert_guard_before_call|nonreentrant_modifier|callee_user_controlled|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00209::StakingManager",
+      "positive_interaction_id": "i:withdraw",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Chainsecurity-Angle Protocol/angle-core-46e6d32837cbe97a4af0adb693e63afa0d01fc3e::CollateralSettlerERC20",
+      "negative_interaction_id": "i:recoverERC20",
+      "similarity": 4.0,
+      "positive_function": "withdraw",
+      "negative_function": "recoverERC20",
+      "negative_protection": "state_update_before_external_call|require_assert_guard_before_call|only_owner_or_access_control|callee_user_controlled|trusted_or_fixed_callee|safe_erc20_wrapper|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00189::Box",
+      "positive_interaction_id": "i:flash",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Chainsecurity-Angle Protocol/angle-core-46e6d32837cbe97a4af0adb693e63afa0d01fc3e::CollateralSettlerERC20",
+      "negative_interaction_id": "i:recoverERC20",
+      "similarity": 4.0,
+      "positive_function": "flash",
+      "negative_function": "recoverERC20",
+      "negative_protection": "state_update_before_external_call|require_assert_guard_before_call|only_owner_or_access_control|callee_user_controlled|trusted_or_fixed_callee|safe_erc20_wrapper|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00102::StopLimit",
+      "positive_interaction_id": "i:modifyOrder",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Chainsecurity-Angle Protocol/angle-core-46e6d32837cbe97a4af0adb693e63afa0d01fc3e::CollateralSettlerERC20",
+      "negative_interaction_id": "i:recoverERC20",
+      "similarity": 4.0,
+      "positive_function": "modifyOrder",
+      "negative_function": "recoverERC20",
+      "negative_protection": "state_update_before_external_call|require_assert_guard_before_call|only_owner_or_access_control|callee_user_controlled|trusted_or_fixed_callee|safe_erc20_wrapper|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00221::LimitOrderHook",
+      "positive_interaction_id": "i:_handleCancelCallback",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Chainsecurity-Angle Protocol/angle-core-46e6d32837cbe97a4af0adb693e63afa0d01fc3e::Governor",
+      "negative_interaction_id": "i:initialize",
+      "similarity": 1.0,
+      "positive_function": "_handleCancelCallback",
+      "negative_function": "initialize",
+      "negative_protection": "state_update_before_external_call|require_assert_guard_before_call|callee_user_controlled|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00221::LimitOrderHook",
+      "positive_interaction_id": "i:_afterSwap",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Chainsecurity-Angle Protocol/angle-core-46e6d32837cbe97a4af0adb693e63afa0d01fc3e::Governor",
+      "negative_interaction_id": "i:initialize",
+      "similarity": 1.0,
+      "positive_function": "_afterSwap",
+      "negative_function": "initialize",
+      "negative_protection": "state_update_before_external_call|require_assert_guard_before_call|callee_user_controlled|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00209::StakingManager",
+      "positive_interaction_id": "i:withdraw",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Chainsecurity-Angle Protocol/angle-core-46e6d32837cbe97a4af0adb693e63afa0d01fc3e::Governor",
+      "negative_interaction_id": "i:initialize",
+      "similarity": 1.0,
+      "positive_function": "withdraw",
+      "negative_function": "initialize",
+      "negative_protection": "state_update_before_external_call|require_assert_guard_before_call|callee_user_controlled|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00209::StakingManager",
+      "positive_interaction_id": "i:withdraw",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Chainsecurity-Angle Protocol/angle-core-46e6d32837cbe97a4af0adb693e63afa0d01fc3e::StakingRewards",
+      "negative_interaction_id": "i:withdraw",
+      "similarity": 5.0,
+      "positive_function": "withdraw",
+      "negative_function": "withdraw",
+      "negative_protection": "state_update_before_external_call|require_assert_guard_before_call|nonreentrant_modifier|callee_user_controlled|safe_erc20_wrapper|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "DAPP::DAppSCAN-source/contracts/consensys-Gamma/hypervisor-41fd4abf79864478523e87924d4e80d80df04879::Hypervisor",
+      "positive_interaction_id": "i:withdraw",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Chainsecurity-Angle Protocol/angle-core-46e6d32837cbe97a4af0adb693e63afa0d01fc3e::StakingRewards",
+      "negative_interaction_id": "i:withdraw",
+      "similarity": 5.0,
+      "positive_function": "withdraw",
+      "negative_function": "withdraw",
+      "negative_protection": "state_update_before_external_call|require_assert_guard_before_call|nonreentrant_modifier|callee_user_controlled|safe_erc20_wrapper|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "DAPP::DAppSCAN-source/contracts/PeckShield-SushiSwap/sushiswap-180bc9b642bba79c1ee4a63f71a3a0d36e64aa63::MasterChef",
+      "positive_interaction_id": "i:withdraw",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Chainsecurity-Angle Protocol/angle-core-46e6d32837cbe97a4af0adb693e63afa0d01fc3e::StakingRewards",
+      "negative_interaction_id": "i:withdraw",
+      "similarity": 5.0,
+      "positive_function": "withdraw",
+      "negative_function": "withdraw",
+      "negative_protection": "state_update_before_external_call|require_assert_guard_before_call|nonreentrant_modifier|callee_user_controlled|safe_erc20_wrapper|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00209::StakingManager",
+      "positive_interaction_id": "i:stake",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/PeckShield-DSG/core-6f607f77698936e132e4e9b5cb4d75580636d919::NFTMarket",
+      "negative_interaction_id": "i:startSales",
+      "similarity": 3.0,
+      "positive_function": "stake",
+      "negative_function": "startSales",
+      "negative_protection": "require_assert_guard_before_call|nonreentrant_modifier|trusted_or_fixed_callee|safe_erc20_wrapper|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00189::Box",
+      "positive_interaction_id": "i:flash",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/PeckShield-DSG/core-6f607f77698936e132e4e9b5cb4d75580636d919::NFTMarket",
+      "negative_interaction_id": "i:startSales",
+      "similarity": 3.0,
+      "positive_function": "flash",
+      "negative_function": "startSales",
+      "negative_protection": "require_assert_guard_before_call|nonreentrant_modifier|trusted_or_fixed_callee|safe_erc20_wrapper|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00102::StopLimit",
+      "positive_interaction_id": "i:modifyOrder",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/PeckShield-DSG/core-6f607f77698936e132e4e9b5cb4d75580636d919::NFTMarket",
+      "negative_interaction_id": "i:startSales",
+      "similarity": 3.0,
+      "positive_function": "modifyOrder",
+      "negative_function": "startSales",
+      "negative_protection": "require_assert_guard_before_call|nonreentrant_modifier|trusted_or_fixed_callee|safe_erc20_wrapper|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00209::StakingManager",
+      "positive_interaction_id": "i:withdraw",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/PeckShield-Hegic(v8888)/Hegic-v8888-2dcd44dc1ae07881e94d52fa618f9704bfd4ffda::HegicPUT",
+      "negative_interaction_id": "i:sellOption",
+      "similarity": 4.0,
+      "positive_function": "withdraw",
+      "negative_function": "sellOption",
+      "negative_protection": "state_update_before_external_call|require_assert_guard_before_call|callee_user_controlled|safe_erc20_wrapper|contract_many_risky_interactions|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00209::StakingManager",
+      "positive_interaction_id": "i:stake",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/PeckShield-Hegic(v8888)/Hegic-v8888-2dcd44dc1ae07881e94d52fa618f9704bfd4ffda::HegicPUT",
+      "negative_interaction_id": "i:sellOption",
+      "similarity": 4.0,
+      "positive_function": "stake",
+      "negative_function": "sellOption",
+      "negative_protection": "state_update_before_external_call|require_assert_guard_before_call|callee_user_controlled|safe_erc20_wrapper|contract_many_risky_interactions|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00189::Box",
+      "positive_interaction_id": "i:flash",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/PeckShield-Hegic(v8888)/Hegic-v8888-2dcd44dc1ae07881e94d52fa618f9704bfd4ffda::HegicPUT",
+      "negative_interaction_id": "i:sellOption",
+      "similarity": 4.0,
+      "positive_function": "flash",
+      "negative_function": "sellOption",
+      "negative_protection": "state_update_before_external_call|require_assert_guard_before_call|callee_user_controlled|safe_erc20_wrapper|contract_many_risky_interactions|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00209::StakingManager",
+      "positive_interaction_id": "i:withdraw",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/PeckShield-Hegic(v8888)/Hegic-v8888-2dcd44dc1ae07881e94d52fa618f9704bfd4ffda::HegicCALL",
+      "negative_interaction_id": "i:sellOption",
+      "similarity": 4.0,
+      "positive_function": "withdraw",
+      "negative_function": "sellOption",
+      "negative_protection": "state_update_before_external_call|require_assert_guard_before_call|callee_user_controlled|safe_erc20_wrapper|contract_many_risky_interactions|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00209::StakingManager",
+      "positive_interaction_id": "i:stake",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/PeckShield-Hegic(v8888)/Hegic-v8888-2dcd44dc1ae07881e94d52fa618f9704bfd4ffda::HegicCALL",
+      "negative_interaction_id": "i:sellOption",
+      "similarity": 4.0,
+      "positive_function": "stake",
+      "negative_function": "sellOption",
+      "negative_protection": "state_update_before_external_call|require_assert_guard_before_call|callee_user_controlled|safe_erc20_wrapper|contract_many_risky_interactions|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00189::Box",
+      "positive_interaction_id": "i:flash",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/PeckShield-Hegic(v8888)/Hegic-v8888-2dcd44dc1ae07881e94d52fa618f9704bfd4ffda::HegicCALL",
+      "negative_interaction_id": "i:sellOption",
+      "similarity": 4.0,
+      "positive_function": "flash",
+      "negative_function": "sellOption",
+      "negative_protection": "state_update_before_external_call|require_assert_guard_before_call|callee_user_controlled|safe_erc20_wrapper|contract_many_risky_interactions|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00209::StakingManager",
+      "positive_interaction_id": "i:stake",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/PeckShield-Hegic(v8888)/Hegic-v8888-2dcd44dc1ae07881e94d52fa618f9704bfd4ffda::HegicStaking",
+      "negative_interaction_id": "i:buyMicroLot",
+      "similarity": 3.0,
+      "positive_function": "stake",
+      "negative_function": "buyMicroLot",
+      "negative_protection": "state_update_before_external_call|require_assert_guard_before_call|trusted_or_fixed_callee|safe_erc20_wrapper|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00189::Box",
+      "positive_interaction_id": "i:flash",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/PeckShield-Hegic(v8888)/Hegic-v8888-2dcd44dc1ae07881e94d52fa618f9704bfd4ffda::HegicStaking",
+      "negative_interaction_id": "i:buyMicroLot",
+      "similarity": 3.0,
+      "positive_function": "flash",
+      "negative_function": "buyMicroLot",
+      "negative_protection": "state_update_before_external_call|require_assert_guard_before_call|trusted_or_fixed_callee|safe_erc20_wrapper|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00102::StopLimit",
+      "positive_interaction_id": "i:modifyOrder",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/PeckShield-Hegic(v8888)/Hegic-v8888-2dcd44dc1ae07881e94d52fa618f9704bfd4ffda::HegicStaking",
+      "negative_interaction_id": "i:buyMicroLot",
+      "similarity": 3.0,
+      "positive_function": "modifyOrder",
+      "negative_function": "buyMicroLot",
+      "negative_protection": "state_update_before_external_call|require_assert_guard_before_call|trusted_or_fixed_callee|safe_erc20_wrapper|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00209::StakingManager",
+      "positive_interaction_id": "i:stake",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/PeckShield-PikaPerpV2/PikaPerpV2-4a0965ff90ed099b7e2d3e8dda47cd589ee8e3a2::PikaStaking",
+      "negative_interaction_id": "i:stake",
+      "similarity": 4.0,
+      "positive_function": "stake",
+      "negative_function": "stake",
+      "negative_protection": "state_update_before_external_call|require_assert_guard_before_call|nonreentrant_modifier|trusted_or_fixed_callee|safe_erc20_wrapper|contract_modifier_access_summary"
+    },
+    {
+      "positive_graph_id": "DAPP::DAppSCAN-source/contracts/Coinbae-Hakka_Finance_wHakka/code::wHakka",
+      "positive_interaction_id": "i:stake",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/PeckShield-PikaPerpV2/PikaPerpV2-4a0965ff90ed099b7e2d3e8dda47cd589ee8e3a2::PikaStaking",
+      "negative_interaction_id": "i:stake",
+      "similarity": 4.0,
+      "positive_function": "stake",
+      "negative_function": "stake",
+      "negative_protection": "state_update_before_external_call|require_assert_guard_before_call|nonreentrant_modifier|trusted_or_fixed_callee|safe_erc20_wrapper|contract_modifier_access_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00189::Box",
+      "positive_interaction_id": "i:flash",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/PeckShield-PikaPerpV2/PikaPerpV2-4a0965ff90ed099b7e2d3e8dda47cd589ee8e3a2::PikaStaking",
+      "negative_interaction_id": "i:stake",
+      "similarity": 3.0,
+      "positive_function": "flash",
+      "negative_function": "stake",
+      "negative_protection": "state_update_before_external_call|require_assert_guard_before_call|nonreentrant_modifier|trusted_or_fixed_callee|safe_erc20_wrapper|contract_modifier_access_summary"
+    },
+    {
+      "positive_graph_id": "DAPP::DAppSCAN-source/contracts/openzeppelin-Endaoment/endaoment-contracts-f60aa253d3d869ad6460877f23e6092acb313add::Fund",
+      "positive_interaction_id": "i:finalizeGrant",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/PeckShield-Buffer/code::BufferBNBPool",
+      "negative_interaction_id": "i:send",
+      "similarity": 3.0,
+      "positive_function": "finalizeGrant",
+      "negative_function": "send",
+      "negative_protection": "state_update_before_external_call|require_assert_guard_before_call|only_owner_or_access_control|callee_user_controlled|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "DAPP::DAppSCAN-source/contracts/SlowMist-CFFv2 Smart Contract Security Audit Report/cff-contract-v2-c86bef3f13c7585f547f9cd0ca900f94664e96b7::CFVaultV2",
+      "positive_interaction_id": "i:withdraw",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/PeckShield-Buffer/code::BufferBNBPool",
+      "negative_interaction_id": "i:send",
+      "similarity": 3.0,
+      "positive_function": "withdraw",
+      "negative_function": "send",
+      "negative_protection": "state_update_before_external_call|require_assert_guard_before_call|only_owner_or_access_control|callee_user_controlled|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "DAPP::DAppSCAN-source/contracts/QuillAudits-Yearn Finance-Yearn Protocol V1/yearn-protocol-9ff0dc0ea73642c529383d0675930a41bf033295::yWETH",
+      "positive_interaction_id": "i:withdrawETH",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/PeckShield-Buffer/code::BufferBNBPool",
+      "negative_interaction_id": "i:send",
+      "similarity": 3.0,
+      "positive_function": "withdrawETH",
+      "negative_function": "send",
+      "negative_protection": "state_update_before_external_call|require_assert_guard_before_call|only_owner_or_access_control|callee_user_controlled|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00209::StakingManager",
+      "positive_interaction_id": "i:withdraw",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Chainsecurity-Angle Protocol  Borrowing Module/angle-borrow-0363b6a137a44e22ee06b3187ba74f7798c1af08::Settlement",
+      "negative_interaction_id": "i:recoverERC20",
+      "similarity": 3.0,
+      "positive_function": "withdraw",
+      "negative_function": "recoverERC20",
+      "negative_protection": "state_update_before_external_call|require_assert_guard_before_call|only_owner_or_access_control|trusted_or_fixed_callee|safe_erc20_wrapper|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00189::Box",
+      "positive_interaction_id": "i:flash",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Chainsecurity-Angle Protocol  Borrowing Module/angle-borrow-0363b6a137a44e22ee06b3187ba74f7798c1af08::Settlement",
+      "negative_interaction_id": "i:recoverERC20",
+      "similarity": 3.0,
+      "positive_function": "flash",
+      "negative_function": "recoverERC20",
+      "negative_protection": "state_update_before_external_call|require_assert_guard_before_call|only_owner_or_access_control|trusted_or_fixed_callee|safe_erc20_wrapper|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00175::P2pYieldProxy",
+      "positive_interaction_id": "i:_withdraw",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Chainsecurity-Angle Protocol  Borrowing Module/angle-borrow-0363b6a137a44e22ee06b3187ba74f7798c1af08::Settlement",
+      "negative_interaction_id": "i:recoverERC20",
+      "similarity": 3.0,
+      "positive_function": "_withdraw",
+      "negative_function": "recoverERC20",
+      "negative_protection": "state_update_before_external_call|require_assert_guard_before_call|only_owner_or_access_control|trusted_or_fixed_callee|safe_erc20_wrapper|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "DAPP::DAppSCAN-source/contracts/SlowMist-CFFv2 Smart Contract Security Audit Report/cff-contract-v2-c86bef3f13c7585f547f9cd0ca900f94664e96b7::CFVaultV2",
+      "positive_interaction_id": "i:withdraw",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Trail_of_Bits-FraxFinance/frax-solidity-3f0993a70e3496fd27887db7754d68709c84015e::veFXS_Solidity",
+      "negative_interaction_id": "i:withdraw",
+      "similarity": 3.0,
+      "positive_function": "withdraw",
+      "negative_function": "withdraw",
+      "negative_protection": "state_update_before_external_call|require_assert_guard_before_call|nonreentrant_modifier|trusted_or_fixed_callee|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "DAPP::DAppSCAN-source/contracts/QuillAudits-Yearn Finance-Yearn Protocol V1/yearn-protocol-9ff0dc0ea73642c529383d0675930a41bf033295::yWETH",
+      "positive_interaction_id": "i:withdrawETH",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Trail_of_Bits-FraxFinance/frax-solidity-3f0993a70e3496fd27887db7754d68709c84015e::veFXS_Solidity",
+      "negative_interaction_id": "i:withdraw",
+      "similarity": 3.0,
+      "positive_function": "withdrawETH",
+      "negative_function": "withdraw",
+      "negative_protection": "state_update_before_external_call|require_assert_guard_before_call|nonreentrant_modifier|trusted_or_fixed_callee|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "DAPP::DAppSCAN-source/contracts/BlockSec-blocksec_multichain_vemult_v1.0_signed/veMULTI-bac804399d1ea280e5bd8cdc9488b6fa6a0a7fcc::ve",
+      "positive_interaction_id": "i:withdraw",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Trail_of_Bits-FraxFinance/frax-solidity-3f0993a70e3496fd27887db7754d68709c84015e::veFXS_Solidity",
+      "negative_interaction_id": "i:withdraw",
+      "similarity": 3.0,
+      "positive_function": "withdraw",
+      "negative_function": "withdraw",
+      "negative_protection": "state_update_before_external_call|require_assert_guard_before_call|nonreentrant_modifier|trusted_or_fixed_callee|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00209::StakingManager",
+      "positive_interaction_id": "i:stake",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Trail_of_Bits-FraxFinance/frax-solidity-3f0993a70e3496fd27887db7754d68709c84015e::MigratableFarmBSC",
+      "negative_interaction_id": "i:_stake",
+      "similarity": 4.0,
+      "positive_function": "stake",
+      "negative_function": "_stake",
+      "negative_protection": "state_update_before_external_call|state_update_after_external_call|require_assert_guard_before_call|nonreentrant_modifier|safe_erc20_wrapper|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00007::Folio",
+      "positive_interaction_id": "i:mint",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Trail_of_Bits-FraxFinance/frax-solidity-3f0993a70e3496fd27887db7754d68709c84015e::MigratableFarmBSC",
+      "negative_interaction_id": "i:_stake",
+      "similarity": 4.0,
+      "positive_function": "mint",
+      "negative_function": "_stake",
+      "negative_protection": "state_update_before_external_call|state_update_after_external_call|require_assert_guard_before_call|nonreentrant_modifier|safe_erc20_wrapper|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "DAPP::DAppSCAN-source/contracts/PeckShield-StackerVC/StackerVC_VentureFund001-3cfb98b21f4731dfd62993feb7c7d1540837f59b::LPGauge",
+      "positive_interaction_id": "i:deposit",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Trail_of_Bits-FraxFinance/frax-solidity-3f0993a70e3496fd27887db7754d68709c84015e::MigratableFarmBSC",
+      "negative_interaction_id": "i:_stake",
+      "similarity": 4.0,
+      "positive_function": "deposit",
+      "negative_function": "_stake",
+      "negative_protection": "state_update_before_external_call|state_update_after_external_call|require_assert_guard_before_call|nonreentrant_modifier|safe_erc20_wrapper|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00209::StakingManager",
+      "positive_interaction_id": "i:stake",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Trail_of_Bits-FraxFinance/frax-solidity-3f0993a70e3496fd27887db7754d68709c84015e::MigratableFarmBSC_FRAX_FXS",
+      "negative_interaction_id": "i:_stake",
+      "similarity": 4.0,
+      "positive_function": "stake",
+      "negative_function": "_stake",
+      "negative_protection": "state_update_before_external_call|state_update_after_external_call|require_assert_guard_before_call|nonreentrant_modifier|safe_erc20_wrapper|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00007::Folio",
+      "positive_interaction_id": "i:mint",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Trail_of_Bits-FraxFinance/frax-solidity-3f0993a70e3496fd27887db7754d68709c84015e::MigratableFarmBSC_FRAX_FXS",
+      "negative_interaction_id": "i:_stake",
+      "similarity": 4.0,
+      "positive_function": "mint",
+      "negative_function": "_stake",
+      "negative_protection": "state_update_before_external_call|state_update_after_external_call|require_assert_guard_before_call|nonreentrant_modifier|safe_erc20_wrapper|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "DAPP::DAppSCAN-source/contracts/PeckShield-StackerVC/StackerVC_VentureFund001-3cfb98b21f4731dfd62993feb7c7d1540837f59b::LPGauge",
+      "positive_interaction_id": "i:deposit",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Trail_of_Bits-FraxFinance/frax-solidity-3f0993a70e3496fd27887db7754d68709c84015e::MigratableFarmBSC_FRAX_FXS",
+      "negative_interaction_id": "i:_stake",
+      "similarity": 4.0,
+      "positive_function": "deposit",
+      "negative_function": "_stake",
+      "negative_protection": "state_update_before_external_call|state_update_after_external_call|require_assert_guard_before_call|nonreentrant_modifier|safe_erc20_wrapper|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "DAPP::DAppSCAN-source/contracts/openzeppelin-Endaoment/endaoment-contracts-f60aa253d3d869ad6460877f23e6092acb313add::Fund",
+      "positive_interaction_id": "i:finalizeGrant",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Trail_of_Bits-FraxFinance/frax-solidity-3f0993a70e3496fd27887db7754d68709c84015e::FraxPoolvAMM",
+      "negative_interaction_id": "i:collectRedemption",
+      "similarity": 3.0,
+      "positive_function": "finalizeGrant",
+      "negative_function": "collectRedemption",
+      "negative_protection": "state_update_before_external_call|require_assert_guard_before_call|callee_user_controlled|trusted_or_fixed_callee|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "DAPP::DAppSCAN-source/contracts/SlowMist-CFFv2 Smart Contract Security Audit Report/cff-contract-v2-c86bef3f13c7585f547f9cd0ca900f94664e96b7::CFVaultV2",
+      "positive_interaction_id": "i:withdraw",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Trail_of_Bits-FraxFinance/frax-solidity-3f0993a70e3496fd27887db7754d68709c84015e::FraxPoolvAMM",
+      "negative_interaction_id": "i:collectRedemption",
+      "similarity": 3.0,
+      "positive_function": "withdraw",
+      "negative_function": "collectRedemption",
+      "negative_protection": "state_update_before_external_call|require_assert_guard_before_call|callee_user_controlled|trusted_or_fixed_callee|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "DAPP::DAppSCAN-source/contracts/QuillAudits-Yearn Finance-Yearn Protocol V1/yearn-protocol-9ff0dc0ea73642c529383d0675930a41bf033295::yWETH",
+      "positive_interaction_id": "i:withdrawETH",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Trail_of_Bits-FraxFinance/frax-solidity-3f0993a70e3496fd27887db7754d68709c84015e::FraxPoolvAMM",
+      "negative_interaction_id": "i:collectRedemption",
+      "similarity": 3.0,
+      "positive_function": "withdrawETH",
+      "negative_function": "collectRedemption",
+      "negative_protection": "state_update_before_external_call|require_assert_guard_before_call|callee_user_controlled|trusted_or_fixed_callee|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "DAPP::DAppSCAN-source/contracts/openzeppelin-Endaoment/endaoment-contracts-f60aa253d3d869ad6460877f23e6092acb313add::Fund",
+      "positive_interaction_id": "i:finalizeGrant",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Trail_of_Bits-FraxFinance/frax-solidity-3f0993a70e3496fd27887db7754d68709c84015e::PoolvAMM_USDC",
+      "negative_interaction_id": "i:collectRedemption",
+      "similarity": 3.0,
+      "positive_function": "finalizeGrant",
+      "negative_function": "collectRedemption",
+      "negative_protection": "state_update_before_external_call|require_assert_guard_before_call|callee_user_controlled|trusted_or_fixed_callee|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "DAPP::DAppSCAN-source/contracts/SlowMist-CFFv2 Smart Contract Security Audit Report/cff-contract-v2-c86bef3f13c7585f547f9cd0ca900f94664e96b7::CFVaultV2",
+      "positive_interaction_id": "i:withdraw",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Trail_of_Bits-FraxFinance/frax-solidity-3f0993a70e3496fd27887db7754d68709c84015e::PoolvAMM_USDC",
+      "negative_interaction_id": "i:collectRedemption",
+      "similarity": 3.0,
+      "positive_function": "withdraw",
+      "negative_function": "collectRedemption",
+      "negative_protection": "state_update_before_external_call|require_assert_guard_before_call|callee_user_controlled|trusted_or_fixed_callee|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "DAPP::DAppSCAN-source/contracts/QuillAudits-Yearn Finance-Yearn Protocol V1/yearn-protocol-9ff0dc0ea73642c529383d0675930a41bf033295::yWETH",
+      "positive_interaction_id": "i:withdrawETH",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Trail_of_Bits-FraxFinance/frax-solidity-3f0993a70e3496fd27887db7754d68709c84015e::PoolvAMM_USDC",
+      "negative_interaction_id": "i:collectRedemption",
+      "similarity": 3.0,
+      "positive_function": "withdrawETH",
+      "negative_function": "collectRedemption",
+      "negative_protection": "state_update_before_external_call|require_assert_guard_before_call|callee_user_controlled|trusted_or_fixed_callee|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00209::StakingManager",
+      "positive_interaction_id": "i:withdraw",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Inspex-SpookySwap Integration & Fantom Expansion/bsc-alpaca-contract-4553a34a6dcfcfbf7aebc693bb5c5c6074c73129::GrazingRange",
+      "negative_interaction_id": "i:emergencyRewardWithdraw",
+      "similarity": 5.0,
+      "positive_function": "withdraw",
+      "negative_function": "emergencyRewardWithdraw",
+      "negative_protection": "require_assert_guard_before_call|nonreentrant_modifier|only_owner_or_access_control|callee_user_controlled|safe_erc20_wrapper|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "DAPP::DAppSCAN-source/contracts/consensys-Gamma/hypervisor-41fd4abf79864478523e87924d4e80d80df04879::Hypervisor",
+      "positive_interaction_id": "i:withdraw",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Inspex-SpookySwap Integration & Fantom Expansion/bsc-alpaca-contract-4553a34a6dcfcfbf7aebc693bb5c5c6074c73129::GrazingRange",
+      "negative_interaction_id": "i:emergencyRewardWithdraw",
+      "similarity": 5.0,
+      "positive_function": "withdraw",
+      "negative_function": "emergencyRewardWithdraw",
+      "negative_protection": "require_assert_guard_before_call|nonreentrant_modifier|only_owner_or_access_control|callee_user_controlled|safe_erc20_wrapper|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "DAPP::DAppSCAN-source/contracts/PeckShield-SushiSwap/sushiswap-180bc9b642bba79c1ee4a63f71a3a0d36e64aa63::MasterChef",
+      "positive_interaction_id": "i:withdraw",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Inspex-SpookySwap Integration & Fantom Expansion/bsc-alpaca-contract-4553a34a6dcfcfbf7aebc693bb5c5c6074c73129::GrazingRange",
+      "negative_interaction_id": "i:emergencyRewardWithdraw",
+      "similarity": 5.0,
+      "positive_function": "withdraw",
+      "negative_function": "emergencyRewardWithdraw",
+      "negative_protection": "require_assert_guard_before_call|nonreentrant_modifier|only_owner_or_access_control|callee_user_controlled|safe_erc20_wrapper|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "DAPP::DAppSCAN-source/contracts/consensys-Aave_Protocol_V2/aave-protocol-v2-f756f44a8d6a328cd545335e46e7128939db88c4::LendingPool",
+      "positive_interaction_id": "i:deposit",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Inspex-SpookySwap Integration & Fantom Expansion/bsc-alpaca-contract-4553a34a6dcfcfbf7aebc693bb5c5c6074c73129::FairLaunch",
+      "negative_interaction_id": "i:deposit",
+      "similarity": 5.0,
+      "positive_function": "deposit",
+      "negative_function": "deposit",
+      "negative_protection": "require_assert_guard_before_call|nonreentrant_modifier|callee_user_controlled|trusted_or_fixed_callee|safe_erc20_wrapper|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "DAPP::DAppSCAN-source/contracts/QuillAudits-1inch-Fixed Rate Swap/fixed-rate-swap-0b5a75e9f56e7d21c290dd28c59dc140dcbcc1d5::FixedRateSwap",
+      "positive_interaction_id": "i:depositFor",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Inspex-SpookySwap Integration & Fantom Expansion/bsc-alpaca-contract-4553a34a6dcfcfbf7aebc693bb5c5c6074c73129::FairLaunch",
+      "negative_interaction_id": "i:deposit",
+      "similarity": 5.0,
+      "positive_function": "depositFor",
+      "negative_function": "deposit",
+      "negative_protection": "require_assert_guard_before_call|nonreentrant_modifier|callee_user_controlled|trusted_or_fixed_callee|safe_erc20_wrapper|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "DAPP::DAppSCAN-source/contracts/PeckShield-KaoyaSwap/contracts-8273073f1d6914f372790399378f177573c52e37::MasterChef",
+      "positive_interaction_id": "i:deposit",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Inspex-SpookySwap Integration & Fantom Expansion/bsc-alpaca-contract-4553a34a6dcfcfbf7aebc693bb5c5c6074c73129::FairLaunch",
+      "negative_interaction_id": "i:deposit",
+      "similarity": 5.0,
+      "positive_function": "deposit",
+      "negative_function": "deposit",
+      "negative_protection": "require_assert_guard_before_call|nonreentrant_modifier|callee_user_controlled|trusted_or_fixed_callee|safe_erc20_wrapper|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00209::StakingManager",
+      "positive_interaction_id": "i:withdraw",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Inspex-SpookySwap Integration & Fantom Expansion/bsc-alpaca-contract-4553a34a6dcfcfbf7aebc693bb5c5c6074c73129::Vault2",
+      "negative_interaction_id": "i:work",
+      "similarity": 4.0,
+      "positive_function": "withdraw",
+      "negative_function": "work",
+      "negative_protection": "state_update_before_external_call|state_update_after_external_call|require_assert_guard_before_call|nonreentrant_modifier|only_owner_or_access_control|callee_user_controlled|safe_erc20_wrapper|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00189::Box",
+      "positive_interaction_id": "i:flash",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Inspex-SpookySwap Integration & Fantom Expansion/bsc-alpaca-contract-4553a34a6dcfcfbf7aebc693bb5c5c6074c73129::Vault2",
+      "negative_interaction_id": "i:work",
+      "similarity": 4.0,
+      "positive_function": "flash",
+      "negative_function": "work",
+      "negative_protection": "state_update_before_external_call|state_update_after_external_call|require_assert_guard_before_call|nonreentrant_modifier|only_owner_or_access_control|callee_user_controlled|safe_erc20_wrapper|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00102::StopLimit",
+      "positive_interaction_id": "i:modifyOrder",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Inspex-SpookySwap Integration & Fantom Expansion/bsc-alpaca-contract-4553a34a6dcfcfbf7aebc693bb5c5c6074c73129::Vault2",
+      "negative_interaction_id": "i:work",
+      "similarity": 4.0,
+      "positive_function": "modifyOrder",
+      "negative_function": "work",
+      "negative_protection": "state_update_before_external_call|state_update_after_external_call|require_assert_guard_before_call|nonreentrant_modifier|only_owner_or_access_control|callee_user_controlled|safe_erc20_wrapper|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00209::StakingManager",
+      "positive_interaction_id": "i:withdraw",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Inspex-SpookySwap Integration & Fantom Expansion/bsc-alpaca-contract-4553a34a6dcfcfbf7aebc693bb5c5c6074c73129::Vault",
+      "negative_interaction_id": "i:work",
+      "similarity": 4.0,
+      "positive_function": "withdraw",
+      "negative_function": "work",
+      "negative_protection": "state_update_before_external_call|state_update_after_external_call|require_assert_guard_before_call|nonreentrant_modifier|only_owner_or_access_control|callee_user_controlled|safe_erc20_wrapper|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00189::Box",
+      "positive_interaction_id": "i:flash",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Inspex-SpookySwap Integration & Fantom Expansion/bsc-alpaca-contract-4553a34a6dcfcfbf7aebc693bb5c5c6074c73129::Vault",
+      "negative_interaction_id": "i:work",
+      "similarity": 4.0,
+      "positive_function": "flash",
+      "negative_function": "work",
+      "negative_protection": "state_update_before_external_call|state_update_after_external_call|require_assert_guard_before_call|nonreentrant_modifier|only_owner_or_access_control|callee_user_controlled|safe_erc20_wrapper|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00102::StopLimit",
+      "positive_interaction_id": "i:modifyOrder",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Inspex-SpookySwap Integration & Fantom Expansion/bsc-alpaca-contract-4553a34a6dcfcfbf7aebc693bb5c5c6074c73129::Vault",
+      "negative_interaction_id": "i:work",
+      "similarity": 4.0,
+      "positive_function": "modifyOrder",
+      "negative_function": "work",
+      "negative_protection": "state_update_before_external_call|state_update_after_external_call|require_assert_guard_before_call|nonreentrant_modifier|only_owner_or_access_control|callee_user_controlled|safe_erc20_wrapper|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00209::StakingManager",
+      "positive_interaction_id": "i:withdraw",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Inspex-SpookySwap Integration & Fantom Expansion/bsc-alpaca-contract-4553a34a6dcfcfbf7aebc693bb5c5c6074c73129::WaultSwapWorker02",
+      "negative_interaction_id": "i:work",
+      "similarity": 4.0,
+      "positive_function": "withdraw",
+      "negative_function": "work",
+      "negative_protection": "require_assert_guard_before_call|nonreentrant_modifier|only_owner_or_access_control|callee_user_controlled|safe_erc20_wrapper|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00189::Box",
+      "positive_interaction_id": "i:flash",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Inspex-SpookySwap Integration & Fantom Expansion/bsc-alpaca-contract-4553a34a6dcfcfbf7aebc693bb5c5c6074c73129::WaultSwapWorker02",
+      "negative_interaction_id": "i:work",
+      "similarity": 4.0,
+      "positive_function": "flash",
+      "negative_function": "work",
+      "negative_protection": "require_assert_guard_before_call|nonreentrant_modifier|only_owner_or_access_control|callee_user_controlled|safe_erc20_wrapper|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00102::StopLimit",
+      "positive_interaction_id": "i:modifyOrder",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Inspex-SpookySwap Integration & Fantom Expansion/bsc-alpaca-contract-4553a34a6dcfcfbf7aebc693bb5c5c6074c73129::WaultSwapWorker02",
+      "negative_interaction_id": "i:work",
+      "similarity": 4.0,
+      "positive_function": "modifyOrder",
+      "negative_function": "work",
+      "negative_protection": "require_assert_guard_before_call|nonreentrant_modifier|only_owner_or_access_control|callee_user_controlled|safe_erc20_wrapper|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00209::StakingManager",
+      "positive_interaction_id": "i:withdraw",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Inspex-SpookySwap Integration & Fantom Expansion/bsc-alpaca-contract-4553a34a6dcfcfbf7aebc693bb5c5c6074c73129::WaultSwapWorker",
+      "negative_interaction_id": "i:work",
+      "similarity": 4.0,
+      "positive_function": "withdraw",
+      "negative_function": "work",
+      "negative_protection": "require_assert_guard_before_call|nonreentrant_modifier|only_owner_or_access_control|callee_user_controlled|safe_erc20_wrapper|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00189::Box",
+      "positive_interaction_id": "i:flash",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Inspex-SpookySwap Integration & Fantom Expansion/bsc-alpaca-contract-4553a34a6dcfcfbf7aebc693bb5c5c6074c73129::WaultSwapWorker",
+      "negative_interaction_id": "i:work",
+      "similarity": 4.0,
+      "positive_function": "flash",
+      "negative_function": "work",
+      "negative_protection": "require_assert_guard_before_call|nonreentrant_modifier|only_owner_or_access_control|callee_user_controlled|safe_erc20_wrapper|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00102::StopLimit",
+      "positive_interaction_id": "i:modifyOrder",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Inspex-SpookySwap Integration & Fantom Expansion/bsc-alpaca-contract-4553a34a6dcfcfbf7aebc693bb5c5c6074c73129::WaultSwapWorker",
+      "negative_interaction_id": "i:work",
+      "similarity": 4.0,
+      "positive_function": "modifyOrder",
+      "negative_function": "work",
+      "negative_protection": "require_assert_guard_before_call|nonreentrant_modifier|only_owner_or_access_control|callee_user_controlled|safe_erc20_wrapper|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00209::StakingManager",
+      "positive_interaction_id": "i:withdraw",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Inspex-SpookySwap Integration & Fantom Expansion/bsc-alpaca-contract-4553a34a6dcfcfbf7aebc693bb5c5c6074c73129::PancakeswapV2Worker",
+      "negative_interaction_id": "i:work",
+      "similarity": 4.0,
+      "positive_function": "withdraw",
+      "negative_function": "work",
+      "negative_protection": "require_assert_guard_before_call|nonreentrant_modifier|only_owner_or_access_control|callee_user_controlled|safe_erc20_wrapper|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00189::Box",
+      "positive_interaction_id": "i:flash",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Inspex-SpookySwap Integration & Fantom Expansion/bsc-alpaca-contract-4553a34a6dcfcfbf7aebc693bb5c5c6074c73129::PancakeswapV2Worker",
+      "negative_interaction_id": "i:work",
+      "similarity": 4.0,
+      "positive_function": "flash",
+      "negative_function": "work",
+      "negative_protection": "require_assert_guard_before_call|nonreentrant_modifier|only_owner_or_access_control|callee_user_controlled|safe_erc20_wrapper|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00102::StopLimit",
+      "positive_interaction_id": "i:modifyOrder",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Inspex-SpookySwap Integration & Fantom Expansion/bsc-alpaca-contract-4553a34a6dcfcfbf7aebc693bb5c5c6074c73129::PancakeswapV2Worker",
+      "negative_interaction_id": "i:work",
+      "similarity": 4.0,
+      "positive_function": "modifyOrder",
+      "negative_function": "work",
+      "negative_protection": "require_assert_guard_before_call|nonreentrant_modifier|only_owner_or_access_control|callee_user_controlled|safe_erc20_wrapper|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00209::StakingManager",
+      "positive_interaction_id": "i:withdraw",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Inspex-SpookySwap Integration & Fantom Expansion/bsc-alpaca-contract-4553a34a6dcfcfbf7aebc693bb5c5c6074c73129::PancakeswapV2Worker02",
+      "negative_interaction_id": "i:work",
+      "similarity": 4.0,
+      "positive_function": "withdraw",
+      "negative_function": "work",
+      "negative_protection": "require_assert_guard_before_call|nonreentrant_modifier|only_owner_or_access_control|callee_user_controlled|safe_erc20_wrapper|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00189::Box",
+      "positive_interaction_id": "i:flash",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Inspex-SpookySwap Integration & Fantom Expansion/bsc-alpaca-contract-4553a34a6dcfcfbf7aebc693bb5c5c6074c73129::PancakeswapV2Worker02",
+      "negative_interaction_id": "i:work",
+      "similarity": 4.0,
+      "positive_function": "flash",
+      "negative_function": "work",
+      "negative_protection": "require_assert_guard_before_call|nonreentrant_modifier|only_owner_or_access_control|callee_user_controlled|safe_erc20_wrapper|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00102::StopLimit",
+      "positive_interaction_id": "i:modifyOrder",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Inspex-SpookySwap Integration & Fantom Expansion/bsc-alpaca-contract-4553a34a6dcfcfbf7aebc693bb5c5c6074c73129::PancakeswapV2Worker02",
+      "negative_interaction_id": "i:work",
+      "similarity": 4.0,
+      "positive_function": "modifyOrder",
+      "negative_function": "work",
+      "negative_protection": "require_assert_guard_before_call|nonreentrant_modifier|only_owner_or_access_control|callee_user_controlled|safe_erc20_wrapper|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00209::StakingManager",
+      "positive_interaction_id": "i:withdraw",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Inspex-SpookySwap Integration & Fantom Expansion/bsc-alpaca-contract-4553a34a6dcfcfbf7aebc693bb5c5c6074c73129::PancakeswapWorker",
+      "negative_interaction_id": "i:work",
+      "similarity": 4.0,
+      "positive_function": "withdraw",
+      "negative_function": "work",
+      "negative_protection": "require_assert_guard_before_call|nonreentrant_modifier|only_owner_or_access_control|callee_user_controlled|safe_erc20_wrapper|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00189::Box",
+      "positive_interaction_id": "i:flash",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Inspex-SpookySwap Integration & Fantom Expansion/bsc-alpaca-contract-4553a34a6dcfcfbf7aebc693bb5c5c6074c73129::PancakeswapWorker",
+      "negative_interaction_id": "i:work",
+      "similarity": 4.0,
+      "positive_function": "flash",
+      "negative_function": "work",
+      "negative_protection": "require_assert_guard_before_call|nonreentrant_modifier|only_owner_or_access_control|callee_user_controlled|safe_erc20_wrapper|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00102::StopLimit",
+      "positive_interaction_id": "i:modifyOrder",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Inspex-SpookySwap Integration & Fantom Expansion/bsc-alpaca-contract-4553a34a6dcfcfbf7aebc693bb5c5c6074c73129::PancakeswapWorker",
+      "negative_interaction_id": "i:work",
+      "similarity": 4.0,
+      "positive_function": "modifyOrder",
+      "negative_function": "work",
+      "negative_protection": "require_assert_guard_before_call|nonreentrant_modifier|only_owner_or_access_control|callee_user_controlled|safe_erc20_wrapper|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00209::StakingManager",
+      "positive_interaction_id": "i:withdraw",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Inspex-SpookySwap Integration & Fantom Expansion/bsc-alpaca-contract-4553a34a6dcfcfbf7aebc693bb5c5c6074c73129::PancakeswapV2WorkerMigrate",
+      "negative_interaction_id": "i:work",
+      "similarity": 4.0,
+      "positive_function": "withdraw",
+      "negative_function": "work",
+      "negative_protection": "require_assert_guard_before_call|nonreentrant_modifier|only_owner_or_access_control|callee_user_controlled|safe_erc20_wrapper|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00189::Box",
+      "positive_interaction_id": "i:flash",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Inspex-SpookySwap Integration & Fantom Expansion/bsc-alpaca-contract-4553a34a6dcfcfbf7aebc693bb5c5c6074c73129::PancakeswapV2WorkerMigrate",
+      "negative_interaction_id": "i:work",
+      "similarity": 4.0,
+      "positive_function": "flash",
+      "negative_function": "work",
+      "negative_protection": "require_assert_guard_before_call|nonreentrant_modifier|only_owner_or_access_control|callee_user_controlled|safe_erc20_wrapper|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00102::StopLimit",
+      "positive_interaction_id": "i:modifyOrder",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Inspex-SpookySwap Integration & Fantom Expansion/bsc-alpaca-contract-4553a34a6dcfcfbf7aebc693bb5c5c6074c73129::PancakeswapV2WorkerMigrate",
+      "negative_interaction_id": "i:work",
+      "similarity": 4.0,
+      "positive_function": "modifyOrder",
+      "negative_function": "work",
+      "negative_protection": "require_assert_guard_before_call|nonreentrant_modifier|only_owner_or_access_control|callee_user_controlled|safe_erc20_wrapper|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00209::StakingManager",
+      "positive_interaction_id": "i:withdraw",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Inspex-SpookySwap Integration & Fantom Expansion/bsc-alpaca-contract-4553a34a6dcfcfbf7aebc693bb5c5c6074c73129::StrategyPartialCloseLiquidate",
+      "negative_interaction_id": "i:execute",
+      "similarity": 4.0,
+      "positive_function": "withdraw",
+      "negative_function": "execute",
+      "negative_protection": "nonreentrant_modifier|callee_user_controlled|trusted_or_fixed_callee|safe_erc20_wrapper|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00189::Box",
+      "positive_interaction_id": "i:flash",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Inspex-SpookySwap Integration & Fantom Expansion/bsc-alpaca-contract-4553a34a6dcfcfbf7aebc693bb5c5c6074c73129::StrategyPartialCloseLiquidate",
+      "negative_interaction_id": "i:execute",
+      "similarity": 4.0,
+      "positive_function": "flash",
+      "negative_function": "execute",
+      "negative_protection": "nonreentrant_modifier|callee_user_controlled|trusted_or_fixed_callee|safe_erc20_wrapper|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00102::StopLimit",
+      "positive_interaction_id": "i:modifyOrder",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Inspex-SpookySwap Integration & Fantom Expansion/bsc-alpaca-contract-4553a34a6dcfcfbf7aebc693bb5c5c6074c73129::StrategyPartialCloseLiquidate",
+      "negative_interaction_id": "i:execute",
+      "similarity": 4.0,
+      "positive_function": "modifyOrder",
+      "negative_function": "execute",
+      "negative_protection": "nonreentrant_modifier|callee_user_controlled|trusted_or_fixed_callee|safe_erc20_wrapper|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "DAPP::DAppSCAN-source/contracts/consensys-Aave_Protocol_V2/aave-protocol-v2-f756f44a8d6a328cd545335e46e7128939db88c4::LendingPool",
+      "positive_interaction_id": "i:deposit",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Inspex-AutoCompound/auto-compound-v2-92626a1dcfc55a28afdf4f996d600fe8bbfd6efd::PronteraV2",
+      "negative_interaction_id": "i:depositToken",
+      "similarity": 5.0,
+      "positive_function": "deposit",
+      "negative_function": "depositToken",
+      "negative_protection": "require_assert_guard_before_call|nonreentrant_modifier|callee_user_controlled|safe_erc20_wrapper|contract_many_risky_interactions|contract_modifier_access_summary"
+    },
+    {
+      "positive_graph_id": "DAPP::DAppSCAN-source/contracts/QuillAudits-1inch-Fixed Rate Swap/fixed-rate-swap-0b5a75e9f56e7d21c290dd28c59dc140dcbcc1d5::FixedRateSwap",
+      "positive_interaction_id": "i:depositFor",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Inspex-AutoCompound/auto-compound-v2-92626a1dcfc55a28afdf4f996d600fe8bbfd6efd::PronteraV2",
+      "negative_interaction_id": "i:depositToken",
+      "similarity": 5.0,
+      "positive_function": "depositFor",
+      "negative_function": "depositToken",
+      "negative_protection": "require_assert_guard_before_call|nonreentrant_modifier|callee_user_controlled|safe_erc20_wrapper|contract_many_risky_interactions|contract_modifier_access_summary"
+    },
+    {
+      "positive_graph_id": "DAPP::DAppSCAN-source/contracts/PeckShield-CryptoHeroes/cryptoheroes-6cb0eaf8c88fdaab89d2b4c83535a189c7793001::CryptoHeroesUniverse",
+      "positive_interaction_id": "i:deposit",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Inspex-AutoCompound/auto-compound-v2-92626a1dcfc55a28afdf4f996d600fe8bbfd6efd::PronteraV2",
+      "negative_interaction_id": "i:depositToken",
+      "similarity": 5.0,
+      "positive_function": "deposit",
+      "negative_function": "depositToken",
+      "negative_protection": "require_assert_guard_before_call|nonreentrant_modifier|callee_user_controlled|safe_erc20_wrapper|contract_many_risky_interactions|contract_modifier_access_summary"
+    },
+    {
+      "positive_graph_id": "DAPP::DAppSCAN-source/contracts/consensys-Aave_Protocol_V2/aave-protocol-v2-f756f44a8d6a328cd545335e46e7128939db88c4::LendingPool",
+      "positive_interaction_id": "i:deposit",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Coinbae-Barnbridge_Vault/CommunityVault0xA3C299eEE1998F45c20010276684921EBE6423D9::Staking",
+      "negative_interaction_id": "i:deposit",
+      "similarity": 4.0,
+      "positive_function": "deposit",
+      "negative_function": "deposit",
+      "negative_protection": "require_assert_guard_before_call|nonreentrant_modifier|callee_user_controlled|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "DAPP::DAppSCAN-source/contracts/QuillAudits-Yearn Finance-Yearn Protocol V1/yearn-protocol-9ff0dc0ea73642c529383d0675930a41bf033295::yWETH",
+      "positive_interaction_id": "i:depositETH",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Coinbae-Barnbridge_Vault/CommunityVault0xA3C299eEE1998F45c20010276684921EBE6423D9::Staking",
+      "negative_interaction_id": "i:deposit",
+      "similarity": 4.0,
+      "positive_function": "depositETH",
+      "negative_function": "deposit",
+      "negative_protection": "require_assert_guard_before_call|nonreentrant_modifier|callee_user_controlled|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "DAPP::DAppSCAN-source/contracts/QuillAudits-Keep3r.Network-Keep3r.Network/StakingRewardsV3-13ecc6966ae1a413f62224382bfd4d64b1a22351::StakingRewardsV3",
+      "positive_interaction_id": "i:deposit",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Coinbae-Barnbridge_Vault/CommunityVault0xA3C299eEE1998F45c20010276684921EBE6423D9::Staking",
+      "negative_interaction_id": "i:deposit",
+      "similarity": 4.0,
+      "positive_function": "deposit",
+      "negative_function": "deposit",
+      "negative_protection": "require_assert_guard_before_call|nonreentrant_modifier|callee_user_controlled|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "DAPP::DAppSCAN-source/contracts/openzeppelin-Endaoment/endaoment-contracts-f60aa253d3d869ad6460877f23e6092acb313add::Fund",
+      "positive_interaction_id": "i:finalizeGrant",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/consensys-Fei_Protocol/fei-protocol-core-ff892c5d0b9697f249d713bbb2b3bd1da7980ed2::GenesisGroup",
+      "negative_interaction_id": "i:redeem",
+      "similarity": 2.0,
+      "positive_function": "finalizeGrant",
+      "negative_function": "redeem",
+      "negative_protection": "state_update_before_external_call|require_assert_guard_before_call|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "DAPP::DAppSCAN-source/contracts/consensys-PoolTogether_Pods/pods-v3-contracts-879dc8b911fc506dd6bead1f36eade919ccfea57::TokenDrop",
+      "positive_interaction_id": "i:claim",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/consensys-Fei_Protocol/fei-protocol-core-ff892c5d0b9697f249d713bbb2b3bd1da7980ed2::GenesisGroup",
+      "negative_interaction_id": "i:redeem",
+      "similarity": 2.0,
+      "positive_function": "claim",
+      "negative_function": "redeem",
+      "negative_protection": "state_update_before_external_call|require_assert_guard_before_call|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "DAPP::DAppSCAN-source/contracts/consensys-Gamma/hypervisor-41fd4abf79864478523e87924d4e80d80df04879::UniProxy",
+      "positive_interaction_id": "i:deposit",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/consensys-Fei_Protocol/fei-protocol-core-ff892c5d0b9697f249d713bbb2b3bd1da7980ed2::GenesisGroup",
+      "negative_interaction_id": "i:redeem",
+      "similarity": 2.0,
+      "positive_function": "deposit",
+      "negative_function": "redeem",
+      "negative_protection": "state_update_before_external_call|require_assert_guard_before_call|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "DAPP::DAppSCAN-source/contracts/consensys-Aave_Protocol_V2/aave-protocol-v2-f756f44a8d6a328cd545335e46e7128939db88c4::LendingPool",
+      "positive_interaction_id": "i:deposit",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Inspex-StakingPool, Vault, Strategy & VotingEscrow/scientix-contract-main::StakingPools",
+      "negative_interaction_id": "i:deposit",
+      "similarity": 2.0,
+      "positive_function": "deposit",
+      "negative_function": "deposit",
+      "negative_protection": "nonreentrant_modifier|callee_user_controlled|contract_many_risky_interactions|contract_modifier_access_summary"
+    },
+    {
+      "positive_graph_id": "DAPP::DAppSCAN-source/contracts/QuillAudits-Yearn Finance-Yearn Protocol V1/yearn-protocol-9ff0dc0ea73642c529383d0675930a41bf033295::yWETH",
+      "positive_interaction_id": "i:depositETH",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Inspex-StakingPool, Vault, Strategy & VotingEscrow/scientix-contract-main::StakingPools",
+      "negative_interaction_id": "i:deposit",
+      "similarity": 2.0,
+      "positive_function": "depositETH",
+      "negative_function": "deposit",
+      "negative_protection": "nonreentrant_modifier|callee_user_controlled|contract_many_risky_interactions|contract_modifier_access_summary"
+    },
+    {
+      "positive_graph_id": "DAPP::DAppSCAN-source/contracts/QuillAudits-Keep3r.Network-Keep3r.Network/StakingRewardsV3-13ecc6966ae1a413f62224382bfd4d64b1a22351::StakingRewardsV3",
+      "positive_interaction_id": "i:deposit",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Inspex-StakingPool, Vault, Strategy & VotingEscrow/scientix-contract-main::StakingPools",
+      "negative_interaction_id": "i:deposit",
+      "similarity": 2.0,
+      "positive_function": "deposit",
+      "negative_function": "deposit",
+      "negative_protection": "nonreentrant_modifier|callee_user_controlled|contract_many_risky_interactions|contract_modifier_access_summary"
+    },
+    {
+      "positive_graph_id": "DAPP::DAppSCAN-source/contracts/consensys-Aave_Protocol_V2/aave-protocol-v2-f756f44a8d6a328cd545335e46e7128939db88c4::LendingPool",
+      "positive_interaction_id": "i:deposit",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Inspex-StakingPool, Vault, Strategy & VotingEscrow/scientix-contract-main::Scientist",
+      "negative_interaction_id": "i:deposit",
+      "similarity": 5.0,
+      "positive_function": "deposit",
+      "negative_function": "deposit",
+      "negative_protection": "require_assert_guard_before_call|nonreentrant_modifier|callee_user_controlled|safe_erc20_wrapper|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "DAPP::DAppSCAN-source/contracts/QuillAudits-1inch-Fixed Rate Swap/fixed-rate-swap-0b5a75e9f56e7d21c290dd28c59dc140dcbcc1d5::FixedRateSwap",
+      "positive_interaction_id": "i:depositFor",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Inspex-StakingPool, Vault, Strategy & VotingEscrow/scientix-contract-main::Scientist",
+      "negative_interaction_id": "i:deposit",
+      "similarity": 5.0,
+      "positive_function": "depositFor",
+      "negative_function": "deposit",
+      "negative_protection": "require_assert_guard_before_call|nonreentrant_modifier|callee_user_controlled|safe_erc20_wrapper|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "DAPP::DAppSCAN-source/contracts/PeckShield-KaoyaSwap/contracts-8273073f1d6914f372790399378f177573c52e37::MasterChef",
+      "positive_interaction_id": "i:deposit",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Inspex-StakingPool, Vault, Strategy & VotingEscrow/scientix-contract-main::Scientist",
+      "negative_interaction_id": "i:deposit",
+      "similarity": 5.0,
+      "positive_function": "deposit",
+      "negative_function": "deposit",
+      "negative_protection": "require_assert_guard_before_call|nonreentrant_modifier|callee_user_controlled|safe_erc20_wrapper|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "DAPP::DAppSCAN-source/contracts/PeckShield-BNPL/BNPL-0ee587a081668dcab166a3a275b8a6c4794ead4d::BankingNode",
+      "positive_interaction_id": "i:unstake",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Inspex-StakingPool, Vault, Strategy & VotingEscrow/scientix-contract-main::TransmuterB",
+      "negative_interaction_id": "i:unstake",
+      "similarity": 5.0,
+      "positive_function": "unstake",
+      "negative_function": "unstake",
+      "negative_protection": "state_update_before_external_call|require_assert_guard_before_call|safe_erc20_wrapper|contract_many_risky_interactions"
+    },
+    {
+      "positive_graph_id": "DAPP::DAppSCAN-source/contracts/Coinbae-Hakka_Finance_wHakka/code::wHakka",
+      "positive_interaction_id": "i:unstake",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Inspex-StakingPool, Vault, Strategy & VotingEscrow/scientix-contract-main::TransmuterB",
+      "negative_interaction_id": "i:unstake",
+      "similarity": 5.0,
+      "positive_function": "unstake",
+      "negative_function": "unstake",
+      "negative_protection": "state_update_before_external_call|require_assert_guard_before_call|safe_erc20_wrapper|contract_many_risky_interactions"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00209::StakingManager",
+      "positive_interaction_id": "i:withdraw",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/Inspex-StakingPool, Vault, Strategy & VotingEscrow/scientix-contract-main::TransmuterB",
+      "negative_interaction_id": "i:unstake",
+      "similarity": 3.0,
+      "positive_function": "withdraw",
+      "negative_function": "unstake",
+      "negative_protection": "state_update_before_external_call|require_assert_guard_before_call|safe_erc20_wrapper|contract_many_risky_interactions"
+    },
+    {
+      "positive_graph_id": "DAPP::DAppSCAN-source/contracts/PeckShield-BNPL/BNPL-0ee587a081668dcab166a3a275b8a6c4794ead4d::BankingNode",
+      "positive_interaction_id": "i:unstake",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/consensys-Idle_Finance/idle-tranches-d94ee7194e8cb17db13b16c338f3e780b62f5435::IdleCDOTrancheRewards",
+      "negative_interaction_id": "i:unstake",
+      "similarity": 6.0,
+      "positive_function": "unstake",
+      "negative_function": "unstake",
+      "negative_protection": "state_update_after_external_call|require_assert_guard_before_call|nonreentrant_modifier|safe_erc20_wrapper|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "DAPP::DAppSCAN-source/contracts/Coinbae-Hakka_Finance_wHakka/code::wHakka",
+      "positive_interaction_id": "i:unstake",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/consensys-Idle_Finance/idle-tranches-d94ee7194e8cb17db13b16c338f3e780b62f5435::IdleCDOTrancheRewards",
+      "negative_interaction_id": "i:unstake",
+      "similarity": 5.0,
+      "positive_function": "unstake",
+      "negative_function": "unstake",
+      "negative_protection": "state_update_after_external_call|require_assert_guard_before_call|nonreentrant_modifier|safe_erc20_wrapper|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "DAPP::DAppSCAN-source/contracts/PeckShield-DSG/core-6f607f77698936e132e4e9b5cb4d75580636d919::SinglePool",
+      "positive_interaction_id": "i:emergencyWithdraw",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/consensys-Idle_Finance/idle-tranches-d94ee7194e8cb17db13b16c338f3e780b62f5435::IdleCDOTrancheRewards",
+      "negative_interaction_id": "i:unstake",
+      "similarity": 4.0,
+      "positive_function": "emergencyWithdraw",
+      "negative_function": "unstake",
+      "negative_protection": "state_update_after_external_call|require_assert_guard_before_call|nonreentrant_modifier|safe_erc20_wrapper|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "DAPP::DAppSCAN-source/contracts/Iosiro-SNX FlashBurn Smart Contract Audit/flashburn-3aa02a3d63d9e0110a5b6669a4a4011ceee3cf2b::SNXFlashLoanTool",
+      "positive_interaction_id": "i:swap",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/consensys-Idle_Finance/idle-tranches-d94ee7194e8cb17db13b16c338f3e780b62f5435::IdleStrategy",
+      "negative_interaction_id": "i:initialize",
+      "similarity": 4.0,
+      "positive_function": "swap",
+      "negative_function": "initialize",
+      "negative_protection": "state_update_before_external_call|nonreentrant_modifier|callee_user_controlled|safe_erc20_wrapper|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "DAPP::DAppSCAN-source/contracts/SlowMist-CFFv2 Smart Contract Security Audit Report/cff-contract-v2-c86bef3f13c7585f547f9cd0ca900f94664e96b7::CFVaultV2",
+      "positive_interaction_id": "i:withdraw",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/consensys-Idle_Finance/idle-tranches-d94ee7194e8cb17db13b16c338f3e780b62f5435::IdleStrategy",
+      "negative_interaction_id": "i:initialize",
+      "similarity": 3.0,
+      "positive_function": "withdraw",
+      "negative_function": "initialize",
+      "negative_protection": "state_update_before_external_call|nonreentrant_modifier|callee_user_controlled|safe_erc20_wrapper|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    },
+    {
+      "positive_graph_id": "FORGE::vfp_00209::StakingManager",
+      "positive_interaction_id": "i:withdraw",
+      "negative_graph_id": "DAPP::DAppSCAN-source/contracts/consensys-Idle_Finance/idle-tranches-d94ee7194e8cb17db13b16c338f3e780b62f5435::IdleStrategy",
+      "negative_interaction_id": "i:initialize",
+      "similarity": 2.0,
+      "positive_function": "withdraw",
+      "negative_function": "initialize",
+      "negative_protection": "state_update_before_external_call|nonreentrant_modifier|callee_user_controlled|safe_erc20_wrapper|contract_many_risky_interactions|contract_modifier_access_summary|contract_inheritance_modifier_summary"
+    }
+  ]
+}

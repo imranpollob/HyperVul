@@ -1,0 +1,4791 @@
+{
+  "dataset_audit": {
+    "generated_at": "2026-06-25T12:51:02",
+    "project_root": "/home/pollmix/Coding/HyperVul",
+    "contract_graphs": {
+      "stats_by_split": {
+        "train": {
+          "split": "train",
+          "graphs": 1614,
+          "graphs_with_edges": 1341,
+          "graphs_with_positive": 153,
+          "total_nodes": 12221,
+          "interaction_nodes": 10740,
+          "helper_nodes": 1481,
+          "total_edges": 51277,
+          "positive_interactions": 215,
+          "negative_interactions": 10525,
+          "labeled_interactions": 10740,
+          "positive_rate_pct": 2.0019,
+          "source_counts": {
+            "DAPP": 1570,
+            "FORGE": 44
+          },
+          "node_kinds": {
+            "interaction": 10740,
+            "helper": 1481
+          },
+          "edge_types": {
+            "shared_state": 30255,
+            "call": 12552,
+            "shared_callee": 8470
+          },
+          "interaction_feature_coverage": {
+            "state_vars_pct": 100.0,
+            "external_calls_pct": 100.0,
+            "security_vector_pct": 100.0,
+            "function_source_pct": 100.0
+          },
+          "missing_graph_fields": {},
+          "missing_node_fields": {},
+          "missing_edge_fields": {}
+        },
+        "val": {
+          "split": "val",
+          "graphs": 167,
+          "graphs_with_edges": 112,
+          "graphs_with_positive": 28,
+          "total_nodes": 987,
+          "interaction_nodes": 844,
+          "helper_nodes": 143,
+          "total_edges": 4343,
+          "positive_interactions": 38,
+          "negative_interactions": 806,
+          "labeled_interactions": 844,
+          "positive_rate_pct": 4.5024,
+          "source_counts": {
+            "DAPP": 157,
+            "FORGE": 10
+          },
+          "node_kinds": {
+            "interaction": 844,
+            "helper": 143
+          },
+          "edge_types": {
+            "shared_state": 2512,
+            "call": 1078,
+            "shared_callee": 753
+          },
+          "interaction_feature_coverage": {
+            "state_vars_pct": 100.0,
+            "external_calls_pct": 100.0,
+            "security_vector_pct": 100.0,
+            "function_source_pct": 100.0
+          },
+          "missing_graph_fields": {},
+          "missing_node_fields": {},
+          "missing_edge_fields": {}
+        },
+        "test": {
+          "split": "test",
+          "graphs": 138,
+          "graphs_with_edges": 105,
+          "graphs_with_positive": 25,
+          "total_nodes": 945,
+          "interaction_nodes": 773,
+          "helper_nodes": 172,
+          "total_edges": 4639,
+          "positive_interactions": 41,
+          "negative_interactions": 732,
+          "labeled_interactions": 773,
+          "positive_rate_pct": 5.304,
+          "source_counts": {
+            "DAPP": 124,
+            "FORGE": 14
+          },
+          "node_kinds": {
+            "interaction": 773,
+            "helper": 172
+          },
+          "edge_types": {
+            "shared_state": 2269,
+            "call": 1294,
+            "shared_callee": 1076
+          },
+          "interaction_feature_coverage": {
+            "state_vars_pct": 100.0,
+            "external_calls_pct": 100.0,
+            "security_vector_pct": 100.0,
+            "function_source_pct": 100.0
+          },
+          "missing_graph_fields": {},
+          "missing_node_fields": {},
+          "missing_edge_fields": {}
+        }
+      },
+      "overlaps": {
+        "graph_id": {
+          "train_vs_val": {
+            "count": 0,
+            "examples": []
+          },
+          "train_vs_test": {
+            "count": 0,
+            "examples": []
+          },
+          "val_vs_test": {
+            "count": 0,
+            "examples": []
+          }
+        },
+        "project": {
+          "train_vs_val": {
+            "count": 0,
+            "examples": []
+          },
+          "train_vs_test": {
+            "count": 0,
+            "examples": []
+          },
+          "val_vs_test": {
+            "count": 0,
+            "examples": []
+          }
+        },
+        "project_contract": {
+          "train_vs_val": {
+            "count": 0,
+            "examples": []
+          },
+          "train_vs_test": {
+            "count": 0,
+            "examples": []
+          },
+          "val_vs_test": {
+            "count": 0,
+            "examples": []
+          }
+        },
+        "raw_contract_name": {
+          "train_vs_val": {
+            "count": 30,
+            "examples": [
+              "AToken",
+              "AaveLendingBridge",
+              "AdminUpgradeabilityProxy",
+              "ElementBridge",
+              "ExampleBridgeContract",
+              "GovernorAlpha",
+              "HeapTestContract",
+              "IssuanceBridge",
+              "LidoBridge",
+              "MStableBridge"
+            ]
+          },
+          "train_vs_test": {
+            "count": 27,
+            "examples": [
+              "AToken",
+              "AdminUpgradeabilityProxy",
+              "AntiSandwichHook",
+              "AprOracle",
+              "BscAprOracle",
+              "ChessRoles",
+              "ChessSchedule",
+              "ERC721",
+              "Exchange",
+              "ExchangeRoles"
+            ]
+          },
+          "val_vs_test": {
+            "count": 20,
+            "examples": [
+              "AToken",
+              "AdminUpgradeabilityProxy",
+              "BaseAdminUpgradeabilityProxy",
+              "BaseUpgradeabilityProxy",
+              "BorrowerOperations",
+              "DefaultReserveInterestRateStrategy",
+              "GenericLogic",
+              "InitializableAdminUpgradeabilityProxy",
+              "InitializableUpgradeabilityProxy",
+              "LendingPool"
+            ]
+          }
+        }
+      }
+    },
+    "split_file_inventory": {
+      "raw_splits": {
+        "train": {
+          "exists": true,
+          "records": 863,
+          "positive": 218,
+          "negative": 645,
+          "positive_rate_pct": 25.2607,
+          "normalized_source_hashes": 824
+        },
+        "val": {
+          "exists": true,
+          "records": 190,
+          "positive": 38,
+          "negative": 152,
+          "positive_rate_pct": 20.0,
+          "normalized_source_hashes": 185
+        },
+        "test": {
+          "exists": true,
+          "records": 182,
+          "positive": 45,
+          "negative": 137,
+          "positive_rate_pct": 24.7253,
+          "normalized_source_hashes": 171
+        }
+      },
+      "clean_splits": {
+        "train": {
+          "exists": true,
+          "records": 863,
+          "positive": 218,
+          "negative": 645,
+          "positive_rate_pct": 25.2607,
+          "normalized_source_hashes": 824
+        },
+        "val": {
+          "exists": true,
+          "records": 190,
+          "positive": 38,
+          "negative": 152,
+          "positive_rate_pct": 20.0,
+          "normalized_source_hashes": 185
+        },
+        "test": {
+          "exists": true,
+          "records": 182,
+          "positive": 45,
+          "negative": 137,
+          "positive_rate_pct": 24.7253,
+          "normalized_source_hashes": 171
+        }
+      }
+    },
+    "embedding_coverage": {
+      "torch_available": true,
+      "node_embeddings": {
+        "exists": true,
+        "dim": 768,
+        "by_hash_count": 7521,
+        "split_hash_coverage": {
+          "data/splits/train.json": {
+            "hashes": 863,
+            "covered": 857,
+            "coverage_pct": 99.3048
+          },
+          "data/splits/val.json": {
+            "hashes": 190,
+            "covered": 190,
+            "coverage_pct": 100.0
+          },
+          "data/splits/test.json": {
+            "hashes": 182,
+            "covered": 152,
+            "coverage_pct": 83.5165
+          },
+          "data/splits/train_augmented.json": {
+            "hashes": 1358,
+            "covered": 859,
+            "coverage_pct": 63.2548
+          },
+          "data/splits/val_features.json": {
+            "hashes": 190,
+            "covered": 190,
+            "coverage_pct": 100.0
+          },
+          "data/splits/test_features.json": {
+            "hashes": 176,
+            "covered": 146,
+            "coverage_pct": 82.9545
+          }
+        }
+      },
+      "member_embeddings": {
+        "exists": true,
+        "state_count": 5196,
+        "callee_count": 11263,
+        "contract_graph_coverage": {
+          "train": {
+            "state_texts": 29601,
+            "state_covered": 29601,
+            "state_coverage_pct": 100.0,
+            "callee_texts": 24639,
+            "callee_covered": 24639,
+            "callee_coverage_pct": 100.0
+          },
+          "val": {
+            "state_texts": 2137,
+            "state_covered": 2137,
+            "state_coverage_pct": 100.0,
+            "callee_texts": 2218,
+            "callee_covered": 2218,
+            "callee_coverage_pct": 100.0
+          },
+          "test": {
+            "state_texts": 2066,
+            "state_covered": 2066,
+            "state_coverage_pct": 100.0,
+            "callee_texts": 1989,
+            "callee_covered": 1989,
+            "callee_coverage_pct": 100.0
+          }
+        }
+      }
+    },
+    "clean_negative_inventory": {
+      "experiments/latest1/eval_clean_negatives_oz_features.json": {
+        "records": 600,
+        "positive": 0,
+        "negative": 600,
+        "all_negative": true
+      },
+      "experiments/latest1/eval_clean_negatives_aave_split.json": {
+        "records": 291,
+        "positive": 0,
+        "negative": 291,
+        "all_negative": true
+      },
+      "experiments/latest1/eval_clean_negatives_external.json": {
+        "records": 633,
+        "positive": 0,
+        "negative": 633,
+        "all_negative": true
+      },
+      "experiments/latest1/eval_clean_negatives_liquity.json": {
+        "records": 279,
+        "positive": 0,
+        "negative": 279,
+        "all_negative": true
+      },
+      "experiments/results/eval_clean_negatives_oz_features.json": {
+        "records": 600,
+        "positive": 0,
+        "negative": 600,
+        "all_negative": true
+      },
+      "experiments/results/eval_clean_negatives_aave_split.json": {
+        "records": 291,
+        "positive": 0,
+        "negative": 291,
+        "all_negative": true
+      },
+      "experiments/results/eval_clean_negatives_external.json": {
+        "records": 633,
+        "positive": 0,
+        "negative": 633,
+        "all_negative": true
+      },
+      "experiments/results/eval_clean_negatives_liquity.json": {
+        "records": 279,
+        "positive": 0,
+        "negative": 279,
+        "all_negative": true
+      }
+    },
+    "clean_negative_summary": {
+      "candidate_files": 8,
+      "canonical_files": 4,
+      "canonical_records": 1803,
+      "canonical_negative": 1803,
+      "canonical_positive": 0,
+      "canonical_all_negative": true,
+      "canonical_file_paths": [
+        "experiments/latest1/eval_clean_negatives_aave_split.json",
+        "experiments/latest1/eval_clean_negatives_external.json",
+        "experiments/latest1/eval_clean_negatives_liquity.json",
+        "experiments/latest1/eval_clean_negatives_oz_features.json"
+      ]
+    },
+    "readiness_checks": [
+      {
+        "check": "contract_graph_files_exist",
+        "status": "pass",
+        "detail": "All train/val/test graph files exist."
+      },
+      {
+        "check": "project_disjoint_splits",
+        "status": "pass",
+        "detail": "Project overlap count across pairwise splits: 0."
+      },
+      {
+        "check": "project_contract_disjoint_splits",
+        "status": "pass",
+        "detail": "Project-contract overlap count across pairwise splits: 0."
+      },
+      {
+        "check": "train_has_both_classes",
+        "status": "pass",
+        "detail": "pos=215, neg=10525, positive_rate=2.0019%"
+      },
+      {
+        "check": "val_has_both_classes",
+        "status": "pass",
+        "detail": "pos=38, neg=806, positive_rate=4.5024%"
+      },
+      {
+        "check": "test_has_both_classes",
+        "status": "pass",
+        "detail": "pos=41, neg=732, positive_rate=5.304%"
+      },
+      {
+        "check": "member_embedding_coverage",
+        "status": "pass",
+        "detail": "State/callee member embedding coverage is >=95%."
+      },
+      {
+        "check": "clean_negative_inventory",
+        "status": "pass",
+        "detail": "Found 1803 canonical clean-negative records across 4 pools (8 candidate files including mirrors)."
+      }
+    ]
+  },
+  "rq1": {
+    "models": {
+      "function-mlp": {
+        "threshold": {
+          "mean": 0.5192,
+          "std": 0.1455890105742875,
+          "values": [
+            0.403,
+            0.343,
+            0.5690000000000001,
+            0.762,
+            0.519
+          ]
+        },
+        "tp": {
+          "mean": 26.4,
+          "std": 4.029888335921977,
+          "values": [
+            33.0,
+            24.0,
+            22.0,
+            24.0,
+            29.0
+          ]
+        },
+        "tn": {
+          "mean": 600.2,
+          "std": 41.38792094319307,
+          "values": [
+            531.0,
+            615.0,
+            637.0,
+            641.0,
+            577.0
+          ]
+        },
+        "fp": {
+          "mean": 131.8,
+          "std": 41.38792094319307,
+          "values": [
+            201.0,
+            117.0,
+            95.0,
+            91.0,
+            155.0
+          ]
+        },
+        "fn": {
+          "mean": 14.6,
+          "std": 4.029888335921977,
+          "values": [
+            8.0,
+            17.0,
+            19.0,
+            17.0,
+            12.0
+          ]
+        },
+        "precision": {
+          "mean": 0.17311538856867256,
+          "std": 0.023525137093398416,
+          "values": [
+            0.14102564102564102,
+            0.1702127659574468,
+            0.18803418803418803,
+            0.20869565217391303,
+            0.15760869565217392
+          ]
+        },
+        "recall": {
+          "mean": 0.6439024390243903,
+          "std": 0.09828995941273115,
+          "values": [
+            0.8048780487804879,
+            0.5853658536585366,
+            0.5365853658536586,
+            0.5853658536585366,
+            0.7073170731707317
+          ]
+        },
+        "specificity": {
+          "mean": 0.8199453551912569,
+          "std": 0.05654087560545504,
+          "values": [
+            0.7254098360655737,
+            0.8401639344262295,
+            0.8702185792349727,
+            0.8756830601092896,
+            0.7882513661202186
+          ]
+        },
+        "false_positive_rate": {
+          "mean": 0.18005464480874317,
+          "std": 0.05654087560545503,
+          "values": [
+            0.27459016393442626,
+            0.1598360655737705,
+            0.12978142076502733,
+            0.12431693989071038,
+            0.21174863387978143
+          ]
+        },
+        "f1": {
+          "mean": 0.2695374723729154,
+          "std": 0.022716448154949574,
+          "values": [
+            0.24000000000000002,
+            0.2637362637362637,
+            0.27848101265822783,
+            0.30769230769230765,
+            0.2577777777777778
+          ]
+        },
+        "f2": {
+          "mean": 0.40924975111078227,
+          "std": 0.014729334318767875,
+          "values": [
+            0.41457286432160806,
+            0.39344262295081966,
+            0.3914590747330961,
+            0.4301075268817204,
+            0.41666666666666674
+          ]
+        },
+        "accuracy": {
+          "mean": 0.810608020698577,
+          "std": 0.04847760726599811,
+          "values": [
+            0.7296248382923674,
+            0.8266494178525227,
+            0.8525226390685641,
+            0.8602846054333765,
+            0.7839586028460543
+          ]
+        },
+        "pr_auc": {
+          "mean": 0.3137974081178542,
+          "std": 0.017531240261301047,
+          "values": [
+            0.3182424739143,
+            0.3226989049461836,
+            0.2791165370184702,
+            0.32254265047881575,
+            0.3263864742315014
+          ]
+        },
+        "roc_auc": {
+          "mean": 0.8307743569238971,
+          "std": 0.007797348283160567,
+          "values": [
+            0.8341663334666134,
+            0.8390976942556312,
+            0.8167399706783954,
+            0.8285019325603091,
+            0.8353658536585366
+          ]
+        },
+        "support": {
+          "mean": 773.0,
+          "std": 0.0,
+          "values": [
+            773.0,
+            773.0,
+            773.0,
+            773.0,
+            773.0
+          ]
+        },
+        "positive_support": {
+          "mean": 41.0,
+          "std": 0.0,
+          "values": [
+            41.0,
+            41.0,
+            41.0,
+            41.0,
+            41.0
+          ]
+        },
+        "negative_support": {
+          "mean": 732.0,
+          "std": 0.0,
+          "values": [
+            732.0,
+            732.0,
+            732.0,
+            732.0,
+            732.0
+          ]
+        }
+      },
+      "pairwise-gat": {
+        "threshold": {
+          "mean": 0.231,
+          "std": 0.2092844953645635,
+          "values": [
+            0.197,
+            0.044,
+            0.636,
+            0.108,
+            0.17
+          ]
+        },
+        "tp": {
+          "mean": 29.8,
+          "std": 1.7204650534085253,
+          "values": [
+            31.0,
+            29.0,
+            30.0,
+            27.0,
+            32.0
+          ]
+        },
+        "tn": {
+          "mean": 551.2,
+          "std": 32.089873792210525,
+          "values": [
+            526.0,
+            524.0,
+            598.0,
+            582.0,
+            526.0
+          ]
+        },
+        "fp": {
+          "mean": 180.8,
+          "std": 32.089873792210525,
+          "values": [
+            206.0,
+            208.0,
+            134.0,
+            150.0,
+            206.0
+          ]
+        },
+        "fn": {
+          "mean": 11.2,
+          "std": 1.7204650534085253,
+          "values": [
+            10.0,
+            12.0,
+            11.0,
+            14.0,
+            9.0
+          ]
+        },
+        "precision": {
+          "mean": 0.1446175081248558,
+          "std": 0.021539984923534955,
+          "values": [
+            0.1308016877637131,
+            0.12236286919831224,
+            0.18292682926829268,
+            0.15254237288135594,
+            0.13445378151260504
+          ]
+        },
+        "recall": {
+          "mean": 0.726829268292683,
+          "std": 0.04196256227825672,
+          "values": [
+            0.7560975609756098,
+            0.7073170731707317,
+            0.7317073170731707,
+            0.6585365853658537,
+            0.7804878048780488
+          ]
+        },
+        "specificity": {
+          "mean": 0.7530054644808744,
+          "std": 0.043838625399194704,
+          "values": [
+            0.7185792349726776,
+            0.7158469945355191,
+            0.8169398907103825,
+            0.7950819672131147,
+            0.7185792349726776
+          ]
+        },
+        "false_positive_rate": {
+          "mean": 0.2469945355191257,
+          "std": 0.0438386253991947,
+          "values": [
+            0.2814207650273224,
+            0.28415300546448086,
+            0.1830601092896175,
+            0.20491803278688525,
+            0.2814207650273224
+          ]
+        },
+        "f1": {
+          "mean": 0.2402869412220388,
+          "std": 0.02904883876347206,
+          "values": [
+            0.22302158273381298,
+            0.20863309352517984,
+            0.29268292682926833,
+            0.24770642201834864,
+            0.22939068100358423
+          ]
+        },
+        "f2": {
+          "mean": 0.39987022547649087,
+          "std": 0.0315029753947134,
+          "values": [
+            0.3865336658354115,
+            0.36159600997506236,
+            0.45731707317073167,
+            0.3958944281524927,
+            0.3980099502487562
+          ]
+        },
+        "accuracy": {
+          "mean": 0.7516170763260026,
+          "std": 0.04042354449137258,
+          "values": [
+            0.720569210866753,
+            0.7153945666235446,
+            0.8124191461836999,
+            0.7878395860284605,
+            0.7218628719275549
+          ]
+        },
+        "pr_auc": {
+          "mean": 0.2918862930444813,
+          "std": 0.01943581990217278,
+          "values": [
+            0.3105605262703517,
+            0.3082621926766294,
+            0.3041537186103457,
+            0.26725463064343624,
+            0.2692003970216435
+          ]
+        },
+        "roc_auc": {
+          "mean": 0.8315773690523791,
+          "std": 0.023107817912489507,
+          "values": [
+            0.834432893509263,
+            0.8177895508463282,
+            0.8701352792216447,
+            0.8003965080634412,
+            0.8351326136212183
+          ]
+        },
+        "support": {
+          "mean": 773.0,
+          "std": 0.0,
+          "values": [
+            773.0,
+            773.0,
+            773.0,
+            773.0,
+            773.0
+          ]
+        },
+        "positive_support": {
+          "mean": 41.0,
+          "std": 0.0,
+          "values": [
+            41.0,
+            41.0,
+            41.0,
+            41.0,
+            41.0
+          ]
+        },
+        "negative_support": {
+          "mean": 732.0,
+          "std": 0.0,
+          "values": [
+            732.0,
+            732.0,
+            732.0,
+            732.0,
+            732.0
+          ]
+        }
+      },
+      "function-features-mlp": {
+        "threshold": {
+          "mean": 0.7066000000000001,
+          "std": 0.1551123463815824,
+          "values": [
+            0.755,
+            0.849,
+            0.405,
+            0.745,
+            0.779
+          ]
+        },
+        "tp": {
+          "mean": 27.8,
+          "std": 1.6,
+          "values": [
+            28.0,
+            28.0,
+            30.0,
+            28.0,
+            25.0
+          ]
+        },
+        "tn": {
+          "mean": 598.2,
+          "std": 16.01749044014074,
+          "values": [
+            598.0,
+            609.0,
+            583.0,
+            579.0,
+            622.0
+          ]
+        },
+        "fp": {
+          "mean": 133.8,
+          "std": 16.01749044014074,
+          "values": [
+            134.0,
+            123.0,
+            149.0,
+            153.0,
+            110.0
+          ]
+        },
+        "fn": {
+          "mean": 13.2,
+          "std": 1.6,
+          "values": [
+            13.0,
+            13.0,
+            11.0,
+            13.0,
+            16.0
+          ]
+        },
+        "precision": {
+          "mean": 0.1731498105787994,
+          "std": 0.011550968841845042,
+          "values": [
+            0.1728395061728395,
+            0.18543046357615894,
+            0.16759776536312848,
+            0.15469613259668508,
+            0.18518518518518517
+          ]
+        },
+        "recall": {
+          "mean": 0.6780487804878049,
+          "std": 0.039024390243902446,
+          "values": [
+            0.6829268292682927,
+            0.6829268292682927,
+            0.7317073170731707,
+            0.6829268292682927,
+            0.6097560975609756
+          ]
+        },
+        "specificity": {
+          "mean": 0.8172131147540984,
+          "std": 0.02188181754117587,
+          "values": [
+            0.8169398907103825,
+            0.8319672131147541,
+            0.796448087431694,
+            0.7909836065573771,
+            0.8497267759562842
+          ]
+        },
+        "false_positive_rate": {
+          "mean": 0.18278688524590167,
+          "std": 0.02188181754117588,
+          "values": [
+            0.1830601092896175,
+            0.1680327868852459,
+            0.20355191256830601,
+            0.20901639344262296,
+            0.15027322404371585
+          ]
+        },
+        "f1": {
+          "mean": 0.27531983394052356,
+          "std": 0.013291195709055407,
+          "values": [
+            0.27586206896551724,
+            0.2916666666666667,
+            0.27272727272727276,
+            0.2522522522522523,
+            0.28409090909090906
+          ]
+        },
+        "f2": {
+          "mean": 0.42701347671598244,
+          "std": 0.013756738770521325,
+          "values": [
+            0.42944785276073616,
+            0.4444444444444446,
+            0.4373177842565597,
+            0.4057971014492754,
+            0.41806020066889626
+          ]
+        },
+        "accuracy": {
+          "mean": 0.8098318240620959,
+          "std": 0.019118192188265114,
+          "values": [
+            0.8098318240620958,
+            0.8240620957309185,
+            0.7930142302716688,
+            0.7852522639068564,
+            0.8369987063389392
+          ]
+        },
+        "pr_auc": {
+          "mean": 0.3342913231342508,
+          "std": 0.008752315636239716,
+          "values": [
+            0.33774602123590614,
+            0.34725826730813386,
+            0.33325523749279895,
+            0.33306025569254405,
+            0.320136833941871
+          ]
+        },
+        "roc_auc": {
+          "mean": 0.8388211382113822,
+          "std": 0.0051338505779461455,
+          "values": [
+            0.8479441556710648,
+            0.8374483539917367,
+            0.8399473543915768,
+            0.8361155537784887,
+            0.8326502732240437
+          ]
+        },
+        "support": {
+          "mean": 773.0,
+          "std": 0.0,
+          "values": [
+            773.0,
+            773.0,
+            773.0,
+            773.0,
+            773.0
+          ]
+        },
+        "positive_support": {
+          "mean": 41.0,
+          "std": 0.0,
+          "values": [
+            41.0,
+            41.0,
+            41.0,
+            41.0,
+            41.0
+          ]
+        },
+        "negative_support": {
+          "mean": 732.0,
+          "std": 0.0,
+          "values": [
+            732.0,
+            732.0,
+            732.0,
+            732.0,
+            732.0
+          ]
+        }
+      },
+      "pairwise-gcn": {
+        "threshold": {
+          "mean": 0.5008,
+          "std": 0.30207177954916614,
+          "values": [
+            0.019,
+            0.657,
+            0.281,
+            0.737,
+            0.81
+          ]
+        },
+        "tp": {
+          "mean": 21.2,
+          "std": 7.467261881037788,
+          "values": [
+            34.0,
+            18.0,
+            15.0,
+            14.0,
+            25.0
+          ]
+        },
+        "tn": {
+          "mean": 598.0,
+          "std": 42.88589511715944,
+          "values": [
+            519.0,
+            633.0,
+            623.0,
+            629.0,
+            586.0
+          ]
+        },
+        "fp": {
+          "mean": 134.0,
+          "std": 42.88589511715944,
+          "values": [
+            213.0,
+            99.0,
+            109.0,
+            103.0,
+            146.0
+          ]
+        },
+        "fn": {
+          "mean": 19.8,
+          "std": 7.467261881037788,
+          "values": [
+            7.0,
+            23.0,
+            26.0,
+            27.0,
+            16.0
+          ]
+        },
+        "precision": {
+          "mean": 0.13566453354229244,
+          "std": 0.013547641943819253,
+          "values": [
+            0.13765182186234817,
+            0.15384615384615385,
+            0.12096774193548387,
+            0.11965811965811966,
+            0.14619883040935672
+          ]
+        },
+        "recall": {
+          "mean": 0.5170731707317073,
+          "std": 0.18212833856189725,
+          "values": [
+            0.8292682926829268,
+            0.43902439024390244,
+            0.36585365853658536,
+            0.34146341463414637,
+            0.6097560975609756
+          ]
+        },
+        "specificity": {
+          "mean": 0.8169398907103826,
+          "std": 0.05858728841142002,
+          "values": [
+            0.7090163934426229,
+            0.8647540983606558,
+            0.8510928961748634,
+            0.8592896174863388,
+            0.8005464480874317
+          ]
+        },
+        "false_positive_rate": {
+          "mean": 0.1830601092896175,
+          "std": 0.05858728841142,
+          "values": [
+            0.29098360655737704,
+            0.13524590163934427,
+            0.1489071038251366,
+            0.1407103825136612,
+            0.1994535519125683
+          ]
+        },
+        "f1": {
+          "mean": 0.2117683281344614,
+          "std": 0.026540317626849958,
+          "values": [
+            0.2361111111111111,
+            0.22784810126582278,
+            0.18181818181818182,
+            0.17721518987341772,
+            0.23584905660377353
+          ]
+        },
+        "f2": {
+          "mean": 0.3233142633909446,
+          "std": 0.0634186629778363,
+          "values": [
+            0.41362530413625304,
+            0.3202846975088968,
+            0.2604166666666667,
+            0.2491103202846975,
+            0.373134328358209
+          ]
+        },
+        "accuracy": {
+          "mean": 0.8010349288486417,
+          "std": 0.04621394786394021,
+          "values": [
+            0.7153945666235446,
+            0.8421733505821475,
+            0.8253557567917206,
+            0.8318240620957309,
+            0.7904269081500647
+          ]
+        },
+        "pr_auc": {
+          "mean": 0.19504624740144735,
+          "std": 0.019872736316592064,
+          "values": [
+            0.20285308427453852,
+            0.20064347970517932,
+            0.18181629929049153,
+            0.16574184744457215,
+            0.2241765262924552
+          ]
+        },
+        "roc_auc": {
+          "mean": 0.8048713847794214,
+          "std": 0.019527642752717497,
+          "values": [
+            0.8011462081833933,
+            0.8202718912435025,
+            0.774556843929095,
+            0.7974143675862988,
+            0.830967612954818
+          ]
+        },
+        "support": {
+          "mean": 773.0,
+          "std": 0.0,
+          "values": [
+            773.0,
+            773.0,
+            773.0,
+            773.0,
+            773.0
+          ]
+        },
+        "positive_support": {
+          "mean": 41.0,
+          "std": 0.0,
+          "values": [
+            41.0,
+            41.0,
+            41.0,
+            41.0,
+            41.0
+          ]
+        },
+        "negative_support": {
+          "mean": 732.0,
+          "std": 0.0,
+          "values": [
+            732.0,
+            732.0,
+            732.0,
+            732.0,
+            732.0
+          ]
+        }
+      },
+      "callgraph-gcn": {
+        "threshold": {
+          "mean": 0.5562,
+          "std": 0.2855754891442891,
+          "values": [
+            0.041,
+            0.871,
+            0.708,
+            0.678,
+            0.483
+          ]
+        },
+        "tp": {
+          "mean": 26.0,
+          "std": 5.513619500836088,
+          "values": [
+            35.0,
+            21.0,
+            20.0,
+            25.0,
+            29.0
+          ]
+        },
+        "tn": {
+          "mean": 596.0,
+          "std": 53.44529913846493,
+          "values": [
+            527.0,
+            622.0,
+            638.0,
+            656.0,
+            537.0
+          ]
+        },
+        "fp": {
+          "mean": 136.0,
+          "std": 53.44529913846493,
+          "values": [
+            205.0,
+            110.0,
+            94.0,
+            76.0,
+            195.0
+          ]
+        },
+        "fn": {
+          "mean": 15.0,
+          "std": 5.513619500836088,
+          "values": [
+            6.0,
+            20.0,
+            21.0,
+            16.0,
+            12.0
+          ]
+        },
+        "precision": {
+          "mean": 0.171713262305109,
+          "std": 0.040856205194251885,
+          "values": [
+            0.14583333333333334,
+            0.16030534351145037,
+            0.17543859649122806,
+            0.24752475247524752,
+            0.12946428571428573
+          ]
+        },
+        "recall": {
+          "mean": 0.6341463414634146,
+          "std": 0.13447852441063632,
+          "values": [
+            0.8536585365853658,
+            0.5121951219512195,
+            0.4878048780487805,
+            0.6097560975609756,
+            0.7073170731707317
+          ]
+        },
+        "specificity": {
+          "mean": 0.8142076502732241,
+          "std": 0.07301270374107231,
+          "values": [
+            0.7199453551912568,
+            0.8497267759562842,
+            0.8715846994535519,
+            0.8961748633879781,
+            0.7336065573770492
+          ]
+        },
+        "false_positive_rate": {
+          "mean": 0.18579234972677597,
+          "std": 0.0730127037410723,
+          "values": [
+            0.28005464480874315,
+            0.15027322404371585,
+            0.1284153005464481,
+            0.10382513661202186,
+            0.26639344262295084
+          ]
+        },
+        "f1": {
+          "mean": 0.2644682967019995,
+          "std": 0.045714716870681536,
+          "values": [
+            0.2491103202846975,
+            0.2441860465116279,
+            0.25806451612903225,
+            0.352112676056338,
+            0.21886792452830192
+          ]
+        },
+        "f2": {
+          "mean": 0.39884444077021475,
+          "std": 0.04580447318617286,
+          "values": [
+            0.4331683168316832,
+            0.35593220338983045,
+            0.3597122302158273,
+            0.4716981132075471,
+            0.3737113402061855
+          ]
+        },
+        "accuracy": {
+          "mean": 0.8046571798188875,
+          "std": 0.06325460231726321,
+          "values": [
+            0.7270375161707633,
+            0.8318240620957309,
+            0.851228978007762,
+            0.8809831824062095,
+            0.7322121604139715
+          ]
+        },
+        "pr_auc": {
+          "mean": 0.27830361611419174,
+          "std": 0.022044429814742538,
+          "values": [
+            0.2416595831190396,
+            0.2757474732448775,
+            0.30426917999746284,
+            0.272297978235692,
+            0.29754386597388693
+          ]
+        },
+        "roc_auc": {
+          "mean": 0.8322604291616686,
+          "std": 0.016128612511760027,
+          "values": [
+            0.8406137544982007,
+            0.8251865920298547,
+            0.8232373717179795,
+            0.8592562974810075,
+            0.8130081300813008
+          ]
+        },
+        "support": {
+          "mean": 773.0,
+          "std": 0.0,
+          "values": [
+            773.0,
+            773.0,
+            773.0,
+            773.0,
+            773.0
+          ]
+        },
+        "positive_support": {
+          "mean": 41.0,
+          "std": 0.0,
+          "values": [
+            41.0,
+            41.0,
+            41.0,
+            41.0,
+            41.0
+          ]
+        },
+        "negative_support": {
+          "mean": 732.0,
+          "std": 0.0,
+          "values": [
+            732.0,
+            732.0,
+            732.0,
+            732.0,
+            732.0
+          ]
+        }
+      },
+      "sequence": {
+        "threshold": {
+          "mean": 0.2686,
+          "std": 0.24626376103682004,
+          "values": [
+            0.398,
+            0.008,
+            0.127,
+            0.6890000000000001,
+            0.121
+          ]
+        },
+        "tp": {
+          "mean": 28.6,
+          "std": 5.4626001134990645,
+          "values": [
+            23.0,
+            36.0,
+            34.0,
+            23.0,
+            27.0
+          ]
+        },
+        "tn": {
+          "mean": 559.4,
+          "std": 61.337101333532225,
+          "values": [
+            606.0,
+            474.0,
+            506.0,
+            639.0,
+            572.0
+          ]
+        },
+        "fp": {
+          "mean": 172.6,
+          "std": 61.337101333532225,
+          "values": [
+            126.0,
+            258.0,
+            226.0,
+            93.0,
+            160.0
+          ]
+        },
+        "fn": {
+          "mean": 12.4,
+          "std": 5.4626001134990645,
+          "values": [
+            18.0,
+            5.0,
+            7.0,
+            18.0,
+            14.0
+          ]
+        },
+        "precision": {
+          "mean": 0.15004830305507671,
+          "std": 0.02649523354243759,
+          "values": [
+            0.15436241610738255,
+            0.12244897959183673,
+            0.13076923076923078,
+            0.19827586206896552,
+            0.1443850267379679
+          ]
+        },
+        "recall": {
+          "mean": 0.697560975609756,
+          "std": 0.13323414910973327,
+          "values": [
+            0.5609756097560976,
+            0.8780487804878049,
+            0.8292682926829268,
+            0.5609756097560976,
+            0.6585365853658537
+          ]
+        },
+        "specificity": {
+          "mean": 0.7642076502732241,
+          "std": 0.08379385428078172,
+          "values": [
+            0.8278688524590164,
+            0.6475409836065574,
+            0.6912568306010929,
+            0.8729508196721312,
+            0.7814207650273224
+          ]
+        },
+        "false_positive_rate": {
+          "mean": 0.23579234972677593,
+          "std": 0.08379385428078173,
+          "values": [
+            0.1721311475409836,
+            0.3524590163934426,
+            0.3087431693989071,
+            0.12704918032786885,
+            0.2185792349726776
+          ]
+        },
+        "f1": {
+          "mean": 0.2425559986782176,
+          "std": 0.026896939028974175,
+          "values": [
+            0.24210526315789474,
+            0.21492537313432836,
+            0.22591362126245848,
+            0.29299363057324845,
+            0.23684210526315785
+          ]
+        },
+        "f2": {
+          "mean": 0.3913396615135693,
+          "std": 0.01475229025777623,
+          "values": [
+            0.3674121405750799,
+            0.3930131004366812,
+            0.40094339622641506,
+            0.4107142857142857,
+            0.38461538461538464
+          ]
+        },
+        "accuracy": {
+          "mean": 0.7606727037516171,
+          "std": 0.0724126706560805,
+          "values": [
+            0.8137128072445019,
+            0.6597671410090556,
+            0.6985769728331177,
+            0.8564036222509702,
+            0.7749029754204398
+          ]
+        },
+        "pr_auc": {
+          "mean": 0.22730289987288796,
+          "std": 0.02095438625058032,
+          "values": [
+            0.20802845225321215,
+            0.20880574631098792,
+            0.21586559624727597,
+            0.2602802975280209,
+            0.24353440702494272
+          ]
+        },
+        "roc_auc": {
+          "mean": 0.8305877648940424,
+          "std": 0.011308057777212981,
+          "values": [
+            0.8237371717979476,
+            0.8171731307477008,
+            0.8318006130880982,
+            0.8508263361322137,
+            0.8294015727042516
+          ]
+        },
+        "support": {
+          "mean": 773.0,
+          "std": 0.0,
+          "values": [
+            773.0,
+            773.0,
+            773.0,
+            773.0,
+            773.0
+          ]
+        },
+        "positive_support": {
+          "mean": 41.0,
+          "std": 0.0,
+          "values": [
+            41.0,
+            41.0,
+            41.0,
+            41.0,
+            41.0
+          ]
+        },
+        "negative_support": {
+          "mean": 732.0,
+          "std": 0.0,
+          "values": [
+            732.0,
+            732.0,
+            732.0,
+            732.0,
+            732.0
+          ]
+        }
+      }
+    }
+  },
+  "rq1_vs_hypervul": {
+    "models": {
+      "function-mlp": {
+        "threshold": {
+          "mean": 0.5192,
+          "std": 0.1455890105742875,
+          "values": [
+            0.403,
+            0.343,
+            0.5690000000000001,
+            0.762,
+            0.519
+          ]
+        },
+        "tp": {
+          "mean": 26.4,
+          "std": 4.029888335921977,
+          "values": [
+            33.0,
+            24.0,
+            22.0,
+            24.0,
+            29.0
+          ]
+        },
+        "tn": {
+          "mean": 600.2,
+          "std": 41.38792094319307,
+          "values": [
+            531.0,
+            615.0,
+            637.0,
+            641.0,
+            577.0
+          ]
+        },
+        "fp": {
+          "mean": 131.8,
+          "std": 41.38792094319307,
+          "values": [
+            201.0,
+            117.0,
+            95.0,
+            91.0,
+            155.0
+          ]
+        },
+        "fn": {
+          "mean": 14.6,
+          "std": 4.029888335921977,
+          "values": [
+            8.0,
+            17.0,
+            19.0,
+            17.0,
+            12.0
+          ]
+        },
+        "precision": {
+          "mean": 0.17311538856867256,
+          "std": 0.023525137093398416,
+          "values": [
+            0.14102564102564102,
+            0.1702127659574468,
+            0.18803418803418803,
+            0.20869565217391303,
+            0.15760869565217392
+          ]
+        },
+        "recall": {
+          "mean": 0.6439024390243903,
+          "std": 0.09828995941273115,
+          "values": [
+            0.8048780487804879,
+            0.5853658536585366,
+            0.5365853658536586,
+            0.5853658536585366,
+            0.7073170731707317
+          ]
+        },
+        "specificity": {
+          "mean": 0.8199453551912569,
+          "std": 0.05654087560545504,
+          "values": [
+            0.7254098360655737,
+            0.8401639344262295,
+            0.8702185792349727,
+            0.8756830601092896,
+            0.7882513661202186
+          ]
+        },
+        "false_positive_rate": {
+          "mean": 0.18005464480874317,
+          "std": 0.05654087560545503,
+          "values": [
+            0.27459016393442626,
+            0.1598360655737705,
+            0.12978142076502733,
+            0.12431693989071038,
+            0.21174863387978143
+          ]
+        },
+        "f1": {
+          "mean": 0.2695374723729154,
+          "std": 0.022716448154949574,
+          "values": [
+            0.24000000000000002,
+            0.2637362637362637,
+            0.27848101265822783,
+            0.30769230769230765,
+            0.2577777777777778
+          ]
+        },
+        "f2": {
+          "mean": 0.40924975111078227,
+          "std": 0.014729334318767875,
+          "values": [
+            0.41457286432160806,
+            0.39344262295081966,
+            0.3914590747330961,
+            0.4301075268817204,
+            0.41666666666666674
+          ]
+        },
+        "accuracy": {
+          "mean": 0.810608020698577,
+          "std": 0.04847760726599811,
+          "values": [
+            0.7296248382923674,
+            0.8266494178525227,
+            0.8525226390685641,
+            0.8602846054333765,
+            0.7839586028460543
+          ]
+        },
+        "pr_auc": {
+          "mean": 0.3137974081178542,
+          "std": 0.017531240261301047,
+          "values": [
+            0.3182424739143,
+            0.3226989049461836,
+            0.2791165370184702,
+            0.32254265047881575,
+            0.3263864742315014
+          ]
+        },
+        "roc_auc": {
+          "mean": 0.8307743569238971,
+          "std": 0.007797348283160567,
+          "values": [
+            0.8341663334666134,
+            0.8390976942556312,
+            0.8167399706783954,
+            0.8285019325603091,
+            0.8353658536585366
+          ]
+        },
+        "support": {
+          "mean": 773.0,
+          "std": 0.0,
+          "values": [
+            773.0,
+            773.0,
+            773.0,
+            773.0,
+            773.0
+          ]
+        },
+        "positive_support": {
+          "mean": 41.0,
+          "std": 0.0,
+          "values": [
+            41.0,
+            41.0,
+            41.0,
+            41.0,
+            41.0
+          ]
+        },
+        "negative_support": {
+          "mean": 732.0,
+          "std": 0.0,
+          "values": [
+            732.0,
+            732.0,
+            732.0,
+            732.0,
+            732.0
+          ]
+        }
+      },
+      "pairwise-gat": {
+        "threshold": {
+          "mean": 0.231,
+          "std": 0.2092844953645635,
+          "values": [
+            0.197,
+            0.044,
+            0.636,
+            0.108,
+            0.17
+          ]
+        },
+        "tp": {
+          "mean": 29.8,
+          "std": 1.7204650534085253,
+          "values": [
+            31.0,
+            29.0,
+            30.0,
+            27.0,
+            32.0
+          ]
+        },
+        "tn": {
+          "mean": 551.2,
+          "std": 32.089873792210525,
+          "values": [
+            526.0,
+            524.0,
+            598.0,
+            582.0,
+            526.0
+          ]
+        },
+        "fp": {
+          "mean": 180.8,
+          "std": 32.089873792210525,
+          "values": [
+            206.0,
+            208.0,
+            134.0,
+            150.0,
+            206.0
+          ]
+        },
+        "fn": {
+          "mean": 11.2,
+          "std": 1.7204650534085253,
+          "values": [
+            10.0,
+            12.0,
+            11.0,
+            14.0,
+            9.0
+          ]
+        },
+        "precision": {
+          "mean": 0.1446175081248558,
+          "std": 0.021539984923534955,
+          "values": [
+            0.1308016877637131,
+            0.12236286919831224,
+            0.18292682926829268,
+            0.15254237288135594,
+            0.13445378151260504
+          ]
+        },
+        "recall": {
+          "mean": 0.726829268292683,
+          "std": 0.04196256227825672,
+          "values": [
+            0.7560975609756098,
+            0.7073170731707317,
+            0.7317073170731707,
+            0.6585365853658537,
+            0.7804878048780488
+          ]
+        },
+        "specificity": {
+          "mean": 0.7530054644808744,
+          "std": 0.043838625399194704,
+          "values": [
+            0.7185792349726776,
+            0.7158469945355191,
+            0.8169398907103825,
+            0.7950819672131147,
+            0.7185792349726776
+          ]
+        },
+        "false_positive_rate": {
+          "mean": 0.2469945355191257,
+          "std": 0.0438386253991947,
+          "values": [
+            0.2814207650273224,
+            0.28415300546448086,
+            0.1830601092896175,
+            0.20491803278688525,
+            0.2814207650273224
+          ]
+        },
+        "f1": {
+          "mean": 0.2402869412220388,
+          "std": 0.02904883876347206,
+          "values": [
+            0.22302158273381298,
+            0.20863309352517984,
+            0.29268292682926833,
+            0.24770642201834864,
+            0.22939068100358423
+          ]
+        },
+        "f2": {
+          "mean": 0.39987022547649087,
+          "std": 0.0315029753947134,
+          "values": [
+            0.3865336658354115,
+            0.36159600997506236,
+            0.45731707317073167,
+            0.3958944281524927,
+            0.3980099502487562
+          ]
+        },
+        "accuracy": {
+          "mean": 0.7516170763260026,
+          "std": 0.04042354449137258,
+          "values": [
+            0.720569210866753,
+            0.7153945666235446,
+            0.8124191461836999,
+            0.7878395860284605,
+            0.7218628719275549
+          ]
+        },
+        "pr_auc": {
+          "mean": 0.2918862930444813,
+          "std": 0.01943581990217278,
+          "values": [
+            0.3105605262703517,
+            0.3082621926766294,
+            0.3041537186103457,
+            0.26725463064343624,
+            0.2692003970216435
+          ]
+        },
+        "roc_auc": {
+          "mean": 0.8315773690523791,
+          "std": 0.023107817912489507,
+          "values": [
+            0.834432893509263,
+            0.8177895508463282,
+            0.8701352792216447,
+            0.8003965080634412,
+            0.8351326136212183
+          ]
+        },
+        "support": {
+          "mean": 773.0,
+          "std": 0.0,
+          "values": [
+            773.0,
+            773.0,
+            773.0,
+            773.0,
+            773.0
+          ]
+        },
+        "positive_support": {
+          "mean": 41.0,
+          "std": 0.0,
+          "values": [
+            41.0,
+            41.0,
+            41.0,
+            41.0,
+            41.0
+          ]
+        },
+        "negative_support": {
+          "mean": 732.0,
+          "std": 0.0,
+          "values": [
+            732.0,
+            732.0,
+            732.0,
+            732.0,
+            732.0
+          ]
+        }
+      },
+      "function-features-mlp": {
+        "threshold": {
+          "mean": 0.7066000000000001,
+          "std": 0.1551123463815824,
+          "values": [
+            0.755,
+            0.849,
+            0.405,
+            0.745,
+            0.779
+          ]
+        },
+        "tp": {
+          "mean": 27.8,
+          "std": 1.6,
+          "values": [
+            28.0,
+            28.0,
+            30.0,
+            28.0,
+            25.0
+          ]
+        },
+        "tn": {
+          "mean": 598.2,
+          "std": 16.01749044014074,
+          "values": [
+            598.0,
+            609.0,
+            583.0,
+            579.0,
+            622.0
+          ]
+        },
+        "fp": {
+          "mean": 133.8,
+          "std": 16.01749044014074,
+          "values": [
+            134.0,
+            123.0,
+            149.0,
+            153.0,
+            110.0
+          ]
+        },
+        "fn": {
+          "mean": 13.2,
+          "std": 1.6,
+          "values": [
+            13.0,
+            13.0,
+            11.0,
+            13.0,
+            16.0
+          ]
+        },
+        "precision": {
+          "mean": 0.1731498105787994,
+          "std": 0.011550968841845042,
+          "values": [
+            0.1728395061728395,
+            0.18543046357615894,
+            0.16759776536312848,
+            0.15469613259668508,
+            0.18518518518518517
+          ]
+        },
+        "recall": {
+          "mean": 0.6780487804878049,
+          "std": 0.039024390243902446,
+          "values": [
+            0.6829268292682927,
+            0.6829268292682927,
+            0.7317073170731707,
+            0.6829268292682927,
+            0.6097560975609756
+          ]
+        },
+        "specificity": {
+          "mean": 0.8172131147540984,
+          "std": 0.02188181754117587,
+          "values": [
+            0.8169398907103825,
+            0.8319672131147541,
+            0.796448087431694,
+            0.7909836065573771,
+            0.8497267759562842
+          ]
+        },
+        "false_positive_rate": {
+          "mean": 0.18278688524590167,
+          "std": 0.02188181754117588,
+          "values": [
+            0.1830601092896175,
+            0.1680327868852459,
+            0.20355191256830601,
+            0.20901639344262296,
+            0.15027322404371585
+          ]
+        },
+        "f1": {
+          "mean": 0.27531983394052356,
+          "std": 0.013291195709055407,
+          "values": [
+            0.27586206896551724,
+            0.2916666666666667,
+            0.27272727272727276,
+            0.2522522522522523,
+            0.28409090909090906
+          ]
+        },
+        "f2": {
+          "mean": 0.42701347671598244,
+          "std": 0.013756738770521325,
+          "values": [
+            0.42944785276073616,
+            0.4444444444444446,
+            0.4373177842565597,
+            0.4057971014492754,
+            0.41806020066889626
+          ]
+        },
+        "accuracy": {
+          "mean": 0.8098318240620959,
+          "std": 0.019118192188265114,
+          "values": [
+            0.8098318240620958,
+            0.8240620957309185,
+            0.7930142302716688,
+            0.7852522639068564,
+            0.8369987063389392
+          ]
+        },
+        "pr_auc": {
+          "mean": 0.3342913231342508,
+          "std": 0.008752315636239716,
+          "values": [
+            0.33774602123590614,
+            0.34725826730813386,
+            0.33325523749279895,
+            0.33306025569254405,
+            0.320136833941871
+          ]
+        },
+        "roc_auc": {
+          "mean": 0.8388211382113822,
+          "std": 0.0051338505779461455,
+          "values": [
+            0.8479441556710648,
+            0.8374483539917367,
+            0.8399473543915768,
+            0.8361155537784887,
+            0.8326502732240437
+          ]
+        },
+        "support": {
+          "mean": 773.0,
+          "std": 0.0,
+          "values": [
+            773.0,
+            773.0,
+            773.0,
+            773.0,
+            773.0
+          ]
+        },
+        "positive_support": {
+          "mean": 41.0,
+          "std": 0.0,
+          "values": [
+            41.0,
+            41.0,
+            41.0,
+            41.0,
+            41.0
+          ]
+        },
+        "negative_support": {
+          "mean": 732.0,
+          "std": 0.0,
+          "values": [
+            732.0,
+            732.0,
+            732.0,
+            732.0,
+            732.0
+          ]
+        }
+      },
+      "pairwise-gcn": {
+        "threshold": {
+          "mean": 0.5008,
+          "std": 0.30207177954916614,
+          "values": [
+            0.019,
+            0.657,
+            0.281,
+            0.737,
+            0.81
+          ]
+        },
+        "tp": {
+          "mean": 21.2,
+          "std": 7.467261881037788,
+          "values": [
+            34.0,
+            18.0,
+            15.0,
+            14.0,
+            25.0
+          ]
+        },
+        "tn": {
+          "mean": 598.0,
+          "std": 42.88589511715944,
+          "values": [
+            519.0,
+            633.0,
+            623.0,
+            629.0,
+            586.0
+          ]
+        },
+        "fp": {
+          "mean": 134.0,
+          "std": 42.88589511715944,
+          "values": [
+            213.0,
+            99.0,
+            109.0,
+            103.0,
+            146.0
+          ]
+        },
+        "fn": {
+          "mean": 19.8,
+          "std": 7.467261881037788,
+          "values": [
+            7.0,
+            23.0,
+            26.0,
+            27.0,
+            16.0
+          ]
+        },
+        "precision": {
+          "mean": 0.13566453354229244,
+          "std": 0.013547641943819253,
+          "values": [
+            0.13765182186234817,
+            0.15384615384615385,
+            0.12096774193548387,
+            0.11965811965811966,
+            0.14619883040935672
+          ]
+        },
+        "recall": {
+          "mean": 0.5170731707317073,
+          "std": 0.18212833856189725,
+          "values": [
+            0.8292682926829268,
+            0.43902439024390244,
+            0.36585365853658536,
+            0.34146341463414637,
+            0.6097560975609756
+          ]
+        },
+        "specificity": {
+          "mean": 0.8169398907103826,
+          "std": 0.05858728841142002,
+          "values": [
+            0.7090163934426229,
+            0.8647540983606558,
+            0.8510928961748634,
+            0.8592896174863388,
+            0.8005464480874317
+          ]
+        },
+        "false_positive_rate": {
+          "mean": 0.1830601092896175,
+          "std": 0.05858728841142,
+          "values": [
+            0.29098360655737704,
+            0.13524590163934427,
+            0.1489071038251366,
+            0.1407103825136612,
+            0.1994535519125683
+          ]
+        },
+        "f1": {
+          "mean": 0.2117683281344614,
+          "std": 0.026540317626849958,
+          "values": [
+            0.2361111111111111,
+            0.22784810126582278,
+            0.18181818181818182,
+            0.17721518987341772,
+            0.23584905660377353
+          ]
+        },
+        "f2": {
+          "mean": 0.3233142633909446,
+          "std": 0.0634186629778363,
+          "values": [
+            0.41362530413625304,
+            0.3202846975088968,
+            0.2604166666666667,
+            0.2491103202846975,
+            0.373134328358209
+          ]
+        },
+        "accuracy": {
+          "mean": 0.8010349288486417,
+          "std": 0.04621394786394021,
+          "values": [
+            0.7153945666235446,
+            0.8421733505821475,
+            0.8253557567917206,
+            0.8318240620957309,
+            0.7904269081500647
+          ]
+        },
+        "pr_auc": {
+          "mean": 0.19504624740144735,
+          "std": 0.019872736316592064,
+          "values": [
+            0.20285308427453852,
+            0.20064347970517932,
+            0.18181629929049153,
+            0.16574184744457215,
+            0.2241765262924552
+          ]
+        },
+        "roc_auc": {
+          "mean": 0.8048713847794214,
+          "std": 0.019527642752717497,
+          "values": [
+            0.8011462081833933,
+            0.8202718912435025,
+            0.774556843929095,
+            0.7974143675862988,
+            0.830967612954818
+          ]
+        },
+        "support": {
+          "mean": 773.0,
+          "std": 0.0,
+          "values": [
+            773.0,
+            773.0,
+            773.0,
+            773.0,
+            773.0
+          ]
+        },
+        "positive_support": {
+          "mean": 41.0,
+          "std": 0.0,
+          "values": [
+            41.0,
+            41.0,
+            41.0,
+            41.0,
+            41.0
+          ]
+        },
+        "negative_support": {
+          "mean": 732.0,
+          "std": 0.0,
+          "values": [
+            732.0,
+            732.0,
+            732.0,
+            732.0,
+            732.0
+          ]
+        }
+      },
+      "callgraph-gcn": {
+        "threshold": {
+          "mean": 0.5562,
+          "std": 0.2855754891442891,
+          "values": [
+            0.041,
+            0.871,
+            0.708,
+            0.678,
+            0.483
+          ]
+        },
+        "tp": {
+          "mean": 26.0,
+          "std": 5.513619500836088,
+          "values": [
+            35.0,
+            21.0,
+            20.0,
+            25.0,
+            29.0
+          ]
+        },
+        "tn": {
+          "mean": 596.0,
+          "std": 53.44529913846493,
+          "values": [
+            527.0,
+            622.0,
+            638.0,
+            656.0,
+            537.0
+          ]
+        },
+        "fp": {
+          "mean": 136.0,
+          "std": 53.44529913846493,
+          "values": [
+            205.0,
+            110.0,
+            94.0,
+            76.0,
+            195.0
+          ]
+        },
+        "fn": {
+          "mean": 15.0,
+          "std": 5.513619500836088,
+          "values": [
+            6.0,
+            20.0,
+            21.0,
+            16.0,
+            12.0
+          ]
+        },
+        "precision": {
+          "mean": 0.171713262305109,
+          "std": 0.040856205194251885,
+          "values": [
+            0.14583333333333334,
+            0.16030534351145037,
+            0.17543859649122806,
+            0.24752475247524752,
+            0.12946428571428573
+          ]
+        },
+        "recall": {
+          "mean": 0.6341463414634146,
+          "std": 0.13447852441063632,
+          "values": [
+            0.8536585365853658,
+            0.5121951219512195,
+            0.4878048780487805,
+            0.6097560975609756,
+            0.7073170731707317
+          ]
+        },
+        "specificity": {
+          "mean": 0.8142076502732241,
+          "std": 0.07301270374107231,
+          "values": [
+            0.7199453551912568,
+            0.8497267759562842,
+            0.8715846994535519,
+            0.8961748633879781,
+            0.7336065573770492
+          ]
+        },
+        "false_positive_rate": {
+          "mean": 0.18579234972677597,
+          "std": 0.0730127037410723,
+          "values": [
+            0.28005464480874315,
+            0.15027322404371585,
+            0.1284153005464481,
+            0.10382513661202186,
+            0.26639344262295084
+          ]
+        },
+        "f1": {
+          "mean": 0.2644682967019995,
+          "std": 0.045714716870681536,
+          "values": [
+            0.2491103202846975,
+            0.2441860465116279,
+            0.25806451612903225,
+            0.352112676056338,
+            0.21886792452830192
+          ]
+        },
+        "f2": {
+          "mean": 0.39884444077021475,
+          "std": 0.04580447318617286,
+          "values": [
+            0.4331683168316832,
+            0.35593220338983045,
+            0.3597122302158273,
+            0.4716981132075471,
+            0.3737113402061855
+          ]
+        },
+        "accuracy": {
+          "mean": 0.8046571798188875,
+          "std": 0.06325460231726321,
+          "values": [
+            0.7270375161707633,
+            0.8318240620957309,
+            0.851228978007762,
+            0.8809831824062095,
+            0.7322121604139715
+          ]
+        },
+        "pr_auc": {
+          "mean": 0.27830361611419174,
+          "std": 0.022044429814742538,
+          "values": [
+            0.2416595831190396,
+            0.2757474732448775,
+            0.30426917999746284,
+            0.272297978235692,
+            0.29754386597388693
+          ]
+        },
+        "roc_auc": {
+          "mean": 0.8322604291616686,
+          "std": 0.016128612511760027,
+          "values": [
+            0.8406137544982007,
+            0.8251865920298547,
+            0.8232373717179795,
+            0.8592562974810075,
+            0.8130081300813008
+          ]
+        },
+        "support": {
+          "mean": 773.0,
+          "std": 0.0,
+          "values": [
+            773.0,
+            773.0,
+            773.0,
+            773.0,
+            773.0
+          ]
+        },
+        "positive_support": {
+          "mean": 41.0,
+          "std": 0.0,
+          "values": [
+            41.0,
+            41.0,
+            41.0,
+            41.0,
+            41.0
+          ]
+        },
+        "negative_support": {
+          "mean": 732.0,
+          "std": 0.0,
+          "values": [
+            732.0,
+            732.0,
+            732.0,
+            732.0,
+            732.0
+          ]
+        }
+      },
+      "sequence": {
+        "threshold": {
+          "mean": 0.2686,
+          "std": 0.24626376103682004,
+          "values": [
+            0.398,
+            0.008,
+            0.127,
+            0.6890000000000001,
+            0.121
+          ]
+        },
+        "tp": {
+          "mean": 28.6,
+          "std": 5.4626001134990645,
+          "values": [
+            23.0,
+            36.0,
+            34.0,
+            23.0,
+            27.0
+          ]
+        },
+        "tn": {
+          "mean": 559.4,
+          "std": 61.337101333532225,
+          "values": [
+            606.0,
+            474.0,
+            506.0,
+            639.0,
+            572.0
+          ]
+        },
+        "fp": {
+          "mean": 172.6,
+          "std": 61.337101333532225,
+          "values": [
+            126.0,
+            258.0,
+            226.0,
+            93.0,
+            160.0
+          ]
+        },
+        "fn": {
+          "mean": 12.4,
+          "std": 5.4626001134990645,
+          "values": [
+            18.0,
+            5.0,
+            7.0,
+            18.0,
+            14.0
+          ]
+        },
+        "precision": {
+          "mean": 0.15004830305507671,
+          "std": 0.02649523354243759,
+          "values": [
+            0.15436241610738255,
+            0.12244897959183673,
+            0.13076923076923078,
+            0.19827586206896552,
+            0.1443850267379679
+          ]
+        },
+        "recall": {
+          "mean": 0.697560975609756,
+          "std": 0.13323414910973327,
+          "values": [
+            0.5609756097560976,
+            0.8780487804878049,
+            0.8292682926829268,
+            0.5609756097560976,
+            0.6585365853658537
+          ]
+        },
+        "specificity": {
+          "mean": 0.7642076502732241,
+          "std": 0.08379385428078172,
+          "values": [
+            0.8278688524590164,
+            0.6475409836065574,
+            0.6912568306010929,
+            0.8729508196721312,
+            0.7814207650273224
+          ]
+        },
+        "false_positive_rate": {
+          "mean": 0.23579234972677593,
+          "std": 0.08379385428078173,
+          "values": [
+            0.1721311475409836,
+            0.3524590163934426,
+            0.3087431693989071,
+            0.12704918032786885,
+            0.2185792349726776
+          ]
+        },
+        "f1": {
+          "mean": 0.2425559986782176,
+          "std": 0.026896939028974175,
+          "values": [
+            0.24210526315789474,
+            0.21492537313432836,
+            0.22591362126245848,
+            0.29299363057324845,
+            0.23684210526315785
+          ]
+        },
+        "f2": {
+          "mean": 0.3913396615135693,
+          "std": 0.01475229025777623,
+          "values": [
+            0.3674121405750799,
+            0.3930131004366812,
+            0.40094339622641506,
+            0.4107142857142857,
+            0.38461538461538464
+          ]
+        },
+        "accuracy": {
+          "mean": 0.7606727037516171,
+          "std": 0.0724126706560805,
+          "values": [
+            0.8137128072445019,
+            0.6597671410090556,
+            0.6985769728331177,
+            0.8564036222509702,
+            0.7749029754204398
+          ]
+        },
+        "pr_auc": {
+          "mean": 0.22730289987288796,
+          "std": 0.02095438625058032,
+          "values": [
+            0.20802845225321215,
+            0.20880574631098792,
+            0.21586559624727597,
+            0.2602802975280209,
+            0.24353440702494272
+          ]
+        },
+        "roc_auc": {
+          "mean": 0.8305877648940424,
+          "std": 0.011308057777212981,
+          "values": [
+            0.8237371717979476,
+            0.8171731307477008,
+            0.8318006130880982,
+            0.8508263361322137,
+            0.8294015727042516
+          ]
+        },
+        "support": {
+          "mean": 773.0,
+          "std": 0.0,
+          "values": [
+            773.0,
+            773.0,
+            773.0,
+            773.0,
+            773.0
+          ]
+        },
+        "positive_support": {
+          "mean": 41.0,
+          "std": 0.0,
+          "values": [
+            41.0,
+            41.0,
+            41.0,
+            41.0,
+            41.0
+          ]
+        },
+        "negative_support": {
+          "mean": 732.0,
+          "std": 0.0,
+          "values": [
+            732.0,
+            732.0,
+            732.0,
+            732.0,
+            732.0
+          ]
+        }
+      },
+      "HyperVul-Full": {
+        "threshold": {
+          "mean": 0.0622,
+          "std": 0.04842478704134898,
+          "values": [
+            0.105,
+            0.007,
+            0.001,
+            0.085,
+            0.113
+          ]
+        },
+        "tp": {
+          "mean": 28.8,
+          "std": 3.3105890714493698,
+          "values": [
+            28.0,
+            31.0,
+            34.0,
+            25.0,
+            26.0
+          ]
+        },
+        "tn": {
+          "mean": 590.4,
+          "std": 37.93468070249175,
+          "values": [
+            607.0,
+            586.0,
+            519.0,
+            615.0,
+            625.0
+          ]
+        },
+        "fp": {
+          "mean": 141.6,
+          "std": 37.934680702491754,
+          "values": [
+            125.0,
+            146.0,
+            213.0,
+            117.0,
+            107.0
+          ]
+        },
+        "fn": {
+          "mean": 12.2,
+          "std": 3.3105890714493698,
+          "values": [
+            13.0,
+            10.0,
+            7.0,
+            16.0,
+            15.0
+          ]
+        },
+        "precision": {
+          "mean": 0.17346893211611877,
+          "std": 0.01932973721776076,
+          "values": [
+            0.1830065359477124,
+            0.1751412429378531,
+            0.13765182186234817,
+            0.176056338028169,
+            0.19548872180451127
+          ]
+        },
+        "recall": {
+          "mean": 0.7024390243902439,
+          "std": 0.08074607491339925,
+          "values": [
+            0.6829268292682927,
+            0.7560975609756098,
+            0.8292682926829268,
+            0.6097560975609756,
+            0.6341463414634146
+          ]
+        },
+        "specificity": {
+          "mean": 0.8065573770491803,
+          "std": 0.05182333429302153,
+          "values": [
+            0.8292349726775956,
+            0.8005464480874317,
+            0.7090163934426229,
+            0.8401639344262295,
+            0.8538251366120219
+          ]
+        },
+        "false_positive_rate": {
+          "mean": 0.19344262295081968,
+          "std": 0.051823334293021515,
+          "values": [
+            0.17076502732240437,
+            0.1994535519125683,
+            0.29098360655737704,
+            0.1598360655737705,
+            0.14617486338797814
+          ]
+        },
+        "f1": {
+          "mean": 0.2762498386157611,
+          "std": 0.021686669188130836,
+          "values": [
+            0.28865979381443296,
+            0.28440366972477066,
+            0.2361111111111111,
+            0.27322404371584696,
+            0.29885057471264365
+          ]
+        },
+        "f2": {
+          "mean": 0.431203661393437,
+          "std": 0.017439643320472722,
+          "values": [
+            0.44164037854889593,
+            0.4545454545454546,
+            0.41362530413625304,
+            0.4084967320261437,
+            0.43771043771043766
+          ]
+        },
+        "accuracy": {
+          "mean": 0.8010349288486417,
+          "std": 0.04511447041423462,
+          "values": [
+            0.8214747736093143,
+            0.7981888745148771,
+            0.7153945666235446,
+            0.8279430789133247,
+            0.8421733505821475
+          ]
+        },
+        "pr_auc": {
+          "mean": 0.20424363178578905,
+          "std": 0.015258659321479134,
+          "values": [
+            0.19311098588800724,
+            0.19913737666142287,
+            0.21975981025481356,
+            0.18494398066296913,
+            0.22426600546173248
+          ]
+        },
+        "roc_auc": {
+          "mean": 0.8295481807277089,
+          "std": 0.008165878850580571,
+          "values": [
+            0.827302412368386,
+            0.8361655337864854,
+            0.835099293615887,
+            0.8144742103158736,
+            0.8346994535519126
+          ]
+        },
+        "support": {
+          "mean": 773.0,
+          "std": 0.0,
+          "values": [
+            773.0,
+            773.0,
+            773.0,
+            773.0,
+            773.0
+          ]
+        },
+        "positive_support": {
+          "mean": 41.0,
+          "std": 0.0,
+          "values": [
+            41.0,
+            41.0,
+            41.0,
+            41.0,
+            41.0
+          ]
+        },
+        "negative_support": {
+          "mean": 732.0,
+          "std": 0.0,
+          "values": [
+            732.0,
+            732.0,
+            732.0,
+            732.0,
+            732.0
+          ]
+        }
+      }
+    }
+  },
+  "rq2": {
+    "models": {
+      "pairwise-gat": {
+        "threshold": {
+          "mean": 0.3782,
+          "std": 0.3287840628740998,
+          "values": [
+            0.786,
+            0.775,
+            0.085,
+            0.12,
+            0.125
+          ]
+        },
+        "tp": {
+          "mean": 24.4,
+          "std": 2.244994432064365,
+          "values": [
+            23.0,
+            28.0,
+            26.0,
+            22.0,
+            23.0
+          ]
+        },
+        "tn": {
+          "mean": 591.8,
+          "std": 29.87574266859319,
+          "values": [
+            617.0,
+            550.0,
+            565.0,
+            599.0,
+            628.0
+          ]
+        },
+        "fp": {
+          "mean": 140.2,
+          "std": 29.87574266859319,
+          "values": [
+            115.0,
+            182.0,
+            167.0,
+            133.0,
+            104.0
+          ]
+        },
+        "fn": {
+          "mean": 16.6,
+          "std": 2.244994432064365,
+          "values": [
+            18.0,
+            13.0,
+            15.0,
+            19.0,
+            18.0
+          ]
+        },
+        "precision": {
+          "mean": 0.1515505743964856,
+          "std": 0.019023974027008252,
+          "values": [
+            0.16666666666666666,
+            0.13333333333333333,
+            0.13471502590673576,
+            0.14193548387096774,
+            0.18110236220472442
+          ]
+        },
+        "recall": {
+          "mean": 0.5951219512195123,
+          "std": 0.05475596175766743,
+          "values": [
+            0.5609756097560976,
+            0.6829268292682927,
+            0.6341463414634146,
+            0.5365853658536586,
+            0.5609756097560976
+          ]
+        },
+        "specificity": {
+          "mean": 0.8084699453551913,
+          "std": 0.04081385610463551,
+          "values": [
+            0.842896174863388,
+            0.7513661202185792,
+            0.7718579234972678,
+            0.8183060109289617,
+            0.8579234972677595
+          ]
+        },
+        "false_positive_rate": {
+          "mean": 0.19153005464480874,
+          "std": 0.04081385610463551,
+          "values": [
+            0.15710382513661203,
+            0.24863387978142076,
+            0.22814207650273224,
+            0.18169398907103826,
+            0.14207650273224043
+          ]
+        },
+        "f1": {
+          "mean": 0.24012247037893855,
+          "std": 0.0213232707052317,
+          "values": [
+            0.2569832402234637,
+            0.22310756972111556,
+            0.22222222222222224,
+            0.22448979591836735,
+            0.27380952380952384
+          ]
+        },
+        "f2": {
+          "mean": 0.37185770013910446,
+          "std": 0.016854923920099654,
+          "values": [
+            0.38079470198675497,
+            0.37433155080213903,
+            0.36414565826330536,
+            0.3448275862068966,
+            0.39518900343642616
+          ]
+        },
+        "accuracy": {
+          "mean": 0.7971539456662355,
+          "std": 0.036105892484272914,
+          "values": [
+            0.8279430789133247,
+            0.7477360931435963,
+            0.7645536869340233,
+            0.8033635187580854,
+            0.8421733505821475
+          ]
+        },
+        "pr_auc": {
+          "mean": 0.2799376889401003,
+          "std": 0.044317603271170326,
+          "values": [
+            0.3249395084313386,
+            0.2862224544908098,
+            0.26286020605954663,
+            0.20418667161430498,
+            0.3214796041045015
+          ]
+        },
+        "roc_auc": {
+          "mean": 0.8016393442622951,
+          "std": 0.01592667535237324,
+          "values": [
+            0.8252365720378515,
+            0.7890177262428362,
+            0.7839530854324936,
+            0.7945821671331468,
+            0.8154071704651472
+          ]
+        },
+        "support": {
+          "mean": 773.0,
+          "std": 0.0,
+          "values": [
+            773.0,
+            773.0,
+            773.0,
+            773.0,
+            773.0
+          ]
+        },
+        "positive_support": {
+          "mean": 41.0,
+          "std": 0.0,
+          "values": [
+            41.0,
+            41.0,
+            41.0,
+            41.0,
+            41.0
+          ]
+        },
+        "negative_support": {
+          "mean": 732.0,
+          "std": 0.0,
+          "values": [
+            732.0,
+            732.0,
+            732.0,
+            732.0,
+            732.0
+          ]
+        }
+      },
+      "hyperedge-nn": {
+        "threshold": {
+          "mean": 0.6384000000000001,
+          "std": 0.19832861619040257,
+          "values": [
+            0.321,
+            0.937,
+            0.687,
+            0.668,
+            0.579
+          ]
+        },
+        "tp": {
+          "mean": 24.2,
+          "std": 2.481934729198171,
+          "values": [
+            28.0,
+            26.0,
+            23.0,
+            23.0,
+            21.0
+          ]
+        },
+        "tn": {
+          "mean": 617.8,
+          "std": 19.415457759218555,
+          "values": [
+            582.0,
+            628.0,
+            619.0,
+            620.0,
+            640.0
+          ]
+        },
+        "fp": {
+          "mean": 114.2,
+          "std": 19.415457759218555,
+          "values": [
+            150.0,
+            104.0,
+            113.0,
+            112.0,
+            92.0
+          ]
+        },
+        "fn": {
+          "mean": 16.8,
+          "std": 2.481934729198171,
+          "values": [
+            13.0,
+            15.0,
+            18.0,
+            18.0,
+            20.0
+          ]
+        },
+        "precision": {
+          "mean": 0.1765264192360625,
+          "std": 0.014832918815285749,
+          "values": [
+            0.15730337078651685,
+            0.2,
+            0.16911764705882354,
+            0.17037037037037037,
+            0.18584070796460178
+          ]
+        },
+        "recall": {
+          "mean": 0.5902439024390245,
+          "std": 0.060534993395077355,
+          "values": [
+            0.6829268292682927,
+            0.6341463414634146,
+            0.5609756097560976,
+            0.5609756097560976,
+            0.5121951219512195
+          ]
+        },
+        "specificity": {
+          "mean": 0.8439890710382514,
+          "std": 0.026523849397839548,
+          "values": [
+            0.7950819672131147,
+            0.8579234972677595,
+            0.8456284153005464,
+            0.8469945355191257,
+            0.8743169398907104
+          ]
+        },
+        "false_positive_rate": {
+          "mean": 0.15601092896174865,
+          "std": 0.02652384939783956,
+          "values": [
+            0.20491803278688525,
+            0.14207650273224043,
+            0.15437158469945356,
+            0.15300546448087432,
+            0.12568306010928962
+          ]
+        },
+        "f1": {
+          "mean": 0.2707558489098333,
+          "std": 0.01759591025948716,
+          "values": [
+            0.2557077625570776,
+            0.30409356725146197,
+            0.2598870056497175,
+            0.26136363636363635,
+            0.2727272727272727
+          ]
+        },
+        "f2": {
+          "mean": 0.3997087371368743,
+          "std": 0.0237440640109808,
+          "values": [
+            0.40935672514619886,
+            0.44217687074829937,
+            0.3833333333333334,
+            0.3846153846153846,
+            0.37906137184115524
+          ]
+        },
+        "accuracy": {
+          "mean": 0.8305304010349289,
+          "std": 0.022629826241314228,
+          "values": [
+            0.7891332470892626,
+            0.8460543337645536,
+            0.8305304010349288,
+            0.8318240620957309,
+            0.8551099611901681
+          ]
+        },
+        "pr_auc": {
+          "mean": 0.26446357981435,
+          "std": 0.02960833421288947,
+          "values": [
+            0.21991258856637025,
+            0.24690101795898722,
+            0.26240473416795784,
+            0.29289289197693846,
+            0.3002066664014961
+          ]
+        },
+        "roc_auc": {
+          "mean": 0.8108290017326402,
+          "std": 0.008463611924099959,
+          "values": [
+            0.8116086898573904,
+            0.8177062508330002,
+            0.7948487271757964,
+            0.818172730907637,
+            0.8118086098893776
+          ]
+        },
+        "support": {
+          "mean": 773.0,
+          "std": 0.0,
+          "values": [
+            773.0,
+            773.0,
+            773.0,
+            773.0,
+            773.0
+          ]
+        },
+        "positive_support": {
+          "mean": 41.0,
+          "std": 0.0,
+          "values": [
+            41.0,
+            41.0,
+            41.0,
+            41.0,
+            41.0
+          ]
+        },
+        "negative_support": {
+          "mean": 732.0,
+          "std": 0.0,
+          "values": [
+            732.0,
+            732.0,
+            732.0,
+            732.0,
+            732.0
+          ]
+        }
+      },
+      "pairwise-gcn": {
+        "threshold": {
+          "mean": 0.503,
+          "std": 0.3616324100519753,
+          "values": [
+            0.056,
+            0.133,
+            0.525,
+            0.882,
+            0.919
+          ]
+        },
+        "tp": {
+          "mean": 22.2,
+          "std": 3.7629775444453557,
+          "values": [
+            29.0,
+            21.0,
+            18.0,
+            23.0,
+            20.0
+          ]
+        },
+        "tn": {
+          "mean": 584.0,
+          "std": 40.64972324629038,
+          "values": [
+            512.0,
+            577.0,
+            617.0,
+            586.0,
+            628.0
+          ]
+        },
+        "fp": {
+          "mean": 148.0,
+          "std": 40.64972324629038,
+          "values": [
+            220.0,
+            155.0,
+            115.0,
+            146.0,
+            104.0
+          ]
+        },
+        "fn": {
+          "mean": 18.8,
+          "std": 3.7629775444453557,
+          "values": [
+            12.0,
+            20.0,
+            23.0,
+            18.0,
+            21.0
+          ]
+        },
+        "precision": {
+          "mean": 0.13370147765470336,
+          "std": 0.01595930254927567,
+          "values": [
+            0.11646586345381527,
+            0.11931818181818182,
+            0.13533834586466165,
+            0.13609467455621302,
+            0.16129032258064516
+          ]
+        },
+        "recall": {
+          "mean": 0.5414634146341464,
+          "std": 0.0917799401084233,
+          "values": [
+            0.7073170731707317,
+            0.5121951219512195,
+            0.43902439024390244,
+            0.5609756097560976,
+            0.4878048780487805
+          ]
+        },
+        "specificity": {
+          "mean": 0.7978142076502732,
+          "std": 0.0555324088064076,
+          "values": [
+            0.6994535519125683,
+            0.7882513661202186,
+            0.842896174863388,
+            0.8005464480874317,
+            0.8579234972677595
+          ]
+        },
+        "false_positive_rate": {
+          "mean": 0.20218579234972678,
+          "std": 0.05553240880640761,
+          "values": [
+            0.3005464480874317,
+            0.21174863387978143,
+            0.15710382513661203,
+            0.1994535519125683,
+            0.14207650273224043
+          ]
+        },
+        "f1": {
+          "mean": 0.21238336005855468,
+          "std": 0.01723412800052181,
+          "values": [
+            0.2,
+            0.1935483870967742,
+            0.2068965517241379,
+            0.21904761904761905,
+            0.24242424242424243
+          ]
+        },
+        "f2": {
+          "mean": 0.3311021976774719,
+          "std": 0.020719983410185935,
+          "values": [
+            0.35108958837772397,
+            0.3088235294117647,
+            0.30303030303030304,
+            0.34534534534534533,
+            0.34722222222222227
+          ]
+        },
+        "accuracy": {
+          "mean": 0.7842173350582147,
+          "std": 0.04806712525761834,
+          "values": [
+            0.6998706338939198,
+            0.7736093143596378,
+            0.8214747736093143,
+            0.7878395860284605,
+            0.8382923673997412
+          ]
+        },
+        "pr_auc": {
+          "mean": 0.21403664044834453,
+          "std": 0.017980124607293646,
+          "values": [
+            0.17987897881388987,
+            0.22953011655323824,
+            0.22643508688189362,
+            0.21291042927705242,
+            0.22142859071564844
+          ]
+        },
+        "roc_auc": {
+          "mean": 0.7893209382913502,
+          "std": 0.016478830984349817,
+          "values": [
+            0.7922497667599627,
+            0.7685259229641477,
+            0.7756897241103559,
+            0.7942323070771691,
+            0.8159069705451153
+          ]
+        },
+        "support": {
+          "mean": 773.0,
+          "std": 0.0,
+          "values": [
+            773.0,
+            773.0,
+            773.0,
+            773.0,
+            773.0
+          ]
+        },
+        "positive_support": {
+          "mean": 41.0,
+          "std": 0.0,
+          "values": [
+            41.0,
+            41.0,
+            41.0,
+            41.0,
+            41.0
+          ]
+        },
+        "negative_support": {
+          "mean": 732.0,
+          "std": 0.0,
+          "values": [
+            732.0,
+            732.0,
+            732.0,
+            732.0,
+            732.0
+          ]
+        }
+      },
+      "set-pool": {
+        "threshold": {
+          "mean": 0.6048,
+          "std": 0.2586668900342678,
+          "values": [
+            0.596,
+            0.504,
+            0.18,
+            0.849,
+            0.895
+          ]
+        },
+        "tp": {
+          "mean": 27.0,
+          "std": 2.1908902300206643,
+          "values": [
+            25.0,
+            31.0,
+            25.0,
+            27.0,
+            27.0
+          ]
+        },
+        "tn": {
+          "mean": 556.2,
+          "std": 24.044957891416654,
+          "values": [
+            557.0,
+            513.0,
+            564.0,
+            587.0,
+            560.0
+          ]
+        },
+        "fp": {
+          "mean": 175.8,
+          "std": 24.044957891416654,
+          "values": [
+            175.0,
+            219.0,
+            168.0,
+            145.0,
+            172.0
+          ]
+        },
+        "fn": {
+          "mean": 14.0,
+          "std": 2.1908902300206643,
+          "values": [
+            16.0,
+            10.0,
+            16.0,
+            14.0,
+            14.0
+          ]
+        },
+        "precision": {
+          "mean": 0.13423776298046444,
+          "std": 0.012094735567491265,
+          "values": [
+            0.125,
+            0.124,
+            0.12953367875647667,
+            0.1569767441860465,
+            0.135678391959799
+          ]
+        },
+        "recall": {
+          "mean": 0.6585365853658537,
+          "std": 0.05343634707367475,
+          "values": [
+            0.6097560975609756,
+            0.7560975609756098,
+            0.6097560975609756,
+            0.6585365853658537,
+            0.6585365853658537
+          ]
+        },
+        "specificity": {
+          "mean": 0.7598360655737705,
+          "std": 0.03284830313035062,
+          "values": [
+            0.7609289617486339,
+            0.7008196721311475,
+            0.7704918032786885,
+            0.8019125683060109,
+            0.7650273224043715
+          ]
+        },
+        "false_positive_rate": {
+          "mean": 0.24016393442622955,
+          "std": 0.03284830313035062,
+          "values": [
+            0.2390710382513661,
+            0.29918032786885246,
+            0.22950819672131148,
+            0.19808743169398907,
+            0.23497267759562843
+          ]
+        },
+        "f1": {
+          "mean": 0.22254472786956261,
+          "std": 0.01650154648429895,
+          "values": [
+            0.2074688796680498,
+            0.21305841924398625,
+            0.21367521367521364,
+            0.2535211267605634,
+            0.225
+          ]
+        },
+        "f2": {
+          "mean": 0.36832586508533965,
+          "std": 0.0205955518963642,
+          "values": [
+            0.3434065934065934,
+            0.3743961352657005,
+            0.35014005602240894,
+            0.40178571428571436,
+            0.371900826446281
+          ]
+        },
+        "accuracy": {
+          "mean": 0.7544631306597671,
+          "std": 0.029127777813314343,
+          "values": [
+            0.7529107373868047,
+            0.703751617076326,
+            0.7619663648124192,
+            0.7943078913324709,
+            0.759379042690815
+          ]
+        },
+        "pr_auc": {
+          "mean": 0.22949775029078623,
+          "std": 0.012566507863439312,
+          "values": [
+            0.21741517837385868,
+            0.2447795215178816,
+            0.23368138088322501,
+            0.23932130240982757,
+            0.2122913682691382
+          ]
+        },
+        "roc_auc": {
+          "mean": 0.7979141676662669,
+          "std": 0.00599311959578922,
+          "values": [
+            0.7882513661202187,
+            0.8016793282686925,
+            0.7987804878048781,
+            0.8058443289350926,
+            0.7950153272024524
+          ]
+        },
+        "support": {
+          "mean": 773.0,
+          "std": 0.0,
+          "values": [
+            773.0,
+            773.0,
+            773.0,
+            773.0,
+            773.0
+          ]
+        },
+        "positive_support": {
+          "mean": 41.0,
+          "std": 0.0,
+          "values": [
+            41.0,
+            41.0,
+            41.0,
+            41.0,
+            41.0
+          ]
+        },
+        "negative_support": {
+          "mean": 732.0,
+          "std": 0.0,
+          "values": [
+            732.0,
+            732.0,
+            732.0,
+            732.0,
+            732.0
+          ]
+        }
+      }
+    },
+    "paired_significance": [
+      {
+        "baseline": "set-pool",
+        "metric": "f1",
+        "n": 5,
+        "mean_delta": 0.048211121040270616,
+        "p_value": 0.0625,
+        "deltas": [
+          0.07909356725146197,
+          0.04682858640573126,
+          0.048238882889027807,
+          0.01920614596670933,
+          0.047688422688422716
+        ]
+      },
+      {
+        "baseline": "set-pool",
+        "metric": "f2",
+        "n": 5,
+        "mean_delta": 0.03138287205153466,
+        "p_value": 0.1875,
+        "deltas": [
+          0.07027604430201839,
+          0.008937198067632934,
+          0.06595013173960546,
+          -0.02272434244455912,
+          0.03447532859297564
+        ]
+      },
+      {
+        "baseline": "set-pool",
+        "metric": "pr_auc",
+        "n": 5,
+        "mean_delta": 0.034965829523563766,
+        "p_value": 0.0625,
+        "deltas": [
+          0.03460964968984903,
+          0.017625212650076244,
+          0.0024974101925115677,
+          0.06088536399166855,
+          0.05921151109371345
+        ]
+      },
+      {
+        "baseline": "set-pool",
+        "metric": "roc_auc",
+        "n": 5,
+        "mean_delta": 0.012914834066373459,
+        "p_value": 0.1875,
+        "deltas": [
+          0.02269092363054781,
+          -0.006830601092896127,
+          0.023357323737171698,
+          0.005964280954285028,
+          0.019392243102758888
+        ]
+      },
+      {
+        "baseline": "pairwise-gcn",
+        "metric": "f1",
+        "n": 5,
+        "mean_delta": 0.05837248885127851,
+        "p_value": 0.0625,
+        "deltas": [
+          0.10409356725146196,
+          0.052990453925579606,
+          0.06215937546030342,
+          0.030303030303030276,
+          0.04231601731601731
+        ]
+      },
+      {
+        "baseline": "pairwise-gcn",
+        "metric": "f2",
+        "n": 5,
+        "mean_delta": 0.06860653945940243,
+        "p_value": 0.0625,
+        "deltas": [
+          0.0910872823705754,
+          0.08030303030303038,
+          0.10053319573443414,
+          0.03183914961893297,
+          0.03927003927003925
+        ]
+      },
+      {
+        "baseline": "pairwise-gcn",
+        "metric": "pr_auc",
+        "n": 5,
+        "mean_delta": 0.050426939366005466,
+        "p_value": 0.125,
+        "deltas": [
+          0.06702203914509736,
+          0.03596964728606422,
+          -0.00961752798686799,
+          0.07877807568584769,
+          0.07998246269988604
+        ]
+      },
+      {
+        "baseline": "pairwise-gcn",
+        "metric": "roc_auc",
+        "n": 5,
+        "mean_delta": 0.021508063441290193,
+        "p_value": 0.125,
+        "deltas": [
+          0.025456484073037466,
+          0.019159003065440494,
+          0.04308276689324275,
+          -0.004098360655737654,
+          0.023940423830467905
+        ]
+      },
+      {
+        "baseline": "pairwise-gat",
+        "metric": "f1",
+        "n": 5,
+        "mean_delta": 0.030633378530894696,
+        "p_value": 0.125,
+        "deltas": [
+          0.04711032702799828,
+          -0.01392251815980633,
+          0.03260019283596205,
+          0.04823747680890536,
+          0.039141414141414116
+        ]
+      },
+      {
+        "baseline": "pairwise-gat",
+        "metric": "f2",
+        "n": 5,
+        "mean_delta": 0.027851036997769873,
+        "p_value": 0.125,
+        "deltas": [
+          0.0613821687615444,
+          -0.011855670103092741,
+          0.03502517434405983,
+          0.03423378563425866,
+          0.02046972635207922
+        ]
+      },
+      {
+        "baseline": "pairwise-gat",
+        "metric": "pr_auc",
+        "n": 5,
+        "mean_delta": -0.015474109125750323,
+        "p_value": 0.6875,
+        "deltas": [
+          -0.0780384904723514,
+          -0.05907486993654365,
+          -0.06630986592443955,
+          0.09601999478719114,
+          0.030032685917391833
+        ]
+      },
+      {
+        "baseline": "pairwise-gat",
+        "metric": "roc_auc",
+        "n": 5,
+        "mean_delta": 0.009189657470345258,
+        "p_value": 0.4375,
+        "deltas": [
+          -0.007530321204851309,
+          -0.02055844328935086,
+          0.02259096361455426,
+          0.017226442756230864,
+          0.034219645475143334
+        ]
+      }
+    ]
+  },
+  "rq3": {
+    "models": {
+      "full": {
+        "threshold": {
+          "mean": 0.0622,
+          "std": 0.04842478704134898,
+          "values": [
+            0.105,
+            0.007,
+            0.001,
+            0.085,
+            0.113
+          ]
+        },
+        "tp": {
+          "mean": 28.8,
+          "std": 3.3105890714493698,
+          "values": [
+            28.0,
+            31.0,
+            34.0,
+            25.0,
+            26.0
+          ]
+        },
+        "tn": {
+          "mean": 590.4,
+          "std": 37.93468070249175,
+          "values": [
+            607.0,
+            586.0,
+            519.0,
+            615.0,
+            625.0
+          ]
+        },
+        "fp": {
+          "mean": 141.6,
+          "std": 37.934680702491754,
+          "values": [
+            125.0,
+            146.0,
+            213.0,
+            117.0,
+            107.0
+          ]
+        },
+        "fn": {
+          "mean": 12.2,
+          "std": 3.3105890714493698,
+          "values": [
+            13.0,
+            10.0,
+            7.0,
+            16.0,
+            15.0
+          ]
+        },
+        "precision": {
+          "mean": 0.17346893211611877,
+          "std": 0.01932973721776076,
+          "values": [
+            0.1830065359477124,
+            0.1751412429378531,
+            0.13765182186234817,
+            0.176056338028169,
+            0.19548872180451127
+          ]
+        },
+        "recall": {
+          "mean": 0.7024390243902439,
+          "std": 0.08074607491339925,
+          "values": [
+            0.6829268292682927,
+            0.7560975609756098,
+            0.8292682926829268,
+            0.6097560975609756,
+            0.6341463414634146
+          ]
+        },
+        "specificity": {
+          "mean": 0.8065573770491803,
+          "std": 0.05182333429302153,
+          "values": [
+            0.8292349726775956,
+            0.8005464480874317,
+            0.7090163934426229,
+            0.8401639344262295,
+            0.8538251366120219
+          ]
+        },
+        "false_positive_rate": {
+          "mean": 0.19344262295081968,
+          "std": 0.051823334293021515,
+          "values": [
+            0.17076502732240437,
+            0.1994535519125683,
+            0.29098360655737704,
+            0.1598360655737705,
+            0.14617486338797814
+          ]
+        },
+        "f1": {
+          "mean": 0.2762498386157611,
+          "std": 0.021686669188130836,
+          "values": [
+            0.28865979381443296,
+            0.28440366972477066,
+            0.2361111111111111,
+            0.27322404371584696,
+            0.29885057471264365
+          ]
+        },
+        "f2": {
+          "mean": 0.431203661393437,
+          "std": 0.017439643320472722,
+          "values": [
+            0.44164037854889593,
+            0.4545454545454546,
+            0.41362530413625304,
+            0.4084967320261437,
+            0.43771043771043766
+          ]
+        },
+        "accuracy": {
+          "mean": 0.8010349288486417,
+          "std": 0.04511447041423462,
+          "values": [
+            0.8214747736093143,
+            0.7981888745148771,
+            0.7153945666235446,
+            0.8279430789133247,
+            0.8421733505821475
+          ]
+        },
+        "pr_auc": {
+          "mean": 0.20424363178578905,
+          "std": 0.015258659321479134,
+          "values": [
+            0.19311098588800724,
+            0.19913737666142287,
+            0.21975981025481356,
+            0.18494398066296913,
+            0.22426600546173248
+          ]
+        },
+        "roc_auc": {
+          "mean": 0.8295481807277089,
+          "std": 0.008165878850580571,
+          "values": [
+            0.827302412368386,
+            0.8361655337864854,
+            0.835099293615887,
+            0.8144742103158736,
+            0.8346994535519126
+          ]
+        },
+        "support": {
+          "mean": 773.0,
+          "std": 0.0,
+          "values": [
+            773.0,
+            773.0,
+            773.0,
+            773.0,
+            773.0
+          ]
+        },
+        "positive_support": {
+          "mean": 41.0,
+          "std": 0.0,
+          "values": [
+            41.0,
+            41.0,
+            41.0,
+            41.0,
+            41.0
+          ]
+        },
+        "negative_support": {
+          "mean": 732.0,
+          "std": 0.0,
+          "values": [
+            732.0,
+            732.0,
+            732.0,
+            732.0,
+            732.0
+          ]
+        }
+      },
+      "no-contrastive": {
+        "threshold": {
+          "mean": 0.391,
+          "std": 0.2930631331300476,
+          "values": [
+            0.767,
+            0.001,
+            0.6900000000000001,
+            0.194,
+            0.303
+          ]
+        },
+        "tp": {
+          "mean": 22.2,
+          "std": 7.332121111929345,
+          "values": [
+            29.0,
+            33.0,
+            15.0,
+            17.0,
+            17.0
+          ]
+        },
+        "tn": {
+          "mean": 628.2,
+          "std": 46.811964282648944,
+          "values": [
+            604.0,
+            552.0,
+            687.0,
+            660.0,
+            638.0
+          ]
+        },
+        "fp": {
+          "mean": 103.8,
+          "std": 46.81196428264894,
+          "values": [
+            128.0,
+            180.0,
+            45.0,
+            72.0,
+            94.0
+          ]
+        },
+        "fn": {
+          "mean": 18.8,
+          "std": 7.332121111929345,
+          "values": [
+            12.0,
+            8.0,
+            26.0,
+            24.0,
+            24.0
+          ]
+        },
+        "precision": {
+          "mean": 0.1867614684738353,
+          "std": 0.03511169383767368,
+          "values": [
+            0.18471337579617833,
+            0.15492957746478872,
+            0.25,
+            0.19101123595505617,
+            0.15315315315315314
+          ]
+        },
+        "recall": {
+          "mean": 0.5414634146341463,
+          "std": 0.17883222224217912,
+          "values": [
+            0.7073170731707317,
+            0.8048780487804879,
+            0.36585365853658536,
+            0.4146341463414634,
+            0.4146341463414634
+          ]
+        },
+        "specificity": {
+          "mean": 0.8581967213114755,
+          "std": 0.06395077087793571,
+          "values": [
+            0.825136612021858,
+            0.7540983606557377,
+            0.9385245901639344,
+            0.9016393442622951,
+            0.8715846994535519
+          ]
+        },
+        "false_positive_rate": {
+          "mean": 0.1418032786885246,
+          "std": 0.0639507708779357,
+          "values": [
+            0.17486338797814208,
+            0.2459016393442623,
+            0.06147540983606557,
+            0.09836065573770492,
+            0.1284153005464481
+          ]
+        },
+        "f1": {
+          "mean": 0.2670048375298813,
+          "std": 0.026576029499695054,
+          "values": [
+            0.2929292929292929,
+            0.25984251968503935,
+            0.297029702970297,
+            0.2615384615384615,
+            0.22368421052631582
+          ]
+        },
+        "f2": {
+          "mean": 0.3738519790481952,
+          "std": 0.058799913052505814,
+          "values": [
+            0.4517133956386292,
+            0.43766578249336874,
+            0.33482142857142855,
+            0.33596837944664026,
+            0.30909090909090914
+          ]
+        },
+        "accuracy": {
+          "mean": 0.8413971539456663,
+          "std": 0.051653214855235316,
+          "values": [
+            0.8188874514877102,
+            0.7567917205692108,
+            0.908150064683053,
+            0.8758085381630013,
+            0.8473479948253557
+          ]
+        },
+        "pr_auc": {
+          "mean": 0.2158070336890816,
+          "std": 0.031625649543478636,
+          "values": [
+            0.24883799425097278,
+            0.1899949023044653,
+            0.2402687292268948,
+            0.2327035678400571,
+            0.16722997482301813
+          ]
+        },
+        "roc_auc": {
+          "mean": 0.8292816206850594,
+          "std": 0.011739590717891721,
+          "values": [
+            0.8443622550979608,
+            0.8330001332800212,
+            0.8357656937225111,
+            0.8232040517126483,
+            0.8100759696121551
+          ]
+        },
+        "support": {
+          "mean": 773.0,
+          "std": 0.0,
+          "values": [
+            773.0,
+            773.0,
+            773.0,
+            773.0,
+            773.0
+          ]
+        },
+        "positive_support": {
+          "mean": 41.0,
+          "std": 0.0,
+          "values": [
+            41.0,
+            41.0,
+            41.0,
+            41.0,
+            41.0
+          ]
+        },
+        "negative_support": {
+          "mean": 732.0,
+          "std": 0.0,
+          "values": [
+            732.0,
+            732.0,
+            732.0,
+            732.0,
+            732.0
+          ]
+        }
+      },
+      "no-localize": {
+        "threshold": {
+          "mean": 0.166,
+          "std": 0.21357153368368176,
+          "values": [
+            0.5760000000000001,
+            0.018000000000000002,
+            0.052000000000000005,
+            0.008,
+            0.176
+          ]
+        },
+        "tp": {
+          "mean": 24.0,
+          "std": 7.0710678118654755,
+          "values": [
+            16.0,
+            18.0,
+            29.0,
+            35.0,
+            22.0
+          ]
+        },
+        "tn": {
+          "mean": 599.6,
+          "std": 53.16239272267568,
+          "values": [
+            648.0,
+            642.0,
+            600.0,
+            500.0,
+            608.0
+          ]
+        },
+        "fp": {
+          "mean": 132.4,
+          "std": 53.162392722675676,
+          "values": [
+            84.0,
+            90.0,
+            132.0,
+            232.0,
+            124.0
+          ]
+        },
+        "fn": {
+          "mean": 17.0,
+          "std": 7.0710678118654755,
+          "values": [
+            25.0,
+            23.0,
+            12.0,
+            6.0,
+            19.0
+          ]
+        },
+        "precision": {
+          "mean": 0.15771239281961957,
+          "std": 0.016407588206916304,
+          "values": [
+            0.16,
+            0.16666666666666666,
+            0.18012422360248448,
+            0.13108614232209737,
+            0.1506849315068493
+          ]
+        },
+        "recall": {
+          "mean": 0.5853658536585366,
+          "std": 0.17246506858208474,
+          "values": [
+            0.3902439024390244,
+            0.43902439024390244,
+            0.7073170731707317,
+            0.8536585365853658,
+            0.5365853658536586
+          ]
+        },
+        "specificity": {
+          "mean": 0.8191256830601092,
+          "std": 0.07262621956649683,
+          "values": [
+            0.8852459016393442,
+            0.8770491803278688,
+            0.819672131147541,
+            0.6830601092896175,
+            0.8306010928961749
+          ]
+        },
+        "false_positive_rate": {
+          "mean": 0.1808743169398907,
+          "std": 0.07262621956649683,
+          "values": [
+            0.11475409836065574,
+            0.12295081967213115,
+            0.18032786885245902,
+            0.31693989071038253,
+            0.16939890710382513
+          ]
+        },
+        "f1": {
+          "mean": 0.24365133013120718,
+          "std": 0.022411921116208884,
+          "values": [
+            0.22695035460992907,
+            0.24161073825503354,
+            0.2871287128712871,
+            0.22727272727272727,
+            0.23529411764705882
+          ]
+        },
+        "f2": {
+          "mean": 0.3681875388802706,
+          "std": 0.051626191720031585,
+          "values": [
+            0.3030303030303031,
+            0.33088235294117646,
+            0.4461538461538461,
+            0.4060324825986079,
+            0.3548387096774194
+          ]
+        },
+        "accuracy": {
+          "mean": 0.8067270375161707,
+          "std": 0.060338437674056465,
+          "values": [
+            0.8589909443725744,
+            0.8538163001293662,
+            0.8137128072445019,
+            0.6921086675291074,
+            0.815006468305304
+          ]
+        },
+        "pr_auc": {
+          "mean": 0.20012012054670417,
+          "std": 0.021325409603632103,
+          "values": [
+            0.17635407411342205,
+            0.2234857609968786,
+            0.22719165277187037,
+            0.18067943610953605,
+            0.19288967874181362
+          ]
+        },
+        "roc_auc": {
+          "mean": 0.8184059709449555,
+          "std": 0.011013862114918973,
+          "values": [
+            0.7984806077568973,
+            0.820005331200853,
+            0.832433693189391,
+            0.8198720511795282,
+            0.8212381713981075
+          ]
+        },
+        "support": {
+          "mean": 773.0,
+          "std": 0.0,
+          "values": [
+            773.0,
+            773.0,
+            773.0,
+            773.0,
+            773.0
+          ]
+        },
+        "positive_support": {
+          "mean": 41.0,
+          "std": 0.0,
+          "values": [
+            41.0,
+            41.0,
+            41.0,
+            41.0,
+            41.0
+          ]
+        },
+        "negative_support": {
+          "mean": 732.0,
+          "std": 0.0,
+          "values": [
+            732.0,
+            732.0,
+            732.0,
+            732.0,
+            732.0
+          ]
+        }
+      },
+      "security": {
+        "threshold": {
+          "mean": 0.0622,
+          "std": 0.04842478704134898,
+          "values": [
+            0.113,
+            0.085,
+            0.105,
+            0.007,
+            0.001
+          ]
+        },
+        "tp": {
+          "mean": 28.8,
+          "std": 3.3105890714493698,
+          "values": [
+            26.0,
+            25.0,
+            28.0,
+            31.0,
+            34.0
+          ]
+        },
+        "tn": {
+          "mean": 590.4,
+          "std": 37.93468070249175,
+          "values": [
+            625.0,
+            615.0,
+            607.0,
+            586.0,
+            519.0
+          ]
+        },
+        "fp": {
+          "mean": 141.6,
+          "std": 37.934680702491754,
+          "values": [
+            107.0,
+            117.0,
+            125.0,
+            146.0,
+            213.0
+          ]
+        },
+        "fn": {
+          "mean": 12.2,
+          "std": 3.3105890714493698,
+          "values": [
+            15.0,
+            16.0,
+            13.0,
+            10.0,
+            7.0
+          ]
+        },
+        "precision": {
+          "mean": 0.17346893211611877,
+          "std": 0.01932973721776076,
+          "values": [
+            0.19548872180451127,
+            0.176056338028169,
+            0.1830065359477124,
+            0.1751412429378531,
+            0.13765182186234817
+          ]
+        },
+        "recall": {
+          "mean": 0.7024390243902439,
+          "std": 0.08074607491339925,
+          "values": [
+            0.6341463414634146,
+            0.6097560975609756,
+            0.6829268292682927,
+            0.7560975609756098,
+            0.8292682926829268
+          ]
+        },
+        "specificity": {
+          "mean": 0.8065573770491803,
+          "std": 0.05182333429302153,
+          "values": [
+            0.8538251366120219,
+            0.8401639344262295,
+            0.8292349726775956,
+            0.8005464480874317,
+            0.7090163934426229
+          ]
+        },
+        "false_positive_rate": {
+          "mean": 0.19344262295081965,
+          "std": 0.051823334293021515,
+          "values": [
+            0.14617486338797814,
+            0.1598360655737705,
+            0.17076502732240437,
+            0.1994535519125683,
+            0.29098360655737704
+          ]
+        },
+        "f1": {
+          "mean": 0.2762498386157611,
+          "std": 0.021686669188130836,
+          "values": [
+            0.29885057471264365,
+            0.27322404371584696,
+            0.28865979381443296,
+            0.28440366972477066,
+            0.2361111111111111
+          ]
+        },
+        "f2": {
+          "mean": 0.431203661393437,
+          "std": 0.017439643320472722,
+          "values": [
+            0.43771043771043766,
+            0.4084967320261437,
+            0.44164037854889593,
+            0.4545454545454546,
+            0.41362530413625304
+          ]
+        },
+        "accuracy": {
+          "mean": 0.8010349288486417,
+          "std": 0.04511447041423462,
+          "values": [
+            0.8421733505821475,
+            0.8279430789133247,
+            0.8214747736093143,
+            0.7981888745148771,
+            0.7153945666235446
+          ]
+        },
+        "pr_auc": {
+          "mean": 0.20424363178578905,
+          "std": 0.015258659321479132,
+          "values": [
+            0.22426600546173248,
+            0.18494398066296913,
+            0.19311098588800724,
+            0.19913737666142287,
+            0.21975981025481356
+          ]
+        },
+        "roc_auc": {
+          "mean": 0.829548180727709,
+          "std": 0.008165878850580571,
+          "values": [
+            0.8346994535519126,
+            0.8144742103158736,
+            0.827302412368386,
+            0.8361655337864854,
+            0.835099293615887
+          ]
+        },
+        "support": {
+          "mean": 773.0,
+          "std": 0.0,
+          "values": [
+            773.0,
+            773.0,
+            773.0,
+            773.0,
+            773.0
+          ]
+        },
+        "positive_support": {
+          "mean": 41.0,
+          "std": 0.0,
+          "values": [
+            41.0,
+            41.0,
+            41.0,
+            41.0,
+            41.0
+          ]
+        },
+        "negative_support": {
+          "mean": 732.0,
+          "std": 0.0,
+          "values": [
+            732.0,
+            732.0,
+            732.0,
+            732.0,
+            732.0
+          ]
+        }
+      },
+      "emb-only": {
+        "threshold": {
+          "mean": 0.19380000000000003,
+          "std": 0.3193426999322202,
+          "values": [
+            0.8300000000000001,
+            0.007,
+            0.002,
+            0.077,
+            0.053
+          ]
+        },
+        "tp": {
+          "mean": 25.2,
+          "std": 2.6381811916545836,
+          "values": [
+            26.0,
+            24.0,
+            29.0,
+            21.0,
+            26.0
+          ]
+        },
+        "tn": {
+          "mean": 618.6,
+          "std": 17.153425313913257,
+          "values": [
+            629.0,
+            624.0,
+            588.0,
+            638.0,
+            614.0
+          ]
+        },
+        "fp": {
+          "mean": 113.4,
+          "std": 17.153425313913253,
+          "values": [
+            103.0,
+            108.0,
+            144.0,
+            94.0,
+            118.0
+          ]
+        },
+        "fn": {
+          "mean": 15.8,
+          "std": 2.6381811916545836,
+          "values": [
+            15.0,
+            17.0,
+            12.0,
+            20.0,
+            15.0
+          ]
+        },
+        "precision": {
+          "mean": 0.18283257568525574,
+          "std": 0.010841927601340659,
+          "values": [
+            0.20155038759689922,
+            0.18181818181818182,
+            0.1676300578034682,
+            0.1826086956521739,
+            0.18055555555555555
+          ]
+        },
+        "recall": {
+          "mean": 0.6146341463414634,
+          "std": 0.06434588272328252,
+          "values": [
+            0.6341463414634146,
+            0.5853658536585366,
+            0.7073170731707317,
+            0.5121951219512195,
+            0.6341463414634146
+          ]
+        },
+        "specificity": {
+          "mean": 0.8450819672131148,
+          "std": 0.023433641139225744,
+          "values": [
+            0.8592896174863388,
+            0.8524590163934426,
+            0.8032786885245902,
+            0.8715846994535519,
+            0.8387978142076503
+          ]
+        },
+        "false_positive_rate": {
+          "mean": 0.15491803278688523,
+          "std": 0.023433641139225758,
+          "values": [
+            0.1407103825136612,
+            0.14754098360655737,
+            0.19672131147540983,
+            0.1284153005464481,
+            0.16120218579234974
+          ]
+        },
+        "f1": {
+          "mean": 0.28093577760700966,
+          "std": 0.01318808263879936,
+          "values": [
+            0.30588235294117644,
+            0.27745664739884396,
+            0.2710280373831776,
+            0.2692307692307692,
+            0.28108108108108104
+          ]
+        },
+        "f2": {
+          "mean": 0.4155560965290624,
+          "std": 0.02319852096351922,
+          "values": [
+            0.4436860068259386,
+            0.4054054054054055,
+            0.43026706231454,
+            0.3763440860215054,
+            0.42207792207792205
+          ]
+        },
+        "accuracy": {
+          "mean": 0.8328589909443727,
+          "std": 0.019247311682688017,
+          "values": [
+            0.8473479948253557,
+            0.8382923673997412,
+            0.7981888745148771,
+            0.8525226390685641,
+            0.8279430789133247
+          ]
+        },
+        "pr_auc": {
+          "mean": 0.22986471199536615,
+          "std": 0.011726051335296757,
+          "values": [
+            0.22019257447046367,
+            0.23921001603864714,
+            0.2129882316550618,
+            0.23239085017441952,
+            0.24454188763823878
+          ]
+        },
+        "roc_auc": {
+          "mean": 0.8345595095295216,
+          "std": 0.0033613527889058813,
+          "values": [
+            0.8320338531254166,
+            0.8349993335998933,
+            0.840896974543516,
+            0.8330334532853525,
+            0.8318339330934293
+          ]
+        },
+        "support": {
+          "mean": 773.0,
+          "std": 0.0,
+          "values": [
+            773.0,
+            773.0,
+            773.0,
+            773.0,
+            773.0
+          ]
+        },
+        "positive_support": {
+          "mean": 41.0,
+          "std": 0.0,
+          "values": [
+            41.0,
+            41.0,
+            41.0,
+            41.0,
+            41.0
+          ]
+        },
+        "negative_support": {
+          "mean": 732.0,
+          "std": 0.0,
+          "values": [
+            732.0,
+            732.0,
+            732.0,
+            732.0,
+            732.0
+          ]
+        }
+      }
+    }
+  },
+  "strong_baselines": null,
+  "quick_sweep": null,
+  "tool_eval": null,
+  "notes": {
+    "static_analyzers": "Slither/Mythril are deferred, not abandoned, because compiler/toolchain handling is separate.",
+    "rq3_symbolic_scope": "The canonical contract_graphs view exposes an 8-d security context. Therefore RQ3 security and full variants are equivalent in this run."
+  }
+}
