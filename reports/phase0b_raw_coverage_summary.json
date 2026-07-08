@@ -38,18 +38,18 @@
     "FORGE": {
       "raw_finding_locations": 1492,
       "raw_target_scope_locations": 257,
-      "source_files_available": 1161,
+      "source_files_available": 1411,
       "recoverable_vulnerability_type": 1492,
       "source_location_or_evidence": 1492,
       "converted_to_constructable_hyperedge": 141,
       "included_in_current_graph_dataset": 87,
       "dropped_by_reason": {
-        "outside_priority_interaction_scope": 892,
-        "not_constructable_as_state_plus_external_call_hyperedge": 61,
+        "outside_priority_interaction_scope": 1113,
+        "not_constructable_as_state_plus_external_call_hyperedge": 69,
         "converted_but_not_in_current_graph_dataset": 54,
-        "missing_or_NA_function_location": 67,
-        "missing_source_file": 316,
-        "function_not_resolved_to_contract": 15
+        "missing_or_NA_function_location": 79,
+        "missing_source_file": 69,
+        "function_not_resolved_to_contract": 21
       },
       "target_scope_by_type": {
         "front-running": 123,

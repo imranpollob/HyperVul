@@ -7,7 +7,7 @@ from sklearn.metrics import precision_recall_fscore_support, precision_recall_cu
 PROJECT_ROOT = Path("/home/pollmix/Coding/HyperVul")
 sys.path.insert(0, str(PROJECT_ROOT))
 sys.path.insert(0, str(PROJECT_ROOT / "scripts"))
-sys.path.insert(0, str(PROJECT_ROOT / "model/latest1"))
+sys.path.insert(0, str(PROJECT_ROOT / "legacy/model/latest1"))
 
 from run_representation_comparison import train_eval, build_contract_graphs, K_OZ, K_AAVE
 import torch

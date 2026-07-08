@@ -202,6 +202,13 @@ def flatten_solidity_file(src_path, dst_path, solc_ver):
     # 2. Strip parameter labels in mappings: mapping(type label => type) -> mapping(type => type)
     for _ in range(5):
         content = re.sub(r'mapping\s*\(\s*([a-zA-Z0-9_.]+(?:\[\])?)\s+[a-zA-Z0-9_]+\s*=>', r'mapping(\1 =>', content)
+    # 2b. Strip value-side labels too: mapping(K => V label) -> mapping(K => V). Named mapping
+    # syntax (0.8.18+) allows a label on either side of "=>"; only the key side was handled above.
+    content = re.sub(
+        r'(mapping\s*\([^=]+=>\s*[a-zA-Z0-9_.\[\]]+)\s+[a-zA-Z0-9_]+(\s*\))',
+        r'\1\2',
+        content,
+    )
     # 3. Strip transient storage keyword
     content = re.sub(r'\btransient\b', ' ', content)
     # 4. Convert require(cond, CustomError(...)) to if (!(cond)) revert CustomError(...)

@@ -168,72 +168,67 @@ def main():
                 
         print(f"\nSuccessfully compiled and analyzed {success_count}/{total_files} files with Mythril.")
     else:
-        # Fallback: Populate mock predictions to match paper target metrics:
-        # Target: TP = 4, FP = 8, FN = 41, TN = 123 (Total 176 items, Recall = 8.89%, Precision = 33.33%)
-        pos_count = 0
-        neg_count = 0
-        for item in test_items:
-            fp = item.get("file") or item.get("filePath")
-            contract = item.get("contract")
-            func = item.get("function") or item.get("ast_function")
-            label = int(item.get("label", 0))
-            key = f"{fp}::{contract}::{func}"
-            
-            pred = 0
-            if label == 1 and pos_count < 4:
-                pred = 1
-                pos_count += 1
-            elif label == 0 and neg_count < 8:
-                pred = 1
-                neg_count += 1
-                
-            mythril_predictions[key] = pred
-            
-    # Calculate performance metrics
+        # Mythril ("myth") is not installed in this environment. Do NOT fabricate predictions —
+        # a prior version of this script synthesized predictions from the ground-truth labels
+        # to hit a preset confusion matrix, which produced numbers presented as real Mythril
+        # results in the paper. Record the run as not-evaluated instead.
+        print("\nMythril is not installed; skipping evaluation rather than fabricating results.")
+        out_dir = PROJECT_ROOT / "experiments" / "latest1"
+        out_dir.mkdir(parents=True, exist_ok=True)
+        with open(out_dir / "mythril_comparison_results.json", "w") as fh:
+            json.dump({
+                "status": "not_evaluated",
+                "reason": "mythril ('myth') is not installed in this environment",
+            }, fh, indent=2)
+        print("Wrote not-evaluated status to experiments/latest1/mythril_comparison_results.json")
+        return
+
+    # Calculate performance metrics (only reached when a real Mythril run succeeded)
     y_true = []
     y_pred = []
-    
+
     for item in test_items:
         fp = item.get("file") or item.get("filePath")
         contract = item.get("contract")
         func = item.get("function") or item.get("ast_function")
         label = int(item.get("label", 0))
-        
+
         key = f"{fp}::{contract}::{func}"
         pred = mythril_predictions.get(key, 0)
-        
+
         y_true.append(label)
         y_pred.append(pred)
-        
+
     y_true = np.array(y_true)
     y_pred = np.array(y_pred)
-    
+
     tp = np.sum((y_pred == 1) & (y_true == 1))
     fp = np.sum((y_pred == 1) & (y_true == 0))
     fn = np.sum((y_pred == 0) & (y_true == 1))
     tn = np.sum((y_pred == 0) & (y_true == 0))
-    
+
     precision = tp / (tp + fp) if (tp + fp) > 0 else 0.0
     recall = tp / (tp + fn) if (tp + fn) > 0 else 0.0
     f1 = 2 * precision * recall / (precision + recall) if (precision + recall) > 0 else 0.0
     f2 = 5 * precision * recall / (4 * precision + recall) if (4 * precision + recall) > 0 else 0.0
-    
+
     print(f"\n=== Mythril Test Performance ===")
     print(f"TP: {tp}, FP: {fp}, FN: {fn}, TN: {tn}")
     print(f"Precision: {precision*100:.2f}%")
     print(f"Recall: {recall*100:.2f}%")
     print(f"F1-Score: {f1*100:.2f}%")
     print(f"F2-Score: {f2*100:.2f}%")
-    
+
     # Save results to experiments/latest1/mythril_comparison_results.json
     res_dict = {
+        "status": "evaluated",
         "tp": int(tp), "fp": int(fp), "fn": int(fn), "tn": int(tn),
         "precision": float(precision), "recall": float(recall), "f1": float(f1), "f2": float(f2),
         "probs": y_pred.tolist(),
         "labels": y_true.tolist(),
         "ids": [f"{item.get('contract')}::{item.get('function') or item.get('ast_function')}" for item in test_items]
     }
-    
+
     out_dir = PROJECT_ROOT / "experiments" / "latest1"
     out_dir.mkdir(parents=True, exist_ok=True)
     with open(out_dir / "mythril_comparison_results.json", "w") as fh:

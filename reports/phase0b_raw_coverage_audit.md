@@ -13,7 +13,7 @@ The current graph dataset is still **not ready for Phase 1 augmentation**. The r
 |dataset|raw finding locations|target-scope locations|source available|vtype recoverable|location/evidence|constructable hyperedges|included in current graphs|
 |---|---|---|---|---|---|---|---|
 |DAppSCAN|1646|352|1646|1646|1224|227|222|
-|FORGE|1492|257|1161|1492|1492|141|87|
+|FORGE|1492|257|1411|1492|1492|141|87|
 
 Notes:
 
@@ -30,12 +30,12 @@ Notes:
 |DAppSCAN|missing_or_NA_function_location|10|
 |DAppSCAN|function_not_resolved_to_contract|3|
 |DAppSCAN|converted_but_not_in_current_graph_dataset|5|
-|FORGE|outside_priority_interaction_scope|892|
-|FORGE|not_constructable_as_state_plus_external_call_hyperedge|61|
+|FORGE|outside_priority_interaction_scope|1113|
+|FORGE|not_constructable_as_state_plus_external_call_hyperedge|69|
 |FORGE|converted_but_not_in_current_graph_dataset|54|
-|FORGE|missing_or_NA_function_location|67|
-|FORGE|missing_source_file|316|
-|FORGE|function_not_resolved_to_contract|15|
+|FORGE|missing_or_NA_function_location|79|
+|FORGE|missing_source_file|69|
+|FORGE|function_not_resolved_to_contract|21|
 
 Full dropped finding rows are in `reports/phase0b_dropped_findings.csv`.
 

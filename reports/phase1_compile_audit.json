@@ -1,0 +1,1645 @@
+{
+  "summary": {
+    "total_files": 215,
+    "compiled_successfully": 54,
+    "compile_success_rate": 0.25116279069767444,
+    "failure_reasons": {
+      "success": 54,
+      "solc_error:Expected ';' but got '('|fallback_v0.8.0:solc_error:unknown_solc_error": 45,
+      "solc_error:Expected ';' but got '('": 13,
+      "solc_error:Expected ')' but got identifier|fallback_v0.8.0:solc_error:unknown_solc_error": 13,
+      "solc_error:Duplicate experimental feature name.|fallback_v0.8.0:solc_error:unknown_solc_error": 10,
+      "solc_error:Expected ')' but got identifier|fallback_v0.8.16:solc_error:unknown_solc_error": 7,
+      "solc_error:Expected ';' but got '{'|fallback_v0.8.0:solc_error:unknown_solc_error": 7,
+      "solc_error:No visibility specified. Did you intend to add \"public\"?|fallback_v0.8.0:solc_error:unknown_solc_error": 6,
+      "solc_error:Identifier not found or not unique.|fallback_v0.8.16:solc_error:unknown_solc_error": 4,
+      "solc_error:Identifier not found or not unique.|fallback_v0.8.0:solc_error:unknown_solc_error": 4,
+      "solc_error:Expected pragma, import directive or contract/interface/library definition.|fallback_v0.8.0:solc_error:unknown_solc_error": 3,
+      "solc_error:Expected pragma, import directive or contract/interface/library/struct/enum/cons|fallback_v0.8.24:solc_error:Identifier is not a function name or not unique.": 2,
+      "solc_error:unknown_solc_error|fallback_v0.8.20:solc_error:unknown_solc_error": 2,
+      "solc_error:Expected ')' but got identifier": 2,
+      "solc_error:Expected type name|fallback_v0.8.16:solc_error:unknown_solc_error": 2,
+      "solc_error:Expected pragma, import directive or contract/interface/library/struct/enum/cons|fallback_v0.8.16:solc_error:unknown_solc_error": 2,
+      "solc_error:Expected primary expression.|fallback_v0.8.0:solc_error:unknown_solc_error": 2,
+      "solc_error:Undeclared identifier.|fallback_v0.8.0:solc_error:unknown_solc_error": 2,
+      "solc_error:Expected identifier, got 'LParen'|fallback_v0.8.0:solc_error:unknown_solc_error": 2,
+      "solc_error:Expected pragma, import directive or contract/interface/library/struct/enum/cons|fallback_v0.8.24:solc_error:Expected pragma, import directive or contract/interface/library/struct/enum/cons": 2,
+      "solc_error:Expected pragma, import directive or contract/interface/library/struct/enum/cons|fallback_v0.8.24:solc_error:Identifier already declared.": 1,
+      "solc_error:Expected pragma, import directive or contract/interface/library/struct/enum/cons|fallback_v0.8.28:solc_error:Undeclared identifier.": 1,
+      "solc_error:Expected '{' but got ')'|fallback_v0.8.28:solc_error:Expected '{' but got ')'": 1,
+      "solc_error:unknown_solc_error|fallback_v0.8.28:solc_error:true` (standard JSON) while enabling the optimizer. Otherwise, try removing loca": 1,
+      "solc_error:Function \"mcopy\" not found.|fallback_v0.8.16:solc_error:unknown_solc_error": 1,
+      "solc_error:Contract \"LenderPool\" should be marked as abstract.|fallback_v0.8.16:solc_error:unknown_solc_error": 1,
+      "solc_error:Immutable variables cannot be read during contract creation time, which means th": 1,
+      "solc_error:Expected ',' but got identifier|fallback_v0.8.0:solc_error:unknown_solc_error": 1,
+      "solc_error:Definition of base has to precede definition of derived contract|fallback_v0.8.16:solc_error:unknown_solc_error": 1,
+      "solc_error:Expected identifier, got 'Payable'|fallback_v0.8.0:solc_error:unknown_solc_error": 1,
+      "solc_error:ABI coder has already been selected for this source unit.|fallback_v0.8.0:solc_error:unknown_solc_error": 1,
+      "solc_error:unknown_solc_error|fallback_v0.8.16:solc_error:unknown_solc_error": 1,
+      "solc_error:Contract \"Vesting\" should be marked as abstract.|fallback_v0.8.16:solc_error:unknown_solc_error": 1,
+      "solc_error:Interfaces cannot inherit.|fallback_v0.8.0:solc_error:unknown_solc_error": 1,
+      "solc_error:Contract \"OKLGWithdrawable\" should be marked as abstract.|fallback_v0.8.16:solc_error:unknown_solc_error": 1,
+      "solc_error:Expected type name": 1,
+      "solc_error:Undeclared identifier.|fallback_v0.8.16:solc_error:unknown_solc_error": 1,
+      "solc_error:The state mutability modifier \"constant\" was removed in version 0.5.0. Use \"view|fallback_v0.8.0:solc_error:unknown_solc_error": 1,
+      "solc_error:ABI coder has already been selected for this source unit.": 1,
+      "solc_error:oz-upgrades-unsafe-allow not valid for contracts.|fallback_v0.8.0:solc_error:unknown_solc_error": 1,
+      "solc_error:Expected pragma, import directive or contract/interface/library/struct/enum/cons|fallback_v0.8.28:solc_error:Expected pragma, import directive or contract/interface/library/struct/enum/cons": 1,
+      "solc_error:Member \"checkTransfer\" not found or not visible after argument-dependent lookup |fallback_v0.8.29:solc_error:Member \"checkTransfer\" not found or not visible after argument-dependent lookup ": 1,
+      "solc_error:Expected pragma, import directive or contract/interface/library/struct/enum/cons|fallback_v0.8.26:solc_error:Member \"toInt128\" not found or not visible after argument-dependent lookup in ui": 1,
+      "solc_error:Expected pragma, import directive or contract/interface/library/struct/enum/cons|fallback_v0.8.26:solc_error:true` (standard JSON) while enabling the optimizer. Otherwise, try removing loca": 1,
+      "solc_error:Undeclared identifier.|fallback_v0.8.24:solc_error:Undeclared identifier.": 1,
+      "solc_error:Expected primary expression.|fallback_v0.8.29:solc_error:Expected primary expression.": 1,
+      "solc_error:Undeclared identifier.|fallback_v0.8.20:solc_error:unknown_solc_error": 1,
+      "solc_error:Identifier not found or not unique.|fallback_v0.8.20:solc_error:unknown_solc_error": 1,
+      "solc_error:Expected ')' but got identifier|fallback_v0.8.28:solc_error:Expected ')' but got identifier": 1,
+      "solc_error:Expected identifier but got ','|fallback_v0.8.24:solc_error:Expected identifier but got ','": 1,
+      "solc_error:Definition of base has to precede definition of derived contract|fallback_v0.8.29:solc_error:Definition of base has to precede definition of derived contract": 1
+    },
+    "by_split": {
+      "train": {
+        "success": 43,
+        "solc_error:Expected pragma, import directive or contract/interface/library/struct/enum/cons|fallback_v0.8.24:solc_error:Identifier already declared.": 1,
+        "solc_error:Expected pragma, import directive or contract/interface/library/struct/enum/cons|fallback_v0.8.28:solc_error:Undeclared identifier.": 1,
+        "solc_error:Expected pragma, import directive or contract/interface/library/struct/enum/cons|fallback_v0.8.24:solc_error:Identifier is not a function name or not unique.": 2,
+        "solc_error:Expected '{' but got ')'|fallback_v0.8.28:solc_error:Expected '{' but got ')'": 1,
+        "solc_error:Identifier not found or not unique.|fallback_v0.8.16:solc_error:unknown_solc_error": 3,
+        "solc_error:Function \"mcopy\" not found.|fallback_v0.8.16:solc_error:unknown_solc_error": 1,
+        "solc_error:Expected ')' but got identifier|fallback_v0.8.0:solc_error:unknown_solc_error": 13,
+        "solc_error:Duplicate experimental feature name.|fallback_v0.8.0:solc_error:unknown_solc_error": 6,
+        "solc_error:Expected ';' but got '('|fallback_v0.8.0:solc_error:unknown_solc_error": 31,
+        "solc_error:Expected ')' but got identifier": 2,
+        "solc_error:Expected ')' but got identifier|fallback_v0.8.16:solc_error:unknown_solc_error": 4,
+        "solc_error:Expected ';' but got '('": 8,
+        "solc_error:Contract \"LenderPool\" should be marked as abstract.|fallback_v0.8.16:solc_error:unknown_solc_error": 1,
+        "solc_error:Identifier not found or not unique.|fallback_v0.8.0:solc_error:unknown_solc_error": 2,
+        "solc_error:Immutable variables cannot be read during contract creation time, which means th": 1,
+        "solc_error:No visibility specified. Did you intend to add \"public\"?|fallback_v0.8.0:solc_error:unknown_solc_error": 5,
+        "solc_error:Expected ',' but got identifier|fallback_v0.8.0:solc_error:unknown_solc_error": 1,
+        "solc_error:Definition of base has to precede definition of derived contract|fallback_v0.8.16:solc_error:unknown_solc_error": 1,
+        "solc_error:Expected pragma, import directive or contract/interface/library/struct/enum/cons|fallback_v0.8.16:solc_error:unknown_solc_error": 1,
+        "solc_error:Expected identifier, got 'Payable'|fallback_v0.8.0:solc_error:unknown_solc_error": 1,
+        "solc_error:Expected ';' but got '{'|fallback_v0.8.0:solc_error:unknown_solc_error": 6,
+        "solc_error:Expected identifier, got 'LParen'|fallback_v0.8.0:solc_error:unknown_solc_error": 2,
+        "solc_error:Contract \"Vesting\" should be marked as abstract.|fallback_v0.8.16:solc_error:unknown_solc_error": 1,
+        "solc_error:Interfaces cannot inherit.|fallback_v0.8.0:solc_error:unknown_solc_error": 1,
+        "solc_error:Expected type name": 1,
+        "solc_error:Undeclared identifier.|fallback_v0.8.0:solc_error:unknown_solc_error": 1,
+        "solc_error:Undeclared identifier.|fallback_v0.8.16:solc_error:unknown_solc_error": 1,
+        "solc_error:The state mutability modifier \"constant\" was removed in version 0.5.0. Use \"view|fallback_v0.8.0:solc_error:unknown_solc_error": 1,
+        "solc_error:Expected pragma, import directive or contract/interface/library definition.|fallback_v0.8.0:solc_error:unknown_solc_error": 2,
+        "solc_error:Expected pragma, import directive or contract/interface/library/struct/enum/cons|fallback_v0.8.28:solc_error:Expected pragma, import directive or contract/interface/library/struct/enum/cons": 1,
+        "solc_error:Member \"checkTransfer\" not found or not visible after argument-dependent lookup |fallback_v0.8.29:solc_error:Member \"checkTransfer\" not found or not visible after argument-dependent lookup ": 1,
+        "solc_error:Expected pragma, import directive or contract/interface/library/struct/enum/cons|fallback_v0.8.26:solc_error:Member \"toInt128\" not found or not visible after argument-dependent lookup in ui": 1,
+        "solc_error:Expected pragma, import directive or contract/interface/library/struct/enum/cons|fallback_v0.8.26:solc_error:true` (standard JSON) while enabling the optimizer. Otherwise, try removing loca": 1,
+        "solc_error:Expected pragma, import directive or contract/interface/library/struct/enum/cons|fallback_v0.8.24:solc_error:Expected pragma, import directive or contract/interface/library/struct/enum/cons": 2,
+        "solc_error:Undeclared identifier.|fallback_v0.8.24:solc_error:Undeclared identifier.": 1,
+        "solc_error:Expected primary expression.|fallback_v0.8.29:solc_error:Expected primary expression.": 1,
+        "solc_error:Undeclared identifier.|fallback_v0.8.20:solc_error:unknown_solc_error": 1,
+        "solc_error:Expected ')' but got identifier|fallback_v0.8.28:solc_error:Expected ')' but got identifier": 1,
+        "solc_error:Expected identifier but got ','|fallback_v0.8.24:solc_error:Expected identifier but got ','": 1,
+        "solc_error:Definition of base has to precede definition of derived contract|fallback_v0.8.29:solc_error:Definition of base has to precede definition of derived contract": 1
+      },
+      "test_features": {
+        "success": 10,
+        "solc_error:unknown_solc_error|fallback_v0.8.28:solc_error:true` (standard JSON) while enabling the optimizer. Otherwise, try removing loca": 1,
+        "solc_error:unknown_solc_error|fallback_v0.8.20:solc_error:unknown_solc_error": 2,
+        "solc_error:Expected ';' but got '('": 3,
+        "solc_error:Expected type name|fallback_v0.8.16:solc_error:unknown_solc_error": 1,
+        "solc_error:Expected pragma, import directive or contract/interface/library definition.|fallback_v0.8.0:solc_error:unknown_solc_error": 1,
+        "solc_error:Expected ';' but got '{'|fallback_v0.8.0:solc_error:unknown_solc_error": 1,
+        "solc_error:Duplicate experimental feature name.|fallback_v0.8.0:solc_error:unknown_solc_error": 1,
+        "solc_error:Expected ';' but got '('|fallback_v0.8.0:solc_error:unknown_solc_error": 6,
+        "solc_error:unknown_solc_error|fallback_v0.8.16:solc_error:unknown_solc_error": 1,
+        "solc_error:Expected primary expression.|fallback_v0.8.0:solc_error:unknown_solc_error": 1,
+        "solc_error:Undeclared identifier.|fallback_v0.8.0:solc_error:unknown_solc_error": 1,
+        "solc_error:Identifier not found or not unique.|fallback_v0.8.0:solc_error:unknown_solc_error": 1
+      },
+      "val_features": {
+        "solc_error:Expected ';' but got '('": 2,
+        "success": 1,
+        "solc_error:Expected ')' but got identifier|fallback_v0.8.16:solc_error:unknown_solc_error": 3,
+        "solc_error:No visibility specified. Did you intend to add \"public\"?|fallback_v0.8.0:solc_error:unknown_solc_error": 1,
+        "solc_error:Expected ';' but got '('|fallback_v0.8.0:solc_error:unknown_solc_error": 8,
+        "solc_error:Duplicate experimental feature name.|fallback_v0.8.0:solc_error:unknown_solc_error": 3,
+        "solc_error:Expected pragma, import directive or contract/interface/library/struct/enum/cons|fallback_v0.8.16:solc_error:unknown_solc_error": 1,
+        "solc_error:ABI coder has already been selected for this source unit.|fallback_v0.8.0:solc_error:unknown_solc_error": 1,
+        "solc_error:Contract \"OKLGWithdrawable\" should be marked as abstract.|fallback_v0.8.16:solc_error:unknown_solc_error": 1,
+        "solc_error:ABI coder has already been selected for this source unit.": 1,
+        "solc_error:Expected type name|fallback_v0.8.16:solc_error:unknown_solc_error": 1,
+        "solc_error:oz-upgrades-unsafe-allow not valid for contracts.|fallback_v0.8.0:solc_error:unknown_solc_error": 1,
+        "solc_error:Expected primary expression.|fallback_v0.8.0:solc_error:unknown_solc_error": 1,
+        "solc_error:Identifier not found or not unique.|fallback_v0.8.0:solc_error:unknown_solc_error": 1,
+        "solc_error:Identifier not found or not unique.|fallback_v0.8.16:solc_error:unknown_solc_error": 1,
+        "solc_error:Identifier not found or not unique.|fallback_v0.8.20:solc_error:unknown_solc_error": 1
+      }
+    }
+  },
+  "results": [
+    {
+      "file": "AbstractYieldStrategy.sol",
+      "split": "train",
+      "success": true,
+      "reason": "",
+      "solc_version": "0.8.11"
+    },
+    {
+      "file": "AgentImageService.sol",
+      "split": "test_features",
+      "success": true,
+      "reason": "",
+      "solc_version": "0.8.11"
+    },
+    {
+      "file": "AntiSandwichHook.sol",
+      "split": "train",
+      "success": false,
+      "reason": "solc_error:Expected pragma, import directive or contract/interface/library/struct/enum/cons|fallback_v0.8.24:solc_error:Identifier already declared.",
+      "solc_version": "0.8.11"
+    },
+    {
+      "file": "Aori.sol",
+      "split": "train",
+      "success": false,
+      "reason": "solc_error:Expected pragma, import directive or contract/interface/library/struct/enum/cons|fallback_v0.8.28:solc_error:Undeclared identifier.",
+      "solc_version": "0.8.11"
+    },
+    {
+      "file": "ArbitraryEVMFlowExecutor.sol",
+      "split": "val_features",
+      "success": false,
+      "reason": "solc_error:Expected ';' but got '('",
+      "solc_version": "0.8.0"
+    },
+    {
+      "file": "BalancerFlashLoan.sol",
+      "split": "test_features",
+      "success": true,
+      "reason": "",
+      "solc_version": "0.8.11"
+    },
+    {
+      "file": "BaseCustomAccounting.sol",
+      "split": "train",
+      "success": false,
+      "reason": "solc_error:Expected pragma, import directive or contract/interface/library/struct/enum/cons|fallback_v0.8.24:solc_error:Identifier is not a function name or not unique.",
+      "solc_version": "0.8.11"
+    },
+    {
+      "file": "BasketToken.sol",
+      "split": "train",
+      "success": false,
+      "reason": "solc_error:Expected '{' but got ')'|fallback_v0.8.28:solc_error:Expected '{' but got ')'",
+      "solc_version": "0.8.11"
+    },
+    {
+      "file": "BorrowerOperations.sol",
+      "split": "val_features",
+      "success": true,
+      "reason": "",
+      "solc_version": "0.6.11"
+    },
+    {
+      "file": "Box.sol",
+      "split": "test_features",
+      "success": false,
+      "reason": "solc_error:unknown_solc_error|fallback_v0.8.28:solc_error:true` (standard JSON) while enabling the optimizer. Otherwise, try removing loca",
+      "solc_version": "0.8.11"
+    },
+    {
+      "file": "BoxAdapterCached.sol",
+      "split": "test_features",
+      "success": true,
+      "reason": "",
+      "solc_version": "0.8.11"
+    },
+    {
+      "file": "Bracket.sol",
+      "split": "test_features",
+      "success": false,
+      "reason": "solc_error:unknown_solc_error|fallback_v0.8.20:solc_error:unknown_solc_error",
+      "solc_version": "0.8.11"
+    },
+    {
+      "file": "CSExitPenalties.sol",
+      "split": "train",
+      "success": true,
+      "reason": "",
+      "solc_version": "0.8.11"
+    },
+    {
+      "file": "CurveConvex2Token.sol",
+      "split": "train",
+      "success": true,
+      "reason": "",
+      "solc_version": "0.8.11"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/BlockSec-blocksec_impossible_finance_swap_v1.2/impossible-swap-core-29aaef89f996acdbee92b67c4d95fb608dc8b876/contracts/ImpossibleWrappedToken.sol",
+      "split": "train",
+      "success": true,
+      "reason": "",
+      "solc_version": "0.7.6"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/BlockSec-blocksec_multichain_vemult_v1.0_signed/veMULTI-bac804399d1ea280e5bd8cdc9488b6fa6a0a7fcc/contracts/ve.sol",
+      "split": "train",
+      "success": true,
+      "reason": "",
+      "solc_version": "0.8.11"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/Chainsecurity-Angle Protocol  Borrowing Module/angle-borrow-0363b6a137a44e22ee06b3187ba74f7798c1af08/contracts/vaultManager/VaultManager.sol",
+      "split": "train",
+      "success": false,
+      "reason": "solc_error:Identifier not found or not unique.|fallback_v0.8.16:solc_error:unknown_solc_error",
+      "solc_version": "0.8.11"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/Chainsecurity-Angle Protocol/angle-core-46e6d32837cbe97a4af0adb693e63afa0d01fc3e/contracts/genericLender/GenericAave.sol",
+      "split": "train",
+      "success": false,
+      "reason": "solc_error:Function \"mcopy\" not found.|fallback_v0.8.16:solc_error:unknown_solc_error",
+      "solc_version": "0.8.7"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/Chainsecurity-Compound  cToken unredacted/compound-protocol-4a54ec5c55b66ea67d44b76f3056f0ed7229db8c/contracts/CToken.sol",
+      "split": "train",
+      "success": true,
+      "reason": "",
+      "solc_version": "0.8.6"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/Chainsecurity-Compound  cToken unredacted/compound-protocol-4a54ec5c55b66ea67d44b76f3056f0ed7229db8c/contracts/Comptroller.sol",
+      "split": "train",
+      "success": true,
+      "reason": "",
+      "solc_version": "0.8.6"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/Chainsecurity-Oasis  Multiply Smart Contracts/multiply-proxy-actions-e277ac1471a95138aaa93b39cf2c16c36c769740/contracts/multiply/MultiplyProxyActions.sol",
+      "split": "train",
+      "success": false,
+      "reason": "solc_error:Expected ')' but got identifier|fallback_v0.8.0:solc_error:unknown_solc_error",
+      "solc_version": "0.7.6"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/Chainsulting-Furucombo-project2/trevi-b3f7fd332873321152db48c9d43fc23a60a29f1a/contracts/FountainBase.sol",
+      "split": "train",
+      "success": false,
+      "reason": "solc_error:Duplicate experimental feature name.|fallback_v0.8.0:solc_error:unknown_solc_error",
+      "solc_version": "0.6.12"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/Coinbae-Barnbridge_Vault/CommunityVault0xA3C299eEE1998F45c20010276684921EBE6423D9/contracts/CommunityVault.sol",
+      "split": "train",
+      "success": false,
+      "reason": "solc_error:Expected ';' but got '('|fallback_v0.8.0:solc_error:unknown_solc_error",
+      "solc_version": "0.6.0"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/Coinbae-Hakka_Finance_wHakka/code/wHakka.sol",
+      "split": "train",
+      "success": true,
+      "reason": "",
+      "solc_version": "0.5.17"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/Coinbae-Pud.Fi Masterchef_Audit/MasterChef0x15Bee180BB39eE5c0166E63313C33984376930Db/contracts/MasterChef.sol",
+      "split": "train",
+      "success": true,
+      "reason": "",
+      "solc_version": "0.6.7"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/Coinbae-Pud.Fi Strategy_Bacdai/StrategyBasisBacDaiLp0x31dfcB1C5dF01A27F8b0b5F9cD1585FE92C7970e/contracts/strategies/strategy-base.sol",
+      "split": "train",
+      "success": true,
+      "reason": "",
+      "solc_version": "0.6.7"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/Coinbae-Pud.Fi Strategy_Bacdai/StrategyBasisBacDaiLp0x31dfcB1C5dF01A27F8b0b5F9cD1585FE92C7970e/contracts/strategies/strategy-basis-farm-base.sol",
+      "split": "train",
+      "success": true,
+      "reason": "",
+      "solc_version": "0.6.7"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/Coinbae-TapCoins_Token_Contract/code/Etherscan-0x9F599410D207f3D2828a8712e5e543AC2E040382.sol",
+      "split": "test_features",
+      "success": true,
+      "reason": "",
+      "solc_version": "0.4.11"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/Coinfabrik-MintingFactoryV2, BaseUpgradableMarketplace & KODAV3UpgradableGatedMarketplace/known-origin-contracts-v3-d592c5f4fa4e0b6fc65a1fce43e302706aedf607/contracts-flat/MintingFactoryV2.sol",
+      "split": "train",
+      "success": false,
+      "reason": "solc_error:Expected ')' but got identifier",
+      "solc_version": "0.8.0"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/Coinfabrik-MintingFactoryV2, BaseUpgradableMarketplace & KODAV3UpgradableGatedMarketplace/known-origin-contracts-v3-d592c5f4fa4e0b6fc65a1fce43e302706aedf607/contracts/minter/MintingFactoryV2.sol",
+      "split": "train",
+      "success": false,
+      "reason": "solc_error:Expected ')' but got identifier|fallback_v0.8.16:solc_error:unknown_solc_error",
+      "solc_version": "0.8.4"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/Coinfabrik-Woonkly Security Audit (DEX STAKE)/STAKESmartContractPreRelease-main/woonklyPOS.sol",
+      "split": "train",
+      "success": false,
+      "reason": "solc_error:Expected ')' but got identifier|fallback_v0.8.0:solc_error:unknown_solc_error",
+      "solc_version": "0.6.6"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/Coinspect-Incognito Audit/bridge-eth-4879219669a38d601265582f815596b6775855b6/bridge/contracts/vault.sol",
+      "split": "train",
+      "success": false,
+      "reason": "solc_error:Expected ';' but got '('|fallback_v0.8.0:solc_error:unknown_solc_error",
+      "solc_version": "0.6.6"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/Hacken-Codex on Althash/Codex-Rewards-Platform-d364d0ef9258dd468f8202a352c58724d6b65638/contracts/CDEX_rewards.sol",
+      "split": "train",
+      "success": true,
+      "reason": "",
+      "solc_version": "0.4.21"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/Hacken-Ground Zero/code/IDO.sol",
+      "split": "train",
+      "success": false,
+      "reason": "solc_error:Expected ')' but got identifier|fallback_v0.8.16:solc_error:unknown_solc_error",
+      "solc_version": "0.8.4"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/Hacken-Hyksos/hyksos-contracts-audit/HyksosCyberkongz.sol",
+      "split": "train",
+      "success": false,
+      "reason": "solc_error:Expected ')' but got identifier|fallback_v0.8.16:solc_error:unknown_solc_error",
+      "solc_version": "0.8.10"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/Hacken-Powerbomb-V1/powerbomb-lite-0f86ff1eecdd723be733a9b33ff4ffa3bbdadcee/hardhat/contracts/PowerBombAvaxCurve.sol",
+      "split": "train",
+      "success": true,
+      "reason": "",
+      "solc_version": "0.8.9"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/Hacken-Tenderize/tender-core-1fd606141625171fe792045ae9233890262d2d62/contracts/tenderizer/integrations/graph/Graph.sol",
+      "split": "val_features",
+      "success": false,
+      "reason": "solc_error:Expected ')' but got identifier|fallback_v0.8.16:solc_error:unknown_solc_error",
+      "solc_version": "0.8.4"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/Hacken-Tenderize/tender-core-1fd606141625171fe792045ae9233890262d2d62/contracts/tenderizer/integrations/livepeer/Livepeer.sol",
+      "split": "val_features",
+      "success": false,
+      "reason": "solc_error:Expected ')' but got identifier|fallback_v0.8.16:solc_error:unknown_solc_error",
+      "solc_version": "0.8.4"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/Hacken-Tenderize/tender-core-1fd606141625171fe792045ae9233890262d2d62/contracts/tenderizer/integrations/matic/Matic.sol",
+      "split": "val_features",
+      "success": false,
+      "reason": "solc_error:Expected ')' but got identifier|fallback_v0.8.16:solc_error:unknown_solc_error",
+      "solc_version": "0.8.4"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/Hacken-The Next War/Contracts-334fe81ea7282ac4f768de077c37a7932c0302de/contracts/Staking.sol",
+      "split": "train",
+      "success": false,
+      "reason": "solc_error:Expected ';' but got '('",
+      "solc_version": "0.8.0"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/Hacken-TrustSwap-V1/code/StakingPool.sol",
+      "split": "train",
+      "success": true,
+      "reason": "",
+      "solc_version": "0.4.24"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/Hacken-VYNKSAFE/code/main.sol",
+      "split": "test_features",
+      "success": false,
+      "reason": "solc_error:Expected ';' but got '('",
+      "solc_version": "0.8.0"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/ImmuneBytes-Bird Money(MasterChef)-Audit Report/bird-farm-contracts-dfd2502b73c8f54c9081682c3eb070fcd3c00629/contracts/MasterChef.sol",
+      "split": "train",
+      "success": false,
+      "reason": "solc_error:Expected ';' but got '('|fallback_v0.8.0:solc_error:unknown_solc_error",
+      "solc_version": "0.6.12"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/ImmuneBytes-Bird Money-Final Audit Report/bird-farm-contracts-dfd2502b73c8f54c9081682c3eb070fcd3c00629/contracts/MasterChef.sol",
+      "split": "train",
+      "success": false,
+      "reason": "solc_error:Expected ';' but got '('|fallback_v0.8.0:solc_error:unknown_solc_error",
+      "solc_version": "0.6.12"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/ImmuneBytes-PolyTrade-Audit Report(Lender Portal)/lender-portal-contracts-dev/contracts/LenderPool.sol",
+      "split": "train",
+      "success": false,
+      "reason": "solc_error:Contract \"LenderPool\" should be marked as abstract.|fallback_v0.8.16:solc_error:unknown_solc_error",
+      "solc_version": "0.8.11"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/ImmuneBytes-SportsIcon-Audit Report/SportsIcon-Vesting-8a26ed5c3a52b7a4d1b22a38b40dd80783ecc6a3/SportsIconPrivateVesting.sol",
+      "split": "train",
+      "success": false,
+      "reason": "solc_error:Identifier not found or not unique.|fallback_v0.8.0:solc_error:unknown_solc_error",
+      "solc_version": "0.7.5"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/Inspex-AutoCompound/auto-compound-v2-92626a1dcfc55a28afdf4f996d600fe8bbfd6efd/PancakeByalanLP.sol",
+      "split": "train",
+      "success": false,
+      "reason": "solc_error:Immutable variables cannot be read during contract creation time, which means th",
+      "solc_version": "0.8.0"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/Inspex-AutoCompoundVault/mondayclub-9ec29e0bb41a6bbef5484976502c924f4557ca02/StrategyCommonChefLP.sol",
+      "split": "train",
+      "success": false,
+      "reason": "solc_error:Identifier not found or not unique.|fallback_v0.8.16:solc_error:unknown_solc_error",
+      "solc_version": "0.8.11"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/Inspex-CakeMaxi/bsc-alpaca-contract-20c4c545a0323b71d2969fd79db8316e60bc7d76/CakeMaxiWorker.sol",
+      "split": "train",
+      "success": false,
+      "reason": "solc_error:No visibility specified. Did you intend to add \"public\"?|fallback_v0.8.0:solc_error:unknown_solc_error",
+      "solc_version": "0.6.6"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/Inspex-FairLaunch, Token, Vault & Workers/Meow-Finance-4a4f13efaf5e5fbed74c0ed23b665751e655d715/contracts/protocol/workers/SpookyswapWorker.sol",
+      "split": "train",
+      "success": false,
+      "reason": "solc_error:Expected ')' but got identifier|fallback_v0.8.0:solc_error:unknown_solc_error",
+      "solc_version": "0.6.6"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/Inspex-MDEX Integration/bsc-alpaca-contract-a3a14d27a4803afebdcf783c9ce8764b65f5587d/MdexWorker02.sol",
+      "split": "val_features",
+      "success": false,
+      "reason": "solc_error:No visibility specified. Did you intend to add \"public\"?|fallback_v0.8.0:solc_error:unknown_solc_error",
+      "solc_version": "0.6.6"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/Inspex-Optimized Worker/bsc-alpaca-contract-1aee2ceec77e3fd3162b74858c846cdc5692928d/contracts/6/protocol/workers/pcs/PancakeswapV2Worker02.sol",
+      "split": "train",
+      "success": false,
+      "reason": "solc_error:Expected ')' but got identifier|fallback_v0.8.0:solc_error:unknown_solc_error",
+      "solc_version": "0.6.6"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/Inspex-SpookySwap Integration & Fantom Expansion/bsc-alpaca-contract-4553a34a6dcfcfbf7aebc693bb5c5c6074c73129/contracts/6/protocol/strategies/spookyswap/SpookySwapStrategyAddBaseTokenOnly.sol",
+      "split": "train",
+      "success": false,
+      "reason": "solc_error:No visibility specified. Did you intend to add \"public\"?|fallback_v0.8.0:solc_error:unknown_solc_error",
+      "solc_version": "0.6.6"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/Inspex-SpookySwap Integration & Fantom Expansion/bsc-alpaca-contract-4553a34a6dcfcfbf7aebc693bb5c5c6074c73129/contracts/6/protocol/workers/spookyswap/SpookyWorker03.sol",
+      "split": "train",
+      "success": false,
+      "reason": "solc_error:No visibility specified. Did you intend to add \"public\"?|fallback_v0.8.0:solc_error:unknown_solc_error",
+      "solc_version": "0.6.6"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/Inspex-StakingPool, Vault, Strategy & VotingEscrow/scientix-contract-main/contracts/vaults/StratAlpaca.sol",
+      "split": "train",
+      "success": false,
+      "reason": "solc_error:Expected ';' but got '('|fallback_v0.8.0:solc_error:unknown_solc_error",
+      "solc_version": "0.6.0"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/Inspex-Tokens, Farm & Shop/-SpeedStar-Audit-3e39d7acf9c1aa9f3a5511c161c2035ba7d6bc1f/contracts/farm/Staking.sol",
+      "split": "test_features",
+      "success": false,
+      "reason": "solc_error:Expected type name|fallback_v0.8.16:solc_error:unknown_solc_error",
+      "solc_version": "0.8.11"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/Inspex-Tokens, Farm & Shop/-SpeedStar-Audit-3e39d7acf9c1aa9f3a5511c161c2035ba7d6bc1f/flatten/Staking.sol",
+      "split": "test_features",
+      "success": false,
+      "reason": "solc_error:Expected pragma, import directive or contract/interface/library definition.|fallback_v0.8.0:solc_error:unknown_solc_error",
+      "solc_version": "0.4.22"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/Inspex-Vault/aleswap-vault-efd3f777b2e9aaa2c635d3d0f463f1884e998112/contracts/strategies/Warden/StrategyWardenLP.sol",
+      "split": "train",
+      "success": false,
+      "reason": "solc_error:Expected ';' but got '('|fallback_v0.8.0:solc_error:unknown_solc_error",
+      "solc_version": "0.6.0"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/Inspex-WUSDMaster/WUSD-91c541c2f1c0ac781ddcfb2be6a62555a5e1e8d1/WUSDMaster.sol",
+      "split": "train",
+      "success": true,
+      "reason": "",
+      "solc_version": "0.8.0"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/Iosiro-1inch Exchange Staking Rewards Smart Contract Audit/liquidity-protocol-c9c8bc600e8e7897f70f84b006de601d4f4bcbe3/BaseRewards.sol",
+      "split": "val_features",
+      "success": false,
+      "reason": "solc_error:Expected ';' but got '('|fallback_v0.8.0:solc_error:unknown_solc_error",
+      "solc_version": "0.6.12"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/Iosiro-SNX FlashBurn Smart Contract Audit/flashburn-3aa02a3d63d9e0110a5b6669a4a4011ceee3cf2b/packages/contracts/contracts/SNXFlashLoanTool.sol",
+      "split": "val_features",
+      "success": false,
+      "reason": "solc_error:Expected ';' but got '('|fallback_v0.8.0:solc_error:unknown_solc_error",
+      "solc_version": "0.7.6"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/Iosiro-Synthetix Phase 2 Smart Contract Audit/synthetix-fdd4782ebebd7b4892c8a68000f76708d5d1aa7b/Synthetix.sol",
+      "split": "train",
+      "success": false,
+      "reason": "solc_error:Expected ',' but got identifier|fallback_v0.8.0:solc_error:unknown_solc_error",
+      "solc_version": "0.4.24"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/PeckShield-AirSwap/airswap-protocols-b87d292aaf6e28ede564b7ea28ece39219994607/source/wrapper/contracts/Wrapper.sol",
+      "split": "train",
+      "success": false,
+      "reason": "solc_error:Identifier not found or not unique.|fallback_v0.8.0:solc_error:unknown_solc_error",
+      "solc_version": "0.5.17"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/PeckShield-Arche/Arche_v1.0_Eros-909f35e0064d636aaf61954a6026fda7b2bade7f/Swap_Factory_Future.sol",
+      "split": "train",
+      "success": true,
+      "reason": "",
+      "solc_version": "0.8.11"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/PeckShield-Atlantis/atlantis-protocol-bsc-766acebba9316eced1c15abf6158b31f470a947f/contracts/AToken.sol",
+      "split": "train",
+      "success": true,
+      "reason": "",
+      "solc_version": "0.5.16"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/PeckShield-BNPL/BNPL-0ee587a081668dcab166a3a275b8a6c4794ead4d/contracts/BankingNode.sol",
+      "split": "test_features",
+      "success": false,
+      "reason": "solc_error:Expected ';' but got '('",
+      "solc_version": "0.8.0"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/PeckShield-BabySwap/code/baby-swap-contract-cac289bf978d969c95721c2adb9f199cee72ffa6/contracts/farm/MasterChef.sol",
+      "split": "train",
+      "success": false,
+      "reason": "solc_error:Expected ';' but got '('|fallback_v0.8.0:solc_error:unknown_solc_error",
+      "solc_version": "0.6.12"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/PeckShield-Buffer/code/Buffer-Protocol-1c648bb35feca23bc801ce76aba63ca66af5917e/contracts/Options/BufferBNBOptions.sol",
+      "split": "train",
+      "success": false,
+      "reason": "solc_error:Expected ';' but got '('",
+      "solc_version": "0.8.0"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/PeckShield-COIN98/code/code.sol",
+      "split": "test_features",
+      "success": false,
+      "reason": "solc_error:Expected ';' but got '{'|fallback_v0.8.0:solc_error:unknown_solc_error",
+      "solc_version": "0.6.0"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/PeckShield-Convex_Frax/frax-cvx-platform-2f8573ee796daa022c1050b4a749bf08049c439b/contracts/contracts/StakingProxyUniV3.sol",
+      "split": "train",
+      "success": true,
+      "reason": "",
+      "solc_version": "0.8.10"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/PeckShield-CryptoHeroes/cryptoheroes-6cb0eaf8c88fdaab89d2b4c83535a189c7793001/CryptoHeroesUniverse.sol",
+      "split": "train",
+      "success": false,
+      "reason": "solc_error:Expected ';' but got '('|fallback_v0.8.0:solc_error:unknown_solc_error",
+      "solc_version": "0.6.12"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/PeckShield-DSG/core-6f607f77698936e132e4e9b5cb4d75580636d919/contracts/pools/SinglePool.sol",
+      "split": "train",
+      "success": false,
+      "reason": "solc_error:Expected ';' but got '('|fallback_v0.8.0:solc_error:unknown_solc_error",
+      "solc_version": "0.6.12"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/PeckShield-DarkCrypto/darkcrypto-contracts-fee5be8d36459aebed2b84e6493875b3dc0366fd/contracts/distribution/SkyRewardPool.sol",
+      "split": "train",
+      "success": true,
+      "reason": "",
+      "solc_version": "0.6.12"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/PeckShield-DarkCrypto/darkcrypto-contracts-fee5be8d36459aebed2b84e6493875b3dc0366fd/contracts/verified/SkyRewardPool.sol",
+      "split": "train",
+      "success": true,
+      "reason": "",
+      "solc_version": "0.6.12"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/PeckShield-Donut/crossroad-550a8c3c010dc8c1a46ea9191d3841462bd58d82/contracts/DjiinAutoBuyer.sol",
+      "split": "train",
+      "success": false,
+      "reason": "solc_error:Identifier not found or not unique.|fallback_v0.8.16:solc_error:unknown_solc_error",
+      "solc_version": "0.8.11"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/PeckShield-Duet/duet-collateral-contracts-92452dad092d6b5f76713484e30159b5fa75ea80/contracts/DYTokenERC20.sol",
+      "split": "train",
+      "success": false,
+      "reason": "solc_error:Definition of base has to precede definition of derived contract|fallback_v0.8.16:solc_error:unknown_solc_error",
+      "solc_version": "0.8.9"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/PeckShield-Hegic(v8888)/Hegic-v8888-2dcd44dc1ae07881e94d52fa618f9704bfd4ffda/contracts/Pool/HegicPool.sol",
+      "split": "train",
+      "success": false,
+      "reason": "solc_error:Expected pragma, import directive or contract/interface/library/struct/enum/cons|fallback_v0.8.16:solc_error:unknown_solc_error",
+      "solc_version": "0.8.6"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/PeckShield-Holdefi/Holdefi-5a1e6e0d582120142e8a531f6806eba6665ef2f4/contracts/Holdefi.sol",
+      "split": "val_features",
+      "success": false,
+      "reason": "solc_error:Duplicate experimental feature name.|fallback_v0.8.0:solc_error:unknown_solc_error",
+      "solc_version": "0.6.12"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/PeckShield-KaoyaSwap/contracts-8273073f1d6914f372790399378f177573c52e37/masterchef.sol",
+      "split": "val_features",
+      "success": false,
+      "reason": "solc_error:Expected pragma, import directive or contract/interface/library/struct/enum/cons|fallback_v0.8.16:solc_error:unknown_solc_error",
+      "solc_version": "0.8.7"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/PeckShield-MilkySwap/milkyswap-59f163e9959cf8bae4a521a9648219b553312e07/contracts/MasterMilker.sol",
+      "split": "train",
+      "success": false,
+      "reason": "solc_error:Expected ';' but got '('|fallback_v0.8.0:solc_error:unknown_solc_error",
+      "solc_version": "0.6.12"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/PeckShield-PikaPerpV2/PikaPerpV2-4a0965ff90ed099b7e2d3e8dda47cd589ee8e3a2/contracts/perp/PikaPerpV2.sol",
+      "split": "train",
+      "success": false,
+      "reason": "solc_error:Expected ';' but got '('",
+      "solc_version": "0.8.0"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/PeckShield-PlutosV1/plutos-eth-contract-0777815/contracts/PMintBurn.sol",
+      "split": "train",
+      "success": false,
+      "reason": "solc_error:Expected identifier, got 'Payable'|fallback_v0.8.0:solc_error:unknown_solc_error",
+      "solc_version": "0.4.21"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/PeckShield-Rikkei/rifi-protocol-b33243fb3a218cc195f0727fe1499cb57f5ea0b2/contracts/RToken.sol",
+      "split": "train",
+      "success": true,
+      "reason": "",
+      "solc_version": "0.5.16"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/PeckShield-ShibaNova/Contracts-b6b1ce1fcaff83d360df8944309f49958842b7b8/shibanova/contracts/MasterShiba.sol",
+      "split": "train",
+      "success": true,
+      "reason": "",
+      "solc_version": "0.6.12"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/PeckShield-StackerVC/StackerVC_VentureFund001-3cfb98b21f4731dfd62993feb7c7d1540837f59b/contracts/Token/LPGauge.sol",
+      "split": "train",
+      "success": false,
+      "reason": "solc_error:Expected ';' but got '('|fallback_v0.8.0:solc_error:unknown_solc_error",
+      "solc_version": "0.6.11"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/PeckShield-SushiSwap/sushiswap-180bc9b642bba79c1ee4a63f71a3a0d36e64aa63/contracts/MasterChef.sol",
+      "split": "val_features",
+      "success": false,
+      "reason": "solc_error:Expected ';' but got '('|fallback_v0.8.0:solc_error:unknown_solc_error",
+      "solc_version": "0.6.12"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/PeckShield-TranchessV1.1/contract-core-68a86350313c1cb9e5467e791d3e9efaf228a0df/contracts/exchange/StakingV2.sol",
+      "split": "test_features",
+      "success": false,
+      "reason": "solc_error:Duplicate experimental feature name.|fallback_v0.8.0:solc_error:unknown_solc_error",
+      "solc_version": "0.6.10"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/PeckShield-Tranchessv1.0/contract-core-5ac3d997da3ef37b0135565a11c5ebcc519862aa/contracts/governance/LiquidityStaking.sol",
+      "split": "train",
+      "success": false,
+      "reason": "solc_error:Expected ')' but got identifier|fallback_v0.8.0:solc_error:unknown_solc_error",
+      "solc_version": "0.6.10"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/PeckShield-btdotfinance/bt-finance-6300bc1271b73a1755fae02594d25fdf6fa39a9c/contracts/vault/bVault.sol",
+      "split": "test_features",
+      "success": true,
+      "reason": "",
+      "solc_version": "0.5.16"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/PepperSec-Aira-Robonomic/robonomics_contracts-cc35a91de187072214d215262d8371f0159c2498/contracts/robonomics/LighthouseLib.sol",
+      "split": "train",
+      "success": false,
+      "reason": "solc_error:Expected ')' but got identifier|fallback_v0.8.0:solc_error:unknown_solc_error",
+      "solc_version": "0.4.24"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/PepperSec-Aira-Robonomic/robonomics_contracts-cc35a91de187072214d215262d8371f0159c2498/contracts/robonomics/RobotLiabilityLib.sol",
+      "split": "train",
+      "success": false,
+      "reason": "solc_error:Expected ')' but got identifier|fallback_v0.8.0:solc_error:unknown_solc_error",
+      "solc_version": "0.4.24"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/QuillAudits-1inch-Fee Collector/fee-collector-3c2626763fd829500496f15476d5e98fbdf4f574/contracts/FeeCollector.sol",
+      "split": "test_features",
+      "success": false,
+      "reason": "solc_error:Expected ';' but got '('",
+      "solc_version": "0.8.0"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/QuillAudits-1inch-Fixed Rate Swap/fixed-rate-swap-0b5a75e9f56e7d21c290dd28c59dc140dcbcc1d5/contracts/FixedRateSwap.sol",
+      "split": "train",
+      "success": true,
+      "reason": "",
+      "solc_version": "0.8.9"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/QuillAudits-1inch-Limit Order Protocol/limit-order-protocol-a14bde6a260458de5083cee117d734221e1cbc05/contracts/LimitOrderProtocol.sol",
+      "split": "val_features",
+      "success": false,
+      "reason": "solc_error:ABI coder has already been selected for this source unit.|fallback_v0.8.0:solc_error:unknown_solc_error",
+      "solc_version": "0.7.6"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/QuillAudits-1inch-token/1inch-token-99fd056f91005ca521a02a005f7bcd8f77e06afc/contracts/ERC20Permit.sol",
+      "split": "train",
+      "success": false,
+      "reason": "solc_error:Expected ';' but got '('|fallback_v0.8.0:solc_error:unknown_solc_error",
+      "solc_version": "0.6.0"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/QuillAudits-AAVE-ParaSwap Adapter/aave-protocol-v2-14e2ab47d95f42ec5ee486f367067e78a7588878/contracts/adapters/BaseParaSwapAdapter.sol",
+      "split": "val_features",
+      "success": false,
+      "reason": "solc_error:Duplicate experimental feature name.|fallback_v0.8.0:solc_error:unknown_solc_error",
+      "solc_version": "0.6.12"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/QuillAudits-Abyss Finance-Abyss Eth2 Depositor/abyss-eth2depositor-a2d58dea4d79846dc682fe93ac3e0eca02323d11/contracts/AbyssEth2Depositor.sol",
+      "split": "test_features",
+      "success": false,
+      "reason": "solc_error:Expected ';' but got '('|fallback_v0.8.0:solc_error:unknown_solc_error",
+      "solc_version": "0.6.11"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/QuillAudits-Algovest/AlgoVestStaking0x090e69e7F48AFC059e480F297042DEA396B971e7/srv/tecmie/algovest/AVS-staking/contracts/stakin_contract.sol",
+      "split": "train",
+      "success": false,
+      "reason": "solc_error:Expected ';' but got '('|fallback_v0.8.0:solc_error:unknown_solc_error",
+      "solc_version": "0.6.0"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/QuillAudits-Alium Finance Smart Contract/alium-farm-e37d6af39af68049c2684085f025385407b4bd55/contracts/MasterChef.sol",
+      "split": "train",
+      "success": false,
+      "reason": "solc_error:No visibility specified. Did you intend to add \"public\"?|fallback_v0.8.0:solc_error:unknown_solc_error",
+      "solc_version": "0.6.12"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/QuillAudits-BCUBE Smart Contract/b-cube-ico-13f9f8a991a65f3e0ca60a2078121fdd5a921fb0/contracts/BCubePublicSale.sol",
+      "split": "train",
+      "success": false,
+      "reason": "solc_error:Expected ';' but got '{'|fallback_v0.8.0:solc_error:unknown_solc_error",
+      "solc_version": "0.5.17"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/QuillAudits-Bond Appetit-Bond Appetit/bondappetit-protocol-355180f0aca0b29d60d808f761052956b7a3a159/contracts/profit/ProfitSplitter.sol",
+      "split": "train",
+      "success": false,
+      "reason": "solc_error:Expected ';' but got '('|fallback_v0.8.0:solc_error:unknown_solc_error",
+      "solc_version": "0.6.0"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/QuillAudits-Citrus Smart Contract/CitrusTechContract-e50a2a983928c10b76e6bc374ae6267f51af99b6/CitrusToken.sol",
+      "split": "train",
+      "success": true,
+      "reason": "",
+      "solc_version": "0.8.4"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/QuillAudits-GearBox Protocol-GearBox Protocol/gearbox-contracts-0ac33ba87212ce056ac6b6357ad74161d417158a/contracts/adapters/CurveV1.sol",
+      "split": "train",
+      "success": false,
+      "reason": "solc_error:Expected ';' but got '('|fallback_v0.8.0:solc_error:unknown_solc_error",
+      "solc_version": "0.7.4"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/QuillAudits-GearBox Protocol-GearBox Protocol/gearbox-contracts-0ac33ba87212ce056ac6b6357ad74161d417158a/contracts/adapters/UniswapV2.sol",
+      "split": "train",
+      "success": false,
+      "reason": "solc_error:Expected ';' but got '('|fallback_v0.8.0:solc_error:unknown_solc_error",
+      "solc_version": "0.7.4"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/QuillAudits-GearBox Protocol-GearBox Protocol/gearbox-contracts-0ac33ba87212ce056ac6b6357ad74161d417158a/contracts/adapters/UniswapV3.sol",
+      "split": "train",
+      "success": false,
+      "reason": "solc_error:Expected ';' but got '('|fallback_v0.8.0:solc_error:unknown_solc_error",
+      "solc_version": "0.7.4"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/QuillAudits-GearBox Protocol-GearBox Protocol/gearbox-contracts-0ac33ba87212ce056ac6b6357ad74161d417158a/contracts/adapters/YearnV2.sol",
+      "split": "train",
+      "success": false,
+      "reason": "solc_error:Expected ';' but got '('|fallback_v0.8.0:solc_error:unknown_solc_error",
+      "solc_version": "0.7.4"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/QuillAudits-GearBox Protocol-GearBox Protocol/gearbox-contracts-0ac33ba87212ce056ac6b6357ad74161d417158a/contracts/core/WETHGateway.sol",
+      "split": "train",
+      "success": false,
+      "reason": "solc_error:Expected ';' but got '('|fallback_v0.8.0:solc_error:unknown_solc_error",
+      "solc_version": "0.7.4"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/QuillAudits-GearBox Protocol-GearBox Protocol/gearbox-contracts-0ac33ba87212ce056ac6b6357ad74161d417158a/contracts/pool/PoolService.sol",
+      "split": "train",
+      "success": false,
+      "reason": "solc_error:Expected ';' but got '('|fallback_v0.8.0:solc_error:unknown_solc_error",
+      "solc_version": "0.7.4"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/QuillAudits-Keep3r.Network-Keep3r.Network/StakingRewardsV3-13ecc6966ae1a413f62224382bfd4d64b1a22351/contracts/StakingRewardsV3-1.sol",
+      "split": "test_features",
+      "success": false,
+      "reason": "solc_error:unknown_solc_error|fallback_v0.8.16:solc_error:unknown_solc_error",
+      "solc_version": "0.8.6"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/QuillAudits-LTO Network-Token Sale/lto-erc20-token-02fa2620aef4c854675230b6544461961d47f968/contracts/LTOTokenSale.sol",
+      "split": "train",
+      "success": true,
+      "reason": "",
+      "solc_version": "0.4.24"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/QuillAudits-Lido-WstETH/lido-dao-ea6fa222004b88e6a24b566a51e5b56b0079272d/contracts/0.6.12/WstETH.sol",
+      "split": "test_features",
+      "success": false,
+      "reason": "solc_error:Expected primary expression.|fallback_v0.8.0:solc_error:unknown_solc_error",
+      "solc_version": "0.6.12"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/QuillAudits-Pickle Finance-Strategy-Curve-scrv-v4_1/protocol-master/strategy-curve-scrv-v4_1.sol",
+      "split": "test_features",
+      "success": false,
+      "reason": "solc_error:Undeclared identifier.|fallback_v0.8.0:solc_error:unknown_solc_error",
+      "solc_version": "0.6.2"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/QuillAudits-SushiSwap-BentoBox/bentobox-c2e150b16b8764ebfe2e1e6e267ae14e10738065/contracts/LendingPair.sol",
+      "split": "val_features",
+      "success": false,
+      "reason": "solc_error:Duplicate experimental feature name.|fallback_v0.8.0:solc_error:unknown_solc_error",
+      "solc_version": "0.6.12"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/QuillAudits-Yearn Finance-Generic Lender/yearnV2-generic-lender-strat-979ef2f0e5da39ca59a5907c37ba2064fcd6be82/contracts/GenericLender/GenericLenderBase.sol",
+      "split": "train",
+      "success": false,
+      "reason": "solc_error:Expected ';' but got '('|fallback_v0.8.0:solc_error:unknown_solc_error",
+      "solc_version": "0.6.12"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/QuillAudits-Yearn Finance-Generic Lender/yearnV2-generic-lender-strat-979ef2f0e5da39ca59a5907c37ba2064fcd6be82/contracts/Strategy.sol",
+      "split": "train",
+      "success": false,
+      "reason": "solc_error:Expected ';' but got '('|fallback_v0.8.0:solc_error:unknown_solc_error",
+      "solc_version": "0.6.12"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/QuillAudits-Yearn Finance-Stablecoins 3pool/stablecoins-3pool-adeb776933c6cb3b8306239cc3357d4c6239a88d/contracts/StrategyDAI.sol",
+      "split": "test_features",
+      "success": false,
+      "reason": "solc_error:Expected ';' but got '('|fallback_v0.8.0:solc_error:unknown_solc_error",
+      "solc_version": "0.6.12"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/QuillAudits-Yearn Finance-Stablecoins 3pool/stablecoins-3pool-adeb776933c6cb3b8306239cc3357d4c6239a88d/contracts/StrategyUSDC.sol",
+      "split": "test_features",
+      "success": false,
+      "reason": "solc_error:Expected ';' but got '('|fallback_v0.8.0:solc_error:unknown_solc_error",
+      "solc_version": "0.6.12"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/QuillAudits-Yearn Finance-Stablecoins 3pool/stablecoins-3pool-adeb776933c6cb3b8306239cc3357d4c6239a88d/contracts/StrategyUSDT.sol",
+      "split": "test_features",
+      "success": false,
+      "reason": "solc_error:Expected ';' but got '('|fallback_v0.8.0:solc_error:unknown_solc_error",
+      "solc_version": "0.6.12"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/QuillAudits-Yearn Finance-Yearn Protocol V1/yearn-protocol-9ff0dc0ea73642c529383d0675930a41bf033295/contracts/vaults/yWETH.sol",
+      "split": "train",
+      "success": false,
+      "reason": "solc_error:Expected ';' but got '{'|fallback_v0.8.0:solc_error:unknown_solc_error",
+      "solc_version": "0.5.16"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/QuillAudits-Yearn Finance-Yearn Vaults V3/yearn-vaults-e390c2a6b2ba6e2ecc8f3a72a1ea4adfabd17544/contracts/BaseWrapper.sol",
+      "split": "train",
+      "success": false,
+      "reason": "solc_error:Duplicate experimental feature name.|fallback_v0.8.0:solc_error:unknown_solc_error",
+      "solc_version": "0.6.12"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/QuillAudits-Yearn Finance-Yearn Vaults V3/yearn-vaults-e390c2a6b2ba6e2ecc8f3a72a1ea4adfabd17544/contracts/yToken.sol",
+      "split": "train",
+      "success": false,
+      "reason": "solc_error:Expected ';' but got '('|fallback_v0.8.0:solc_error:unknown_solc_error",
+      "solc_version": "0.6.12"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/QuillAudits-Yearn Finance-Yoracle.Link/yoracle.link-faf1309cbe7a05f70b338351315039eb8e5b9c09/contracts/Keep3rV1Oracle.sol",
+      "split": "train",
+      "success": false,
+      "reason": "solc_error:Expected ')' but got identifier|fallback_v0.8.0:solc_error:unknown_solc_error",
+      "solc_version": "0.6.12"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/QuillAudits-coalichain/CoaliSC-3f0920d650467279f7ceee08776bd74ecadd3237/Main.sol",
+      "split": "train",
+      "success": false,
+      "reason": "solc_error:Expected identifier, got 'LParen'|fallback_v0.8.0:solc_error:unknown_solc_error",
+      "solc_version": "0.4.21"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/Runtime_V\u0435rification-ElementFinance/elf-contracts-637c6f959315cbb11a164555e588520c7d89122b/contracts/YVaultAssetProxy.sol",
+      "split": "train",
+      "success": true,
+      "reason": "",
+      "solc_version": "0.8.0"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/Runtime_V\u0435rification-Element_Finance_Governance_Security_Audit_Report/council-3d751c959b42573c78ccd0bccbc80424bf6d9a90/contracts/CoreVoting.sol",
+      "split": "train",
+      "success": true,
+      "reason": "",
+      "solc_version": "0.8.0"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/Runtime_V\u0435rification-Stakefish_BatchDeposit/eth2-batch-deposit-a4912b2d839305da8447b7cec6b2f09238b90e37/contracts/BatchDeposits.sol",
+      "split": "train",
+      "success": false,
+      "reason": "solc_error:Expected ';' but got '('|fallback_v0.8.0:solc_error:unknown_solc_error",
+      "solc_version": "0.6.11"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/Runtime_V\u0435rification-Tracer_Perpetual_Pools_V2/perpetual-pools-contracts-846bbf62652d7c83aee1cf3766275c4d08b00c8a/contracts/implementation/PoolCommitter.sol",
+      "split": "train",
+      "success": true,
+      "reason": "",
+      "solc_version": "0.8.7"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/Runtime_V\u0435rification-Tracer_Perpetual_Pools_V2/vesting-a02cbd5e73e629b5d80c0af0202a3ee6f18d0216/contracts/Vesting.sol",
+      "split": "train",
+      "success": false,
+      "reason": "solc_error:Contract \"Vesting\" should be marked as abstract.|fallback_v0.8.16:solc_error:unknown_solc_error",
+      "solc_version": "0.8.4"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/Runtime_V\u0435rification-stakefish_ethereum_staking_audit_report/eth2-validation-services-contract-d91928f3a270f6115831fe3a21a69eb98bf57b26/contracts/StakefishERC721Wrapper.sol",
+      "split": "train",
+      "success": true,
+      "reason": "",
+      "solc_version": "0.8.4"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/SlowMist-Booster-Protocol_\u667a\u80fd\u5b89\u5168\u5ba1\u8ba1\u62a5\u544a/boosterProtocol-946b15629c410d706856584f3aa04001d6a55bd2/contracts/strategies/StrategyMDex.sol",
+      "split": "train",
+      "success": false,
+      "reason": "solc_error:Expected ';' but got '('|fallback_v0.8.0:solc_error:unknown_solc_error",
+      "solc_version": "0.6.12"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/SlowMist-Booster-Protocol_\u667a\u80fd\u5b89\u5168\u5ba1\u8ba1\u62a5\u544a/boosterProtocol-946b15629c410d706856584f3aa04001d6a55bd2/contracts/strategies/StrategyUtils.sol",
+      "split": "train",
+      "success": false,
+      "reason": "solc_error:Expected ';' but got '('|fallback_v0.8.0:solc_error:unknown_solc_error",
+      "solc_version": "0.6.12"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/SlowMist-Booster-Protocol_\u667a\u80fd\u5b89\u5168\u5ba1\u8ba1\u62a5\u544a/boosterProtocol-946b15629c410d706856584f3aa04001d6a55bd2/contracts/utils/BuybackBooToken.sol",
+      "split": "train",
+      "success": false,
+      "reason": "solc_error:Expected ';' but got '('|fallback_v0.8.0:solc_error:unknown_solc_error",
+      "solc_version": "0.6.12"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/SlowMist-CFFv2 Smart Contract Security Audit Report/cff-contract-v2-c86bef3f13c7585f547f9cd0ca900f94664e96b7/contracts/core/CFVault.sol",
+      "split": "train",
+      "success": false,
+      "reason": "solc_error:Expected identifier, got 'LParen'|fallback_v0.8.0:solc_error:unknown_solc_error",
+      "solc_version": "0.4.21"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/SlowMist-ForTube2.0 Smart Contract Security Audit Report/bond-854527d0ea7ad2ddd3504b4d4ae3fcb57cb6445d/contracts/PRA.sol",
+      "split": "train",
+      "success": false,
+      "reason": "solc_error:Expected ')' but got identifier|fallback_v0.8.0:solc_error:unknown_solc_error",
+      "solc_version": "0.6.0"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/SlowMist-Starcrazy Smart Contract Security Audit Report/starcrazy-contracts-e9e11d234ac065726e108a73dfcd5efbad26f2c5/contract/AlianaMinting.sol",
+      "split": "train",
+      "success": false,
+      "reason": "solc_error:Interfaces cannot inherit.|fallback_v0.8.0:solc_error:unknown_solc_error",
+      "solc_version": "0.5.0"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/Solidified-Aztec Element Bridge/aztec-connect-bridges-ac2e7194b5887ea11a607b4cf8de0547b3d7fdd0/src/bridges/element/ElementBridge.sol",
+      "split": "train",
+      "success": false,
+      "reason": "solc_error:Expected ';' but got '('|fallback_v0.8.0:solc_error:unknown_solc_error",
+      "solc_version": "0.6.10"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/Solidified-Aztec Lido Bridge/aztec-connect-bridges-d5aca13d4d0a17b21eeddf77f49f4c6613461fb0/src/bridges/lido/LidoBridge.sol",
+      "split": "val_features",
+      "success": false,
+      "reason": "solc_error:Expected ';' but got '('|fallback_v0.8.0:solc_error:unknown_solc_error",
+      "solc_version": "0.6.10"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/Solidity_Finance-OKLG - Smart Contract/contracts-e167d0d742d21bcc62d7a5b770a1f0ed1cf31eca/contracts/OKLGTokenLocker.sol",
+      "split": "val_features",
+      "success": false,
+      "reason": "solc_error:Contract \"OKLGWithdrawable\" should be marked as abstract.|fallback_v0.8.16:solc_error:unknown_solc_error",
+      "solc_version": "0.8.4"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/Trail_of_Bits-88mph/88mph-contracts-76cd9d1fc45e65f5d0f686621fe6af85c40aa140/contracts/rewards/xMPH.sol",
+      "split": "train",
+      "success": true,
+      "reason": "",
+      "solc_version": "0.8.11"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/Trail_of_Bits-CompliFi/complifi-protocol-v1-912e93014aa16a9b6987556d971ed2b599b8cba7/contracts/Vault.sol",
+      "split": "val_features",
+      "success": false,
+      "reason": "solc_error:Expected ';' but got '('|fallback_v0.8.0:solc_error:unknown_solc_error",
+      "solc_version": "0.7.6"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/Trail_of_Bits-FraxFinance/frax-solidity-3f0993a70e3496fd27887db7754d68709c84015e/contracts/Curve/CurveAMO.sol",
+      "split": "train",
+      "success": false,
+      "reason": "solc_error:Expected ')' but got identifier|fallback_v0.8.0:solc_error:unknown_solc_error",
+      "solc_version": "0.6.11"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/Trail_of_Bits-FraxFinance/frax-solidity-3f0993a70e3496fd27887db7754d68709c84015e/contracts/Frax/Pools/FraxPool.sol",
+      "split": "train",
+      "success": false,
+      "reason": "solc_error:Expected ')' but got identifier|fallback_v0.8.0:solc_error:unknown_solc_error",
+      "solc_version": "0.6.11"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/Trail_of_Bits-FraxFinance/frax-solidity-3f0993a70e3496fd27887db7754d68709c84015e/contracts/Misc_AMOs/InvestorAMO_V2.sol",
+      "split": "train",
+      "success": false,
+      "reason": "solc_error:Expected ')' but got identifier|fallback_v0.8.0:solc_error:unknown_solc_error",
+      "solc_version": "0.6.11"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/Trail_of_Bits-FraxQ42021/frax-solidity-bd40775e283923aa9e32a107abd426430a99835e/src/hardhat/contracts/FPI/TWAMM.sol",
+      "split": "train",
+      "success": false,
+      "reason": "solc_error:Expected type name",
+      "solc_version": "0.8.0"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/Trail_of_Bits-FujiProtocol/fuji-protocol-933ea57b11889d87744efa23e95c90b7bf589402/contracts/FujiVault.sol",
+      "split": "train",
+      "success": false,
+      "reason": "solc_error:Expected ')' but got identifier",
+      "solc_version": "0.8.0"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/Trail_of_Bits-Liquity/dev-f0df3efa5a5f05b205752184cfce107c5bd6e06c/packages/contracts/contracts/BorrowerOperations.sol",
+      "split": "test_features",
+      "success": true,
+      "reason": "",
+      "solc_version": "0.6.11"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/Trail_of_Bits-Liquity/dev-f0df3efa5a5f05b205752184cfce107c5bd6e06c/packages/contracts/contracts/TroveManager.sol",
+      "split": "test_features",
+      "success": true,
+      "reason": "",
+      "solc_version": "0.6.11"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/Trail_of_Bits-MapleFinance/liquidations-35c628e5ab45fbffaab7aef43a030a98b712a94a/contracts/Liquidator.sol",
+      "split": "train",
+      "success": true,
+      "reason": "",
+      "solc_version": "0.8.7"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/Trail_of_Bits-OriginDollar/origin-dollar-81431fd3b2aa4c518ffc389844f9708c00b516f0/contracts/contracts/governance/Governor.sol",
+      "split": "train",
+      "success": true,
+      "reason": "",
+      "solc_version": "0.5.11"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/Trail_of_Bits-OriginDollar/origin-dollar-81431fd3b2aa4c518ffc389844f9708c00b516f0/contracts/contracts/strategies/CompoundStrategy.sol",
+      "split": "train",
+      "success": false,
+      "reason": "solc_error:Expected ';' but got '{'|fallback_v0.8.0:solc_error:unknown_solc_error",
+      "solc_version": "0.5.11"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/Trail_of_Bits-OriginDollar/origin-dollar-81431fd3b2aa4c518ffc389844f9708c00b516f0/contracts/contracts/vault/VaultAdmin.sol",
+      "split": "train",
+      "success": false,
+      "reason": "solc_error:Expected ';' but got '{'|fallback_v0.8.0:solc_error:unknown_solc_error",
+      "solc_version": "0.5.11"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/Trail_of_Bits-OriginDollar/origin-dollar-81431fd3b2aa4c518ffc389844f9708c00b516f0/contracts/contracts/vault/VaultCore.sol",
+      "split": "train",
+      "success": false,
+      "reason": "solc_error:Expected ';' but got '{'|fallback_v0.8.0:solc_error:unknown_solc_error",
+      "solc_version": "0.5.11"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/Trail_of_Bits-PerpetualProtocolV2/perp-oracle-contract-ba78a5b87098dcffb7285fc585afff1001a87232/contracts/ChainlinkPriceFeed.sol",
+      "split": "test_features",
+      "success": false,
+      "reason": "solc_error:Expected ';' but got '('|fallback_v0.8.0:solc_error:unknown_solc_error",
+      "solc_version": "0.7.6"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/Trail_of_Bits-Primitive/rmm-core-5dcf4306fc32fb9a4e3c154deb86f6b9d513c344/contracts/PrimitiveEngine.sol",
+      "split": "train",
+      "success": true,
+      "reason": "",
+      "solc_version": "0.8.6"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/Trail_of_Bits-UniswapV3Core/v3-core-99223f33fd69a9e024f00bd8eea17b029d3f8f2d/contracts/UniswapV3Pool.sol",
+      "split": "train",
+      "success": false,
+      "reason": "solc_error:Undeclared identifier.|fallback_v0.8.0:solc_error:unknown_solc_error",
+      "solc_version": "0.7.6"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/Trail_of_Bits-YieldProtocol/fyDai-4422fda75931f2bfea49f5041ec90dc026e5c03d/contracts/pool/Pool.sol",
+      "split": "train",
+      "success": false,
+      "reason": "solc_error:Expected ';' but got '('|fallback_v0.8.0:solc_error:unknown_solc_error",
+      "solc_version": "0.6.10"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/Trail_of_Bits-YieldV2/vault-v2-819a713416249da92c44eb629ed26a49425a4656/contracts/Ladle.sol",
+      "split": "train",
+      "success": false,
+      "reason": "solc_error:Undeclared identifier.|fallback_v0.8.16:solc_error:unknown_solc_error",
+      "solc_version": "0.8.6"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/Trail_of_Bits-ampleforth/market-oracle-888fccaf05786f3f7f49e18ff040f911d44906f4/contracts/MarketOracle.sol",
+      "split": "train",
+      "success": true,
+      "reason": "",
+      "solc_version": "0.4.24"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/Trail_of_Bits-setprotocol/set-protocol-contracts-b4acf144c10b1d9f3ecde4ee2820931df1cb8e4a/contracts/core/modules/lib/ExchangeExecution.sol",
+      "split": "train",
+      "success": false,
+      "reason": "solc_error:Duplicate experimental feature name.|fallback_v0.8.0:solc_error:unknown_solc_error",
+      "solc_version": "0.5.4"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/consensys-Aave_Protocol_V2/aave-protocol-v2-f756f44a8d6a328cd545335e46e7128939db88c4/contracts/lendingpool/LendingPool.sol",
+      "split": "test_features",
+      "success": false,
+      "reason": "solc_error:Expected ';' but got '('|fallback_v0.8.0:solc_error:unknown_solc_error",
+      "solc_version": "0.6.8"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/consensys-Amp/amp-token-contracts-6871b6c64c712835b332e515cc553308dcbbc539/contracts/Amp.sol",
+      "split": "val_features",
+      "success": false,
+      "reason": "solc_error:Expected ';' but got '('|fallback_v0.8.0:solc_error:unknown_solc_error",
+      "solc_version": "0.6.9"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/consensys-Connext NXTP \u2014 Noncustodial Xchain Transfer Protocol/nxtp-0656436d654cfe0313fa3c2bbc81aa86232ade16/packages/contracts/contracts/TransactionManager.sol",
+      "split": "train",
+      "success": false,
+      "reason": "solc_error:Expected ')' but got identifier|fallback_v0.8.16:solc_error:unknown_solc_error",
+      "solc_version": "0.8.4"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/consensys-DeFi_Saver/defisaver-v3-contracts-cb29669a84c2d6fffaf2231c0938eb407c060919/contracts/actions/compound/helpers/CompHelper.sol",
+      "split": "train",
+      "success": true,
+      "reason": "",
+      "solc_version": "0.7.0"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/consensys-DeFi_Saver/defisaver-v3-contracts-cb29669a84c2d6fffaf2231c0938eb407c060919/contracts/actions/flashloan/FLAaveV2.sol",
+      "split": "train",
+      "success": false,
+      "reason": "solc_error:Duplicate experimental feature name.|fallback_v0.8.0:solc_error:unknown_solc_error",
+      "solc_version": "0.7.0"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/consensys-ENS_Permanent_Registrar/ethregistrar-e52abfc2799ac361364aca6135fc20f9175a29fd/contracts/ETHRegistrarController.sol",
+      "split": "train",
+      "success": false,
+      "reason": "solc_error:The state mutability modifier \"constant\" was removed in version 0.5.0. Use \"view|fallback_v0.8.0:solc_error:unknown_solc_error",
+      "solc_version": "0.5.0"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/consensys-Fei_Protocol/fei-protocol-core-ff892c5d0b9697f249d713bbb2b3bd1da7980ed2/contracts/pcv/EthUniswapPCVController.sol",
+      "split": "train",
+      "success": false,
+      "reason": "solc_error:Expected ';' but got '{'|fallback_v0.8.0:solc_error:unknown_solc_error",
+      "solc_version": "0.6.0"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/consensys-Fei_Protocol/fei-protocol-core-ff892c5d0b9697f249d713bbb2b3bd1da7980ed2/contracts/pool/Pool.sol",
+      "split": "train",
+      "success": false,
+      "reason": "solc_error:No visibility specified. Did you intend to add \"public\"?|fallback_v0.8.0:solc_error:unknown_solc_error",
+      "solc_version": "0.6.0"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/consensys-Fei_Protocol_v2_Phase_1/fei-protocol-core-5e3e2ab889f06831f4fe2e8460066ded40ccf0a8/contracts/pcv/balancer/BalancerLBPSwapper.sol",
+      "split": "train",
+      "success": false,
+      "reason": "solc_error:Expected ';' but got '('",
+      "solc_version": "0.8.0"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/consensys-Gamma/hypervisor-41fd4abf79864478523e87924d4e80d80df04879/contracts/Hypervisor.sol",
+      "split": "val_features",
+      "success": false,
+      "reason": "solc_error:Expected ';' but got '('|fallback_v0.8.0:solc_error:unknown_solc_error",
+      "solc_version": "0.7.6"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/consensys-Gamma/hypervisor-41fd4abf79864478523e87924d4e80d80df04879/contracts/UniProxy.sol",
+      "split": "val_features",
+      "success": false,
+      "reason": "solc_error:ABI coder has already been selected for this source unit.",
+      "solc_version": "0.8.11"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/consensys-GrowthDeFi WHEAT/wheat-v1-core-8360ac0a537589bb974e8a5a169bb3e7c95d2857/contracts/Exchange.sol",
+      "split": "train",
+      "success": false,
+      "reason": "solc_error:Expected ';' but got '('|fallback_v0.8.0:solc_error:unknown_solc_error",
+      "solc_version": "0.6.0"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/consensys-Idle_Finance/idle-tranches-d94ee7194e8cb17db13b16c338f3e780b62f5435/contracts/IdleCDO.sol",
+      "split": "val_features",
+      "success": false,
+      "reason": "solc_error:Expected type name|fallback_v0.8.16:solc_error:unknown_solc_error",
+      "solc_version": "0.8.4"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/consensys-MCDEX_Mai_Protocol_V2/mai-protocol-v2-4b198083ec4ae2d6851e101fc44ea333eaa3cd92/contracts/liquidity/AMM.sol",
+      "split": "train",
+      "success": false,
+      "reason": "solc_error:Expected pragma, import directive or contract/interface/library definition.|fallback_v0.8.0:solc_error:unknown_solc_error",
+      "solc_version": "0.5.17"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/consensys-PoolTogether_Pods/pods-v3-contracts-879dc8b911fc506dd6bead1f36eade919ccfea57/contracts/Pod.sol",
+      "split": "val_features",
+      "success": false,
+      "reason": "solc_error:Expected ';' but got '('|fallback_v0.8.0:solc_error:unknown_solc_error",
+      "solc_version": "0.7.0"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/consensys-PoolTogether_Pods/pods-v3-contracts-879dc8b911fc506dd6bead1f36eade919ccfea57/contracts/TokenDrop.sol",
+      "split": "val_features",
+      "success": false,
+      "reason": "solc_error:oz-upgrades-unsafe-allow not valid for contracts.|fallback_v0.8.0:solc_error:unknown_solc_error",
+      "solc_version": "0.7.0"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/consensys-PoolTogether_Sushi_and_Yearn_V2_Yield_Sources/pooltogether-yearnv2-yield-source-a34857f1555908a6263d2ebd189f0cb40e1858da/contracts/yield-source/YearnV2YieldSource.sol",
+      "split": "val_features",
+      "success": false,
+      "reason": "solc_error:Expected primary expression.|fallback_v0.8.0:solc_error:unknown_solc_error",
+      "solc_version": "0.6.12"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/consensys-Skyweaver/Skyweaver-contracts-bde0c184db6168bf86656a48b12d5747950b54d9/contracts/shop/EternalHeroesFactory.sol",
+      "split": "train",
+      "success": false,
+      "reason": "solc_error:Duplicate experimental feature name.|fallback_v0.8.0:solc_error:unknown_solc_error",
+      "solc_version": "0.5.16"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/consensys-The_LAO/moloch-4bc443f4dad60279b47978fc6987bb978d3dfc58/contracts/Moloch.sol",
+      "split": "test_features",
+      "success": true,
+      "reason": "",
+      "solc_version": "0.5.3"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/consensys-Zer0_zBanc/zBanc-48da0ac1eebbe31a74742f1ae4281b156f03a4bc/solidity/contracts/converter/types/liquid-token/DynamicLiquidTokenConverter.sol",
+      "split": "train",
+      "success": true,
+      "reason": "",
+      "solc_version": "0.6.12"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/openzeppelin-Alpha_Finance_Homora_V2/alpha-homora-v2-contract-5efa332f2ecf8e9705c326cffda5305bc6f752f7/WMasterChef.sol",
+      "split": "train",
+      "success": false,
+      "reason": "solc_error:Expected ')' but got identifier|fallback_v0.8.0:solc_error:unknown_solc_error",
+      "solc_version": "0.6.12"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/openzeppelin-Endaoment/endaoment-contracts-f60aa253d3d869ad6460877f23e6092acb313add/Fund.sol",
+      "split": "test_features",
+      "success": false,
+      "reason": "solc_error:Identifier not found or not unique.|fallback_v0.8.0:solc_error:unknown_solc_error",
+      "solc_version": "0.6.10"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/openzeppelin-Fuel_Token/FUEL-Contracts-3717b751bb2fa57ae300776a93ee4d7d7beb2c07/FuelCrowdfund.sol",
+      "split": "val_features",
+      "success": false,
+      "reason": "solc_error:Identifier not found or not unique.|fallback_v0.8.0:solc_error:unknown_solc_error",
+      "solc_version": "0.4.24"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/openzeppelin-Optimism/contracts-18e128343731b9bde23812ce932e24d81440b6b7/contracts/optimistic-ethereum/OVM/bridge/tokens/OVM_L1ERC20Gateway.sol",
+      "split": "train",
+      "success": false,
+      "reason": "solc_error:Expected pragma, import directive or contract/interface/library definition.|fallback_v0.8.0:solc_error:unknown_solc_error",
+      "solc_version": "0.5.0"
+    },
+    {
+      "file": "DAppSCAN-source/contracts/openzeppelin-Solo_Margin_Protocol/solo-17df84db351d5438e1b7437572722b4f52c8b2b4/contracts/protocol/impl/AdminImpl.sol",
+      "split": "train",
+      "success": false,
+      "reason": "solc_error:Duplicate experimental feature name.|fallback_v0.8.0:solc_error:unknown_solc_error",
+      "solc_version": "0.5.4"
+    },
+    {
+      "file": "DIAExternalStaking.sol",
+      "split": "train",
+      "success": true,
+      "reason": "",
+      "solc_version": "0.8.11"
+    },
+    {
+      "file": "EnjoyoorsVaultWithdrawals.sol",
+      "split": "train",
+      "success": true,
+      "reason": "",
+      "solc_version": "0.8.11"
+    },
+    {
+      "file": "Folio.sol",
+      "split": "train",
+      "success": false,
+      "reason": "solc_error:Expected pragma, import directive or contract/interface/library/struct/enum/cons|fallback_v0.8.28:solc_error:Expected pragma, import directive or contract/interface/library/struct/enum/cons",
+      "solc_version": "0.8.11"
+    },
+    {
+      "file": "GenericERC4626.sol",
+      "split": "train",
+      "success": false,
+      "reason": "solc_error:Member \"checkTransfer\" not found or not visible after argument-dependent lookup |fallback_v0.8.29:solc_error:Member \"checkTransfer\" not found or not visible after argument-dependent lookup ",
+      "solc_version": "0.8.11"
+    },
+    {
+      "file": "HyperCoreFlowExecutor.sol",
+      "split": "val_features",
+      "success": false,
+      "reason": "solc_error:Expected ';' but got '('",
+      "solc_version": "0.8.0"
+    },
+    {
+      "file": "L1Mailbox.sol",
+      "split": "train",
+      "success": false,
+      "reason": "solc_error:Expected ';' but got '('",
+      "solc_version": "0.8.0"
+    },
+    {
+      "file": "LikwidMarginPosition.sol",
+      "split": "train",
+      "success": false,
+      "reason": "solc_error:Expected pragma, import directive or contract/interface/library/struct/enum/cons|fallback_v0.8.26:solc_error:Member \"toInt128\" not found or not visible after argument-dependent lookup in ui",
+      "solc_version": "0.8.11"
+    },
+    {
+      "file": "LikwidPairPosition.sol",
+      "split": "train",
+      "success": false,
+      "reason": "solc_error:Expected pragma, import directive or contract/interface/library/struct/enum/cons|fallback_v0.8.26:solc_error:true` (standard JSON) while enabling the optimizer. Otherwise, try removing loca",
+      "solc_version": "0.8.11"
+    },
+    {
+      "file": "LimitOrderHook.sol",
+      "split": "train",
+      "success": false,
+      "reason": "solc_error:Expected pragma, import directive or contract/interface/library/struct/enum/cons|fallback_v0.8.24:solc_error:Identifier is not a function name or not unique.",
+      "solc_version": "0.8.11"
+    },
+    {
+      "file": "MainFeeDistributor.sol",
+      "split": "train",
+      "success": true,
+      "reason": "",
+      "solc_version": "0.8.11"
+    },
+    {
+      "file": "MarketConfigurator.sol",
+      "split": "train",
+      "success": false,
+      "reason": "solc_error:Expected pragma, import directive or contract/interface/library/struct/enum/cons|fallback_v0.8.24:solc_error:Expected pragma, import directive or contract/interface/library/struct/enum/cons",
+      "solc_version": "0.8.11"
+    },
+    {
+      "file": "MerkleDistributor.sol",
+      "split": "train",
+      "success": false,
+      "reason": "solc_error:Expected ';' but got '('|fallback_v0.8.0:solc_error:unknown_solc_error",
+      "solc_version": "0.6.6"
+    },
+    {
+      "file": "OPSuccinctDisputeGame.sol",
+      "split": "val_features",
+      "success": false,
+      "reason": "solc_error:Identifier not found or not unique.|fallback_v0.8.16:solc_error:unknown_solc_error",
+      "solc_version": "0.8.11"
+    },
+    {
+      "file": "OctoDistributor.sol",
+      "split": "train",
+      "success": true,
+      "reason": "",
+      "solc_version": "0.8.11"
+    },
+    {
+      "file": "OidcRecoveryValidator.sol",
+      "split": "train",
+      "success": false,
+      "reason": "solc_error:Undeclared identifier.|fallback_v0.8.24:solc_error:Undeclared identifier.",
+      "solc_version": "0.8.11"
+    },
+    {
+      "file": "OracleLess.sol",
+      "split": "test_features",
+      "success": true,
+      "reason": "",
+      "solc_version": "0.8.11"
+    },
+    {
+      "file": "P2pResolvProxy.sol",
+      "split": "train",
+      "success": false,
+      "reason": "solc_error:Expected primary expression.|fallback_v0.8.29:solc_error:Expected primary expression.",
+      "solc_version": "0.8.11"
+    },
+    {
+      "file": "P2pYieldProxy.sol",
+      "split": "train",
+      "success": true,
+      "reason": "",
+      "solc_version": "0.8.11"
+    },
+    {
+      "file": "PDPVerifier.sol",
+      "split": "train",
+      "success": false,
+      "reason": "solc_error:Undeclared identifier.|fallback_v0.8.20:solc_error:unknown_solc_error",
+      "solc_version": "0.8.11"
+    },
+    {
+      "file": "PolygonStrategy.sol",
+      "split": "train",
+      "success": false,
+      "reason": "solc_error:Expected pragma, import directive or contract/interface/library/struct/enum/cons|fallback_v0.8.24:solc_error:Expected pragma, import directive or contract/interface/library/struct/enum/cons",
+      "solc_version": "0.8.11"
+    },
+    {
+      "file": "Router_Adapter.sol",
+      "split": "train",
+      "success": false,
+      "reason": "solc_error:Expected ';' but got '('",
+      "solc_version": "0.8.0"
+    },
+    {
+      "file": "ScrollChainValidium.sol",
+      "split": "test_features",
+      "success": true,
+      "reason": "",
+      "solc_version": "0.8.11"
+    },
+    {
+      "file": "SpokePool.sol",
+      "split": "train",
+      "success": false,
+      "reason": "solc_error:Expected ';' but got '('",
+      "solc_version": "0.8.0"
+    },
+    {
+      "file": "StakingManager.sol",
+      "split": "val_features",
+      "success": false,
+      "reason": "solc_error:Identifier not found or not unique.|fallback_v0.8.20:solc_error:unknown_solc_error",
+      "solc_version": "0.8.11"
+    },
+    {
+      "file": "StopLimit.sol",
+      "split": "test_features",
+      "success": false,
+      "reason": "solc_error:unknown_solc_error|fallback_v0.8.20:solc_error:unknown_solc_error",
+      "solc_version": "0.8.11"
+    },
+    {
+      "file": "ValidatorExitDelayVerifier.sol",
+      "split": "train",
+      "success": true,
+      "reason": "",
+      "solc_version": "0.8.11"
+    },
+    {
+      "file": "ZkStack_CustomGasToken_Adapter.sol",
+      "split": "train",
+      "success": false,
+      "reason": "solc_error:Expected ';' but got '('",
+      "solc_version": "0.8.0"
+    },
+    {
+      "file": "mErc20Host.sol",
+      "split": "train",
+      "success": false,
+      "reason": "solc_error:Expected ')' but got identifier|fallback_v0.8.28:solc_error:Expected ')' but got identifier",
+      "solc_version": "0.8.11"
+    },
+    {
+      "file": "src/helpers/DelegationMetaSwapAdapter.sol",
+      "split": "train",
+      "success": false,
+      "reason": "solc_error:Expected identifier but got ','|fallback_v0.8.24:solc_error:Expected identifier but got ','",
+      "solc_version": "0.8.11"
+    },
+    {
+      "file": "src/withdraws/Dinero.sol",
+      "split": "train",
+      "success": false,
+      "reason": "solc_error:Definition of base has to precede definition of derived contract|fallback_v0.8.29:solc_error:Definition of base has to precede definition of derived contract",
+      "solc_version": "0.8.11"
+    },
+    {
+      "file": "sys_chaincfg.sol",
+      "split": "train",
+      "success": true,
+      "reason": "",
+      "solc_version": "0.8.0"
+    }
+  ]
+}

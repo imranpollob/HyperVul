@@ -392,66 +392,14 @@ For paper claims, avoid claiming superiority from one seed.
 
 ---
 
-## 10. Planned Paper Tables
+## 10. Paper Tables
 
-The numeric values below are **demo placeholders** used to show the intended paper-table shape. They are not achieved results and should not be treated as targets to reproduce. The measured values are generated dynamically in `hypervul_fair_eval/outputs/final_report.md`.
-
-### Table 1: Dataset Statistics
-
-| Split | Contracts | Functions | Interactions | Positives | Negatives | Positive Rate |
-|---|---:|---:|---:|---:|---:|---:|
-| Train | 820 | 14,500 | 18,900 | 1,120 | 17,780 | 5.9% |
-| Validation | 105 | 1,780 | 2,260 | 135 | 2,125 | 6.0% |
-| Test | 110 | 1,920 | 2,410 | 148 | 2,262 | 6.1% |
-
-### Table 2: RQ1 Generic Baselines vs HyperVul-Full
-
-| Model | Uses Hyperedge? | Precision | Recall | F1 | F2 | PR-AUC | ROC-AUC |
-|---|---:|---:|---:|---:|---:|---:|---:|
-| Slither | No | 41.2 | 52.7 | 46.2 | 49.9 | n/a | n/a |
-| Mythril | No | 33.5 | 44.1 | 38.1 | 41.5 | n/a | n/a |
-| Function-MLP | No | 54.0 +/- 2.1 | 71.2 +/- 3.0 | 61.4 +/- 2.4 | 66.9 +/- 2.6 | 63.8 +/- 2.2 | 84.0 +/- 1.5 |
-| Function+Features MLP | No | 57.8 +/- 1.8 | 73.5 +/- 2.7 | 64.7 +/- 2.0 | 69.7 +/- 2.2 | 66.9 +/- 2.0 | 85.7 +/- 1.3 |
-| Sequence Model | No | 59.4 +/- 2.0 | 75.1 +/- 2.5 | 66.3 +/- 2.1 | 71.3 +/- 2.0 | 68.4 +/- 1.8 | 86.5 +/- 1.2 |
-| CallGraph-GCN | No | 61.0 +/- 1.9 | 76.0 +/- 2.4 | 67.7 +/- 1.9 | 72.5 +/- 2.1 | 70.2 +/- 1.7 | 87.3 +/- 1.1 |
-| PairwiseGraph-GCN | No | 63.3 +/- 1.7 | 78.5 +/- 2.2 | 70.1 +/- 1.8 | 75.0 +/- 1.9 | 72.5 +/- 1.6 | 88.4 +/- 1.0 |
-| HyperVul-Full | Yes | 72.5 +/- 1.5 | 84.8 +/- 1.9 | 78.2 +/- 1.6 | 82.0 +/- 1.7 | 82.7 +/- 1.4 | 93.1 +/- 0.8 |
-
-### Table 3: RQ2 Controlled Representation Ablation
-
-| Model | Candidate Interactions | Representation | Precision | Recall | F1 | F2 | PR-AUC |
-|---|---:|---|---:|---:|---:|---:|---:|
-| Set-Pool | Same | no edges | 60.5 +/- 2.0 | 77.0 +/- 2.4 | 67.8 +/- 2.1 | 73.0 +/- 2.2 | 70.1 +/- 1.9 |
-| Pairwise-GCN | Same | pairwise clique | 64.2 +/- 1.8 | 79.1 +/- 2.2 | 70.9 +/- 1.9 | 75.8 +/- 1.8 | 73.3 +/- 1.7 |
-| Pairwise-GAT | Same | pairwise attention | 65.7 +/- 1.7 | 80.0 +/- 2.0 | 72.1 +/- 1.8 | 76.8 +/- 1.7 | 74.8 +/- 1.6 |
-| HyperedgeNN | Same | true hyperedge | 70.1 +/- 1.5 | 82.9 +/- 1.9 | 76.0 +/- 1.6 | 80.1 +/- 1.5 | 79.4 +/- 1.3 |
-
-### Table 4: RQ3 HyperVul Component Ablation
-
-| Variant | Symbolic Features | Localization | Contrastive | Precision | Recall | F1 | F2 | PR-AUC |
-|---|---|---:|---:|---:|---:|---:|---:|---:|
-| HyperVul-EmbOnly | none | Yes | Yes | 68.2 +/- 1.8 | 81.5 +/- 2.1 | 74.3 +/- 1.9 | 78.8 +/- 1.8 | 77.5 +/- 1.6 |
-| HyperVul-Security | security subset | Yes | Yes | 70.4 +/- 1.6 | 83.0 +/- 1.9 | 76.2 +/- 1.7 | 80.2 +/- 1.6 | 80.1 +/- 1.5 |
-| HyperVul-Full | full | Yes | Yes | 72.5 +/- 1.5 | 84.8 +/- 1.9 | 78.2 +/- 1.6 | 82.0 +/- 1.7 | 82.7 +/- 1.4 |
-| HyperVul-NoLocalize | full | No | Yes | 70.6 +/- 1.7 | 82.2 +/- 2.0 | 76.0 +/- 1.8 | 79.7 +/- 1.8 | 80.5 +/- 1.5 |
-| HyperVul-NoContrastive | full | Yes | No | 69.9 +/- 1.8 | 81.8 +/- 2.1 | 75.4 +/- 1.9 | 79.2 +/- 1.9 | 79.8 +/- 1.6 |
-
-### Table 5: Clean-Negative False Positive Rate
-
-| Model | OpenZeppelin FPR | Aave FPR | MakerDAO/Bancor FPR | Liquity FPR | Mean Clean FPR |
-|---|---:|---:|---:|---:|---:|
-| Function-MLP | 16.8 | 19.4 | 22.1 | 18.7 | 19.3 |
-| PairwiseGraph-GCN | 12.5 | 15.2 | 17.8 | 14.1 | 14.9 |
-| HyperedgeNN | 9.8 | 12.0 | 13.5 | 11.2 | 11.6 |
-| HyperVul-Full | 6.4 | 8.1 | 9.7 | 7.5 | 7.9 |
-
-### Table 6: Statistical Significance Summary
-
-| Comparison | Test | Statistic | p-value | Interpretation |
-|---|---|---:|---:|---|
-| HyperVul-Full vs PairwiseGraph-GCN | McNemar | 18.4 | 0.00002 | HyperVul improves paired correctness |
-| HyperedgeNN vs Pairwise-GAT | McNemar | 9.7 | 0.0018 | Hyperedge representation improves over pairwise reduction |
-| HyperVul-Full vs HyperVul-EmbOnly | bootstrap F1 delta | +3.9 | 0.004 | Symbolic features improve performance |
+Demo/placeholder tables previously here (dataset stats, RQ1/RQ2/RQ3 comparisons, clean-negative
+FPR, significance summary) were never real measurements and were removed during the Phase 0.5
+repo cleanup (see `/reports/phase0_phase1_rebuild_report.md`) after they were found presented
+alongside real numbers with no visual distinction. The real, measured values are generated
+dynamically in `hypervul_fair_eval/outputs/final_report.md` — that file is the only source of
+truth for paper tables; no numbers should be hand-written here or anywhere else.
 
 ---
 

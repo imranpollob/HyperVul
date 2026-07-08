@@ -26,7 +26,7 @@ sys.path.append(str(PROJECT_ROOT / "scripts"))
 
 import extract_bottleneck_schema as ebs   # build_bottleneck_item + node builders (loads SmartBERT)
 import negative_hyperedge_sampling as nhs
-from src.models import symbolic as S
+from legacy.src.models import symbolic as S
 
 # Clean-code OOD holdouts (source != OZ/Aave/DAppSCAN/FORGE) live in local clones; their
 # source files are resolved by parsing the whole repo (mirrors build_external_clean.py /

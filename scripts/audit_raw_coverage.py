@@ -247,6 +247,60 @@ def build_dapp_raw_findings() -> list[RawFinding]:
     return rows
 
 
+FORGE_RAW_SOURCE_ROOTS = [
+    ROOT / "data" / "FORGE-Curated" / "dataset-curated" / "contracts",
+    ROOT / "data" / "FORGE-Curated" / "dataset-curated" / "contracts-raw",
+]
+
+_forge_project_file_index: dict[str, dict[str, Path]] = {}
+
+
+def _forge_project_index(project_name: str) -> dict[str, Path]:
+    """Basename -> path index of every .sol file under a FORGE project's raw source tree.
+
+    `flatten/vfp-vuln/*.json` only embeds the specific files a finding's primary
+    location touched; secondary locations (e.g. a library referenced from the main
+    finding function) are frequently *not* embedded there even though the full project
+    checkout is present under dataset-curated/{contracts,contracts-raw}.
+    """
+    if project_name in _forge_project_file_index:
+        return _forge_project_file_index[project_name]
+    index: dict[str, Path] = {}
+    for root in FORGE_RAW_SOURCE_ROOTS:
+        proj_dir = root / f"{project_name}-source"
+        if proj_dir.exists():
+            for p in proj_dir.rglob("*.sol"):
+                index.setdefault(p.name, p)
+    _forge_project_file_index[project_name] = index
+    return index
+
+
+def resolve_forge_source(project_name: str, file_base: str) -> tuple[str, str]:
+    """Best-effort resolution of a FORGE finding-location reference to real source text.
+
+    `file_base` is either a genuine filename not embedded in the vfp's affected_files,
+    or a bare contract/library name with no file extension (some `location` entries look
+    like "LibVestingPlan::resetAmount" rather than "File.sol::function"). Returns
+    (repo-relative path, source text); source text is "" if nothing was found.
+    """
+    if not project_name or not file_base:
+        return "", ""
+    index = _forge_project_index(project_name)
+    if file_base in index:
+        p = index[file_base]
+        return str(p.relative_to(ROOT)), p.read_text(encoding="utf-8", errors="ignore")
+    if not file_base.lower().endswith(".sol"):
+        pattern = re.compile(rf"\b(?:contract|library|interface)\s+{re.escape(file_base)}\b")
+        for p in index.values():
+            try:
+                text = p.read_text(encoding="utf-8", errors="ignore")
+            except Exception:
+                continue
+            if pattern.search(text):
+                return str(p.relative_to(ROOT)), text
+    return "", ""
+
+
 def build_forge_raw_findings() -> list[RawFinding]:
     rows: list[RawFinding] = []
     for vf in sorted(FORGE_VULN_DIR.glob("vfp_*.json")):
@@ -255,6 +309,7 @@ def build_forge_raw_findings() -> list[RawFinding]:
         except Exception:
             continue
         vfp_id = data.get("vfp_id") or vf.stem
+        project_name = data.get("project_name") or ""
         affected = data.get("affected_files") or {}
         parsed_by_file: dict[str, dict[str, Any]] = {}
         merged_contracts: dict[str, Any] = {}
@@ -279,6 +334,21 @@ def build_forge_raw_findings() -> list[RawFinding]:
                 source_key = next((k for k in affected if Path(k).name == file_base), file_base)
                 src = affected.get(source_key, "")
                 parsed = parsed_by_file.get(file_base, {})
+                if not src:
+                    # Not embedded in this vfp's affected_files snapshot (either the
+                    # referenced file was never attached, or `file_base` is actually a
+                    # bare contract/library name rather than a filename, e.g. a
+                    # location like "LibVestingPlan::resetAmount" with no ".sol"). Fall
+                    # back to the raw project source tree, which usually still has it.
+                    resolved_path, resolved_src = resolve_forge_source(project_name, file_base)
+                    if resolved_src:
+                        source_key = resolved_path
+                        src = resolved_src
+                        try:
+                            parsed = nhs.parse_contracts(src)
+                        except Exception:
+                            parsed = {}
+                        merged_contracts.update(parsed)
                 contract = ""
                 if func:
                     for cn in merged_contracts:
