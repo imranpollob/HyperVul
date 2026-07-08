@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-08T04:12:31",
+  "generated_at": "2026-07-08T04:28:22",
   "project_root": "/home/pollmix/Coding/HyperVul",
   "contract_graphs": {
     "stats_by_split": {
@@ -279,11 +279,6 @@
           "hashes": 182,
           "covered": 152,
           "coverage_pct": 83.5165
-        },
-        "data/splits/train_augmented.json": {
-          "hashes": 1358,
-          "covered": 859,
-          "coverage_pct": 63.2548
         },
         "data/splits/val_features.json": {
           "hashes": 190,
